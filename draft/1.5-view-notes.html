@@ -1,0 +1,219 @@
+<!doctype>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#0b0c0c">
+    <title>View notes</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--[if !IE 8]><!-->
+    <link href="css/govuk-frontend-1.1.1.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/table-floating-header.css">
+    <!--<![endif]-->
+
+    <!--[if IE 8]>
+        <link href="css/govuk-frontend-ie8-1.1.1.min.css" rel="stylesheet" />
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="/html5-shiv/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body class="govuk-template__body page js-enabled">
+
+    <!-- Accessibility link to skip to the main content. -->
+    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+
+    <!-- PAGE HEADER. -->
+    <header class="page__header" role="banner" data-module="header">
+        <div class="page__header__inner">
+            <div class="page__header__column page__header__column--logo">
+                <img class="page__header__logo" src="img/hackney-logo-white.png" alt="Hackney">
+            </div>
+            <div class="page__header__column page__header__column--title">
+                <p class="govuk-!-font-size-24">NCC - CRM</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- TEMPORARY PHASE BANNER. -->
+    <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+                Proto
+            </strong>
+            <span class="govuk-phase-banner__text">
+                This is a prototype page.
+            </span>
+        </p>
+    </div>
+
+    <!-- Content area. -->
+    <div class="page__middle">
+
+        <!-- Navigation menu. -->
+        <nav class="page__menu">
+            <ul class="page__menu__list">
+                <li class="page__menu__item page__menu__item--active"><a href="">Home</a></li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-call">
+                    <label for="menu-call">Call</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                        <li><a href="">Item 3</a></li>
+                    </ul>
+                </li>
+                <li class="page__menu__item">
+                    <a href="">Log call</a>
+                </li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-rent">
+                    <label for="menu-rent">Rent</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                        <li><a href="">Item 3</a></li>
+                    </ul>
+                </li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-comms">
+                    <label for="menu-comms">Comms</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non distinctio dolorem vitae! Ex natus sequi nesciunt autem unde distinctio, perspiciatis sapiente ipsam minus incidunt reprehenderit commodi provident dolor voluptate alias.</p>
+        </nav>
+
+        <!-- MAIN CONTENT AREA. -->
+        <main id="main-content" class="page__content">
+
+            <!-- Back link. -->
+            <a href="#" class="govuk-back-link">Back</a>
+
+            <div class="govuk-main-wrapper">
+
+                <h1 class="govuk-heading-m">View notes</h1>
+
+                <table class="govuk-table floating-header">
+                    <thead class="govuk-table__head">
+                        <tr class="govuk-table__row">
+                            <th class="govuk-table__header" scope="col" data-width="120">Date</th>
+                            <th class="govuk-table__header" scope="col" data-width="160">Status</th>
+                            <th class="govuk-table__header" scope="col" data-width="250">Action</th>
+                            <th class="govuk-table__header" scope="col" data-width="200">User</th>
+                            <th class="govuk-table__header" scope="col">Comments</th>
+                            <th class="govuk-table__header" scope="col" data-width="300">Attachments</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <button class="govuk-button govuk-!-margin-bottom-0">
+                                    Print / Export
+                                </button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">03/04/2018</td>
+                            <td class="govuk-table__cell">Automatic</td>
+                            <td class="govuk-table__cell">Rent paid</td>
+                            <td class="govuk-table__cell">Paul</td>
+                            <td class="govuk-table__cell">Rent paid</td>
+                            <td class="govuk-table__cell">Voluptatum</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">02/04/2018</td>
+                            <td class="govuk-table__cell">AD</td>
+                            <td class="govuk-table__cell">Arrears cleared</td>
+                            <td class="govuk-table__cell">Manjit</td>
+                            <td class="govuk-table__cell">Arrears cleared</td>
+                            <td class="govuk-table__cell"></td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">01/04/2018</td>
+                            <td class="govuk-table__cell">Agent notes</td>
+                            <td class="govuk-table__cell">Sent refund form</td>
+                            <td class="govuk-table__cell">Clinton</td>
+                            <td class="govuk-table__cell">Sent refund form</td>
+                            <td class="govuk-table__cell">Ipsam dolore deserunt</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">03/04/2018</td>
+                            <td class="govuk-table__cell">Automatic</td>
+                            <td class="govuk-table__cell">Rent paid</td>
+                            <td class="govuk-table__cell">Paul</td>
+                            <td class="govuk-table__cell">Rent paid</td>
+                            <td class="govuk-table__cell">Voluptatum</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">02/04/2018</td>
+                            <td class="govuk-table__cell">AD</td>
+                            <td class="govuk-table__cell">Arrears cleared</td>
+                            <td class="govuk-table__cell">Manjit</td>
+                            <td class="govuk-table__cell">Arrears cleared</td>
+                            <td class="govuk-table__cell"></td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">01/04/2018</td>
+                            <td class="govuk-table__cell">Agent notes</td>
+                            <td class="govuk-table__cell">Sent refund form</td>
+                            <td class="govuk-table__cell">Clinton</td>
+                            <td class="govuk-table__cell">Sent refund form</td>
+                            <td class="govuk-table__cell">Ipsam dolore deserunt</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">03/04/2018</td>
+                            <td class="govuk-table__cell">Automatic</td>
+                            <td class="govuk-table__cell">Rent paid</td>
+                            <td class="govuk-table__cell">Paul</td>
+                            <td class="govuk-table__cell">Rent paid</td>
+                            <td class="govuk-table__cell">Voluptatum</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">02/04/2018</td>
+                            <td class="govuk-table__cell">AD</td>
+                            <td class="govuk-table__cell">Arrears cleared</td>
+                            <td class="govuk-table__cell">Manjit</td>
+                            <td class="govuk-table__cell">Arrears cleared</td>
+                            <td class="govuk-table__cell"></td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">01/04/2018</td>
+                            <td class="govuk-table__cell">Agent notes</td>
+                            <td class="govuk-table__cell">Sent refund form</td>
+                            <td class="govuk-table__cell">Clinton</td>
+                            <td class="govuk-table__cell">Sent refund form</td>
+                            <td class="govuk-table__cell">Ipsam dolore deserunt</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- PAGE FOOTER. -->
+    <!-- (not in the sketch, but might be useful to have.) -->
+    <footer class="page__footer">
+        <a href="">Help</a>
+        <a href="">Contacts</a>
+        <a href="">A-Z of Services</a>
+    </footer>
+    
+    <script src="css/govuk-frontend-1.1.1.min.js"></script>
+    <script src="js/floating-table-header.js"></script>
+    <script>
+        window.GOVUKFrontend.initAll();
+    </script>
+</body>
+</html>

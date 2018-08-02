@@ -1,0 +1,259 @@
+<!doctype>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#0b0c0c">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--[if !IE 8]><!-->
+    <link href="css/govuk-frontend-1.1.1.min.css" rel="stylesheet" />
+    <!--<![endif]-->
+
+    <!--[if IE 8]>
+        <link href="css/govuk-frontend-ie8-1.1.1.min.css" rel="stylesheet" />
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="/html5-shiv/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body class="govuk-template__body page js-enabled">
+
+    <!-- Accessibility link to skip to the main content. -->
+    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+
+    <!-- PAGE HEADER. -->
+    <header class="page__header" role="banner" data-module="header">
+        <div class="page__header__inner">
+            <div class="page__header__column page__header__column--logo">
+                <img class="page__header__logo" src="img/hackney-logo-white.png" alt="Hackney">
+            </div>
+            <div class="page__header__column page__header__column--title">
+                <p class="govuk-!-font-size-24">NCC - CRM</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- TEMPORARY PHASE BANNER. -->
+    <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+                Proto
+            </strong>
+            <span class="govuk-phase-banner__text">
+                This is a prototype page.
+            </span>
+        </p>
+    </div>
+
+    <!-- Content area. -->
+    <div class="page__middle">
+
+        <!-- Navigation menu. -->
+        <nav class="page__menu">
+            <ul class="page__menu__list">
+                <li class="page__menu__item page__menu__item--active"><a href="">Home</a></li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-call">
+                    <label for="menu-call">Call</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                        <li><a href="">Item 3</a></li>
+                    </ul>
+                </li>
+                <li class="page__menu__item">
+                    <a href="">Log call</a>
+                </li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-rent">
+                    <label for="menu-rent">Rent</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                        <li><a href="">Item 3</a></li>
+                    </ul>
+                </li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-comms">
+                    <label for="menu-comms">Comms</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non distinctio dolorem vitae! Ex natus sequi nesciunt autem unde distinctio, perspiciatis sapiente ipsam minus incidunt reprehenderit commodi provident dolor voluptate alias.</p>
+        </nav>
+
+        <!-- MAIN CONTENT AREA. -->
+        <main id="main-content" class="page__content">
+
+            <!-- Back link. -->
+            <a href="#" class="govuk-back-link">Back</a>
+
+            <div class="govuk-main-wrapper">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+
+                        <!-- Search for contact details. -->
+                        <h2 class="govuk-heading-m">Search for contact details</h2>
+
+                        <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
+                        <form action="1.2-identify.html">
+                            <div class="panel govuk-!-margin-bottom-5">
+                                <div class="govuk-form-group govuk-!-margin-bottom-2">
+                                    <label class="govuk-label govuk-!-font-weight-bold" for="query">
+                                        Search by phone number, address or tenancy reference:
+                                    </label>
+                                    <input class="govuk-input govuk-!-width-one-half" id="query" name="query" type="search">
+                                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Option to mark the caller as anonymous. -->
+                        <button class="govuk-link-button">
+                            Anonymize
+                        </button>
+
+                        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+                    </div>                        
+                </div>
+            </div>
+
+            <!-- A list of up to ten previous calls. -->
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-heading-m">Last ten calls</caption>
+                <thead class="govuk-table__head">
+                    <colgroup>
+                        <col width="150">
+                        <col width="*">
+                        <col width="160">
+                        <col width="100">
+                        <col width="200">
+                    </colgroup>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="col">Tenancy ref.</th>
+                        <th class="govuk-table__header" scope="col">Name</th>
+                        <th class="govuk-table__header" scope="col">Date</th>
+                        <th class="govuk-table__header" scope="col">Time</th>
+                        <th class="govuk-table__header" scope="col">Reason for call</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/11</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr A Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">Pay Rent</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/12</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr B Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">General</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/13</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr C Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">Pay Rent</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/14</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr D Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">Pay Rent</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/15</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr E Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">ASB</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/16</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr F Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">General</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/17</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr G Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">Repairs</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/18</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr H Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">ASB</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/19</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr I Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">Pay Rent</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">
+                            <a href="">09786/20</a>
+                        </th>
+                        <td class="govuk-table__cell">Mr J Bell</td>
+                        <td class="govuk-table__cell">24/07/2018</td>
+                        <td class="govuk-table__cell">23:59</td>
+                        <td class="govuk-table__cell">ASB</td>
+                    </tr>
+                </tbody>
+            </table>
+                    
+        </main>
+    </div>
+
+    <!-- PAGE FOOTER. -->
+    <!-- (not in the sketch, but might be useful to have.) -->
+    <footer class="page__footer">
+        <a href="">Help</a>
+        <a href="">Contacts</a>
+        <a href="">A-Z of Services</a>
+    </footer>
+    
+    <script src="css/govuk-frontend-1.1.1.min.js"></script>
+    <script>window.GOVUKFrontend.initAll()</script>
+</body>
+</html>

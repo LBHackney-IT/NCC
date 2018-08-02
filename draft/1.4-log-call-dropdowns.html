@@ -1,0 +1,202 @@
+<!doctype>
+<html lang="en" class="govuk-template" ng-app="hackney.ncc">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#0b0c0c">
+    <title>Log Call</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--[if !IE 8]><!-->
+    <link href="css/govuk-frontend-1.1.1.min.css" rel="stylesheet" />
+    <!--<![endif]-->
+
+    <!--[if IE 8]>
+        <link href="css/govuk-frontend-ie8-1.1.1.min.css" rel="stylesheet" />
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="/html5-shiv/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body class="govuk-template__body page js-enabled">
+
+    <!-- Accessibility link to skip to the main content. -->
+    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+
+    <!-- PAGE HEADER. -->
+    <header class="page__header" role="banner" data-module="header">
+        <div class="page__header__inner">
+            <div class="page__header__column page__header__column--logo">
+                <img class="page__header__logo" src="img/hackney-logo-white.png" alt="Hackney">
+            </div>
+            <div class="page__header__column page__header__column--title">
+                <p class="govuk-!-font-size-24">NCC - CRM</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- TEMPORARY PHASE BANNER. -->
+    <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+                Proto
+            </strong>
+            <span class="govuk-phase-banner__text">
+                This is a prototype page.
+            </span>
+        </p>
+    </div>
+
+    <!-- Content area. -->
+    <div class="page__middle">
+
+        <!-- Navigation menu. -->
+        <nav class="page__menu">
+            <ul class="page__menu__list">
+                <li class="page__menu__item page__menu__item--active"><a href="">Home</a></li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-call">
+                    <label for="menu-call">Call</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                        <li><a href="">Item 3</a></li>
+                    </ul>
+                </li>
+                <li class="page__menu__item">
+                    <a href="">Log call</a>
+                </li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-rent">
+                    <label for="menu-rent">Rent</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                        <li><a href="">Item 3</a></li>
+                    </ul>
+                </li>
+                <li class="page__menu__item">
+                    <input type="checkbox" id="menu-comms">
+                    <label for="menu-comms">Comms</label>
+                    <ul>
+                        <li><a href="">Item 1</a></li>
+                        <li><a href="">Item 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non distinctio dolorem vitae! Ex natus sequi nesciunt autem unde distinctio, perspiciatis sapiente ipsam minus incidunt reprehenderit commodi provident dolor voluptate alias.</p>
+        </nav>
+
+        <!-- MAIN CONTENT AREA. -->
+        <main id="main-content" class="page__content">
+
+            <!-- Back link. -->
+            <a href="#" class="govuk-back-link">Back</a>
+
+            <div class="govuk-main-wrapper" ng-controller="LogCallDropdownCtrl as $ctrl">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+
+                        <form action="">
+
+                            <div class="govuk-grid-row">
+                                <div class="govuk-grid-column-one-half">
+
+                                    <!-- Type of call. -->
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-fieldset__legend govuk-fieldset__legend--s" for="call_type">
+                                            Log call type
+                                        </label>
+                                        <select class="govuk-select" id="call_type" name="call_type"
+                                                ng-model="$ctrl.model.selected.call_type"
+                                                ng-change="$ctrl.resetCallReason()"
+                                                ng-options="type.id as type.label for type in $ctrl.model.call_types">
+                                            <option value="" selected>- select a call type</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="govuk-grid-column-one-half">
+
+                                    <!-- The reason for the call. -->
+                                    <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" ng-show="$ctrl.isCallTypeSelected()">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                            <h2 class="govuk-fieldset__heading">
+                                                Log reason for call
+                                            </h2>
+                                        </legend>
+
+                                        <div class="govuk-radios" data-module="radios">
+                                            <div class="govuk-radios__item" ng-repeat="reason in $ctrl.getReasonsForCallType()">
+                                                <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
+                                                        ng-model="$ctrl.model.selected.call_reason" ng-value="reason.id">
+                                                <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}" ng-bind="reason.label"></label>
+                                            </div>
+                                        </div>                  
+                                    </fieldset>
+
+                                </div>
+                            </div>
+
+                            <!-- Next button. -->
+                            <button class="govuk-button" ng-show="$ctrl.canProceed()">
+                                Next
+                            </button>
+    
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add notes. -->
+            <div class="page__notes__container">
+                <input type="checkbox" id="add-note">
+                <label for="add-note" class="govuk-link-button govuk-!-margin-bottom-0">Add a note</label>
+                <div class="page__notes">
+                    <div class="govuk-form-group">
+
+                        <dl class="value-list value-list--horizontal">
+                            <dt class="value-list__label">Date</dt>
+                            <dd class="value-list__value">21/08/2018</dd>
+                            <dt class="value-list__label">User</dt>
+                            <dd class="value-list__value">George "Kingfish" Stevens</dd>
+                        </dl>
+
+                        <label class="govuk-label" for="more-detail">
+                            Comments
+                        </label>
+                        <textarea class="govuk-textarea page__notes__field" id="more-detail" name="more-detail" rows="4" aria-describedby="more-detail-hint"></textarea>
+                    </div>
+                    <div class="govuk-form-group">
+                        <a href="">View old notes</a>
+                    </div>
+                    <div class="govuk-form-group">
+                        <a href="">Attach a file</a>
+                    </div>
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
+                        Save
+                    </button>
+                </div>
+            </div>
+    
+        </main>
+    </div>
+
+    <!-- PAGE FOOTER. -->
+    <!-- (not in the sketch, but might be useful to have.) -->
+    <footer class="page__footer">
+        <a href="">Help</a>
+        <a href="">Contacts</a>
+        <a href="">A-Z of Services</a>
+    </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js" integrity="sha256-57LfeK2BvOobYQX2XI1cm6H+bqBPKEgr1KgV/zdycSs=" crossorigin="anonymous"></script>    <script src="js/angularjs-demo.js"></script>
+    <script src="js/hackneyapi.factory.js"></script>
+    <script src="js/log-call-dropdown.controller.js"></script>
+</body>
+</html>

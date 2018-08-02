@@ -1,0 +1,343 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100%;
+}
+
+.page__header {
+    background: #252525;
+    border-bottom: 4px solid #17b15a;
+    color: #EEE;
+    padding: 2rem;
+    position: relative;
+}
+.page__header:before {
+    background: #17b15a;
+    bottom: 5px;
+    content: "";
+    display: block;
+    height: 5px;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+.page__header::after {
+    background: #9bcf7f;
+    bottom: -11px;
+    content: '';
+    display: block;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+@media (min-width: 520px) {
+    .page__header__inner {
+        display: flex;
+        align-items: center;
+    }        
+}
+
+.page__header__column--logo {
+    flex-basis: 300px;
+    /* see https://stackoverflow.com/.../what-are-the-differences-between-flex-basis-and-width */
+}
+
+.page__header__column--title {
+    flex-grow: 1;
+}
+
+.page__header__logo {
+    max-height: 40px;
+}
+
+.page__middle {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.page__menu {
+    border-right: 1px solid #bfc1c3;
+    display: none;
+    flex-basis: 25%;
+    max-width: 360px;
+    overflow: hidden;
+    padding: 1rem;
+}
+@media screen and (min-width: 769px) {
+    /* as an example */
+    .page__menu {
+        display: initial;
+    }
+}
+.page__menu__list {
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style-type: none
+}
+.page__menu__item a,
+.page__menu__item a:link,
+.page__menu__item a:visited,
+.page__menu__item label {
+    cursor: pointer;
+    display: block;
+    padding: 8px 30px 8px 10px;
+    border-left: 4px solid transparent;
+    color: #005ea5;
+    background: inherit;
+    text-decoration:none
+}
+.page__menu__item a:hover,
+.page__menu__item label:hover {
+    border-left-color: #2b8cc4
+}
+
+.page__menu__item--active > a,
+.page__menu__item--active > a:link,
+.page__menu__item--active > a:visited,
+.page__menu__item--active > label {
+    border-left-color: #005ea5;
+    background: #f8f8f8;
+    font-weight: bold;
+}
+
+.page__menu__item input {
+    display: none;
+}
+
+.page__menu__item label {
+    position: relative;
+}
+.page__menu__item label:after {
+    content: "+";
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.page__menu__item input:checked ~ label:after {
+    content: "-";
+}
+
+.page__menu__item > ul {
+    margin-left: 2.5em;
+    display: none;
+} 
+
+.page__menu__item input:checked ~ ul {
+    display: list-item;
+} 
+
+.page__content {
+    flex-grow: 1;
+    padding: 2rem;
+    flex-basis: 60%;
+    overflow: auto;
+}
+
+.page__notes__container {
+    max-width: 500px;
+    position: absolute;
+    right: 0;
+    top: 20px;
+    width: 30%;
+    z-index: 100;
+    text-align: right;
+}
+.page__notes__container > input {
+    display: none;
+}
+.page__notes__container > input:checked ~ .page__notes {
+    display: block;
+}
+.page__notes__container > label {
+    background: rgba(255,255,255,.75);
+    display: inline-block;
+    padding: 1rem;
+}
+.page__notes__container > label:after {
+    content: "+";
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    width: 1.5em;
+}
+.page__notes__container > input:checked ~ label:after {
+    content: "-";
+}
+
+
+.page__notes {
+    background: #FFF;
+    border: 2px solid #111;
+    border-right: none;
+    display: none;
+    padding: 1rem;
+    text-align: left;
+}
+
+.page__notes__field {
+    max-height: 15rem;
+}
+
+/* FOOTER */
+.page__footer {
+    background-color: #252525;
+    border-top: 5px solid #74C043;
+    color: #FFF;
+    margin-top: 0;
+    padding: 1.5rem 2rem 1rem;
+    position: relative;
+    text-align: center;
+}
+.page__footer:before {
+    background-color: #9BCF7F;
+    content: '';
+    display: block;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 5px;
+}
+.page__footer:after {
+    background-color: #17B15A;
+    content: '';
+    height: 6px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -16px;
+    z-index: 99;
+}
+.page__footer a {
+    color: #FFF;
+}
+
+.text-red {
+    color: #B10E1E; /* govuk-colour('red') */
+}
+
+.text-green {
+    color: #006435; /* govuk-colour('green') */
+}
+
+.panel {
+    background: #DEE0E2; /* govuk-colour("grey-3") */
+    padding: 1rem;
+}
+
+.box-panel {
+    border: 1px solid #DEE0E2; /* govuk-colour("grey-3") */
+    padding: 1rem;
+}
+
+.transactions {
+    border: 1px solid #BFC1C3; /* $govuk-border-colour */
+    max-height: 21rem;
+    overflow: auto;
+    padding: 0.5rem 1rem;
+}
+
+.transactions .transaction__amount {
+    text-align: right;
+}
+
+
+/* LINK button style. */
+.govuk-link-button{
+    font-family:nta,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.1875;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    display:inline-block;
+    position:relative;
+    width:100%;
+    margin-top:0;
+    margin-bottom:22px;
+    padding:7px 10px;
+    border:2px solid transparent;
+    border-radius:0;
+    color:inherit;
+    background-color:transparent;
+
+    text-decoration: underline;
+    text-align:center;
+    vertical-align:top;
+    cursor:pointer;
+    -webkit-appearance:none
+}
+@media print{
+    .govuk-link-button{
+        font-family:sans-serif
+    }
+}
+@media (min-width:40.0625em){
+    .govuk-link-button{
+        font-size:19px;
+        line-height:1
+    }
+}
+@media print{
+    .govuk-link-button{
+        font-size:14pt;
+        line-height:19px
+    }
+}
+.govuk-link-button:focus{
+    outline:3px solid #ffbf47;
+    outline-offset:0
+}
+@media (min-width:40.0625em){
+    .govuk-link-button{
+        margin-bottom:32px;
+        width:auto
+    }
+}
+.govuk-link-button:active,
+.govuk-link-button:hover,
+.govuk-link-button:link,
+.govuk-link-button:visited{
+    color:inherit;
+    text-decoration:none
+}
+
+
+.value-list__label {
+    font-weight: bold;
+}
+.value-list__value {
+    margin-bottom: .5rem;
+}
+.value-list--horizontal {
+    display: flex;
+    flex-wrap: wrap;
+}
+.value-list--horizontal .value-list__label {
+    flex-basis: 32%;
+}
+.value-list--horizontal .value-list__value {
+    flex-basis: 68%;
+}
+    
