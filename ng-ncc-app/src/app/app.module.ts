@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -11,6 +12,8 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
+
+import { HackneyAPIInterceptor } from './API/hackney-api.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
 
     // Set up routing.
     RouterModule.forRoot(

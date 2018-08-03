@@ -11,12 +11,15 @@
                         <label class="govuk-fieldset__legend govuk-fieldset__legend--s" for="call_type">
                             Log call type
                         </label>
-                        <select class="govuk-select" id="call_type" name="call_type"
+                        <!-- <select class="govuk-select" id="call_type" name="call_type"
                                 ng-model="$ctrl.model.selected.call_type"
                                 ng-change="$ctrl.resetCallReason()"
                                 ng-options="type.id as type.label for type in $ctrl.model.call_types">
                             <option value="" selected>- select a call type</option>
-                        </select>
+                        </select> -->
+                        <div *ngFor="let item of call_types">
+                            {{ item.id }}: {{ item.label}}
+                        </div>
                     </div>
 
                 </div>
@@ -31,13 +34,13 @@
                             </h2>
                         </legend>
 
-                        <div class="govuk-radios" data-module="radios">
+                        <!-- <div class="govuk-radios" data-module="radios">
                             <div class="govuk-radios__item" ng-repeat="reason in $ctrl.getReasonsForCallType()">
                                 <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
                                         ng-model="$ctrl.model.selected.call_reason" ng-value="reason.id">
                                 <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}" ng-bind="reason.label"></label>
                             </div>
-                        </div>
+                        </div> -->
                     </fieldset>
 
                 </div>
