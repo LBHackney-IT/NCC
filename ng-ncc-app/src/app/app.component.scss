@@ -1,0 +1,7 @@
+:host {
+    // This selector targets the host (i.e. <app-root/>).
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+    padding-bottom: 10px; // for the Hackney stripe branding on the footer.
+}

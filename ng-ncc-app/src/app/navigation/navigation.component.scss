@@ -1,0 +1,100 @@
+$navigation-border-colour: #BFC1C3 !default;
+$navigation-border-width: 1px !default;
+$navigation-max-width: 360px !default;
+$navigation-padding: 1rem !default;
+$navigation-menu-item-link-colour: #005EA5 !default;
+$navigation-menu-item-active-bg-colour: #F8F8F8 !default;
+$navigation-menu-item-active-line-colour: #005EA5 !default;
+
+////////////////////
+
+@import "~govuk-frontend/settings/media-queries";
+
+// The "navigation" sidebar is set to be hidden if the screen is narrower than a typical tablet device.
+
+:host {
+    // This selector targets the host (i.e. <app-navigation/>).
+    border-right: $navigation-border-width solid $navigation-border-colour;
+    display: none;
+    flex-basis: 25%;
+    max-width: $navigation-max-width;
+    overflow: hidden;
+    padding: $navigation-padding;
+    @media screen and (min-width: map-get($govuk-breakpoints, 'desktop')) {
+        display: initial;
+    }
+}
+
+.navigation__list {
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style-type: none
+}
+
+.navigation__item {
+
+    // Regular item state.
+    a,
+    a:link,
+    a:visited,
+    label {
+        cursor: pointer;
+        display: block;
+        padding: 8px 30px 8px 10px;
+        border-left: 4px solid transparent;
+        color: $navigation-menu-item-link-colour;
+        background: inherit;
+        text-decoration: none
+    }
+
+    // Item hover state.
+    a:hover,
+    label:hover {
+        border-left-color: #2b8cc4
+    }
+
+    // Active item state.
+    &--active> {
+        a,
+        a:link,
+        a:visited,
+        label {
+            border-left-color: $navigation-menu-item-active-line-colour;
+            background: $navigation-menu-item-active-bg-colour;
+            font-weight: bold;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // TODO remove these selectors (using checkboxes to show and hide sections).
+    input {
+        display: none;
+
+        &:checked {
+            ~ label:after {
+                content: "-";
+            }
+            ~ ul {
+                display: list-item;
+            }
+        }
+    }
+
+    label {
+        position: relative;
+
+        &:after {
+            content: "+";
+            font-weight: bold;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+    }
+
+    > ul {
+        margin-left: 2.5em;
+        display: none;
+    }
+    // -------------------------------------------------------------------------
+}
