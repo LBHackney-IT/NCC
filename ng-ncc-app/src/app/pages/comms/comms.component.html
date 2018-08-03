@@ -1,3 +1,142 @@
-<p>
-  comms works!
-</p>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">Communications</h1>
+
+    <p class="govuk-inset-text">
+      The form can be downloaded by visiting <a href="">https://hackney.gov.uk</a>
+    </p>
+
+    <form class="" action="index.html" method="post">
+
+      <!-- Select the form to send. -->
+      <div class="govuk-form-group">
+          <label class="govuk-label govuk-!-font-weight-bold" for="form">
+              Select form to send:
+          </label>
+          <select class="govuk-select govuk-!-width-one-half" id="form" name="form">
+              <option value="refund">Refund form</option>
+          </select>
+      </div>
+
+      <div class="govuk-grid-row">
+
+          <!-- Message preview. -->
+          <div class="govuk-grid-column-one-half">
+            <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
+            <div class="panel govuk-form-group">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+            </div>
+          </div>
+
+          <!-- Customise message. -->
+          <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-!-font-weight-bold" for="message_custom">
+                Customise
+              </label>
+              <textarea class="govuk-textarea govuk-!-margin-bottom-1" id="message_custom" rows="4" cols="80">Ut enim ad minim veniam, quis nostrud exercitation ullamco. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+              <button type="button" class="govuk-link-button govuk-!-margin-bottom-0">Print</button>
+            </div>
+          </div>
+
+      </div>
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-label govuk-!-font-weight-bold">
+              Select communications method
+            </h2>
+          </legend>
+          <div class="govuk-radios" data-module="radios">
+
+            <!-- By email. -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="method-email" name="method" type="radio" value="email" data-aria-controls="method-by-email">
+              <label class="govuk-label govuk-radios__label" for="method-email">
+                Email
+              </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-email">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="email">
+                  Email address
+                </label>
+                <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="text">
+              </div>
+            </div>
+
+            <!-- By SMS. -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="method-sms" name="method" type="radio" value="text" data-aria-controls="method-by-sms">
+              <label class="govuk-label govuk-radios__label" for="method-sms">
+              SMS
+            </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-sms">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="mobile">
+                  Mobile phone number
+                </label>
+                <input class="govuk-input govuk-!-width-one-half" id="mobile" name="mobile" type="text">
+              </div>
+            </div>
+
+            <!-- By post. -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="method-post" name="method" type="radio" value="text" data-aria-controls="method-by-post">
+              <label class="govuk-label govuk-radios__label" for="method-post">
+                Post
+              </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-post">
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-line-1">
+                      First line of address
+                  </label>
+                  <input class="govuk-input" id="address-line-1" name="address-line-1" type="text">
+              </div>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-line-2">
+                      Second line of address
+                  </label>
+                  <input class="govuk-input" id="address-line-2" name="address-line-2" type="text">
+              </div>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-town">
+                      Town or city
+                  </label>
+                  <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" type="text">
+              </div>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-county">
+                      County
+                  </label>
+                  <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" type="text">
+              </div>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-postcode">
+                      Postcode
+                  </label>
+                  <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text">
+              </div>
+
+            </div>
+
+          </div>
+        </fieldset>
+      </div>
+
+      <button type="submit" class="govuk-button">
+        Send
+      </button>
+    </form>
+
+  </div>
+</div>
