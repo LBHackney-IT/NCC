@@ -24,9 +24,20 @@ export class PageLogCallComponent implements OnInit {
 
     ngOnInit() {
         // Fetch a list of call types and reasons from the Hackney API.
-        this.HackneyAPI.getCallTypes().then((types) => {
+
+
+        /*
+        // Promise method...
+        this.HackneyAPI.getCallTypes_P().then((types) => {
             this.call_types = types;
         });
+        */
+
+        // Observable method...
+        this.HackneyAPI.getCallTypes_O().subscribe(types => {
+            this.call_types = types;
+        });
+
         /*$q.all({
             types:   HackneyAPI.getCallTypes(),
             reasons: HackneyAPI.getCallReasons()

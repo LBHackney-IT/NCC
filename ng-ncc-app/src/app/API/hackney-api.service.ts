@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+    // replaces "import 'rxjs/add/operators/map'"
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class HackneyAPIService {
 
   constructor(private http: HttpClient) { }
 
-  getCallTypes(): Promise {
+  /**
+   * Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
+   *
+   * This version of the method makes use of a Promise, which is what we're used to doing in AngularJS.
+   */
+  getCallTypes_P(): Promise {
       // https://codecraft.tv/courses/angular/http/http-with-promises/
       return new Promise((resolve, reject) => {
           this.http.get('https://sandboxapi.hackney.gov.uk/CRMLookups?id=3')
@@ -16,9 +24,10 @@ export class HackneyAPIService {
             .then(
                 res => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
-                    // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
+                    // Though the above recommends using lodash/underscore for mapping with an obj`ect, we can still do it using native JS.
                     let types = res.result;
 
+                    // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
                     let indexed_types = Object.keys(types).map(function (value, index) {
                         return { id: parseInt(index), label: types[index] };
                     });
@@ -27,7 +36,33 @@ export class HackneyAPIService {
                 }
             );
       });
-  }
+    }
+
+    /**
+     * Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
+     *
+     * This version of the method makes use of a [highly touted] Observable.
+     */
+    getCallTypes_O() {
+        // Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
+        // https://stackoverflow.com/a/50850777/4073160
+        return this.http
+          .get('https://sandboxapi.hackney.gov.uk/CRMLookups?id=3')
+          .pipe(
+              .map((response: Array<any>) => {
+                  // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
+                  // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
+                  let types = response.result;
+
+                  // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
+                  let indexed_types = Object.keys(types).map(function (value, index) {
+                      return { id: parseInt(index), label: types[index] };
+                  });
+
+                  return indexed_types;
+              })
+          );
+    }
 
   // getCallReasons(http: Http) {
   //     return http
