@@ -1,0 +1,47 @@
+.page__header {
+    background: #252525;
+    border-bottom: 4px solid #17b15a;
+    color: #EEE;
+    padding: 2rem;
+    position: relative;
+
+    &::after,
+    &:before {
+        content: '';
+        display: block;
+        height: 5px;
+        left: 0;
+        position: absolute;
+        right: 0;
+    }
+
+    .page__header:before {
+        background: $hackney-green;
+        bottom: 5px;
+    }
+
+    &::after {
+        background: $hackney-light-green;
+        bottom: -11px;
+        height: 3px;
+    }
+}
+@media (min-width: 520px) {
+    .page__header__inner {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.page__header__column--logo {
+    flex-basis: 300px;
+    /* see https://stackoverflow.com/.../what-are-the-differences-between-flex-basis-and-width */
+}
+
+.page__header__column--title {
+    flex-grow: 1;
+}
+
+.page__header__logo {
+    max-height: 40px;
+}

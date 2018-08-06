@@ -1,0 +1,218 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <!-- Search for contact details. -->
+        <h2 class="govuk-heading-m">Search for contact details</h2>
+
+        <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
+        <form action="">
+            <div class="panel govuk-!-margin-bottom-5">
+                <div class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="govuk-label govuk-!-font-weight-bold" for="query">
+                        Search by phone number, address or tenancy reference:
+                    </label>
+                    <input class="govuk-input govuk-!-width-one-half" id="query" name="query" type="search">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Option to mark the caller as anonymous. -->
+        <button class="govuk-link-button govuk-!-margin-bottom-0">
+            Anonymize
+        </button>
+
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+        <!-- If we've found contact information... -->
+        <h2 class="govuk-heading-m">Identify caller</h2>
+
+        <!-- Found contact information. -->
+        <div class="box-panel govuk-!-margin-bottom-5">
+            <div class="govuk-grid-row">
+
+                <!-- The contact's name. -->
+                <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+                    <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Mr D Bell</h2>
+                    <p class="govuk-body govuk-!-margin-bottom-0">
+                        <a href="">Ms J Bell</a>
+                        <span class="govuk-body-s">Advocate/Secondary contact</span>
+                    </p>
+                </div>
+
+                <!-- Contact details. -->
+                <div class="govuk-grid-column-one-half">
+                    <h1 class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</h1>
+                    <p class="govuk-body">
+                        Mr D Bell
+                        <br> 0208 111 1111
+                        <br> dbell@hotmail.com
+                    </p>
+                </div>
+
+                <!-- The respective address. -->
+                <div class="govuk-grid-column-one-half">
+                    <h1 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h1>
+                    <p class="govuk-body">
+                        106 Hackney Road
+                        <br> Mare Street
+                        <br> E5
+                        <br> London, UK
+                    </p>
+                </div>
+
+                <!-- DPA. -->
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary">
+                            <span class="govuk-details__summary-text">DPA</span>
+                        </summary>
+                        <div class="govuk-details__text">
+                            <dl class="value-list value-list--horizontal govuk-body-s">
+                                <dt class="value-list__label">Date of birth</dt>
+                                <dd class="value-list__value">01/01/2018</dd>
+
+                                <dt class="value-list__label">Payment reference number</dt>
+                                <dd class="value-list__value">T9986/02</dd>
+
+                                <dt class="value-list__label">Date of last payment</dt>
+                                <dd class="value-list__value">01/01/2018</dd>
+
+                                <dt class="value-list__label">Amount last paid</dt>
+                                <dd class="value-list__value">£60.00</dd>
+
+                                <dt class="value-list__label">Month and year tenancy began</dt>
+                                <dd class="value-list__value">01/2018</dd>
+
+                                <dt class="value-list__label">Preferred payment method</dt>
+                                <dd class="value-list__value">Card payment</dd>
+                            </dl>
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Option to edit this contact information. -->
+            <a href="1.3-edit-contact-details.html" class="govuk-link-button govuk-!-margin-bottom-0">Edit contact information</a>
+
+            <!-- Select this information. -->
+            <button class="govuk-button govuk-!-margin-bottom-0">Next</button>
+
+        </div>
+
+        <!-- Details of other tenants at the property (if present). -->
+        <details class="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">View other tenants at this address</span>
+            </summary>
+
+            <!-- Information about each other tenant. -->
+            <div class="box-panel govuk-!-margin-bottom-1">
+                <div class="govuk-grid-row govuk-!-margin-bottom-3 govuk-!-margin-top-3">
+                    <div class="govuk-grid-column-full">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Ms J Bell</h2>
+                    </div>
+
+                    <div class="govuk-grid-column-one-half">
+                        <h1 class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</h1>
+                        <p class="govuk-body">
+                            0208 111 1111
+                            <br> dbell@hotmail.com
+                        </p>
+                    </div>
+
+                    <div class="govuk-grid-column-one-half">
+                        <details class="govuk-details">
+                            <summary class="govuk-details__summary">
+                                <span class="govuk-details__summary-text">DPA</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <dl class="value-list govuk-body-s">
+                                    <dt class="value-list__label">Date of birth</dt>
+                                    <dd class="value-list__value">01/01/2018</dd>
+
+                                    <dt class="value-list__label">Payment reference number</dt>
+                                    <dd class="value-list__value">T9986/02</dd>
+
+                                    <dt class="value-list__label">Date of last payment</dt>
+                                    <dd class="value-list__value">01/01/2018</dd>
+
+                                    <dt class="value-list__label">Amount last paid</dt>
+                                    <dd class="value-list__value">£60.00</dd>
+
+                                    <dt class="value-list__label">Month and year tenancy began</dt>
+                                    <dd class="value-list__value">01/2018</dd>
+
+                                    <dt class="value-list__label">Preferred payment method</dt>
+                                    <dd class="value-list__value">Card payment</dd>
+                                </dl>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Option to edit this contact information. -->
+                <a href="1.3-edit-contact-details.html" class="govuk-link-button govuk-!-margin-bottom-0">Edit contact information</a>
+
+                <!-- Select this information. -->
+                <button class="govuk-button govuk-!-margin-bottom-0">Next</button>
+            </div>
+
+            <div class="box-panel govuk-!-margin-bottom-1">
+                <div class="govuk-grid-row govuk-!-margin-bottom-3 govuk-!-margin-top-3">
+                    <div class="govuk-grid-column-full">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Ms K Bell</h2>
+                    </div>
+
+                    <div class="govuk-grid-column-one-half">
+                        <h1 class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</h1>
+                        <p class="govuk-body">
+                            0208 111 1111
+                            <br> dbell@hotmail.com
+                        </p>
+                    </div>
+
+                    <div class="govuk-grid-column-one-half">
+                        <details class="govuk-details">
+                            <summary class="govuk-details__summary">
+                                <span class="govuk-details__summary-text">DPA</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <dl class="value-list govuk-body-s">
+                                    <dt class="value-list__label">Date of birth</dt>
+                                    <dd class="value-list__value">01/01/2018</dd>
+
+                                    <dt class="value-list__label">Payment reference number</dt>
+                                    <dd class="value-list__value">T9986/02</dd>
+
+                                    <dt class="value-list__label">Date of last payment</dt>
+                                    <dd class="value-list__value">01/01/2018</dd>
+
+                                    <dt class="value-list__label">Amount last paid</dt>
+                                    <dd class="value-list__value">£60.00</dd>
+
+                                    <dt class="value-list__label">Month and year tenancy began</dt>
+                                    <dd class="value-list__value">01/2018</dd>
+
+                                    <dt class="value-list__label">Preferred payment method</dt>
+                                    <dd class="value-list__value">Card payment</dd>
+                                </dl>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Option to edit this contact information. -->
+                <a href="1.3-edit-contact-details.html" class="govuk-link-button govuk-!-margin-bottom-0">Edit contact information</a>
+
+                <!-- Select this information. -->
+                <button class="govuk-button govuk-!-margin-bottom-0">Next</button>
+            </div>
+
+        </details>
+    </div>
+
+</div>
