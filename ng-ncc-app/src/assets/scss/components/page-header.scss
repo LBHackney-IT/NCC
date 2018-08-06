@@ -5,9 +5,9 @@
     padding: 2rem;
     position: relative;
 
-    &:before,
-    &::after {
-        content: "";
+    &::after,
+    &:before {
+        content: '';
         display: block;
         height: 5px;
         left: 0;
@@ -19,14 +19,13 @@
         background: $hackney-green;
         bottom: 5px;
     }
+
     &::after {
         background: $hackney-light-green;
         bottom: -11px;
         height: 3px;
     }
-
 }
-
 @media (min-width: 520px) {
     .page__header__inner {
         display: flex;

@@ -17,27 +17,27 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { HackneyAPIInterceptor } from './API/hackney-api.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavigationComponent,
-    PageHomeComponent,
-    PageIdentifyComponent,
-    PageLogCallComponent,
-    PageCommsComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
+    declarations: [
+        AppComponent,
+        NavigationComponent,
+        PageHomeComponent,
+        PageIdentifyComponent,
+        PageLogCallComponent,
+        PageCommsComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
 
-    // Set up routing.
-    RouterModule.forRoot(
-      AppRoutes
-    )
+        // Set up routing.
+        RouterModule.forRoot(
+            AppRoutes
+        )
 
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 
 export class AppModule { }

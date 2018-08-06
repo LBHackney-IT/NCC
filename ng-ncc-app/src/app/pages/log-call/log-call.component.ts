@@ -4,9 +4,9 @@ import { HackneyAPIService } from '../../api/hackney-api.service';
 
 
 @Component({
-  selector: 'app-page-log-call',
-  templateUrl: './log-call.component.html',
-  styleUrls: ['./log-call.component.css']
+    selector: 'app-page-log-call',
+    templateUrl: './log-call.component.html',
+    styleUrls: ['./log-call.component.css']
 })
 
 export class PageLogCallComponent implements OnInit {
@@ -17,7 +17,7 @@ export class PageLogCallComponent implements OnInit {
 
     constructor(private HackneyAPI: HackneyAPIService) {
         this.selected = {
-            call_type:   null,
+            call_type: null,
             call_reason: null
         };
     }
@@ -45,10 +45,10 @@ export class PageLogCallComponent implements OnInit {
      * Returns a list of call reasons for the currently selected call type, ordered alphabetically.
      */
     getCallTypeReasons() {
-        if ( this.isCallTypeSelected() ) {
-            let reasons = this.call_reasons[ this.selected.call_type ];
-            reasons.sort(function(a, b){
-                let left  = a.label.toLowerCase();
+        if (this.isCallTypeSelected()) {
+            let reasons = this.call_reasons[this.selected.call_type];
+            reasons.sort(function(a, b) {
+                let left = a.label.toLowerCase();
                 let right = b.label.toLowerCase();
 
                 if (left < right) {

@@ -5,13 +5,9 @@ $navigation-padding: 1rem !default;
 $navigation-menu-item-link-colour: #005EA5 !default;
 $navigation-menu-item-active-bg-colour: #F8F8F8 !default;
 $navigation-menu-item-active-line-colour: #005EA5 !default;
-
 ////////////////////
-
 @import "~govuk-frontend/settings/media-queries";
-
 // The "navigation" sidebar is set to be hidden if the screen is narrower than a typical tablet device.
-
 :host {
     // This selector targets the host (i.e. <app-navigation/>).
     border-right: $navigation-border-width solid $navigation-border-colour;
@@ -28,11 +24,10 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
 .navigation__list {
     margin: 0 0 2rem;
     padding: 0;
-    list-style-type: none
+    list-style-type: none;
 }
 
 .navigation__item {
-
     // Regular item state.
     a,
     a:link,
@@ -44,17 +39,15 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
         border-left: 4px solid transparent;
         color: $navigation-menu-item-link-colour;
         background: inherit;
-        text-decoration: none
+        text-decoration: none;
     }
-
     // Item hover state.
     a:hover,
     label:hover {
-        border-left-color: #2b8cc4
+        border-left-color: #2b8cc4;
     }
-
     // Active item state.
-    &--active> {
+    &--active > {
         a,
         a:link,
         a:visited,
@@ -64,7 +57,6 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
             font-weight: bold;
         }
     }
-
     // -------------------------------------------------------------------------
     // TODO remove these selectors (using checkboxes to show and hide sections).
     input {
@@ -72,8 +64,9 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
 
         &:checked {
             ~ label:after {
-                content: "-";
+                content: '-';
             }
+
             ~ ul {
                 display: list-item;
             }
@@ -84,7 +77,7 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
         position: relative;
 
         &:after {
-            content: "+";
+            content: '+';
             font-weight: bold;
             position: absolute;
             right: 10px;

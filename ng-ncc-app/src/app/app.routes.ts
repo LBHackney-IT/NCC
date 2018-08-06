@@ -11,26 +11,26 @@ const AppRoutes: Routes = [
         path: 'home',
         component: PageHomeComponent
     },
-  {
-      // Log Call page.
-      path: 'log-call',
-      component: PageLogCallComponent
-  },
-  {
-      // Identify page.
-      path: 'identify',
-      component: PageIdentifyComponent
-  },
-  {
-      // Comms page.
-      path: 'comms',
-      component: PageCommsComponent
-  },
-  {
-      // Catch-all (which should go to the home page).
-      path: '**',
-      redirectTo: '/home'
-  }
+    {
+        // Log Call page.
+        path: 'log-call',
+        component: PageLogCallComponent
+    },
+    {
+        // Identify page.
+        path: 'identify',
+        component: PageIdentifyComponent
+    },
+    {
+        // Comms page.
+        path: 'comms',
+        component: PageCommsComponent
+    },
+    {
+        // Catch-all (which should go to the home page).
+        path: '**',
+        redirectTo: '/home'
+    }
 ];
 
 export default AppRoutes;
