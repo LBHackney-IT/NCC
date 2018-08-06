@@ -17,14 +17,13 @@ export class PageLogCallComponent implements OnInit {
 
     constructor(private HackneyAPI: HackneyAPIService) {
         this.selected = {
-            call_type: null,
+            call_type:   null,
             call_reason: null
         };
     }
 
     ngOnInit() {
         // Fetch a list of call types and reasons from the Hackney API.
-
 
         /*
         // Promise method...
@@ -37,38 +36,58 @@ export class PageLogCallComponent implements OnInit {
         this.HackneyAPI.getCallTypes_O().subscribe(types => {
             this.call_types = types;
         });
-
-        /*$q.all({
-            types:   HackneyAPI.getCallTypes(),
-            reasons: HackneyAPI.getCallReasons()
-        })
-        .then(function(responses) {
-            this.call_types   = responses.types;
-            this.call_reasons = responses.reasons;
-        });*/
+        this.HackneyAPI.getCallReasons_O().subscribe(types => {
+            this.call_reasons = types;
+        });
     }
 
-    // getReasonsForCallType() {
-    //     if ( isCallTypeSelected() ) {
-    //         reasons = this.call_reasons[ this.selected.call_type ];
-    //         //reasons = $filter('orderBy')(reasons, 'label'); // in alphabetical order.
-    //         return reasons;
-    //     }
-    //     return null;
-    // }
+    /**
+     * Returns a list of call reasons for the currently selected call type, ordered alphabetically.
+     */
+    getCallTypeReasons() {
+        if ( this.isCallTypeSelected() ) {
+            let reasons = this.call_reasons[ this.selected.call_type ];
+            reasons.sort(function(a, b){
+                let left  = a.label.toLowerCase();
+                let right = b.label.toLowerCase();
 
+                if (left < right) {
+                    return -1;
+                } else if (left > right) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            return reasons;
+        }
+    }
+
+    /**
+     * This is called when the call type is set/changed, and resets the selected call reason.
+     */
     resetCallReason() {
+        console.log('Call reason was reset.');
         this.selected.call_reason = null;
     }
 
+    /**
+     * Returns TRUE if we should be able to proceed.
+     */
     canProceed() {
         return this.isCallTypeSelected() && this.isCallReasonSelected();
     }
 
+    /**
+     * Returns TRUE if a call type has been selected.
+     */
     isCallTypeSelected() {
         return (null !== this.selected.call_type);
     }
 
+    /**
+     * Returns TRUE if a call reason has been selected.
+     */
     isCallReasonSelected() {
         return (null !== this.selected.call_reason);
     }

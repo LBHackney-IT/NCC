@@ -43,13 +43,13 @@ export class HackneyAPIService {
      *
      * This version of the method makes use of a [highly touted] Observable.
      */
-    getCallTypes_O() {
+    getCallTypes_O(): Observable {
         // Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
           .get('https://sandboxapi.hackney.gov.uk/CRMLookups?id=3')
           .pipe(
-              .map((response: Array<any>) => {
+              .map((response) => {
                   // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
                   // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
                   let types = response.result;
@@ -64,29 +64,36 @@ export class HackneyAPIService {
           );
     }
 
-  // getCallReasons(http: Http) {
-  //     return http
-  //         .get('https://sandboxapi.hackney.gov.uk/CRMEnquiryTypes')
-  //         .then(function(response) {
-  //             // Group the enquiry types by their group.
-  //             var groups = {};
-  //             var types = response.data.result;
-  //
-  //             // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
-  //             // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
-  //             Object.keys(types).map(function(key) {
-  //                 var call_type = parseInt(types[key].enquiryCallType);
-  //                 if ( groups[call_type] == undefined ) {
-  //                     groups[call_type] = [];
-  //                 }
-  //                 groups[call_type].push({
-  //                     id: types[key].enquiryTypeId,
-  //                     label: types[key].enquiryType
-  //                 });
-  //             });
-  //
-  //             return groups;
-  //         });
-  // }
+  /**
+   * Fetching a list of call reasons from the HackneyAPI microservice, and returning them as a formatted list.
+   *
+   * This method uses an Observable.
+   */
+  getCallReasons_O(): Observable {
+      //
+      // https://stackoverflow.com/a/50850777/4073160
+      return this.http
+        .get('https://sandboxapi.hackney.gov.uk/CRMEnquiryTypes')
+        .pipe(
+            .map((response) => {
+                let groups = {}; // groups of call reasons, indexed by call type.
+                let types  = response.result;
+
+                Object.keys(types)
+                    .map(function(key) {
+                        let call_type = parseInt(types[key].enquiryCallType);
+                        if ( undefined === groups[call_type] ) {
+                            groups[call_type] = [];
+                        }
+                        groups[call_type].push({
+                            id:    types[key].enquiryTypeId,
+                            label: types[key].enquiryType
+                        });
+                    });
+
+                return groups;
+            }
+        );
+  }
 
 }

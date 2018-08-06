@@ -34,7 +34,7 @@
         "indent_level": 0,
         "indent_size": 4,
         "indent_with_tabs": false,
-        "jslint_happy": false, // If true, then jslint-stricter mode is enforced
+        "jslint_happy": true,
         "keep_array_indentation": false,
         "keep_function_indentation": false,
         "max_preserve_newlines": 2,

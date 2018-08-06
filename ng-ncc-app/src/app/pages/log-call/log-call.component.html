@@ -6,20 +6,15 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half">
 
-                    <!-- Type of call. -->
+                    <!-- The type of call. -->
                     <div class="govuk-form-group">
                         <label class="govuk-fieldset__legend govuk-fieldset__legend--s" for="call_type">
                             Log call type
                         </label>
-                        <!-- <select class="govuk-select" id="call_type" name="call_type"
-                                ng-model="$ctrl.model.selected.call_type"
-                                ng-change="$ctrl.resetCallReason()"
-                                ng-options="type.id as type.label for type in $ctrl.model.call_types">
-                            <option value="" selected>- select a call type</option>
-                        </select> -->
-                        <div *ngFor="let item of call_types">
-                            {{ item.id }}: {{ item.label}}
-                        </div>
+                        <select class="govuk-select" id="call_type" name="call_type" [(ngModel)]="selected.call_type" (change)="resetCallReason()">
+                            <option [value]="null" selected>- select a call type</option>
+                            <option *ngFor="let item of call_types" [value]="item.id">{{ item.label }}</option>
+                        </select>
                     </div>
 
                 </div>
@@ -27,27 +22,26 @@
                 <div class="govuk-grid-column-one-half">
 
                     <!-- The reason for the call. -->
-                    <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" ng-show="$ctrl.isCallTypeSelected()">
+                    <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" *ngIf="isCallTypeSelected()">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                             <h2 class="govuk-fieldset__heading">
                                 Log reason for call
                             </h2>
                         </legend>
 
-                        <!-- <div class="govuk-radios" data-module="radios">
-                            <div class="govuk-radios__item" ng-repeat="reason in $ctrl.getReasonsForCallType()">
-                                <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
-                                        ng-model="$ctrl.model.selected.call_reason" ng-value="reason.id">
-                                <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}" ng-bind="reason.label"></label>
+                        <div class="govuk-radios" data-module="radios">
+                            <div class="govuk-radios__item" *ngFor="let reason of getCallTypeReasons()">
+                                <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio" [(ngModel)]="selected.call_reason" [value]="reason.id">
+                                <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                             </div>
-                        </div> -->
+                        </div>
                     </fieldset>
 
                 </div>
             </div>
 
             <!-- Next button. -->
-            <button class="govuk-button" ng-show="$ctrl.canProceed()">
+            <button class="govuk-button" *ngIf="canProceed()">
                 Next
             </button>
 
