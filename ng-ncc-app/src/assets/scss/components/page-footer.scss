@@ -1,0 +1,35 @@
+.page__footer {
+    background-color: #252525;
+    border-top: 5px solid #74C043;
+    color: #FFF;
+    margin-top: 0;
+    padding: 1.5rem 2rem 1rem;
+    position: relative;
+    text-align: center;
+
+    &:before,
+    &.after {
+        content: '';
+        display: block;
+        height: 3px;
+        left: 0;
+        position: absolute;
+        right: 0;
+    }
+
+    &:before {
+        background-color: $hackney-green;
+        top: 5px;
+    }
+
+    &:after {
+        background-color: $hackney-light-green;
+        height: 6px;
+        top: -16px;
+        z-index: 99;
+    }
+
+    a {
+        color: $white;
+    }
+}

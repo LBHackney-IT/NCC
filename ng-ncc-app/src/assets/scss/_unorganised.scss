@@ -1,68 +1,9 @@
-html,
-body {
-    height: 100%;
-}
-
-body {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    margin: 0;
-    padding: 0;
-}
 
 .page {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     height: 100%;
-}
-
-.page__header {
-    background: #252525;
-    border-bottom: 4px solid #17b15a;
-    color: #EEE;
-    padding: 2rem;
-    position: relative;
-}
-.page__header:before {
-    background: #17b15a;
-    bottom: 5px;
-    content: "";
-    display: block;
-    height: 5px;
-    left: 0;
-    position: absolute;
-    right: 0;
-}
-.page__header::after {
-    background: #9bcf7f;
-    bottom: -11px;
-    content: '';
-    display: block;
-    height: 3px;
-    left: 0;
-    position: absolute;
-    right: 0;
-}
-
-@media (min-width: 520px) {
-    .page__header__inner {
-        display: flex;
-        align-items: center;
-    }
-}
-
-.page__header__column--logo {
-    flex-basis: 300px;
-    /* see https://stackoverflow.com/.../what-are-the-differences-between-flex-basis-and-width */
-}
-
-.page__header__column--title {
-    flex-grow: 1;
-}
-
-.page__header__logo {
-    max-height: 40px;
 }
 
 .page__content {
@@ -119,38 +60,6 @@ body {
 }
 
 /* FOOTER */
-.page__footer {
-    background-color: #252525;
-    border-top: 5px solid #74C043;
-    color: #FFF;
-    margin-top: 0;
-    padding: 1.5rem 2rem 1rem;
-    position: relative;
-    text-align: center;
-}
-.page__footer:before {
-    background-color: #9BCF7F;
-    content: '';
-    display: block;
-    height: 3px;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 5px;
-}
-.page__footer:after {
-    background-color: #17B15A;
-    content: '';
-    height: 6px;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: -16px;
-    z-index: 99;
-}
-.page__footer a {
-    color: #FFF;
-}
 
 .text-red {
     color: #B10E1E; /* govuk-colour('red') */
