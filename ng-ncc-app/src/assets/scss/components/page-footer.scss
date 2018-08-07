@@ -16,7 +16,7 @@ $page-footer-padding: 1.5rem 2rem 1rem !default;
     position: relative;
     text-align: center;
 
-    &.after,
+    &:after,
     &:before {
         content: '';
         display: block;

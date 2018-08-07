@@ -13,7 +13,11 @@ $page-header-padding: 2rem !default;
     padding: $page-header-padding;
     position: relative;
 
-    &::after,
+    p {
+        color: inherit;
+    }
+
+    &:after,
     &:before {
         content: '';
         display: block;
@@ -23,12 +27,12 @@ $page-header-padding: 2rem !default;
         right: 0;
     }
 
-    .page__header:before {
+    &:before {
         background: $hackney-green;
         bottom: 5px;
     }
 
-    &::after {
+    &:after {
         background: $hackney-light-green;
         bottom: -11px;
         height: 3px;
