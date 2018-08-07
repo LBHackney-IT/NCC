@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 // replaces "import 'rxjs/add/operators/map'"
+import { Observable, of, from } from 'rxjs';
+// see https://stackoverflow.com/questions/42376972/best-way-to-import-observable-from-rxjs
+import { LogCallReason } from '../../classes/log-call-reason.class';
+import { LogCallType } from '../../classes/log-call-type.class';
+import { JSONResult } from '../../interfaces/json-result.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -14,49 +19,22 @@ export class HackneyAPIService {
     /**
      * Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
      *
-     * This version of the method makes use of a Promise, which is what we're used to doing in AngularJS.
-     */
-    getCallTypes_P(): Promise {
-        // https://codecraft.tv/courses/angular/http/http-with-promises/
-        return new Promise((resolve, reject) => {
-            this.http.get('https://sandboxapi.hackney.gov.uk/CRMLookups?id=3')
-                .toPromise()
-                .then(
-                    res => {
-                        // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
-                        // Though the above recommends using lodash/underscore for mapping with an obj`ect, we can still do it using native JS.
-                        let types = res.result;
-
-                        // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
-                        let indexed_types = Object.keys(types).map(function(value, index) {
-                            return { id: parseInt(index), label: types[index] };
-                        });
-
-                        resolve(indexed_types);
-                    }
-                );
-        });
-    }
-
-    /**
-     * Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
-     *
      * This version of the method makes use of a [highly touted] Observable.
      */
-    getCallTypes_O(): Observable {
+    getCallTypes(): Observable<LogCallType[]> {
         // Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
             .get('https://sandboxapi.hackney.gov.uk/CRMLookups?id=3')
             .pipe(
-              .map((response) => {
+                map((response: JSONResult) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
                     // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
                     let types = response.result;
 
                     // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
-                    let indexed_types = Object.keys(types).map(function(value, index) {
-                        return { id: parseInt(index), label: types[index] };
+                    let indexed_types: Array<LogCallType> = Object.keys(types).map(function(value, index) {
+                        return new LogCallType(index, types[index]);
                     });
 
                     return indexed_types;
@@ -69,31 +47,28 @@ export class HackneyAPIService {
      *
      * This method uses an Observable.
      */
-    getCallReasons_O(): Observable {
+    getCallReasons(): Observable<any> {
         //
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
             .get('https://sandboxapi.hackney.gov.uk/CRMEnquiryTypes')
             .pipe(
-            .map((response) => {
+                map((response: JSONResult) => {
                     let groups = {}; // groups of call reasons, indexed by call type.
                     let types = response.result;
 
                     Object.keys(types)
                         .map(function(key) {
                             let call_type = parseInt(types[key].enquiryCallType);
+                            let reason: LogCallReason = new LogCallReason(types[key].enquiryTypeId, types[key].enquiryType);
                             if (undefined === groups[call_type]) {
                                 groups[call_type] = [];
                             }
-                            groups[call_type].push({
-                                id: types[key].enquiryTypeId,
-                                label: types[key].enquiryType
-                            });
+                            groups[call_type].push(reason);
                         });
-
                     return groups;
-                }
-                );
+                })
+            );
     }
 
 }

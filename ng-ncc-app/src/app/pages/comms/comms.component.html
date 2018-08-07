@@ -7,6 +7,9 @@
             The form can be downloaded by visiting <a href="">https://hackney.gov.uk</a>
         </p>
 
+        <h2 class="govuk-heading-m">Available templates...</h2>
+        <div>{{ templates }}</div>
+
         <form class="" action="index.html" method="post">
 
             <!-- Select the form to send. -->
@@ -53,7 +56,7 @@
 
                         <!-- By email. -->
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="method-email" name="method" type="radio" value="email" data-aria-controls="method-by-email">
+                            <input class="govuk-radios__input" id="method-email" name="method" type="radio" [(ngModel)]="selection.method" [value]="METHOD_EMAIL" data-aria-controls="method-by-email">
                             <label class="govuk-label govuk-radios__label" for="method-email">
                                 Email
                             </label>
@@ -69,7 +72,7 @@
 
                         <!-- By SMS. -->
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="method-sms" name="method" type="radio" value="text" data-aria-controls="method-by-sms">
+                            <input class="govuk-radios__input" id="method-sms" name="method" type="radio" [(ngModel)]="selection.method" [value]="METHOD_SMS" data-aria-controls="method-by-sms">
                             <label class="govuk-label govuk-radios__label" for="method-sms">
                                 SMS
                             </label>
@@ -85,7 +88,7 @@
 
                         <!-- By post. -->
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="method-post" name="method" type="radio" value="text" data-aria-controls="method-by-post">
+                            <input class="govuk-radios__input" id="method-post" name="method" type="radio" [(ngModel)]="selection.method" [value]="METHOD_POST" data-aria-controls="method-by-post">
                             <label class="govuk-label govuk-radios__label" for="method-post">
                                 Post
                             </label>

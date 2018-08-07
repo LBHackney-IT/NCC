@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HackneyAPIService } from '../../api/hackney-api.service';
-
+import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
+import { LogCallReason } from '../../interfaces/log-call-reason.interface';
+import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
+import { LogCallType } from '../../interfaces/log-call-type.interface';
 
 @Component({
     selector: 'app-page-log-call',
@@ -11,9 +13,9 @@ import { HackneyAPIService } from '../../api/hackney-api.service';
 
 export class PageLogCallComponent implements OnInit {
 
-    call_types: Array<Object>;
-    call_reasons: Array<Object>;
-    selected: Object;
+    call_types: Array<LogCallType>;
+    call_reasons: Array<any>;
+    selected: LogCallSelection;
 
     constructor(private HackneyAPI: HackneyAPIService) {
         this.selected = {
@@ -25,29 +27,22 @@ export class PageLogCallComponent implements OnInit {
     ngOnInit() {
         // Fetch a list of call types and reasons from the Hackney API.
 
-        /*
-        // Promise method...
-        this.HackneyAPI.getCallTypes_P().then((types) => {
-            this.call_types = types;
-        });
-        */
-
         // Observable method...
-        this.HackneyAPI.getCallTypes_O().subscribe(types => {
+        this.HackneyAPI.getCallTypes().subscribe(types => {
             this.call_types = types;
         });
-        this.HackneyAPI.getCallReasons_O().subscribe(types => {
+        this.HackneyAPI.getCallReasons().subscribe(types => {
             this.call_reasons = types;
         });
     }
 
     /**
-     * Returns a list of call reasons for the currently selected call type, ordered alphabetically.
+     * Returns a list of call reasons for the currently selected call type, ordered alphabetically (ascending).
      */
     getCallTypeReasons() {
         if (this.isCallTypeSelected()) {
-            let reasons = this.call_reasons[this.selected.call_type];
-            reasons.sort(function(a, b) {
+            let reasons: Array<LogCallReason> = this.call_reasons[this.selected.call_type];
+            reasons.sort(function(a: LogCallReason, b: LogCallReason) {
                 let left = a.label.toLowerCase();
                 let right = b.label.toLowerCase();
 
