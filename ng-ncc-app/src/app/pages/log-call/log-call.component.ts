@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
-import { LogCallReason } from '../../interfaces/log-call-reason.interface';
 import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
-import { LogCallType } from '../../interfaces/log-call-type.interface';
+import { LogCallReason } from '../../classes/log-call-reason.class';
+import { LogCallType } from '../../classes/log-call-type.class';
 
 @Component({
     selector: 'app-page-log-call',
