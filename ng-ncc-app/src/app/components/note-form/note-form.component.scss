@@ -26,14 +26,14 @@ $note-form-toggle-padding: 1rem;
     text-align: right;
 }
 
-.note-form__toggle {
+.note-form__container__toggle {
     background: $note-form-toggle-bg-colour;
     color: $note-form-toggle-text-colour;
     display: inline-block;
     padding: $note-form-toggle-padding;
 }
 
-.note-form__form {
+.note-form__container__form {
     background: $note-form-bg-colour;
     border: $note-form-border;
     color: $note-form-text-colour;
