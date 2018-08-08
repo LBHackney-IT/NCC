@@ -1,0 +1,35 @@
+<!-- TODO conditionally display this component based on where we are (and what data is available). -->
+<div class="note-form__container" [ngStyle]="containerStyle">
+
+    <!-- Toggle button for displaying the form. -->
+    <button class="note-form__toggle" type="button" name="button" (click)="toggle()">
+        Add a note
+    </button>
+
+    <div *ngIf="visible">
+        <form class="note-form__form" (ngSubmit)="saveComment()">
+            <div class="govuk-form-group">
+
+                <!-- Caller details. -->
+                <dl class="value-list value-list--horizontal">
+                    <dt class="value-list__label">Caller</dt>
+                    <dd class="value-list__value">George "Kingfish" Stevens</dd>
+                </dl>
+
+                <!-- Comment field. -->
+                <label class="govuk-label" for="more-detail">Comments</label>
+                <textarea class="govuk-textarea note-form__field" id="more-detail" required name="comment" [(ngModel)]="comment" rows="4" aria-describedby="more-detail-hint"></textarea>
+
+            </div>
+            <div class="govuk-form-group">
+                <a href="">View old notes</a>
+            </div>
+            <div class="govuk-form-group">
+                <a href="">Attach a file</a>
+            </div>
+            <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
+                Save
+            </button>
+        </form>
+    </div>
+</div>
