@@ -40,7 +40,7 @@ export class NoteFormComponent implements OnInit {
      * Using only CSS, the component would appear over the vertical scrollbar (if there is one) if its position is fixed.
      * We have to listen to the scroll event on the main content container, so we can position the component accordingly.
      */
-    _reposition(scroll_position) {
+    _reposition(scroll_position: number) {
         this.containerStyle = {
             'top.px': scroll_position + this.TOP_MARGIN
             // a nice shortcut for setting a pixel value.
@@ -51,6 +51,7 @@ export class NoteFormComponent implements OnInit {
      * This is called when the form is submitted.
      */
     saveComment() {
+        console.log('Added a comment.');
         this._resetComment();
     }
 

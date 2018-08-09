@@ -7,7 +7,7 @@
     </button>
 
     <div *ngIf="visible">
-        <form class="note-form__container__form" (ngSubmit)="saveComment()">
+        <form class="note-form__container__form" #commentForm="ngForm" (ngSubmit)="saveComment()">
             <div class="govuk-form-group">
 
                 <!-- Caller details. -->
