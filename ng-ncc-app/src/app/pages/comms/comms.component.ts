@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { initAll } from 'govuk-frontend'
 import { NotifyService } from '../../API/Notify/notify.service';
 import { CommsSelection } from '../../classes/comms-selection.class';
+import { ContactDetails } from '../../classes/contact-details.class';
 
 @Component({
     selector: 'app-page-comms',
@@ -17,6 +18,8 @@ export class PageCommsComponent implements OnInit {
     templates: Array<any>;
 
     selection: CommsSelection;
+    existing: ContactDetails;
+    create: ContactDetails;
 
     constructor(private Notify: NotifyService) { }
 
@@ -25,6 +28,8 @@ export class PageCommsComponent implements OnInit {
         initAll();
 
         this.selection = new CommsSelection;
+        this.existing = new ContactDetails;
+        this.create = new ContactDetails;
     }
 
     /**
@@ -39,6 +44,10 @@ export class PageCommsComponent implements OnInit {
      */
     shouldShowSendButton(): boolean {
         return this.selection.isComplete();
+    }
+
+    prepareNewDetail(key: string) {
+        this.existing[key] = null;
     }
 
 }
