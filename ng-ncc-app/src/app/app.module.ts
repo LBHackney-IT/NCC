@@ -13,6 +13,8 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
+import { NoteFormComponent } from './components/note-form/note-form.component';
+import { ContentAreaComponent } from './components/content-area/content-area.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +23,9 @@ import { PageCommsComponent } from './pages/comms/comms.component';
         PageHomeComponent,
         PageIdentifyComponent,
         PageLogCallComponent,
-        PageCommsComponent
+        PageCommsComponent,
+        NoteFormComponent,
+        ContentAreaComponent
     ],
     imports: [
         BrowserModule,
