@@ -1,5 +1,6 @@
 $hackney-green: #17B15A;
 $hackney-light-green: #9BCF7F;
+$dark-grey: #252525;
 $white: #FFF;
 
 // GOV.UK customisation.
@@ -7,3 +8,10 @@ $govuk-global-styles: true;
 $govuk-font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $govuk-font-family-tabular: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $govuk-brand-colour: $hackney-green;
+
+$page-header-bg-colour: $dark-grey;
+$page-header-text-colour: $white;
+$page-header-border-colour: $hackney-green;
+
+$page-footer-border-colour: $hackney-light-green;
+$page-footer-link-colour: $white;

@@ -1,11 +1,23 @@
+$page-header-bg-colour: #252525 !default;
+$page-header-text-colour: #EEE !default;
+$page-header-border-width: 4px !default;
+$page-header-border-colour: #999 !default;
+$page-header-padding: 2rem !default;
+
+////////////////////
+
 .page__header {
-    background: #252525;
-    border-bottom: 4px solid #17b15a;
-    color: #EEE;
-    padding: 2rem;
+    background: $page-header-bg-colour;
+    border-bottom: $page-header-border-width solid $page-header-border-colour;
+    color: $page-header-text-colour;
+    padding: $page-header-padding;
     position: relative;
 
-    &::after,
+    p {
+        color: inherit;
+    }
+
+    &:after,
     &:before {
         content: '';
         display: block;
@@ -15,12 +27,12 @@
         right: 0;
     }
 
-    .page__header:before {
+    &:before {
         background: $hackney-green;
         bottom: 5px;
     }
 
-    &::after {
+    &:after {
         background: $hackney-light-green;
         bottom: -11px;
         height: 3px;

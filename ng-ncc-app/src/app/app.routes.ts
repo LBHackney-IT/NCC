@@ -5,7 +5,7 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 
-const AppRoutes: Routes = [
+export const AppRoutes: Routes = [
     {
         // Home page.
         path: 'home',
@@ -32,5 +32,3 @@ const AppRoutes: Routes = [
         redirectTo: '/home'
     }
 ];
-
-export default AppRoutes;
