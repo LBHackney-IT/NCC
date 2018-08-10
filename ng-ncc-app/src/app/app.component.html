@@ -2,12 +2,10 @@
 <app-navigation></app-navigation>
 
 <!-- MAIN CONTENT AREA. -->
-<main id="main-content" class="page__content">
-
-    <!-- TODO conditionally show or hide the Back link, based on the page. -->
-    <a href="#" class="govuk-back-link">Back</a>
-
+<app-content-area>
     <div class="govuk-main-wrapper">
         <router-outlet></router-outlet>
     </div>
-</main>
+
+    <app-note-form></app-note-form>
+</app-content-area>
