@@ -3,6 +3,7 @@ import { initAll } from 'govuk-frontend'
 import { NotifyService } from '../../API/Notify/notify.service';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { ContactDetails } from '../../classes/contact-details.class';
+import { CONTACT } from '../../constants/contact.constant';
 
 @Component({
     selector: 'app-page-comms',
@@ -11,15 +12,9 @@ import { ContactDetails } from '../../classes/contact-details.class';
 })
 export class PageCommsComponent implements OnInit {
 
-    METHOD_SMS: string = 'sms';
-    METHOD_EMAIL: string = 'email';
-    METHOD_POST: string = 'letter';
-
+    CONTACT_METHOD: object;
     templates: Array<any>;
-
     selection: CommsSelection;
-    existing: ContactDetails;
-    create: ContactDetails;
 
     constructor(private Notify: NotifyService) { }
 
@@ -28,8 +23,7 @@ export class PageCommsComponent implements OnInit {
         initAll();
 
         this.selection = new CommsSelection;
-        this.existing = new ContactDetails;
-        this.create = new ContactDetails;
+        this.CONTACT_METHOD = CONTACT;
     }
 
     /**
@@ -47,7 +41,7 @@ export class PageCommsComponent implements OnInit {
     }
 
     prepareNewDetail(key: string) {
-        this.existing[key] = null;
+        this.selection.existing[key] = null;
     }
 
 }
