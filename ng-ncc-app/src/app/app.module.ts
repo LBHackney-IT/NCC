@@ -12,6 +12,8 @@ import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { NoteFormComponent } from './components/note-form/note-form.component';
+import { ContentAreaComponent } from './components/content-area/content-area.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { AppRoutingModule } from './/app-routing.module';
         PageHomeComponent,
         PageIdentifyComponent,
         PageLogCallComponent,
-        PageCommsComponent
+        PageCommsComponent,
+        NoteFormComponent,
+        ContentAreaComponent
     ],
     imports: [
         BrowserModule,
@@ -29,7 +33,6 @@ import { AppRoutingModule } from './/app-routing.module';
 
         // Set up routing.
         AppRoutingModule
-
     ],
     providers: [],
     bootstrap: [AppComponent]

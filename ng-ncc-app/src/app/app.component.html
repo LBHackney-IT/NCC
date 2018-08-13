@@ -2,8 +2,10 @@
 <app-navigation></app-navigation>
 
 <!-- MAIN CONTENT AREA. -->
-<main id="main-content" class="page__content">
+<app-content-area>
     <div class="govuk-main-wrapper">
         <router-outlet></router-outlet>
     </div>
-</main>
+
+    <app-note-form></app-note-form>
+</app-content-area>
