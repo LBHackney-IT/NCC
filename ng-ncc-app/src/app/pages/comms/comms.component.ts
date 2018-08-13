@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { initAll } from 'govuk-frontend'
-import { NotifyService } from '../../API/Notify/notify.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
+import { NotifyTemplate } from '../../classes/notify-template.class';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { ContactDetails } from '../../classes/contact-details.class';
 import { CONTACT } from '../../constants/contact.constant';
@@ -16,7 +20,7 @@ export class PageCommsComponent implements OnInit {
     templates: Array<any>;
     selection: CommsSelection;
 
-    constructor(private Notify: NotifyService) { }
+    constructor(private Notify: NotifyAPIService, private route: ActivatedRoute) { }
 
     ngOnInit() {
         // Initialise the GOV.UK Frontend components on this page.
@@ -24,6 +28,11 @@ export class PageCommsComponent implements OnInit {
 
         this.selection = new CommsSelection;
         this.CONTACT_METHOD = CONTACT;
+
+        this.route.data
+            .subscribe((data) => {
+                console.log('templates?', data);
+            });
     }
 
     /**

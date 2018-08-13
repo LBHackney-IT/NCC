@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 import { AppRoutes } from './app.routes';
+import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
@@ -38,7 +39,9 @@ import { ContentAreaComponent } from './components/content-area/content-area.com
         )
 
     ],
-    providers: [],
+    providers: [
+        NotifyTemplatesResolver
+    ],
     bootstrap: [AppComponent]
 })
 
