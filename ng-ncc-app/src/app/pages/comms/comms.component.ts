@@ -69,8 +69,5 @@ export class PageCommsComponent implements OnInit {
         return this.selection.isComplete();
     }
 
-    prepareNewDetail(key: string) {
-        this.selection.existing[key] = null;
-    }
 
 }

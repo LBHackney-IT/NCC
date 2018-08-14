@@ -22,7 +22,6 @@
 
             <!-- Select the communications method. -->
             <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
-
             <app-comms-method-select [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)" [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)" [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"></app-comms-method-select>
 
             <!-- Previewing the message to be sent. -->

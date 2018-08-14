@@ -1,41 +1,31 @@
-<div class="">
-    <button type="button" class="govuk-button" [disabled]="disableEmail">Email</button>
-    <button type="button" class="govuk-button" [disabled]="disableSMS">SMS</button>
-    <button type="button" class="govuk-button" [disabled]="disablePost">Post</button>
-</div>
-
-<!-- <div class="govuk-form-group">
+<div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 class="govuk-label govuk-!-font-weight-bold">Select communications method</h2>
         </legend>
-        <div class="govuk-radios" data-module="radios"> -->
+        <div class="govuk-radios" data-module="radios">
 
-<!-- By email. -->
-<!-- <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="method-email" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="!disableEmail" [value]="methods.METHOD_EMAIL" data-aria-controls="method-by-email">
+            <!-- By email. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-email" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="disableEmail" [value]="methods.METHOD_EMAIL" data-aria-controls="method-by-email">
                 <label class="govuk-label govuk-radios__label" for="method-email">
-                    Email ({{ disableEmail }})
+                    Email
                 </label>
             </div>
-            <div class="govuk-radios__conditional" id="method-by-email"> -->
+            <div class="govuk-radios__conditional" id="method-by-email">
 
-<!-- Which email address? -->
-<!-- <div class="govuk-form-group">
-                    <div class="govuk-radios__item">
+                <!-- Which email address? -->
+                <div class="govuk-form-group">
+
+                    <!-- Existing email addresses (from the caller). -->
+                    <!-- <div class="govuk-radios__item">
                         <input class="govuk-radios__input" id="method-email-1" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="'dbell@hotmail.co.uk'">
                         <label class="govuk-label govuk-radios__label" for="method-email-1">
                             dbell@hotmail.co.uk
                         </label>
-                    </div>
+                    </div> -->
 
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="method-email-2" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="'dbell@gmail.com'">
-                        <label class="govuk-label govuk-radios__label" for="method-email-2">
-                            dbell@gmail.com
-                        </label>
-                    </div>
-
+                    <!-- Enter a new email address. -->
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" id="method-email-new" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="null">
                         <label class="govuk-label govuk-radios__label" for="method-email-new">
@@ -43,31 +33,27 @@
                         </label>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
-<!-- By SMS. -->
-<!-- <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="method-sms" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="!isMethodAvailable(methods.METHOD_SMS)" [value]="methods.METHOD_SMS" data-aria-controls="method-by-sms">
+            <!-- By SMS. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-sms" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="disableSMS" [value]="methods.METHOD_SMS" data-aria-controls="method-by-sms">
                 <label class="govuk-label govuk-radios__label" for="method-sms">
-                    SMS ({{ isMethodAvailable(methods.METHOD_SMS) }})
+                    SMS
                 </label>
             </div>
             <div class="govuk-radios__conditional" id="method-by-sms">
                 <div class="govuk-form-group">
+                    <!--
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" id="method-mobile-1" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="'07111 111111'">
                         <label class="govuk-label govuk-radios__label" for="method-mobile-1">
                             07111 111111
                         </label>
                     </div>
+                -->
 
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="method-mobile-2" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="'07222 222222'">
-                        <label class="govuk-label govuk-radios__label" for="method-mobile-2">
-                            07222 222222
-                        </label>
-                    </div>
-
+                    <!-- Enter a new [mobile] phone number. -->
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" id="method-mobile-new" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="null">
                         <label class="govuk-label govuk-radios__label" for="method-mobile-new">
@@ -75,17 +61,16 @@
                         </label>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
-<!-- By post. -->
-<!-- <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="method-post" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="!isMethodAvailable(methods.METHOD_POST)" [value]="methods.METHOD_POST" data-aria-controls="method-by-post">
+            <!-- By post. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-post" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="disablePost" [value]="methods.METHOD_POST" data-aria-controls="method-by-post">
                 <label class="govuk-label govuk-radios__label" for="method-post">
-                    Post ({{ isMethodAvailable(methods.METHOD_POST) }})
+                    Post
                 </label>
             </div>
             <div class="govuk-radios__conditional" id="method-by-post">
-
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="address-line-1">
                         First line of address
@@ -125,13 +110,7 @@
                     <p class="govuk-body-s">Post will automatically be sent by GOV.UK Notify.</p>
                 </div>
 
-            </div> -->
-
-<!-- </div>
+            </div>
+        </div>
     </fieldset>
-
-    <p class="govuk-body" *ngIf="selection.method && selection.hasDetail()">
-        <b>Method:</b> {{ selection.method }} &ndash; {{ selection.getDetail() }}
-    </p>
-
-</div> -->
+</div>
