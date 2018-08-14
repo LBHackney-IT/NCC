@@ -71,4 +71,18 @@ export class HackneyAPIService {
             );
     }
 
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string): Observable<any> {
+        const query: string = `firstname=${first_name}&surname=${last_name}&addressline12=${address}&postcode=${postcode}&IsAdvanceSearch=false`;
+        // very important to set IsAdvanceSearch to false.
+
+        return this.http
+            .get('https://sandboxapi.hackney.gov.uk/v1/CitizenIndexSearch?' + query)
+            .pipe(
+                map((response: any) => {
+                    // TODO perhaps filter out any unwanted/unnecessary information.
+                    return response.results;
+                })
+            );
+    }
+
 }
