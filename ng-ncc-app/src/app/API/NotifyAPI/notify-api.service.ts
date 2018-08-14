@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 import { Observable, of, from } from 'rxjs';
 
 import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
-import { NotifyTemplate } from '../../classes/notify-template.class';
 
 @Injectable({
     providedIn: 'root'
@@ -33,10 +32,8 @@ export class NotifyAPIService {
             .pipe(
                 map((response: NotifyAPIJSONResult) => {
                     // Prepare the data returned from the microservice as a list of templates.
-                    console.log(response.response);
-                    const templates: Array<NotifyTemplate> = Object.keys(response.response.templates).map(function(value, index) {
-                        let template = response.response.templates[index];
-                        return new NotifyTemplate(template.id, template.type, template.name, template.subject, template.body, template.version);
+                    const templates: Array<object> = Object.keys(response.response.templates).map(function(value, index) {
+                        return response.response.templates[index];
                     });
 
                     return templates;

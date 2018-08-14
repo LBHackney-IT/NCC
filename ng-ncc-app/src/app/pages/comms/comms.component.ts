@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
-import { NotifyTemplate } from '../../classes/notify-template.class';
 import { CommsSelection } from '../../classes/comms-selection.class';
+import { CommsOption } from '../../classes/comms-option.class';
 import { ContactDetails } from '../../classes/contact-details.class';
 import { CONTACT } from '../../constants/contact.constant';
 
@@ -17,7 +17,7 @@ import { CONTACT } from '../../constants/contact.constant';
 export class PageCommsComponent implements OnInit {
 
     CONTACT_METHOD: object;
-    templates: Array<any>;
+    comms_options: CommsOption[];
     selection: CommsSelection;
 
     constructor(private Notify: NotifyAPIService, private route: ActivatedRoute) { }
@@ -31,7 +31,7 @@ export class PageCommsComponent implements OnInit {
 
         this.route.data
             .subscribe((data) => {
-                console.log('templates?', data);
+                this.comms_options = data.templates;
             });
     }
 

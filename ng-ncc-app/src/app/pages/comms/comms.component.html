@@ -16,9 +16,7 @@
                 </label>
                 <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selection.form">
                     <option [ngValue]="null">- select a form</option>
-                    <option [value]="refund">Refund form</option>
-                    <option [value]="statement">Statement form</option>
-                    <option [value]="direct-debit">Direct debit form</option>
+                    <option *ngFor="let option of comms_options" [ngValue]="index">{{ option.name }}</option>
                 </select>
             </div>
 
