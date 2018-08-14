@@ -14,7 +14,7 @@
                 <label class="govuk-label govuk-!-font-weight-bold" for="form">
                     Select form to send:
                 </label>
-                <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selected_option">
+                <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selected_option" (change)="updatePreview()">
                     <option [ngValue]="null">- select a form</option>
                     <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.name }}</option>
                 </select>
@@ -35,9 +35,7 @@
                 <!-- Message preview. -->
                 <div class="govuk-grid-column-one-half">
                     <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
-                    <div class="panel govuk-form-group">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                    </div>
+                    <app-notify-template-preview [settings]="preview"></app-notify-template-preview>
                 </div>
 
             </div>

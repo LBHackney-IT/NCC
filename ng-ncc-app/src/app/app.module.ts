@@ -17,6 +17,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { NoteFormComponent } from './components/note-form/note-form.component';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
+import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { CommsMethodSelectComponent } from './components/comms-method-select/com
         PageCommsComponent,
         NoteFormComponent,
         ContentAreaComponent,
-        CommsMethodSelectComponent
+        CommsMethodSelectComponent,
+        NotifyTemplatePreviewComponent
     ],
     imports: [
         BrowserModule,

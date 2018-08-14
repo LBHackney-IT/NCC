@@ -42,8 +42,17 @@ export class NotifyAPIService {
     /**
      * Returns a preview of a specified GOV.UK Notify template.
      */
-    getTemplatePreview() {
+    getTemplatePreview(template_id: string, version: number = 1) {
+        return this.http
+            .get(this._url + '/GetTemplateByIdAndVersion?TemplateId=' + template_id + '&Version=' + version)
+            .pipe(
+                map((data: NotifyAPIJSONResult) => {
+                    const template_body: string = data.response.body;
+                    // TODO pass additional parameters to this method and replace placeholders with data.
 
+                    return template_body;
+                })
+            );
     }
 
     /**

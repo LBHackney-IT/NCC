@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { ContactDetails } from '../../classes/contact-details.class';
+import { CommsTemplate } from '../../classes/comms-template.class';
+import { TemplatePreviewSettings } from '../../classes/template-preview-settings.class';
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
 
@@ -19,7 +21,8 @@ export class PageCommsComponent implements OnInit {
     CONTACT_METHOD: object;
     comms_options: CommsOption[];
     selected_option: CommsOption;
-    selected_details: object;
+    selected_details: CommsMethodDetails;
+    preview: TemplatePreviewSettings;
 
     constructor(private Notify: NotifyAPIService, private route: ActivatedRoute) { }
 
@@ -63,17 +66,25 @@ export class PageCommsComponent implements OnInit {
      * Called when valid communication method and respective details are entered.
      */
     onSelectCommsMethod(details: CommsMethodDetails) {
-        console.log('comms method: ', details.method, details.details);
         this.selected_details = details;
+        this.updatePreview();
     }
 
     /**
      * Called when an invalid communication method and respective details are entered.
      */
     onInvalidCommsMethod() {
-        console.log('comms method invalidated.');
         this.selected_details = null;
     }
 
+    updatePreview() {
+        if (this.shouldShowPreview()) {
+            let selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
+            if (this.preview && this.preview.template_id !== selected.id) {
+                return;
+            }
+            this.preview = new TemplatePreviewSettings(selected.id, selected.version);
+        }
+    }
 
 }
