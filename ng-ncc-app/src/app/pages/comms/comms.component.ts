@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
-import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsOption } from '../../classes/comms-option.class';
 import { ContactDetails } from '../../classes/contact-details.class';
 import { CONTACT } from '../../constants/contact.constant';
+import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
 
 @Component({
     selector: 'app-page-comms',
@@ -18,7 +18,8 @@ export class PageCommsComponent implements OnInit {
 
     CONTACT_METHOD: object;
     comms_options: CommsOption[];
-    selection: CommsSelection;
+    selected_option: CommsOption;
+    selected_details: object;
 
     constructor(private Notify: NotifyAPIService, private route: ActivatedRoute) { }
 
@@ -26,8 +27,9 @@ export class PageCommsComponent implements OnInit {
         // Initialise the GOV.UK Frontend components on this page.
         initAll();
 
-        this.selection = new CommsSelection;
         this.CONTACT_METHOD = CONTACT;
+
+        this.selected_option = null;
 
         this.route.data
             .subscribe((data) => {
@@ -35,21 +37,9 @@ export class PageCommsComponent implements OnInit {
             });
     }
 
-    resetMethod() {
-        if (!(this.selection.method && this.isMethodAvailable(this.selection.method))) {
-            console.log('reset method.');
-            this.selection.method = null;
-            if (this.selection.form) {
-                console.log(CONTACT.METHOD_EMAIL, this.selection.form.hasTemplate(CONTACT.METHOD_EMAIL));
-                console.log(CONTACT.METHOD_POST, this.selection.form.hasTemplate(CONTACT.METHOD_POST));
-                console.log(CONTACT.METHOD_SMS, this.selection.form.hasTemplate(CONTACT.METHOD_SMS));
-            }
-        }
-    }
-
     isMethodAvailable(type: string): boolean {
-        if (this.selection.form) {
-            return !!(this.selection.form.hasTemplate(type));
+        if (this.selected_option) {
+            return !!(this.selected_option.hasTemplate(type));
         }
 
         return false;
@@ -59,14 +49,30 @@ export class PageCommsComponent implements OnInit {
      * Returns TRUE if the messgae preview should be shown.
      */
     shouldShowPreview(): boolean {
-        return this.selection.isComplete();
+        return null !== this.selected_details;
     }
 
     /**
      * Returns TRUE if the Send button should be made available.
      */
     shouldShowSendButton(): boolean {
-        return this.selection.isComplete();
+        return null !== this.selected_details;
+    }
+
+    /**
+     * Called when valid communication method and respective details are entered.
+     */
+    onSelectCommsMethod(details: CommsMethodDetails) {
+        console.log('comms method: ', details.method, details.details);
+        this.selected_details = details;
+    }
+
+    /**
+     * Called when an invalid communication method and respective details are entered.
+     */
+    onInvalidCommsMethod() {
+        console.log('comms method invalidated.');
+        this.selected_details = null;
     }
 
 
