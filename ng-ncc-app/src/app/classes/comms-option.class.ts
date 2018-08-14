@@ -17,7 +17,7 @@ export class CommsOption {
         if (this.templates.hasOwnProperty(type)) {
             this.templates[type] = template;
         } else {
-            throw 'Invalid template type: ' + type;
+            throw new Error('Invalid template type: ' + type);
         }
     }
 

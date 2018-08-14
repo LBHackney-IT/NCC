@@ -5,4 +5,4 @@ export interface NotifyAPITemplate {
     body: string;
     type: string;
     version: number;
-};
+}

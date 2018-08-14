@@ -50,7 +50,7 @@ export const AppRoutes: Routes = [
         RouterModule
     ],
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(AppRoutes)
     ]
 })
 export class AppRoutingModule { }
