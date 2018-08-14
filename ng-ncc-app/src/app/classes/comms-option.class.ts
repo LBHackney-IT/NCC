@@ -21,8 +21,8 @@ export class CommsOption {
         }
     }
 
-    hasTemplate(type: string) {
-        return (this.templates.hasOwnProperty(type) && null !== this.templates[type]);
+    hasTemplate(type: string): boolean {
+        return (this.templates.hasOwnProperty(type) && (null !== this.templates[type]));
     }
 
 }

@@ -30,11 +30,9 @@ export class NotifyAPIService {
         return this.http
             .get(this._url + '/GetAllTemplates?TemplateType=' + ofType)
             .pipe(
-                map((response: NotifyAPIJSONResult) => {
+                map((data: NotifyAPIJSONResult) => {
                     // Prepare the data returned from the microservice as a list of templates.
-                    const templates: Array<object> = Object.keys(response.response.templates).map(function(value, index) {
-                        return response.response.templates[index];
-                    });
+                    const templates: Array<object> = Array.from(data.response.templates);
 
                     return templates;
                 })

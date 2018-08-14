@@ -1,15 +1,16 @@
 import { ContactDetails } from './contact-details.class';
+import { CommsOption } from './comms-option.class';
 import { CONTACT } from '../constants/contact.constant';
 
 export class CommsSelection {
-    form: string;
+    form: CommsOption;
     method: string;
     existing: ContactDetails;
     create: ContactDetails;
 
-    constructor(form: string = null, method: string = null) {
-        this.form = form;
-        this.method = method;
+    constructor() {
+        this.form = null;
+        this.method = null;
         this.existing = new ContactDetails;
         this.create = new ContactDetails;
     }

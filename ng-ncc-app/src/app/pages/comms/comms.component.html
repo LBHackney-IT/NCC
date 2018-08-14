@@ -14,14 +14,21 @@
                 <label class="govuk-label govuk-!-font-weight-bold" for="form">
                     Select form to send:
                 </label>
-                <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selection.form">
+                <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selection.form" (ngModelChange)="resetMethod()">
                     <option [ngValue]="null">- select a form</option>
-                    <option *ngFor="let option of comms_options" [ngValue]="index">{{ option.name }}</option>
+                    <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.name }}</option>
                 </select>
             </div>
 
             <!-- Select the communications method. -->
             <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
+
+            <div class="">
+                <button type="button" class="govuk-button" [disabled]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)">Email</button>
+                <button type="button" class="govuk-button" [disabled]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)">SMS</button>
+                <button type="button" class="govuk-button" [disabled]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)">Post</button>
+            </div>
+
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -31,9 +38,9 @@
 
                         <!-- By email. -->
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="method-email" name="method" type="radio" [(ngModel)]="selection.method" [value]="CONTACT_METHOD.METHOD_EMAIL" data-aria-controls="method-by-email">
+                            <input class="govuk-radios__input" id="method-email" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)" [value]="CONTACT_METHOD.METHOD_EMAIL" data-aria-controls="method-by-email">
                             <label class="govuk-label govuk-radios__label" for="method-email">
-                                Email
+                                Email ({{ isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL) }})
                             </label>
                         </div>
                         <div class="govuk-radios__conditional" id="method-by-email">
@@ -65,9 +72,9 @@
 
                         <!-- By SMS. -->
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="method-sms" name="method" type="radio" [(ngModel)]="selection.method" [value]="CONTACT_METHOD.METHOD_SMS" data-aria-controls="method-by-sms">
+                            <input class="govuk-radios__input" id="method-sms" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)" [value]="CONTACT_METHOD.METHOD_SMS" data-aria-controls="method-by-sms">
                             <label class="govuk-label govuk-radios__label" for="method-sms">
-                                SMS
+                                SMS ({{ isMethodAvailable(CONTACT_METHOD.METHOD_SMS) }})
                             </label>
                         </div>
                         <div class="govuk-radios__conditional" id="method-by-sms">
@@ -96,10 +103,10 @@
                         </div>
 
                         <!-- By post. -->
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="method-post" name="method" type="radio" [(ngModel)]="selection.method" [value]="CONTACT_METHOD.METHOD_POST" data-aria-controls="method-by-post">
+                        <!-- <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="method-post" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)" [value]="CONTACT_METHOD.METHOD_POST" data-aria-controls="method-by-post">
                             <label class="govuk-label govuk-radios__label" for="method-post">
-                                Post
+                                Post ({{ isMethodAvailable(CONTACT_METHOD.METHOD_POST) }})
                             </label>
                         </div>
                         <div class="govuk-radios__conditional" id="method-by-post">
@@ -143,7 +150,7 @@
                                 <p class="govuk-body-s">Post will automatically be sent by GOV.UK Notify.</p>
                             </div>
 
-                        </div>
+                        </div> -->
 
                     </div>
                 </fieldset>

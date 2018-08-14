@@ -35,6 +35,26 @@ export class PageCommsComponent implements OnInit {
             });
     }
 
+    resetMethod() {
+        if (!(this.selection.method && this.isMethodAvailable(this.selection.method))) {
+            console.log('reset method.');
+            this.selection.method = null;
+            if (this.selection.form) {
+                console.log(CONTACT.METHOD_EMAIL, this.selection.form.hasTemplate(CONTACT.METHOD_EMAIL));
+                console.log(CONTACT.METHOD_POST, this.selection.form.hasTemplate(CONTACT.METHOD_POST));
+                console.log(CONTACT.METHOD_SMS, this.selection.form.hasTemplate(CONTACT.METHOD_SMS));
+            }
+        }
+    }
+
+    isMethodAvailable(type: string): boolean {
+        if (this.selection.form) {
+            return !!(this.selection.form.hasTemplate(type));
+        }
+
+        return false;
+    }
+
     /**
      * Returns TRUE if the messgae preview should be shown.
      */
