@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageHomeComponent } from './pages/home/home.component';
@@ -32,8 +33,24 @@ export const AppRoutes: Routes = [
         }
     },
     {
+        // Empty path (which should go to the home page).
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
+    },
+    {
         // Catch-all (which should go to the home page).
         path: '**',
         redirectTo: '/home'
     }
 ];
+
+@NgModule({
+    exports: [
+        RouterModule
+    ],
+    imports: [
+        RouterModule.forRoot(routes)
+    ]
+})
+export class AppRoutingModule { }
