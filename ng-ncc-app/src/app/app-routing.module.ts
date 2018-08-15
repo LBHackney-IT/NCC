@@ -6,7 +6,9 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 
-const routes: Routes = [
+import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
+
+export const AppRoutes: Routes = [
     {
         // Home page.
         path: 'home',
@@ -25,7 +27,10 @@ const routes: Routes = [
     {
         // Comms page.
         path: 'comms',
-        component: PageCommsComponent
+        component: PageCommsComponent,
+        resolve: {
+            templates: NotifyTemplatesResolver
+        }
     },
     {
         // Empty path (which should go to the home page).
@@ -45,7 +50,7 @@ const routes: Routes = [
         RouterModule
     ],
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(AppRoutes)
     ]
 })
 export class AppRoutingModule { }

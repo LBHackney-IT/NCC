@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
+import { AppRoutes } from './app.routes';
+import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
+
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
@@ -16,6 +19,8 @@ import { AppRoutingModule } from './/app-routing.module';
 
 import { NoteFormComponent } from './components/note-form/note-form.component';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
+import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
+import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +31,9 @@ import { ContentAreaComponent } from './components/content-area/content-area.com
         PageLogCallComponent,
         PageCommsComponent,
         NoteFormComponent,
-        ContentAreaComponent
+        ContentAreaComponent,
+        CommsMethodSelectComponent,
+        NotifyTemplatePreviewComponent
     ],
     imports: [
         BrowserModule,
@@ -36,7 +43,9 @@ import { ContentAreaComponent } from './components/content-area/content-area.com
         // Set up routing.
         AppRoutingModule
     ],
-    providers: [],
+    providers: [
+        NotifyTemplatesResolver
+    ],
     bootstrap: [AppComponent]
 })
 
