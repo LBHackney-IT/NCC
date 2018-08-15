@@ -9,11 +9,11 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 export const AppRoutes: Routes = [
-    {
-        // Home page.
-        path: 'home',
-        component: PageHomeComponent
-    },
+    // {
+    //     // Home page.
+    //     path: 'home',
+    //     component: PageHomeComponent
+    // },
     {
         // Log Call page.
         path: 'log-call',
@@ -35,14 +35,25 @@ export const AppRoutes: Routes = [
     {
         // Empty path (which should go to the home page).
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/identify',
         pathMatch: 'full'
     },
     {
         // Catch-all (which should go to the home page).
         path: '**',
-        redirectTo: '/home'
+        redirectTo: '/identify'
     }
+    // {
+    //     // Empty path (which should go to the home page).
+    //     path: '',
+    //     redirectTo: '/home',
+    //     pathMatch: 'full'
+    // },
+    // {
+    //     // Catch-all (which should go to the home page).
+    //     path: '**',
+    //     redirectTo: '/home'
+    // }
 ];
 
 @NgModule({
