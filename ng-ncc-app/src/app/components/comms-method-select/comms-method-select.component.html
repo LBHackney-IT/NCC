@@ -1,0 +1,116 @@
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-label govuk-!-font-weight-bold">Select communications method</h2>
+        </legend>
+        <div class="govuk-radios" data-module="radios">
+
+            <!-- By email. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-email" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="disableEmail" [value]="methods.METHOD_EMAIL" data-aria-controls="method-by-email">
+                <label class="govuk-label govuk-radios__label" for="method-email">
+                    Email
+                </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-email">
+
+                <!-- Which email address? -->
+                <div class="govuk-form-group">
+
+                    <!-- Existing email addresses (from the caller). -->
+                    <!-- <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="method-email-1" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="'dbell@hotmail.co.uk'">
+                        <label class="govuk-label govuk-radios__label" for="method-email-1">
+                            dbell@hotmail.co.uk
+                        </label>
+                    </div> -->
+
+                    <!-- Enter a new email address. -->
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="method-email-new" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="null">
+                        <label class="govuk-label govuk-radios__label" for="method-email-new">
+                            <input class="govuk-input" type="email" name="new_email" [(ngModel)]="selection.create[methods.METHOD_EMAIL]" (focus)="prepareNewDetail(methods.METHOD_EMAIL)" (ngModelChange)="checkDetails()">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- By SMS. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-sms" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="disableSMS" [value]="methods.METHOD_SMS" data-aria-controls="method-by-sms">
+                <label class="govuk-label govuk-radios__label" for="method-sms">
+                    SMS
+                </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-sms">
+                <div class="govuk-form-group">
+                    <!--
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="method-mobile-1" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="'07111 111111'">
+                        <label class="govuk-label govuk-radios__label" for="method-mobile-1">
+                            07111 111111
+                        </label>
+                    </div>
+                -->
+
+                    <!-- Enter a new [mobile] phone number. -->
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="method-mobile-new" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="null">
+                        <label class="govuk-label govuk-radios__label" for="method-mobile-new">
+                            <input class="govuk-input" type="tel" name="new_mobile" [(ngModel)]="selection.create[methods.METHOD_SMS]" (focus)="prepareNewDetail(methods.METHOD_SMS)" (ngModelChange)="checkDetails()">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- By post. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-post" name="method" type="radio" [(ngModel)]="selection.method" [disabled]="disablePost" [value]="methods.METHOD_POST" data-aria-controls="method-by-post">
+                <label class="govuk-label govuk-radios__label" for="method-post">
+                    Post
+                </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-post">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-1">
+                        First line of address
+                    </label>
+                    <input class="govuk-input" id="address-line-1" name="address-line-1" [(ngModel)]="selection.existing[methods.METHOD_POST].line_1" type="text" (ngModelChange)="checkDetails()">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-2">
+                        Second line of address
+                    </label>
+                    <input class="govuk-input" id="address-line-2" name="address-line-2" [(ngModel)]="selection.existing[methods.METHOD_POST].line_2" type="text" (ngModelChange)="checkDetails()">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-town">
+                        Town or city
+                    </label>
+                    <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" [(ngModel)]="selection.existing[methods.METHOD_POST].town" type="text" (ngModelChange)="checkDetails()">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-county">
+                        County
+                    </label>
+                    <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" [(ngModel)]="selection.existing[methods.METHOD_POST].county" type="text" (ngModelChange)="checkDetails()">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-postcode">
+                        Postcode
+                    </label>
+                    <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" [(ngModel)]="selection.existing[methods.METHOD_POST].postcode" type="text" (ngModelChange)="checkDetails()">
+                </div>
+
+                <div class="govuk-form-group">
+                    <p class="govuk-body-s">Post will automatically be sent by GOV.UK Notify.</p>
+                </div>
+
+            </div>
+        </div>
+    </fieldset>
+</div>

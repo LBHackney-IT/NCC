@@ -1,9 +1,12 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
+
+import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 export const AppRoutes: Routes = [
     {
@@ -24,7 +27,16 @@ export const AppRoutes: Routes = [
     {
         // Comms page.
         path: 'comms',
-        component: PageCommsComponent
+        component: PageCommsComponent,
+        resolve: {
+            templates: NotifyTemplatesResolver
+        }
+    },
+    {
+        // Empty path (which should go to the home page).
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
     },
     {
         // Catch-all (which should go to the home page).
@@ -32,3 +44,13 @@ export const AppRoutes: Routes = [
         redirectTo: '/home'
     }
 ];
+
+@NgModule({
+    exports: [
+        RouterModule
+    ],
+    imports: [
+        RouterModule.forRoot(AppRoutes)
+    ]
+})
+export class AppRoutingModule { }
