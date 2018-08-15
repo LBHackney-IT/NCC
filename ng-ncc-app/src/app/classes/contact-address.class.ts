@@ -10,7 +10,7 @@ export class ContactAddress {
      */
     toString() {
         if (this.isValid()) {
-            let parts = [this.line_1, this.line_2, this.town, this.county, this.postcode].filter(function(line: string) {
+            const parts = [this.line_1, this.line_2, this.town, this.county, this.postcode].filter(function(line: string) {
                 return (undefined !== line) && (0 < line.length);
             });
 
@@ -20,7 +20,7 @@ export class ContactAddress {
 
     isValid() {
         let valid = true;
-        let required = [this.line_1, this.town, this.postcode];
+        const required = [this.line_1, this.town, this.postcode];
         required.forEach(function(value) {
             valid = valid && (undefined !== value && 0 < value.length);
         });

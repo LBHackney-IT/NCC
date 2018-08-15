@@ -6,4 +6,4 @@ export class LogCallType {
         this.id = id;
         this.label = label;
     }
-};
+}

@@ -71,9 +71,9 @@ export class NotifyAPIService {
             })
             .pipe(
                 map(
-                    (data: NotifyAPIJSONResult) => {
+                    (result: NotifyAPIJSONResult) => {
                         // TODO: what do we return?
-                        console.log(data);
+                        console.log(result);
                         return true;
                     }
                 )
@@ -100,9 +100,9 @@ export class NotifyAPIService {
             })
             .pipe(
                 map(
-                    (data: NotifyAPIJSONResult) => {
+                    (result: NotifyAPIJSONResult) => {
                         // TODO: what do we return?
-                        console.log(data);
+                        console.log(result);
                         return true;
                     }
                 )

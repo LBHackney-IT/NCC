@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { TemplatePreviewSettings } from '../../classes/template-preview-settings.class';
 
@@ -7,7 +7,7 @@ import { TemplatePreviewSettings } from '../../classes/template-preview-settings
     templateUrl: './notify-template-preview.component.html',
     styleUrls: ['./notify-template-preview.component.css']
 })
-export class NotifyTemplatePreviewComponent implements OnInit {
+export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
     @Input() settings: TemplatePreviewSettings;
 
     _loading: boolean;
@@ -24,10 +24,14 @@ export class NotifyTemplatePreviewComponent implements OnInit {
         // TODO display a loading prompt.
         // TODO do we fetch the preview from the API, or use what has already been downloaded (from getTemplates())?
         if (this.settings) {
-            if (changes.settings.isFirstChange() || changes.settings.previousValue.template_id !== changes.settings.currentValue.template_id) {
+            if (changes.settings.isFirstChange()) {
                 // A basic check to ensure that the settings have actually changed.
                 // previousValue and currentValue would always be different as they're different objects.
-                this.updatePreview();
+                const old_template: string = changes.settings.previousValue;
+                const new_template: string = changes.settings.currentValue;
+                if (old_template !== new_template) {
+                    this.updatePreview();
+                }
             }
         }
     }
