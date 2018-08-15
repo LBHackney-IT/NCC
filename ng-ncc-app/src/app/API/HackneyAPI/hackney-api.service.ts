@@ -71,8 +71,16 @@ export class HackneyAPIService {
             );
     }
 
+    /**
+     *
+     */
     getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string): Observable<any> {
-        const query: string = `firstname=${first_name}&surname=${last_name}&addressline12=${address}&postcode=${postcode}&IsAdvanceSearch=false`;
+        let query: string = '';
+        if (first_name) query += `firstname=${first_name}`;
+        if (last_name) query += `surname=${last_name}`;
+        if (address) query += `addressline12=${address}`;
+        if (postcode) query += `postcode=${postcode}`;
+        query += '&IsAdvanceSearch=false';
         // very important to set IsAdvanceSearch to false.
 
         return this.http
