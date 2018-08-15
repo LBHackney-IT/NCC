@@ -2,11 +2,10 @@ import { CONTACT } from '../constants/contact.constant';
 import { CommsTemplate } from '../classes/comms-template.class';
 
 export class CommsOption {
-    name: string;
-    templates: object;
+    templates: {};
 
-    constructor(name: string) {
-        this.name = name;
+    constructor(public name: string) {
+        // defining public parameters allows us to create and set the respective class property.
         this.templates = new Object;
         this.templates[CONTACT.METHOD_EMAIL] = null;
         this.templates[CONTACT.METHOD_POST] = null;
