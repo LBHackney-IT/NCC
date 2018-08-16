@@ -9,7 +9,7 @@ import { AddressSearchGroupedResult } from '../../interfaces/address-search-grou
 })
 export class AddressSearchResultsComponent implements OnChanges {
     @Input() results: CitizenIndexSearchResult[];
-    @Output() selected = new EventEmitter<CitizenIndexSearchResult[]>();
+    @Output() selected = new EventEmitter<AddressSearchGroupedResult>();
 
     grouped_results: AddressSearchGroupedResult[];
 
@@ -22,16 +22,25 @@ export class AddressSearchResultsComponent implements OnChanges {
         this._organiseResults();
     }
 
+    /**
+     * Returns TRUE if there are no search results.
+     */
     hasNoResults(): boolean {
         return this.results && 0 === this.results.length;
     }
 
+    /**
+     * Returns TRUE if there are search results.
+     */
     hasResults(): boolean {
         return this.results && 0 < this.results.length;
     }
 
+    /**
+     * Called when a result is selected from the list.
+     */
     selectRow(result: AddressSearchGroupedResult) {
-        console.log('selected', result);
+        this.selected.emit(result);
     }
 
     /**
@@ -47,11 +56,11 @@ export class AddressSearchResultsComponent implements OnChanges {
                     (r[k] || (r[k] = {
                         id: k,
                         address: v.fullAddressDisplay,
-                        addressLine1: parseInt(v.addressLine1),
-                        addressLine1_raw: v.addressLine1,
-                        addressLine2: v.addressLine2,
-                        addressLine3: v.addressLine3,
-                        postcode: v.postCode,
+                        addressLine1: parseInt(v.addressLine1.toLowerCase()),
+                        addressLine1_raw: v.addressLine1.toLowerCase(),
+                        addressLine2: v.addressLine2.toLowerCase(),
+                        addressLine3: v.addressLine3.toLowerCase(),
+                        postcode: v.postCode.toLowerCase(),
                         results: []
                     })).results.push(v), r), {}
             );
@@ -68,10 +77,10 @@ export class AddressSearchResultsComponent implements OnChanges {
         let results: AddressSearchGroupedResult[] = Object.values(grouped_results);
         results.sort((a, b) => {
             const checks = [
-                this._compare(a, b, 'addressLine1'),
-                this._compare(a, b, 'addressLine1_raw'),
                 this._compare(a, b, 'addressLine2'),
                 this._compare(a, b, 'addressLine3'),
+                this._compare(a, b, 'addressLine1'),
+                this._compare(a, b, 'addressLine1_raw'),
                 this._compare(a, b, 'postcode')
             ];
             const filtered = checks.filter((v: number) => { return 0 !== v; });

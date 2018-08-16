@@ -1,0 +1,89 @@
+<!-- TODO this as a component. -->
+<div class="no-results" *ngIf="hasNoResults()">
+    No results.
+</div>
+
+<div class="govuk-body" *ngIf="hasResults()">
+
+    <!-- If we've found contact information... -->
+    <h2 class="govuk-heading-m">Identify caller</h2>
+
+    <button type="button" class="govuk-link-button" (click)="goBack()">
+        Back to results
+    </button>
+
+    <div class="box-panel">
+
+        <!-- Display the address of the property. -->
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
+                <p class="govuk-body" [innerHtml]="getAddress()"></p>
+            </div>
+            <div class="govuk-grid-column-two-thirds">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-2">DPA</h2>
+                <dl class="value-list value-list--horizontal govuk-body-s">
+                    <dt class="value-list__label">Payment reference number</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Date of last payment and amount</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Amount last paid</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Month and year their tenancy began</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Preferred payment method</dt>
+                    <dd class="value-list__value">...</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Display each tenant. -->
+        <div class="govuk-radios govuk-radios--inline">
+            <div class="govuk-radios__item" *ngFor="let row of tenants">
+                <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
+                <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-1">
+
+                    <!-- The contact's name. -->
+                    <span class="govuk-grid-column-full govuk-!-margin-bottom-5">
+                        <span class="govuk-heading-m govuk-!-margin-bottom-1">{{ row.fullName }}</span>
+                        <!--<p class="govuk-body-s govuk-!-margin-bottom-0">
+                            <b>Ms J Bell</b> &ndash; <span>Advocate/Secondary contact</span>
+                        </p>-->
+                    </span>
+
+                    <!-- Contact details. -->
+                    <span class="govuk-grid-column-one-half">
+                        <span class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</span>
+                        <span class="value-list value-list--horizontal govuk-body-s">
+                            <span class="value-list__label">Telephone</span>
+                            <span class="value-list__value">{{ row.telephone1 }}</span>
+                            <!-- <span class="value-list__value">{{ row.telephone2 }}</span>
+                            <span class="value-list__value">{{ row.telephone3 }}</span> -->
+
+                            <span class="value-list__label">Email</span>
+                            <span class="value-list__value">{{ row.emailAddress }}</span>
+                        </span>
+                    </span>
+
+                    <!-- DPA. -->
+                    <span class="govuk-grid-column-one-half">
+                        <span class="govuk-heading-s govuk-!-margin-bottom-2">DPA</span>
+                        <span class="value-list value-list--horizontal govuk-body-s">
+                            <span class="value-list__label">NI number</span>
+                            <span class="value-list__value">AB 12 34 56 C</span>
+
+                            <span class="value-list__label">Date of birth</span>
+                            <span class="value-list__value">09/09/1999</span>
+                        </span>
+                    </span>
+
+                </label>
+            </div>
+        </div>
+
+        <!-- Select this information. -->
+        <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">Continue</button>
+
+    </div>
+
+</div>

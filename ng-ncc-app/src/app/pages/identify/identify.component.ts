@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
+import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
 
 @Component({
     selector: 'app-page-identify',
@@ -12,6 +13,7 @@ export class PageIdentifyComponent implements OnInit {
     _searching: boolean;
     postcode: string;
     results: CitizenIndexSearchResult[];
+    selected_address: AddressSearchGroupedResult;
 
     constructor(private HackneyAPI: HackneyAPIService) { }
 
@@ -20,7 +22,7 @@ export class PageIdentifyComponent implements OnInit {
     }
 
     /**
-     *
+     * Performs a Citizen Index search.
      */
     performSearch() {
         // For the time being, we are only searching for people by postcode.
@@ -28,6 +30,7 @@ export class PageIdentifyComponent implements OnInit {
             return;
         }
         this.results = null;
+        this.selected_address = null;
         this._searching = true;
 
         let subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
@@ -46,67 +49,46 @@ export class PageIdentifyComponent implements OnInit {
     }
 
     /**
-     *
+     * Returns TRUE if the user can peform a search for details.
      */
     canPerformSearch() {
         return !this._searching && !!(this.postcode);
     }
 
     /**
-     *
+     * Called when an address is selected from search results.
      */
-    selectHouseholdID(household_id: string) {
-        // // or more to the point, select the address by household ID.
-        // this.selected_property_id = household_id;
-        // return false;
+    addressSelected(result: AddressSearchGroupedResult) {
+        this.selected_address = result;
     }
 
     /**
-     *
+     * Called when a tenant is selected from address results.
      */
-    backToPostcodeResults() {
-        // this.selected_property_id = null;
+    tenantSelected(result: CitizenIndexSearchResult) {
+        // this.selected_address = result;
+        console.log(result);
     }
 
     /**
-     *
+     * Returns TRUE if we should display the list of addresses.
      */
-    getTenantResults() {
-        // if (this.selected_property_id) {
-        //     // Find all the entries matching the respective ID.
-        //     const list = this.address_list[this.selected_property_id];
-        //     console.log(list);
-        //
-        //     return list;
-        // }
+    shouldShowAddresses(): boolean {
+        return null !== this.results && null === this.selected_address;
     }
 
     /**
-     *
+     * Returns TRUE if we should display the list of tenants.
      */
-    getSelectedPropertyAddress() {
-        // if (this.selected_property_id) {
-        //     const tenant = this.address_list[this.selected_property_id][0];
-        //     let address = [
-        //         tenant.addressLine1,
-        //         tenant.addressLine2,
-        //         tenant.addressLine3,
-        //         tenant.postcode,
-        //         tenant.addressCity,
-        //         tenant.addressCountry,
-        //     ]
-        //     return address.filter((value: string) => {
-        //         return null !== value && undefined !== value;
-        //     }).join('<br>');
-        // }
+    shouldShowTenants(): boolean {
+        return null !== this.selected_address;
     }
 
     /**
-     *
+     * Goes back to the list of addresses from the list of tenants.
      */
-    noTenantResults() {
-        // return !(this.tenant_list && this.tenant_list.length > 0);
+    backToAddresses() {
+        this.selected_address = null;
     }
-
 
 }

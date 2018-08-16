@@ -19,3 +19,8 @@ button {
     text-align: left;
     width: 100%;
 }
+
+.no-results {
+    font-size: $address-results-button-text-size;
+    padding: $address-results-button-padding;
+}
