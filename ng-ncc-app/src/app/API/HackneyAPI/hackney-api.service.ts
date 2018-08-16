@@ -6,7 +6,8 @@ import { Observable, of, from } from 'rxjs';
 // see https://stackoverflow.com/questions/42376972/best-way-to-import-observable-from-rxjs
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
-import { JSONResult } from '../../interfaces/json-result.interface';
+import { HackneyAPIJSONResult } from '../../interfaces/hackney-api-json-result.interface';
+import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -27,10 +28,10 @@ export class HackneyAPIService {
         return this.http
             .get('https://sandboxapi.hackney.gov.uk/CRMLookups?id=3')
             .pipe(
-                map((response: JSONResult) => {
+                map((response: HackneyAPIJSONResult) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
                     // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
-                    let types = response.result;
+                    let types = response.results;
 
                     // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
                     let indexed_types: Array<LogCallType> = Object.keys(types).map(function(value, index) {
@@ -53,9 +54,9 @@ export class HackneyAPIService {
         return this.http
             .get('https://sandboxapi.hackney.gov.uk/CRMEnquiryTypes')
             .pipe(
-                map((response: JSONResult) => {
+                map((response: HackneyAPIJSONResult) => {
                     let groups = {}; // groups of call reasons, indexed by call type.
-                    let types = response.result;
+                    let types = response.results;
 
                     Object.keys(types)
                         .map(function(key) {
@@ -72,9 +73,11 @@ export class HackneyAPIService {
     }
 
     /**
-     *
+     * Searches for citizens and returns a list of results.
      */
-    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string): Observable<any> {
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string): Observable<CitizenIndexSearchResult[]> {
+
+        // Build the query part of the URL.
         let query: string = '';
         if (first_name) query += `firstname=${first_name}`;
         if (last_name) query += `surname=${last_name}`;
@@ -86,7 +89,7 @@ export class HackneyAPIService {
         return this.http
             .get('https://sandboxapi.hackney.gov.uk/v1/CitizenIndexSearch?' + query)
             .pipe(
-                map((response: any) => {
+                map((response: HackneyAPIJSONResult) => {
                     // TODO perhaps filter out any unwanted/unnecessary information.
                     return response.results;
                 })

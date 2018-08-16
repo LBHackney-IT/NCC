@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
+import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
 
 @Component({
     selector: 'app-page-identify',
@@ -10,7 +11,7 @@ export class PageIdentifyComponent implements OnInit {
 
     _searching: boolean;
     postcode: string;
-    results: any; // TODO add a class.
+    results: CitizenIndexSearchResult[];
     address_list: any; // TODO add a class.
     selected_property_id: string;
     tenant_list: any; // TODO add a class.
@@ -26,6 +27,9 @@ export class PageIdentifyComponent implements OnInit {
         this.no_results = false;
     }
 
+    /**
+     *
+     */
     performSearch() {
         // For the time being, we are only searching for people by postcode.
         if (this._searching) {
@@ -57,10 +61,16 @@ export class PageIdentifyComponent implements OnInit {
             );
     }
 
+    /**
+     *
+     */
     canPerformSearch() {
         return !this._searching && !!(this.postcode);
     }
 
+    /**
+     *
+     */
     getAddressResults() {
         if (this.results && this.results.length) {
 
@@ -92,6 +102,9 @@ export class PageIdentifyComponent implements OnInit {
         }
     }
 
+    /**
+     *
+     */
     _compare(a, b, key: string) {
         if (a[key] > b[key]) {
             return 1;
@@ -112,11 +125,17 @@ export class PageIdentifyComponent implements OnInit {
         return false;
     }
 
+    /**
+     *
+     */
     backToPostcodeResults() {
         this.selected_property_id = null;
         this.tenant_list = null;
     }
 
+    /**
+     *
+     */
     getTenantResults() {
         if (this.selected_property_id) {
             // Find all the entries matching the respective ID.
@@ -127,6 +146,9 @@ export class PageIdentifyComponent implements OnInit {
         }
     }
 
+    /**
+     *
+     */
     getSelectedPropertyAddress() {
         if (this.selected_property_id) {
             const tenant = this.address_list[this.selected_property_id][0];
@@ -144,6 +166,9 @@ export class PageIdentifyComponent implements OnInit {
         }
     }
 
+    /**
+     *
+     */
     noTenantResults() {
         return !(this.tenant_list && this.tenant_list.length > 0);
     }
