@@ -19,7 +19,7 @@ export class ContactAddress {
     }
 
     isValid() {
-        const valid = true;
+        let valid = true;
         const required = [this.line_1, this.town, this.postcode];
         required.forEach(function(value) {
             valid = valid && (undefined !== value && 0 < value.length);
