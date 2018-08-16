@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
 import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 
 @Component({
     selector: 'app-page-identify',
@@ -67,7 +69,22 @@ export class PageIdentifyComponent implements OnInit {
      */
     tenantSelected(result: CitizenIndexSearchResult) {
         // this.selected_address = result;
-        console.log(result);
+        const caller = new IdentifiedCaller(result);
+        alert(`Identified the caller as ${caller.getName()}.`);
+        this._outputCaller(caller);
+    }
+
+    anonymousSelected() {
+        const caller = new AnonymousCaller;
+        alert('Caller is anonymous.');
+        this._outputCaller(caller);
+    }
+
+    _outputCaller(caller: Caller) {
+        console.log(`Caller's name is ${caller.getName() || 'not present'}.`);
+        console.log('Caller\'s email addresses:', caller.getEmailAddresses());
+        console.log('Caller\'s telephone numbers:', caller.getTelephoneNumbers());
+        console.log('Is the caller anonymous?', caller.isAnonymous());
     }
 
     /**
