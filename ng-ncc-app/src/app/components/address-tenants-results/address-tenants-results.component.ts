@@ -1,36 +1,41 @@
-import { Component, EventEmitter, Input, Output, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
 import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { IdentifiedCaller } from '../../classes/identified-caller.class';
 
 @Component({
     selector: 'app-address-tenants-results',
     templateUrl: './address-tenants-results.component.html',
     styleUrls: ['./address-tenants-results.component.css']
 })
-export class AddressTenantsResultsComponent implements OnChanges, OnInit {
+export class AddressTenantsResultsComponent implements OnChanges {
     @Input() address: AddressSearchGroupedResult;
-    @Output() selected = new EventEmitter<CitizenIndexSearchResult>();
+
+    // When a tenant is selected and the Continue button is hit.
+    @Output() selected = new EventEmitter<IdentifiedCaller>();
+
+    // When the user hits the back link.
     @Output() back = new EventEmitter<void>();
 
-    _selected: CitizenIndexSearchResult;
-    tenants: CitizenIndexSearchResult[];
+    // The selected tenant.
+    _selected: IdentifiedCaller;
 
-    constructor() { }
-
-    ngOnInit() {
-    }
+    // A list of tenants under the address passed to this component.
+    tenants: IdentifiedCaller[];
 
     ngOnChanges() {
         this._selected = null;
         if (this.address) {
-            this.tenants = this.address.results;
 
-            // If there is only one tenant, automatically select them.
+            // Convert the list of results into IdentifiedCallers.
+            // Since we're selecting a person from the list, we know that the caller is going to be identified.
+            this.tenants = this.address.results.map((row) => { return new IdentifiedCaller(row); });
+
+            // If there's only one tenant, automatically select them.
             if (1 === this.tenants.length) {
                 this._selected = this.tenants[0];
             }
         }
-        // TODO create a class for handling tenant/contact information.
     }
 
     /**

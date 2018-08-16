@@ -39,13 +39,13 @@
 
         <!-- Display each tenant. -->
         <div class="govuk-radios govuk-radios--inline">
-            <div class="govuk-radios__item" *ngFor="let row of tenants">
-                <input class="govuk-radios__input" id="changed-name-1" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
-                <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-1">
+            <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index">
+                <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
+                <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-{{i}}">
 
                     <!-- The contact's name. -->
                     <span class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                        <span class="govuk-heading-m govuk-!-margin-bottom-1">{{ row.fullName }}</span>
+                        <span class="govuk-heading-m govuk-!-margin-bottom-1">{{ row.getName() }}</span>
                         <!--<p class="govuk-body-s govuk-!-margin-bottom-0">
                             <b>Ms J Bell</b> &ndash; <span>Advocate/Secondary contact</span>
                         </p>-->
@@ -56,12 +56,18 @@
                         <span class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</span>
                         <span class="value-list value-list--horizontal govuk-body-s">
                             <span class="value-list__label">Telephone</span>
-                            <span class="value-list__value">{{ row.telephone1 }}</span>
-                            <!-- <span class="value-list__value">{{ row.telephone2 }}</span>
-                            <span class="value-list__value">{{ row.telephone3 }}</span> -->
+                            <span class="value-list__value">
+                                <span *ngFor="let number of row.getTelephoneNumbers()">
+                                    {{ number }}
+                                </span>
+                            </span>
 
                             <span class="value-list__label">Email</span>
-                            <span class="value-list__value">{{ row.emailAddress }}</span>
+                            <span class="value-list__value">
+                                <span *ngFor="let email of row.getEmailAddresses()">
+                                    {{ email }}
+                                </span>
+                            </span>
                         </span>
                     </span>
 
@@ -82,7 +88,9 @@
         </div>
 
         <!-- Select this information. -->
-        <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">Continue</button>
+        <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">
+            Continue
+        </button>
 
     </div>
 

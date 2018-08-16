@@ -4,6 +4,7 @@ import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-
 import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
+import { Caller } from '../../interfaces/caller.interface';
 
 @Component({
     selector: 'app-page-identify',
@@ -67,13 +68,14 @@ export class PageIdentifyComponent implements OnInit {
     /**
      * Called when a tenant is selected from address results.
      */
-    tenantSelected(result: CitizenIndexSearchResult) {
-        // this.selected_address = result;
-        const caller = new IdentifiedCaller(result);
+    tenantSelected(caller: IdentifiedCaller) {
         alert(`Identified the caller as ${caller.getName()}.`);
         this._outputCaller(caller);
     }
 
+    /**
+     * Called when the user hits the Anonymous caller button..
+     */
     anonymousSelected() {
         const caller = new AnonymousCaller;
         alert('Caller is anonymous.');

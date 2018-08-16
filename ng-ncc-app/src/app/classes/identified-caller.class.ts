@@ -10,7 +10,6 @@ export class IdentifiedCaller implements Caller {
 
     constructor(citizen: CitizenIndexSearchResult) {
         this._details = citizen;
-        console.log('New identified caller', this.getName());
     }
 
     isAnonymous(): boolean {
