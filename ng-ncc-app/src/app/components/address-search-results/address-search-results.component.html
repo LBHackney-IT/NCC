@@ -1,0 +1,9 @@
+<ul *ngIf="hasResults()">
+    <li class="govuk-!-margin-bottom-2" *ngFor="let row of grouped_results">
+        <button type="button" (click)="selectRow(row)">{{ row.address }}</button>
+    </li>
+</ul>
+
+<div class="" *ngIf="hasNoResults()">
+    No results.
+</div>

@@ -31,12 +31,7 @@
         </div>
 
         <!-- Found contact information. -->
-        <!-- TODO turn this into a component - or a child route! -->
-        <ul *ngIf="address_list && ! selected_property_id">
-            <li class="box-panel govuk-body govuk-!-margin-bottom-2" *ngFor="let household_id of unique_addresses">
-                <a href="" (click)="selectHouseholdID(household_id)">{{ address_list[household_id][0].fullAddressDisplay }}</a>
-            </li>
-        </ul>
+        <app-address-search-results [results]="results"></app-address-search-results>
 
         <!-- Tenant information. -->
         <div class="box-panel govuk-!-margin-bottom-5" *ngIf="selected_property_id">
