@@ -31,10 +31,10 @@ export class HackneyAPIService {
                 map((response: HackneyAPIJSONResult) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
                     // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
-                    let types = response.results;
+                    const types = response.result;
 
                     // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
-                    let indexed_types: Array<LogCallType> = Object.keys(types).map(function(value, index) {
+                    const indexed_types: Array<LogCallType> = Object.keys(types).map(function(value, index) {
                         return new LogCallType(index, types[index]);
                     });
 
@@ -60,8 +60,8 @@ export class HackneyAPIService {
 
                     Object.keys(types)
                         .map(function(key) {
-                            let call_type = parseInt(types[key].enquiryCallType);
-                            let reason: LogCallReason = new LogCallReason(types[key].enquiryTypeId, types[key].enquiryType);
+                            const call_type = parseInt(types[key].enquiryCallType, 10);
+                            const reason: LogCallReason = new LogCallReason(types[key].enquiryTypeId, types[key].enquiryType);
                             if (undefined === groups[call_type]) {
                                 groups[call_type] = [];
                             }

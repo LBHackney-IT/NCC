@@ -17,13 +17,21 @@ export class NotifyTemplatesResolver implements Resolve<CommsOption[]> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CommsOption[]> {
 
         // forkJoin() is the Observable equivalent of Promise.all(), which is used to resolve multiple Observables before continuing.
+        // TODO: how do we handle errors? (e.g. if we are offline.)
         return forkJoin(
             this.NotifyAPI.getTemplates(CONTACT.METHOD_EMAIL),
             this.NotifyAPI.getTemplates(CONTACT.METHOD_POST),
-            this.NotifyAPI.getTemplates(CONTACT.METHOD_SMS),
-            (email, letter, sms) => {
-                return this._organiseTemplates([].concat(email, letter, sms));
-            }
+            this.NotifyAPI.getTemplates(CONTACT.METHOD_SMS)
+        ).pipe(
+            map((data) => {
+                const template_list = data.reduce((a, b) => a.concat(b), []);
+                const results = this._organiseTemplates(template_list);
+                // // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_flatten
+                return results;
+            },
+                (error) => {
+                    console.log('Error fetching information:', error);
+                })
         );
 
     }
@@ -31,7 +39,7 @@ export class NotifyTemplatesResolver implements Resolve<CommsOption[]> {
     /**
      * Organise the templates obtained from GOV.UK Notify into a grouped list.
      */
-    _organiseTemplates(templates: Array<NotifyAPITemplate>): CommsOption[] {
+    _organiseTemplates(templates): CommsOption[] {
         const options: CommsOption[] = new Array<CommsOption>();
 
         // Group the templates by their name.

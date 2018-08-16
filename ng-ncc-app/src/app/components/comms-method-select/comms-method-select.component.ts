@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';

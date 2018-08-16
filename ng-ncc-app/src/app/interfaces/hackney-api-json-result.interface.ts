@@ -1,4 +1,5 @@
 // An interface for JSON responses from the Hackney API/microservice.
 export interface HackneyAPIJSONResult {
-    results: Array<any>;
+    result?: Array<any>;
+    results?: Array<any>; // we should have consistency...
 }
