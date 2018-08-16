@@ -56,7 +56,7 @@ export class AddressSearchResultsComponent implements OnChanges {
                     (r[k] || (r[k] = {
                         id: k,
                         address: v.fullAddressDisplay,
-                        addressLine1: parseInt(v.addressLine1.toLowerCase()),
+                        addressLine1: parseInt(v.addressLine1.toLowerCase(), 10),
                         addressLine1_raw: v.addressLine1.toLowerCase(),
                         addressLine2: v.addressLine2.toLowerCase(),
                         addressLine3: v.addressLine3.toLowerCase(),
@@ -74,7 +74,7 @@ export class AddressSearchResultsComponent implements OnChanges {
      *
      */
     _sortedGroupedResults(grouped_results): AddressSearchGroupedResult[] {
-        let results: AddressSearchGroupedResult[] = Object.values(grouped_results);
+        const results: AddressSearchGroupedResult[] = Object.values(grouped_results);
         results.sort((a, b) => {
             const checks = [
                 this._compare(a, b, 'addressLine2'),
@@ -83,7 +83,8 @@ export class AddressSearchResultsComponent implements OnChanges {
                 this._compare(a, b, 'addressLine1_raw'),
                 this._compare(a, b, 'postcode')
             ];
-            const filtered = checks.filter((v: number) => { return 0 !== v; });
+            const filtered = checks.filter((v: number) => 0 !== v);
+            // shorthand for function(v) { return 0 !== v; }
             return filtered.length ? filtered[0] : 0;
             // i.e. use the first non-zero value found, or 0 if all else fails.
         });

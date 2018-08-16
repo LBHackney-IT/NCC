@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { initAll } from 'govuk-frontend'
+import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -79,7 +79,7 @@ export class PageCommsComponent implements OnInit {
 
     updatePreview() {
         if (this.shouldShowPreview()) {
-            let selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
+            const selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
             if (this.preview && this.preview.template_id !== selected.id) {
                 return;
             }

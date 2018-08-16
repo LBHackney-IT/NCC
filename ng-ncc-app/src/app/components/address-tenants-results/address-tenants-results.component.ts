@@ -29,7 +29,7 @@ export class AddressTenantsResultsComponent implements OnChanges {
 
             // Convert the list of results into IdentifiedCallers.
             // Since we're selecting a person from the list, we know that the caller is going to be identified.
-            this.tenants = this.address.results.map((row) => { return new IdentifiedCaller(row); });
+            this.tenants = this.address.results.map((row) => new IdentifiedCaller(row));
 
             // If there's only one tenant, automatically select them.
             if (1 === this.tenants.length) {

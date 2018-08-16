@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { TemplatePreviewSettings } from '../../classes/template-preview-settings.class';
 
@@ -7,7 +7,7 @@ import { TemplatePreviewSettings } from '../../classes/template-preview-settings
     templateUrl: './notify-template-preview.component.html',
     styleUrls: ['./notify-template-preview.component.css']
 })
-export class NotifyTemplatePreviewComponent implements OnInit {
+export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
     @Input() settings: TemplatePreviewSettings;
 
     _loading: boolean;

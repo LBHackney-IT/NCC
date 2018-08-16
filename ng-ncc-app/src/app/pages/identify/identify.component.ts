@@ -36,7 +36,7 @@ export class PageIdentifyComponent implements OnInit {
         this.selected_address = null;
         this._searching = true;
 
-        let subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
+        const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
             .subscribe(
                 (rows) => {
                     this._searching = false;

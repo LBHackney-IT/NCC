@@ -45,7 +45,7 @@ export class IdentifiedCaller implements Caller {
      * TODO this is a common method.
      */
     _filterEmpty(n: any) {
-        return n != undefined;
+        return n !== undefined;
     }
 
 }
