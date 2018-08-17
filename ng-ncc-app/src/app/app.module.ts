@@ -20,6 +20,8 @@ import { NoteFormComponent } from './components/note-form/note-form.component';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
+import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
+import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +34,9 @@ import { NotifyTemplatePreviewComponent } from './components/notify-template-pre
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
-        NotifyTemplatePreviewComponent
+        NotifyTemplatePreviewComponent,
+        AddressSearchResultsComponent,
+        AddressTenantsResultsComponent
     ],
     imports: [
         BrowserModule,
