@@ -38,7 +38,7 @@ export class PageIdentifyComponent implements OnInit {
         this.tenant_list = null;
         this._searching = true;
 
-        let subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
+        const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
             .subscribe(
                 (rows) => {
                     this._searching = false;
@@ -85,8 +85,9 @@ export class PageIdentifyComponent implements OnInit {
             // Group the results by their household ID.
             // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_uniq
             addresses = addresses
-                .reduce((r, v, i, a, k = v.householdId) => ((r[k] || (r[k] = []))
-                    .push(v), r), {})
+                .reduce(
+                    (r, v, i, a, k = v.householdId) => ((r[k] || (r[k] = [])).push(v), r), {}
+                );
 
             return addresses;
         }
@@ -130,14 +131,14 @@ export class PageIdentifyComponent implements OnInit {
     getSelectedPropertyAddress() {
         if (this.selected_property_id) {
             const tenant = this.address_list[this.selected_property_id][0];
-            let address = [
+            const address = [
                 tenant.addressLine1,
                 tenant.addressLine2,
                 tenant.addressLine3,
                 tenant.postcode,
                 tenant.addressCity,
                 tenant.addressCountry,
-            ]
+            ];
             return address.filter((value: string) => {
                 return null !== value && undefined !== value;
             }).join('<br>');

@@ -35,7 +35,10 @@ export class NotifyAPIService {
                     const templates: Array<object> = Array.from(data.response.templates);
 
                     return templates;
-                })
+                },
+                    (error) => {
+                        console.log('Error fetching templates:', error);
+                    })
             );
     }
 
@@ -58,7 +61,24 @@ export class NotifyAPIService {
     /**
      * Send an email message through GOV.UK Notify.
      */
-    sendEmail() { }
+    sendEmail(email: string, template_id: string, data: any) {
+        const template_data: string = JSON.stringify(data);
+        return this.http
+            .post(`${this._url}/SendEmail`, {
+                EmailTo: email,
+                TemplateId: template_id,
+                TemplateData: JSON.stringify(data)
+            })
+            .pipe(
+                map(
+                    (result: NotifyAPIJSONResult) => {
+                        // TODO: what do we return?
+                        console.log(result);
+                        return true;
+                    }
+                )
+            );
+    }
 
     /**
      * Send a postal message through GOV.UK Notify.
@@ -68,6 +88,25 @@ export class NotifyAPIService {
     /**
      * Send a text message (SMS) through GOV.UK Notify.
      */
-    sendSMS() { }
+    sendSMS(mobile: string, template_id: string, data: any) {
+        if (!(mobile && template_id)) {
+            return;
+        }
+        return this.http
+            .post(`${this._url}/SendSMS`, {
+                MobileNumber: mobile,
+                TemplateId: template_id,
+                TemplateData: encodeURIComponent(JSON.stringify(data))
+            })
+            .pipe(
+                map(
+                    (result: NotifyAPIJSONResult) => {
+                        // TODO: what do we return?
+                        console.log(result);
+                        return true;
+                    }
+                )
+            );
 
+    }
 }

@@ -1,9 +1,5 @@
 export class LogCallReason {
-    id: string;
-    label: string;
 
-    constructor(id: string, label: string) {
-        this.id = id;
-        this.label = label;
-    }
+    constructor(public id: string, public label: string) { }
+
 }

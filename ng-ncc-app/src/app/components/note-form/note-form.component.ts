@@ -8,7 +8,7 @@ import { ContentAreaComponent } from '../content-area/content-area.component';
 })
 export class NoteFormComponent implements OnInit {
 
-    TOP_MARGIN: number = 20;    // gap between the top of the content area and the toggle button.
+    TOP_MARGIN = 20;    // gap between the top of the content area and the toggle button.
     containerStyle: Object;     // used to control the inline style of .note-form__container.
     comment: string;
     visible: boolean;
@@ -16,7 +16,7 @@ export class NoteFormComponent implements OnInit {
     constructor(private inj: Injector) {
         // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
         // https://stackoverflow.com/a/40026333/4073160
-        let parentComponent = this.inj.get(ContentAreaComponent);
+        const parentComponent = this.inj.get(ContentAreaComponent);
         if (parentComponent) {
             // Subscribe to the ContentAreaComponent's eventScrolled [Observable] event.
             parentComponent.eventScrolled.subscribe(value => this._reposition(value));
