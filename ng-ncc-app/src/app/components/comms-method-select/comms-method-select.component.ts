@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
@@ -8,7 +8,7 @@ import { CommsMethodDetails } from '../../interfaces/comms-method-details.interf
     templateUrl: './comms-method-select.component.html',
     styleUrls: ['./comms-method-select.component.css']
 })
-export class CommsMethodSelectComponent implements OnInit {
+export class CommsMethodSelectComponent implements OnInit, OnChanges {
     // TODO use Angular instead of GOV.UK Frontend to manage the conditional radio button content.
 
     // Whether to enable or disable communications methods.

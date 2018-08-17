@@ -41,10 +41,10 @@ export class PageLogCallComponent implements OnInit {
      */
     getCallTypeReasons() {
         if (this.isCallTypeSelected()) {
-            let reasons: Array<LogCallReason> = this.call_reasons[this.selected.call_type];
+            const reasons: Array<LogCallReason> = this.call_reasons[this.selected.call_type];
             reasons.sort(function(a: LogCallReason, b: LogCallReason) {
-                let left = a.label.toLowerCase();
-                let right = b.label.toLowerCase();
+                const left = a.label.toLowerCase();
+                const right = b.label.toLowerCase();
 
                 if (left < right) {
                     return -1;

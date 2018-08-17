@@ -1,4 +1,4 @@
-# Hackney NCC CRM project
+# Hackney Neighbourhood Contact Centre (NCC) CRM project.
 
 Making use of:
 

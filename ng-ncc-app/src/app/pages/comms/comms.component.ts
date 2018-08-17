@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { initAll } from 'govuk-frontend'
+import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -24,7 +24,7 @@ export class PageCommsComponent implements OnInit {
     selected_details: CommsMethodDetails;
     preview: TemplatePreviewSettings;
 
-    constructor(private Notify: NotifyAPIService, private route: ActivatedRoute) { }
+    constructor(private NotifyAPI: NotifyAPIService, private route: ActivatedRoute) { }
 
     ngOnInit() {
         // Initialise the GOV.UK Frontend components on this page.
@@ -79,11 +79,57 @@ export class PageCommsComponent implements OnInit {
 
     updatePreview() {
         if (this.shouldShowPreview()) {
-            let selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
+            const selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
             if (this.preview && this.preview.template_id !== selected.id) {
                 return;
             }
             this.preview = new TemplatePreviewSettings(selected.id, selected.version);
+        }
+    }
+
+    sendMessage(event) {
+        if (event && event.defaultPrevented) {
+            return;
+        }
+
+        const template_id: string = this.selected_option.templates[this.selected_details.method].id;
+        const address: string = this.selected_details.details;
+        let subscription;
+
+        switch (this.selected_details.method) {
+            case CONTACT.METHOD_EMAIL:
+                // Send an email.
+                subscription = this.NotifyAPI.sendEmail(address, template_id, {})
+                    .subscribe(
+                        (feedback) => {
+                            console.log('Sent email, got feedback:', feedback);
+                        },
+                        (error) => {
+                            console.log('Error sending email:', error);
+                        },
+                        () => {
+                            subscription.unsubscribe();
+                        });
+                break;
+
+            case CONTACT.METHOD_SMS:
+                // Send a text message.
+                console.log('send sms', address, template_id);
+                subscription = this.NotifyAPI.sendSMS(address, template_id, {})
+                    .subscribe(
+                        (feedback) => {
+                            console.log('Sent text message, got feedback:', feedback);
+                        },
+                        (error) => {
+                            console.log('Error sending text message:', error);
+                        },
+                        () => {
+                            subscription.unsubscribe();
+                        });
+                break;
+
+            default:
+                console.log('Unsupported method at present:', this.selected_details.method);
         }
     }
 
