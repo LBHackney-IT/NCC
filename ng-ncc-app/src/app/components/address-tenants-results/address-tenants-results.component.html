@@ -1,7 +1,4 @@
-<!-- TODO this as a component. -->
-<div class="no-results" *ngIf="hasNoResults()">
-    No results.
-</div>
+<app-no-results *ngIf="hasNoResults()"></app-no-results>
 
 <div class="govuk-body" *ngIf="hasResults()">
 
@@ -12,9 +9,8 @@
         Back to results
     </button>
 
-    <div class="box-panel">
-
-        <!-- Display the address of the property. -->
+    <!-- Display the address of the property. -->
+    <div class="box-panel govuk-!-margin-bottom-3">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-third">
                 <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
@@ -36,8 +32,10 @@
                 </dl>
             </div>
         </div>
+    </div>
 
-        <!-- Display each tenant. -->
+    <!-- Display each tenant. -->
+    <div class="box-panel tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios govuk-radios--inline">
             <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index">
                 <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
@@ -87,11 +85,11 @@
             </div>
         </div>
 
-        <!-- Select this information. -->
-        <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">
-            Continue
-        </button>
-
     </div>
+
+    <!-- Select this information. -->
+    <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">
+        Continue
+    </button>
 
 </div>

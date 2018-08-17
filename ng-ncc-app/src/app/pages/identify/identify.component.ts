@@ -104,6 +104,16 @@ export class PageIdentifyComponent implements OnInit {
     }
 
     /**
+     * Returns TRUE if we should display the DPA warning.
+     */
+    shouldShowWarning(): boolean {
+        if (this.results) {
+            return this.results.length > 0;
+        }
+        return false;
+    }
+
+    /**
      * Goes back to the list of addresses from the list of tenants.
      */
     backToAddresses() {

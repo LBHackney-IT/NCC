@@ -11,7 +11,7 @@
                     <label class="govuk-label govuk-!-font-weight-bold" for="query">
                         Search by postcode:
                     </label>
-                    <input class="govuk-input govuk-!-width-one-half" id="query" name="query" type="search" [(ngModel)]="postcode" [disabled]="_searching">
+                    <input class="govuk-input govuk-!-width-one-half" id="query" name="query" type="text" [(ngModel)]="postcode" [disabled]="_searching">
                     <button type="submit" class="govuk-button govuk-!-margin-bottom-0" (click)="performSearch()" [disabled]="!canPerformSearch()">
                         Search
                     </button>
@@ -26,8 +26,12 @@
 
         <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-        <div class="govuk-body govuk-!-margin-bottom-5" *ngIf="no_results">
-            No results.
+        <div class="govuk-warning-text" *ngIf="shouldShowWarning()">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-warning-text__assistive">Warning</span>
+                DPA: Callers have to answer two DPA questions to access account information.
+            </strong>
         </div>
 
         <!-- A list of addresses matching the search query. -->

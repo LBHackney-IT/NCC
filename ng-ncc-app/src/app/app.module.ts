@@ -22,6 +22,7 @@ import { CommsMethodSelectComponent } from './components/comms-method-select/com
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
+import { NoResultsComponent } from './components/no-results/no-results.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { AddressTenantsResultsComponent } from './components/address-tenants-res
         CommsMethodSelectComponent,
         NotifyTemplatePreviewComponent,
         AddressSearchResultsComponent,
-        AddressTenantsResultsComponent
+        AddressTenantsResultsComponent,
+        NoResultsComponent
     ],
     imports: [
         BrowserModule,
