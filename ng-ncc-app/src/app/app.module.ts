@@ -23,6 +23,7 @@ import { NotifyTemplatePreviewComponent } from './components/notify-template-pre
 import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
+import { BackLinkComponent } from './components/back-link/back-link.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { NoResultsComponent } from './components/no-results/no-results.component
         NotifyTemplatePreviewComponent,
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
-        NoResultsComponent
+        NoResultsComponent,
+        BackLinkComponent
     ],
     imports: [
         BrowserModule,
