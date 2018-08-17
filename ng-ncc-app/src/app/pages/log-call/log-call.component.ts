@@ -13,9 +13,10 @@ import { LogCallType } from '../../classes/log-call-type.class';
 
 export class PageLogCallComponent implements OnInit {
 
-    call_types: Array<LogCallType>;
+    call_types: LogCallType[];
     call_reasons: Array<any>;
     selected: LogCallSelection;
+    previous_calls: Array<any>;
 
     constructor(private HackneyAPI: HackneyAPIService) {
         this.selected = {
@@ -34,6 +35,8 @@ export class PageLogCallComponent implements OnInit {
         this.HackneyAPI.getCallReasons().subscribe(types => {
             this.call_reasons = types;
         });
+
+        this._makePreviousCalls();
     }
 
     /**
@@ -41,7 +44,7 @@ export class PageLogCallComponent implements OnInit {
      */
     getCallTypeReasons() {
         if (this.isCallTypeSelected()) {
-            const reasons: Array<LogCallReason> = this.call_reasons[this.selected.call_type];
+            const reasons: Array<LogCallReason> = this.call_reasons[this.selected.call_type.id];
             reasons.sort(function(a: LogCallReason, b: LogCallReason) {
                 const left = a.label.toLowerCase();
                 const right = b.label.toLowerCase();
@@ -62,7 +65,6 @@ export class PageLogCallComponent implements OnInit {
      * This is called when the call type is set/changed, and resets the selected call reason.
      */
     resetCallReason() {
-        console.log('Call reason was reset.');
         this.selected.call_reason = null;
     }
 
@@ -85,6 +87,28 @@ export class PageLogCallComponent implements OnInit {
      */
     isCallReasonSelected() {
         return (null !== this.selected.call_reason);
+    }
+
+    _makePreviousCalls() {
+        this.previous_calls = new Array<any>();
+        for (let i = 1; i <= 10; i++) {
+            this.previous_calls.push({
+                reference: `07891/${i}`,
+                name: 'Mr ' + (String.fromCharCode(65 + i - 1)) + ' Bell',
+                date: new Date().toLocaleDateString("en-GB"),
+                time: new Date().toLocaleTimeString("en-GB"),
+                call_reason: ['Pay rent', 'General', 'ASB', 'Repairs', 'Other'][(Math.random() * 4).toFixed(0)]
+            })
+        }
+    }
+
+    getLastCalls() {
+        return this.previous_calls;
+    }
+
+
+    confirmCallNature() {
+        console.log('Call nature:', this.selected.call_type.label, this.selected.call_reason.label);
     }
 
 }

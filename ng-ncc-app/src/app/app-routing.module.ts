@@ -35,13 +35,13 @@ export const AppRoutes: Routes = [
     {
         // Empty path (which should go to the home page).
         path: '',
-        redirectTo: '/identify',
+        redirectTo: '/log-call',
         pathMatch: 'full'
     },
     {
         // Catch-all (which should go to the home page).
         path: '**',
-        redirectTo: '/identify'
+        redirectTo: '/log-call'
     }
     // {
     //     // Empty path (which should go to the home page).
