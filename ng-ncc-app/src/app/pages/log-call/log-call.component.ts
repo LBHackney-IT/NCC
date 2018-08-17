@@ -95,10 +95,10 @@ export class PageLogCallComponent implements OnInit {
             this.previous_calls.push({
                 reference: `07891/${i}`,
                 name: 'Mr ' + (String.fromCharCode(65 + i - 1)) + ' Bell',
-                date: new Date().toLocaleDateString("en-GB"),
-                time: new Date().toLocaleTimeString("en-GB"),
+                date: new Date().toLocaleDateString('en-GB'),
+                time: new Date().toLocaleTimeString('en-GB'),
                 call_reason: ['Pay rent', 'General', 'ASB', 'Repairs', 'Other'][(Math.random() * 4).toFixed(0)]
-            })
+            });
         }
     }
 
