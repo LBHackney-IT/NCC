@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { ContactDetails } from '../../classes/contact-details.class';
+import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
 import { TemplatePreviewSettings } from '../../classes/template-preview-settings.class';
 import { CONTACT } from '../../constants/contact.constant';
@@ -19,9 +20,10 @@ import { CommsMethodDetails } from '../../interfaces/comms-method-details.interf
 export class PageCommsComponent implements OnInit {
 
     CONTACT_METHOD: object;
+    _sending: boolean;
     comms_options: CommsOption[];
     selected_option: CommsOption;
-    selected_details: CommsMethodDetails;
+    selected_details: CommsSelection;
     preview: TemplatePreviewSettings;
 
     constructor(private NotifyAPI: NotifyAPIService, private route: ActivatedRoute) { }
@@ -31,7 +33,7 @@ export class PageCommsComponent implements OnInit {
         initAll();
 
         this.CONTACT_METHOD = CONTACT;
-
+        this._sending = false;
         this.selected_option = null;
 
         this.route.data
@@ -65,8 +67,9 @@ export class PageCommsComponent implements OnInit {
     /**
      * Called when valid communication method and respective details are entered.
      */
-    onSelectCommsMethod(details: CommsMethodDetails) {
+    onSelectCommsMethod(details: CommsSelection) {
         this.selected_details = details;
+        console.log(details);
         this.updatePreview();
     }
 
@@ -77,9 +80,16 @@ export class PageCommsComponent implements OnInit {
         this.selected_details = null;
     }
 
+    /**
+     *
+     */
     updatePreview() {
         if (this.shouldShowPreview()) {
             const selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
+            if (!selected) {
+                // We might not have a selected template! If the previously selected method was made invalid, it will happen.
+                return;
+            }
             if (this.preview && this.preview.template_id !== selected.id) {
                 return;
             }
@@ -87,18 +97,26 @@ export class PageCommsComponent implements OnInit {
         }
     }
 
+    /**
+     * Attempts to send a message via GOV.UK Notify.
+     */
     sendMessage(event) {
         if (event && event.defaultPrevented) {
             return;
         }
 
         const template_id: string = this.selected_option.templates[this.selected_details.method].id;
-        const address: string = this.selected_details.details;
+        const method: string = this.selected_details.method;
+        const address: string = this.selected_details.getDetail();
         let subscription;
+        console.log(address);
 
-        switch (this.selected_details.method) {
+        this._sending = true;
+
+        switch (method) {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
+                console.log('Sending an email to', address);
                 subscription = this.NotifyAPI.sendEmail(address, template_id, {})
                     .subscribe(
                         (feedback) => {
@@ -109,12 +127,13 @@ export class PageCommsComponent implements OnInit {
                         },
                         () => {
                             subscription.unsubscribe();
+                            this._sending = false;
                         });
                 break;
 
             case CONTACT.METHOD_SMS:
                 // Send a text message.
-                console.log('send sms', address, template_id);
+                console.log('Sending a text message to', address);
                 subscription = this.NotifyAPI.sendSMS(address, template_id, {})
                     .subscribe(
                         (feedback) => {
@@ -125,11 +144,13 @@ export class PageCommsComponent implements OnInit {
                         },
                         () => {
                             subscription.unsubscribe();
+                            this._sending = false;
                         });
                 break;
 
             default:
-                console.log('Unsupported method at present:', this.selected_details.method);
+                console.log('Unsupported method:', method);
+                this._sending = false;
         }
     }
 
