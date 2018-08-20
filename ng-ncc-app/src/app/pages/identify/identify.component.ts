@@ -5,6 +5,7 @@ import { AddressSearchGroupedResult } from '../../interfaces/address-search-grou
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { Caller } from '../../interfaces/caller.interface';
+import { CallService } from '../../services/call.service';
 
 @Component({
     selector: 'app-page-identify',
@@ -18,7 +19,7 @@ export class PageIdentifyComponent implements OnInit {
     results: CitizenIndexSearchResult[];
     selected_address: AddressSearchGroupedResult;
 
-    constructor(private HackneyAPI: HackneyAPIService) { }
+    constructor(private HackneyAPI: HackneyAPIService, private Call: CallService) { }
 
     ngOnInit() {
         this._searching = false;
@@ -70,7 +71,7 @@ export class PageIdentifyComponent implements OnInit {
      */
     tenantSelected(caller: IdentifiedCaller) {
         alert(`Identified the caller as ${caller.getName()}.`);
-        this._outputCaller(caller);
+        this.Call.setCaller(caller);
     }
 
     /**
@@ -79,14 +80,7 @@ export class PageIdentifyComponent implements OnInit {
     anonymousSelected() {
         const caller = new AnonymousCaller;
         alert('Caller is anonymous.');
-        this._outputCaller(caller);
-    }
-
-    _outputCaller(caller: Caller) {
-        console.log(`Caller's name is ${caller.getName() || 'not present'}.`);
-        console.log('Caller\'s email addresses:', caller.getEmailAddresses());
-        console.log('Caller\'s telephone numbers:', caller.getTelephoneNumbers());
-        console.log('Is the caller anonymous?', caller.isAnonymous());
+        this.Call.setCaller(caller);
     }
 
     /**
