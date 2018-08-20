@@ -5,6 +5,7 @@ import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
+import { PagePlaygroundComponent } from './pages/playground/playground.component';
 
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
@@ -14,6 +15,11 @@ export const AppRoutes: Routes = [
     //     path: 'home',
     //     component: PageHomeComponent
     // },
+    {
+        // Playground page (for testing things).
+        path: 'playground',
+        component: PagePlaygroundComponent
+    },
     {
         // Log Call page.
         path: 'log-call',

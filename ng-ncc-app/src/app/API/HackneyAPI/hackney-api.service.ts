@@ -55,9 +55,10 @@ export class HackneyAPIService {
             .get('https://sandboxapi.hackney.gov.uk/CRMEnquiryTypes')
             .pipe(
                 map((response: HackneyAPIJSONResult) => {
-                    let groups = {}; // groups of call reasons, indexed by call type.
-                    let types = response.results;
+                    let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
+                    const types = response.result;
 
+                    groups = {};
                     Object.keys(types)
                         .map(function(key) {
                             const call_type = parseInt(types[key].enquiryCallType, 10);
@@ -75,10 +76,11 @@ export class HackneyAPIService {
     /**
      * Searches for citizens and returns a list of results.
      */
-    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string): Observable<CitizenIndexSearchResult[]> {
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
+        Observable<CitizenIndexSearchResult[]> {
 
         // Build the query part of the URL.
-        let query: string = '';
+        let query = '';
         if (first_name) { query += `firstname=${first_name}`; }
         if (last_name) { query += `surname=${last_name}`; }
         if (address) { query += `addressline12=${address}`; }

@@ -13,6 +13,7 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
+import { PagePlaygroundComponent } from './pages/playground/playground.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -22,6 +23,8 @@ import { CommsMethodSelectComponent } from './components/comms-method-select/com
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
+import { DialogueComponent } from './components/dialogue/dialogue.component';
+import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 
 @NgModule({
     declarations: [
@@ -31,12 +34,15 @@ import { AddressTenantsResultsComponent } from './components/address-tenants-res
         PageIdentifyComponent,
         PageLogCallComponent,
         PageCommsComponent,
+        PagePlaygroundComponent,
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
         NotifyTemplatePreviewComponent,
         AddressSearchResultsComponent,
-        AddressTenantsResultsComponent
+        AddressTenantsResultsComponent,
+        DialogueComponent,
+        DialogueTitleComponent
     ],
     imports: [
         BrowserModule,
