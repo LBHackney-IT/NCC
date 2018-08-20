@@ -32,6 +32,16 @@ $dialogue-z: 100 !default;
     z-index: $dialogue-z + 1;
 }
 
+.dialogue__buttons {
+    button {
+        margin-right: .5rem;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
 .dialogue__button--close {
     font-weight: 700;
     padding: 15px 30px;
