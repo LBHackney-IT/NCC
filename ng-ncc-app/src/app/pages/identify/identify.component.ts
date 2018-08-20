@@ -6,6 +6,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { Caller } from '../../interfaces/caller.interface';
 import { CallService } from '../../services/call.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-page-identify',
@@ -19,7 +20,7 @@ export class PageIdentifyComponent implements OnInit {
     results: CitizenIndexSearchResult[];
     selected_address: AddressSearchGroupedResult;
 
-    constructor(private HackneyAPI: HackneyAPIService, private Call: CallService) { }
+    constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService) { }
 
     ngOnInit() {
         this._searching = false;
@@ -70,17 +71,16 @@ export class PageIdentifyComponent implements OnInit {
      * Called when a tenant is selected from address results.
      */
     tenantSelected(caller: IdentifiedCaller) {
-        alert(`Identified the caller as ${caller.getName()}.`);
         this.Call.setCaller(caller);
+        this.nextStep();
     }
 
     /**
      * Called when the user hits the Anonymous caller button..
      */
     anonymousSelected() {
-        const caller = new AnonymousCaller;
-        alert('Caller is anonymous.');
-        this.Call.setCaller(caller);
+        this.Call.setCaller(new AnonymousCaller);
+        this.nextStep();
     }
 
     /**
@@ -102,6 +102,13 @@ export class PageIdentifyComponent implements OnInit {
      */
     backToAddresses() {
         this.selected_address = null;
+    }
+
+    nextStep() {
+        if (this.Call.hasCaller()) {
+            this.router.navigateByUrl('comms');
+            // TODO determine which page (comms or payment) to go to, based on the call type and reason.
+        }
     }
 
 }
