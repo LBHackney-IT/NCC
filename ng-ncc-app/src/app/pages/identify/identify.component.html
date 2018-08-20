@@ -26,14 +26,6 @@
 
         <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-        <div class="govuk-warning-text" *ngIf="shouldShowWarning()">
-            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-            <strong class="govuk-warning-text__text">
-                <span class="govuk-warning-text__assistive">Warning</span>
-                DPA: Callers have to answer two DPA questions to access account information.
-            </strong>
-        </div>
-
         <!-- A list of addresses matching the search query. -->
         <app-address-search-results [results]="results" *ngIf="shouldShowAddresses()"
             (selected)="addressSelected($event)"></app-address-search-results>

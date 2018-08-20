@@ -2,6 +2,14 @@
 
 <div class="govuk-body" *ngIf="hasResults()">
 
+    <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            DPA: Callers have to answer two DPA questions to access account information.
+        </strong>
+    </div>
+
     <!-- If we've found contact information... -->
     <h2 class="govuk-heading-m">Identify caller</h2>
 
@@ -79,6 +87,8 @@
                             <span class="value-list__label">Date of birth</span>
                             <span class="value-list__value">09/09/1999</span>
                         </span>
+
+                        <button class="govuk-link-button" type="button" name="button">Edit contact details</button>
                     </span>
 
                 </label>

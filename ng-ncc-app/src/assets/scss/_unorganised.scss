@@ -97,6 +97,11 @@
     text-decoration: none;
 }
 
+$value-list-horizontal-label-ratio: 1 !default;
+$value-list-horizontal-value-ratio: 2 !default; // how wide the value area is compared to the label.
+$value-list-horizontal-gap-ratio: 0.1 !default; // how wide the gap is compared to the label.
+$value-list-ratio: 100 / ($value-list-horizontal-label-ratio + $value-list-horizontal-value-ratio + $value-list-horizontal-gap-ratio);
+
 .value-list__label {
     font-weight: bold;
 }
@@ -111,9 +116,10 @@
 }
 
 .value-list--horizontal .value-list__label {
-    flex-basis: 32%;
+    width: ($value-list-ratio * $value-list-horizontal-label-ratio) * 1%;
+    margin-right: ($value-list-ratio * $value-list-horizontal-gap-ratio) * 1%;
 }
 
 .value-list--horizontal .value-list__value {
-    flex-basis: 67%;
+    width: ($value-list-ratio * $value-list-horizontal-value-ratio) * 1%;
 }
