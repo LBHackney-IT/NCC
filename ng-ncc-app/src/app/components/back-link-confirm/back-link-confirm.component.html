@@ -1,0 +1,8 @@
+<a href="" class="govuk-back-link" (click)="confirm($event)">Back</a>
+
+<app-confirm-dialogue [(show)]="show" yesButtonText="Leave this page" noButtonText="Stay on this page"
+    (selectedYes)="confirmedLeave()" (selectedNo)="confirmedStay()">
+    <app-dialogue-title>Are you sure you want to leave this page?</app-dialogue-title>
+    You haven't finished sending the message yet.<br>
+    Leaving means the message will be lost.
+</app-confirm-dialogue>
