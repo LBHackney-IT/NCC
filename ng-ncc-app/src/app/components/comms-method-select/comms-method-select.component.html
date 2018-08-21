@@ -18,12 +18,12 @@
                 <div class="govuk-form-group">
 
                     <!-- Existing email addresses (from the caller). -->
-                    <!-- <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="method-email-1" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="'dbell@hotmail.co.uk'">
-                        <label class="govuk-label govuk-radios__label" for="method-email-1">
-                            dbell@hotmail.co.uk
+                    <div class="govuk-radios__item" *ngFor="let email_address of existingEmailAddresses(); i as index">
+                        <input class="govuk-radios__input" id="method-email-{{ i }}" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="email_address">
+                        <label class="govuk-label govuk-radios__label" for="method-email-{{ i }}">
+                            {{ email_address }}
                         </label>
-                    </div> -->
+                    </div>
 
                     <!-- Enter a new email address. -->
                     <div class="govuk-radios__item">
@@ -44,14 +44,14 @@
             </div>
             <div class="govuk-radios__conditional" id="method-by-sms">
                 <div class="govuk-form-group">
-                    <!--
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="method-mobile-1" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="'07111 111111'">
-                        <label class="govuk-label govuk-radios__label" for="method-mobile-1">
-                            07111 111111
+
+                    <!-- Existing telephone numbers (from the caller). -->
+                    <div class="govuk-radios__item" *ngFor="let telephone_number of existingTelephoneNumbers(); i as index">
+                        <input class="govuk-radios__input" id="method-mobile-{{ i }}" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="telephone_number">
+                        <label class="govuk-label govuk-radios__label" for="method-mobile-{{ i }}">
+                            {{ telephone_number }}
                         </label>
                     </div>
-                -->
 
                     <!-- Enter a new [mobile] phone number. -->
                     <div class="govuk-radios__item">

@@ -27,25 +27,20 @@ export class IdentifiedCaller implements Caller {
      * Returns the caller's telephone numbers.
      */
     getTelephoneNumbers(): string[] {
+        // We take each of the available telphone number slots and filter out empty ones.
+        // (e.g. a caller might have telephone1 and telephone3, but not telephone2.)
         return [
             this._details.telephone1,
             this._details.telephone2,
             this._details.telephone3
-        ].filter(this._filterEmpty);
+        ].filter((n) => null !== n);
     }
 
     /**
-     * Returns the caller's email addresses.
+     * Returns the caller's email address[es].
      */
     getEmailAddresses(): string[] {
-        return [this._details.emailAddress].filter(this._filterEmpty);
-    }
-
-    /**
-     * TODO this is a common method.
-     */
-    _filterEmpty(n: any) {
-        return n !== undefined;
+        return [this._details.emailAddress].filter((n) => null !== n);
     }
 
 }

@@ -72,6 +72,7 @@ export class PageIdentifyComponent implements OnInit {
      */
     tenantSelected(caller: IdentifiedCaller) {
         this.Call.setCaller(caller);
+        console.log(JSON.stringify(caller.getTelephoneNumbers()));
         this.nextStep();
     }
 
