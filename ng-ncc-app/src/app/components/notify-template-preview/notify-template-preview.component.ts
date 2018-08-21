@@ -5,13 +5,14 @@ import { TemplatePreviewSettings } from '../../classes/template-preview-settings
 @Component({
     selector: 'app-notify-template-preview',
     templateUrl: './notify-template-preview.component.html',
-    styleUrls: ['./notify-template-preview.component.css']
+    styleUrls: ['./notify-template-preview.component.scss']
 })
 export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
     @Input() settings: TemplatePreviewSettings;
 
     _loading: boolean;
     preview: string;
+    placeholders: { [propKey: string]: string };
 
     constructor(private NotifyAPI: NotifyAPIService) { }
 
@@ -36,15 +37,51 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
         }
     }
 
+    /**
+     *
+     */
     updatePreview() {
         if (!this._loading) {
             this._loading = true;
             this.NotifyAPI.getTemplatePreview(this.settings.template_id, this.settings.version)
                 .subscribe(preview => {
                     this.preview = preview;
+                    this.placeholders = {};
                     this._loading = false;
                 });
         }
+    }
+
+    /**
+     *
+     */
+    getPlaceholders(): string[] {
+        // const regex = new RegExp('\(\(([A-za-z0-9 ]+)\)\)', 'gm');
+        const regex = new RegExp('\(\(Free Type\)\)', 'gm');
+        // At present we're only looking for a "((Free Type))" placeholder.
+        const matches = regex.exec(this.preview);
+        let placeholders: string[] = [];
+        if (matches) {
+            placeholders.push(matches[1]);
+        }
+        return placeholders;
+    }
+
+    /**
+     *
+     */
+    getCustomisedPreview(): string {
+        let preview = this.preview;
+        if (this.placeholders) {
+            // Replace any placeholders in the template with our custom values.
+            const values: { placeholder: string, value: string }[] = Object.keys(this.placeholders)
+                .map((key) => { return { placeholder: `((${key}))`, value: this.placeholders[key] }; })
+                .filter((v: any) => v.value);
+            values.forEach((v) => {
+                preview = preview.replace(v.placeholder, `<span class="preview__highlight">${v.value}</span>`);
+            });
+        }
+        return preview;
     }
 
 }
