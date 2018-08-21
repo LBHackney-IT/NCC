@@ -18,6 +18,6 @@ $page-footer-link-colour: $white;
 
 // Z-index settings.
 // Set as multiples of 10, old school like BASIC lines.
-$page-footer-z-index: 80;
-$note-form-z-index: 90;
-$dialogue-z-index: 100;
+$page-footer-z-index: 10;
+$note-form-z-index: 20;
+$dialogue-z-index: 30;
