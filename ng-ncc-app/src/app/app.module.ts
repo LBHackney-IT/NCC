@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
+import { CallerResolver } from './resolvers/caller-resolver.service';
+import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 import { PageHomeComponent } from './pages/home/home.component';
@@ -57,6 +59,8 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         AppRoutingModule
     ],
     providers: [
+        CallerResolver,
+        CallNatureResolver,
         NotifyTemplatesResolver
     ],
     bootstrap: [AppComponent]

@@ -41,7 +41,7 @@
             </div>
 
             <!-- Next button. -->
-            <button class="govuk-button" *ngIf="canProceed()">
+            <button class="govuk-button" *ngIf="canProceed()" (click)="proceed()">
                 Next
             </button>
 
