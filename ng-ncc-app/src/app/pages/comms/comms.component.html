@@ -30,14 +30,9 @@
                 (invalidated)="onInvalidCommsMethod($event)"></app-comms-method-select>
 
             <!-- Previewing the message to be sent. -->
-            <div class="govuk-grid-row" *ngIf="shouldShowPreview()">
-
-                <!-- Message preview. -->
-                <div class="govuk-grid-column-one-half">
-                    <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
-                    <app-notify-template-preview [settings]="preview"></app-notify-template-preview>
-                </div>
-
+            <div *ngIf="shouldShowPreview()">
+                <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
+                <app-notify-template-preview [(settings)]="preview"></app-notify-template-preview>
             </div>
 
             <!-- Send the message to the caller. -->
