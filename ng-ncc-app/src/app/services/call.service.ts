@@ -18,7 +18,7 @@ export class CallService {
     private call_nature: LogCallSelection;
 
     constructor() {
-        this.reset;
+        this.reset();
     }
 
     /**
