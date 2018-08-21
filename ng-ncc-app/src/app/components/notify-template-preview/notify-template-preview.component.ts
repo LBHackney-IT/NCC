@@ -59,7 +59,8 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
         // const regex = new RegExp('\(\(([A-za-z0-9 ]+)\)\)', 'gm');
         const regex = /\(\(([A-za-z0-9 ]+)\)\)/gm;
         const matches = regex.exec(this.preview);
-        let placeholders: string[] = [];
+        let placeholders: string[];
+        placeholders = [];
         if (matches) {
             placeholders.push(matches[1]);
         }
@@ -74,7 +75,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
         if (this.settings.parameters) {
             // Replace any placeholders in the template with our custom values.
             const values: { placeholder: string, value: string }[] = Object.keys(this.settings.parameters)
-                .map((key) => { return { placeholder: `((${key}))`, value: this.settings.parameters[key] }; })
+                .map((key) => ({ placeholder: `((${key}))`, value: this.settings.parameters[key] }))
                 .filter((v: any) => v.value);
             values.forEach((v) => {
                 preview = preview.replace(v.placeholder, `<span class="preview__highlight">${v.value}</span>`);

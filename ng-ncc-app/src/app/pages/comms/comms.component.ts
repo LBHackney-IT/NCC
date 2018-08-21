@@ -147,10 +147,10 @@ export class PageCommsComponent implements OnInit {
                         },
                         "id": "3151d743-c118-42a7-bad6-85c57c8c1555",
                         "reference": null,
-                        "uri": "https://api.notifications.service.gov.uk/v2/notifications/3151d743-c118-42a7-bad6-85c57c8c1555",
+                        "uri": "https://api.notifications.service.gov.uk/v2/notifications/...",
                         "template": {
                           "id": "6dc4b959-62e1-4c28-abef-faf67376b372",
-                          "uri": "https://api.notifications.service.gov.uk/services/bd9a84ae-ccbb-448c-b761-47a8f11aab92/templates/6dc4b959-62e1-4c28-abef-faf67376b372",
+                          "uri": "https://api.notifications.service.gov.uk/services/...",
                           "version": 2
                         }
                       }
