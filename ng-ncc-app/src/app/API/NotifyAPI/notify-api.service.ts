@@ -55,8 +55,9 @@ export class NotifyAPIService {
      */
     sendEmail(email: string, template_id: string, data: any) {
         // NOTE: A gotcha with this endpoint is that it takes GET style parameters instead of via POST.
+        const template_data = JSON.stringify(data);
         return this.http
-            .post(`${this._url}/SendEmail?EmailTo=${email}&TemplateId=${template_id}&TemplateData=${JSON.stringify(data)}`, {});
+            .post(`${this._url}/SendEmail?EmailTo=${email}&TemplateId=${template_id}&TemplateData=${template_data}`, {});
     }
 
     /**
@@ -69,7 +70,8 @@ export class NotifyAPIService {
      */
     sendSMS(mobile: string, template_id: string, data: any) {
         // NOTE: A gotcha with this endpoint is that it takes GET style parameters instead of via POST.
+        const template_data = JSON.stringify(data);
         return this.http
-            .post(`${this._url}/SendSMS?MobileNumber=${mobile}&TemplateId=${template_id}&TemplateData=${JSON.stringify(data)}`, {});
+            .post(`${this._url}/SendSMS?MobileNumber=${mobile}&TemplateId=${template_id}&TemplateData=${template_data}`, {});
     }
 }
