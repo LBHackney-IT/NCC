@@ -1,0 +1,27 @@
+<dialog class="dialogue" role="dialog" aria-labelledby="dialogue-title" [open]="show" (keyup.esc)="answerNo()">
+    <div class="dialogue__box">
+
+        <!-- Optional dialogue title. -->
+        <ng-content select="app-dialogue-title"></ng-content>
+
+        <!-- Dialogue text. -->
+        <p class="dialogue__text govuk-body govuk-!-margin-bottom-5">
+            <ng-content></ng-content>
+        </p>
+
+        <div class="dialogue__buttons">
+
+            <!-- "Yes" button. -->
+            <button class="button dialogue__button dialogue__button--close govuk-button govuk-!-margin-bottom-0" type="button" (click)="answerYes()">
+                {{ yesButtonText || defaultYesButtonText }}
+            </button>
+
+            <!-- "No" button. -->
+            <button class="button dialogue__button dialogue__button--close govuk-button govuk-!-margin-bottom-0" type="button" (click)="answerNo()" #dialogueButton>
+                {{ noButtonText || defaultNoButtonText }}
+            </button>
+
+        </div>
+
+    </div>
+</dialog>

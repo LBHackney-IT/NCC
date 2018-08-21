@@ -27,6 +27,8 @@ import { AddressSearchResultsComponent } from './components/address-search-resul
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
+import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
+import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +46,9 @@ import { DialogueTitleComponent } from './components/dialogue/title/dialogue-tit
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
         DialogueComponent,
-        DialogueTitleComponent
+        DialogueTitleComponent,
+        ConfirmDialogueComponent,
+        BackLinkConfirmComponent
     ],
     imports: [
         BrowserModule,

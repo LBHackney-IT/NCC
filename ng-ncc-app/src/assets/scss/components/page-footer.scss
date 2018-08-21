@@ -4,6 +4,7 @@ $page-footer-border-width: 5px !default;
 $page-footer-border-colour: #999 !default;
 $page-footer-link-colour: #EEE !default;
 $page-footer-padding: 1.5rem 2rem 1rem !default;
+$page-footer-z-index: 10 !default;
 
 ////////////////////
 
@@ -35,7 +36,7 @@ $page-footer-padding: 1.5rem 2rem 1rem !default;
         background-color: $hackney-light-green;
         height: 6px;
         top: -16px;
-        z-index: 99;
+        z-index: $page-footer-z-index;
     }
 
     a {
