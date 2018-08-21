@@ -1,0 +1,6 @@
+<app-dialogue [(show)]="show" [buttonText]="'All right then'" (closed)="handleClose()">
+    <app-dialogue-title>Example title</app-dialogue-title>
+    This is a dialogue.
+</app-dialogue>
+
+<button class="govuk-button" type="button" name="button" (click)="openModal()">Show dialogue...</button>
