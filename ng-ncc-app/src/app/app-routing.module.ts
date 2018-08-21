@@ -7,6 +7,8 @@ import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 
+import { CallerResolver } from './resolvers/caller-resolver.service';
+import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 export const AppRoutes: Routes = [
@@ -28,13 +30,19 @@ export const AppRoutes: Routes = [
     {
         // Identify page.
         path: 'identify',
-        component: PageIdentifyComponent
+        component: PageIdentifyComponent,
+        resolve: {
+            call_nature: CallNatureResolver,
+            templates: NotifyTemplatesResolver
+        }
     },
     {
         // Comms page.
         path: 'comms',
         component: PageCommsComponent,
         resolve: {
+            caller: CallerResolver,
+            call_nature: CallNatureResolver,
             templates: NotifyTemplatesResolver
         }
     },

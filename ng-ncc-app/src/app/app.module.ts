@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
+import { CallerResolver } from './resolvers/caller-resolver.service';
+import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 import { PageHomeComponent } from './pages/home/home.component';
@@ -27,6 +29,8 @@ import { NoResultsComponent } from './components/no-results/no-results.component
 import { BackLinkComponent } from './components/back-link/back-link.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
+import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
+import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +50,9 @@ import { DialogueTitleComponent } from './components/dialogue/title/dialogue-tit
         NoResultsComponent,
         BackLinkComponent
         DialogueComponent,
-        DialogueTitleComponent
+        DialogueTitleComponent,
+        ConfirmDialogueComponent,
+        BackLinkConfirmComponent
     ],
     imports: [
         BrowserModule,
@@ -57,6 +63,8 @@ import { DialogueTitleComponent } from './components/dialogue/title/dialogue-tit
         AppRoutingModule
     ],
     providers: [
+        CallerResolver,
+        CallNatureResolver,
         NotifyTemplatesResolver
     ],
     bootstrap: [AppComponent]

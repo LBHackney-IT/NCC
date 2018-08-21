@@ -1,4 +1,5 @@
 import { Caller } from '../interfaces/caller.interface';
+import { ContactAddress } from '../classes/contact-address.class';
 
 /**
  * This class represents an anonymous caller, as selected from the Identify page.
@@ -20,6 +21,10 @@ export class AnonymousCaller implements Caller {
 
     getEmailAddresses(): string[] {
         return [];
+    }
+
+    getPostalAddress(): ContactAddress {
+        return null;
     }
 
 }

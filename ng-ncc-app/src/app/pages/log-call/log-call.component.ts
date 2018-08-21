@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
+import { CallService } from '../../services/call.service';
 
 @Component({
     selector: 'app-page-log-call',
@@ -18,7 +20,7 @@ export class PageLogCallComponent implements OnInit {
     selected: LogCallSelection;
     previous_calls: Array<any>;
 
-    constructor(private HackneyAPI: HackneyAPIService) {
+    constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService) {
         this.selected = {
             call_type: null,
             call_reason: null
@@ -69,6 +71,15 @@ export class PageLogCallComponent implements OnInit {
     }
 
     /**
+     * This is called when the call type is set/changed, and resets the selected call reason.
+     */
+    proceed() {
+        console.log('Call reason was set.');
+        this.Call.setCallNature(this.selected);
+        this.router.navigateByUrl('identify');
+    }
+
+    /**
      * Returns TRUE if we should be able to proceed.
      */
     canProceed() {
@@ -106,9 +117,5 @@ export class PageLogCallComponent implements OnInit {
         return this.previous_calls;
     }
 
-
-    confirmCallNature() {
-        console.log('Call nature:', this.selected.call_type.label, this.selected.call_reason.label);
-    }
 
 }
