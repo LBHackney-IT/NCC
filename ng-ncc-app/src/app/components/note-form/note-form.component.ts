@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ContentAreaComponent } from '../content-area/content-area.component';
+import { CallService } from '../../services/call.service';
 
 @Component({
     selector: 'app-note-form',
@@ -8,12 +9,13 @@ import { ContentAreaComponent } from '../content-area/content-area.component';
 })
 export class NoteFormComponent implements OnInit {
 
-    TOP_MARGIN = 20;    // gap between the top of the content area and the toggle button.
-    containerStyle: Object;     // used to control the inline style of .note-form__container.
+    TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
+    containerStyle: Object; // used to control the inline style of .note-form__container.
     comment: string;
-    visible: boolean;
+    show: boolean;          // whether the note component is visible on the page.
+    expanded: boolean;      // whether the form for adding a note is expanded.
 
-    constructor(private inj: Injector) {
+    constructor(private inj: Injector, private Call: CallService) {
         // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
         // https://stackoverflow.com/a/40026333/4073160
         const parentComponent = this.inj.get(ContentAreaComponent);
@@ -24,15 +26,36 @@ export class NoteFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.visible = false;
+        this.expanded = false;
         this._resetComment();
+    }
+
+    /**
+     * Returns TRUE if the component should be made visible.
+     */
+    shouldShow(): boolean {
+        return this.Call.hasCaller() && this.Call.hasCallNature();
     }
 
     /**
      * Show or hide the note form.
      */
     toggle() {
-        this.visible = !this.visible;
+        this.expanded = !this.expanded;
+    }
+
+    /**
+     * Returns TRUE if the caller is anonymous.
+     */
+    isCallerAnonymous(): boolean {
+        return this.Call.getCaller().isAnonymous();
+    }
+
+    /**
+     * Returns the caller's name.
+     */
+    getCallerName(): string {
+        return this.Call.getCaller().getName();
     }
 
     /**

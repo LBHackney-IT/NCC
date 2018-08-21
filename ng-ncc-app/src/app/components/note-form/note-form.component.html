@@ -1,19 +1,22 @@
 <!-- TODO conditionally display this component based on where we are (and what data is available). -->
-<div class="note-form__container" [ngStyle]="containerStyle">
+<div class="note-form__container" [ngStyle]="containerStyle" *ngIf="shouldShow()">
 
     <!-- Toggle button for displaying the form. -->
     <button class="note-form__container__toggle" type="button" name="button" (click)="toggle()">
         Add a note
     </button>
 
-    <div *ngIf="visible">
+    <div *ngIf="expanded">
         <form class="note-form__container__form" #commentForm="ngForm" (ngSubmit)="saveComment()">
             <div class="govuk-form-group">
 
                 <!-- Caller details. -->
-                <dl class="value-list value-list--horizontal">
+                <dl class="value-list value-list--horizontal govuk-body">
                     <dt class="value-list__label">Caller</dt>
-                    <dd class="value-list__value">George "Kingfish" Stevens</dd>
+                    <dd class="value-list__value">
+                        <span *ngIf="!isCallerAnonymous()">{{ getCallerName() }}</span>
+                        <em *ngIf="isCallerAnonymous()">anonymous</em>
+                    </dd>
                 </dl>
 
                 <!-- Comment field. -->
@@ -23,9 +26,6 @@
             </div>
             <div class="govuk-form-group">
                 <a href="">View old notes</a>
-            </div>
-            <div class="govuk-form-group">
-                <a href="">Attach a file</a>
             </div>
             <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
                 Save

@@ -18,12 +18,12 @@
                 <div class="govuk-form-group">
 
                     <!-- Existing email addresses (from the caller). -->
-                    <!-- <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="method-email-1" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="'dbell@hotmail.co.uk'">
-                        <label class="govuk-label govuk-radios__label" for="method-email-1">
-                            dbell@hotmail.co.uk
+                    <div class="govuk-radios__item" *ngFor="let email_address of existingEmailAddresses(); i as index">
+                        <input class="govuk-radios__input" id="method-email-{{ i }}" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="email_address">
+                        <label class="govuk-label govuk-radios__label" for="method-email-{{ i }}">
+                            {{ email_address }}
                         </label>
-                    </div> -->
+                    </div>
 
                     <!-- Enter a new email address. -->
                     <div class="govuk-radios__item">
@@ -44,14 +44,14 @@
             </div>
             <div class="govuk-radios__conditional" id="method-by-sms">
                 <div class="govuk-form-group">
-                    <!--
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="method-mobile-1" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="'07111 111111'">
-                        <label class="govuk-label govuk-radios__label" for="method-mobile-1">
-                            07111 111111
+
+                    <!-- Existing telephone numbers (from the caller). -->
+                    <div class="govuk-radios__item" *ngFor="let telephone_number of existingTelephoneNumbers(); i as index">
+                        <input class="govuk-radios__input" id="method-mobile-{{ i }}" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="telephone_number">
+                        <label class="govuk-label govuk-radios__label" for="method-mobile-{{ i }}">
+                            {{ telephone_number }}
                         </label>
                     </div>
-                -->
 
                     <!-- Enter a new [mobile] phone number. -->
                     <div class="govuk-radios__item">
@@ -71,39 +71,48 @@
                 </label>
             </div>
             <div class="govuk-radios__conditional" id="method-by-post">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-line-1">
-                        First line of address
-                    </label>
-                    <input class="govuk-input" id="address-line-1" name="address-line-1" [(ngModel)]="selection.existing[methods.METHOD_POST].line_1" type="text" (ngModelChange)="checkDetails()">
+
+                <!-- If the caller is identified, we display their address. -->
+                <div *ngIf="!caller.isAnonymous()">
+                    {{ caller.getPostalAddress() }}
                 </div>
 
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-line-2">
-                        Second line of address
-                    </label>
-                    <input class="govuk-input" id="address-line-2" name="address-line-2" [(ngModel)]="selection.existing[methods.METHOD_POST].line_2" type="text" (ngModelChange)="checkDetails()">
-                </div>
+                <!-- If the caller is anonymous, we display a form for entering an address. -->
+                <div *ngIf="caller.isAnonymous()">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="address-line-1">
+                            First line of address
+                        </label>
+                        <input class="govuk-input" id="address-line-1" name="address-line-1" [(ngModel)]="selection.existing[methods.METHOD_POST].line_1" type="text" (ngModelChange)="checkDetails()">
+                    </div>
 
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-town">
-                        Town or city
-                    </label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" [(ngModel)]="selection.existing[methods.METHOD_POST].town" type="text" (ngModelChange)="checkDetails()">
-                </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="address-line-2">
+                            Second line of address
+                        </label>
+                        <input class="govuk-input" id="address-line-2" name="address-line-2" [(ngModel)]="selection.existing[methods.METHOD_POST].line_2" type="text" (ngModelChange)="checkDetails()">
+                    </div>
 
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-county">
-                        County
-                    </label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" [(ngModel)]="selection.existing[methods.METHOD_POST].county" type="text" (ngModelChange)="checkDetails()">
-                </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="address-town">
+                            Town or city
+                        </label>
+                        <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" [(ngModel)]="selection.existing[methods.METHOD_POST].town" type="text" (ngModelChange)="checkDetails()">
+                    </div>
 
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-postcode">
-                        Postcode
-                    </label>
-                    <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" [(ngModel)]="selection.existing[methods.METHOD_POST].postcode" type="text" (ngModelChange)="checkDetails()">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="address-county">
+                            County
+                        </label>
+                        <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" [(ngModel)]="selection.existing[methods.METHOD_POST].county" type="text" (ngModelChange)="checkDetails()">
+                    </div>
+
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="address-postcode">
+                            Postcode
+                        </label>
+                        <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" [(ngModel)]="selection.existing[methods.METHOD_POST].postcode" type="text" (ngModelChange)="checkDetails()">
+                    </div>
                 </div>
 
                 <div class="govuk-form-group">
