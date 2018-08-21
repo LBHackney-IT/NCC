@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
-import { TemplatePreviewSettings } from '../../classes/template-preview-settings.class';
+import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
 
 @Component({
     selector: 'app-notify-template-preview',
@@ -9,10 +9,10 @@ import { TemplatePreviewSettings } from '../../classes/template-preview-settings
 })
 export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
     @Input() settings: TemplatePreviewSettings;
+    @Output() settingsChange = new EventEmitter<TemplatePreviewSettings>();
 
     _loading: boolean;
     preview: string;
-    placeholders: { [propKey: string]: string };
 
     constructor(private NotifyAPI: NotifyAPIService) { }
 
@@ -25,15 +25,15 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
         // TODO display a loading prompt.
         // TODO do we fetch the preview from the API, or use what has already been downloaded (from getTemplates())?
         if (this.settings) {
-            if (changes.settings.isFirstChange()) {
-                // A basic check to ensure that the settings have actually changed.
-                // previousValue and currentValue would always be different as they're different objects.
-                const old_template: string = changes.settings.previousValue;
-                const new_template: string = changes.settings.currentValue;
-                if (old_template !== new_template) {
-                    this.updatePreview();
-                }
+            // A basic check to ensure that the settings have actually changed.
+            // previousValue and currentValue would always be different as they're different objects.
+            const old_template: string = changes.settings.previousValue;
+            const new_template: string = changes.settings.currentValue;
+            if (old_template !== new_template) {
+                this.updatePreview();
             }
+
+            this.settingsChange.emit(this.settings);
         }
     }
 
@@ -46,7 +46,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
             this.NotifyAPI.getTemplatePreview(this.settings.template_id, this.settings.version)
                 .subscribe(preview => {
                     this.preview = preview;
-                    this.placeholders = {};
+                    this.settings.parameters = {};
                     this._loading = false;
                 });
         }
@@ -72,10 +72,10 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
      */
     getCustomisedPreview(): string {
         let preview = this.preview;
-        if (this.placeholders) {
+        if (this.settings.parameters) {
             // Replace any placeholders in the template with our custom values.
-            const values: { placeholder: string, value: string }[] = Object.keys(this.placeholders)
-                .map((key) => { return { placeholder: `((${key}))`, value: this.placeholders[key] }; })
+            const values: { placeholder: string, value: string }[] = Object.keys(this.settings.parameters)
+                .map((key) => { return { placeholder: `((${key}))`, value: this.settings.parameters[key] }; })
                 .filter((v: any) => v.value);
             values.forEach((v) => {
                 preview = preview.replace(v.placeholder, `<span class="preview__highlight">${v.value}</span>`);

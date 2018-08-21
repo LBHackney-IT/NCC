@@ -7,7 +7,7 @@ import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { ContactDetails } from '../../classes/contact-details.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
-import { TemplatePreviewSettings } from '../../classes/template-preview-settings.class';
+import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
 
@@ -88,7 +88,11 @@ export class PageCommsComponent implements OnInit {
             if (this.preview && this.preview.template_id !== selected.id) {
                 return;
             }
-            this.preview = new TemplatePreviewSettings(selected.id, selected.version);
+            this.preview = {
+                template_id: selected.id,
+                version: selected.version,
+                parameters: {}
+            };
         }
     }
 
