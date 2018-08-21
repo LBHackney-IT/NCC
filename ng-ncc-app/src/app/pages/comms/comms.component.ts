@@ -25,6 +25,7 @@ export class PageCommsComponent implements OnInit {
     selected_option: CommsOption;
     selected_details: CommsSelection;
     preview: TemplatePreviewSettings;
+    modal: any;
 
     constructor(private NotifyAPI: NotifyAPIService, private route: ActivatedRoute) { }
 
@@ -35,6 +36,10 @@ export class PageCommsComponent implements OnInit {
         this.CONTACT_METHOD = CONTACT;
         this._sending = false;
         this.selected_option = null;
+        this.modal = {
+            confirmed: false,
+            error: false
+        };
 
         this.route.data
             .subscribe((data) => {
@@ -121,9 +126,11 @@ export class PageCommsComponent implements OnInit {
                     .subscribe(
                         (feedback) => {
                             console.log('Sent email, got feedback:', feedback);
+                            this.modal.confirmed = true;
                         },
                         (error) => {
                             console.log('Error sending email:', error);
+                            this.modal.error = true;
                         },
                         () => {
                             subscription.unsubscribe();
@@ -138,9 +145,11 @@ export class PageCommsComponent implements OnInit {
                     .subscribe(
                         (feedback) => {
                             console.log('Sent text message, got feedback:', feedback);
+                            this.modal.confirmed = true;
                         },
                         (error) => {
                             console.log('Error sending text message:', error);
+                            this.modal.error = true;
                         },
                         () => {
                             subscription.unsubscribe();

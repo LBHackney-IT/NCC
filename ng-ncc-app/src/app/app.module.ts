@@ -13,6 +13,7 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
+import { PagePlaygroundComponent } from './pages/playground/playground.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -24,6 +25,8 @@ import { AddressSearchResultsComponent } from './components/address-search-resul
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
+import { DialogueComponent } from './components/dialogue/dialogue.component';
+import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +36,7 @@ import { BackLinkComponent } from './components/back-link/back-link.component';
         PageIdentifyComponent,
         PageLogCallComponent,
         PageCommsComponent,
+        PagePlaygroundComponent,
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
@@ -41,6 +45,8 @@ import { BackLinkComponent } from './components/back-link/back-link.component';
         AddressTenantsResultsComponent,
         NoResultsComponent,
         BackLinkComponent
+        DialogueComponent,
+        DialogueTitleComponent
     ],
     imports: [
         BrowserModule,

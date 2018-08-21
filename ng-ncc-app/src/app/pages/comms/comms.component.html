@@ -50,6 +50,21 @@
             <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
                 Send
             </button>
+
+            <!-- Confirmation modal. -->
+            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+                Message sent successfully.
+            </app-dialogue>
+
+            <app-dialogue [(show)]="modal.error">
+                <div class="govuk-warning-text">
+                    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                    <span class="govuk-warning-text__text">
+                        There was a problem with sending the message.
+                    </span>
+                </div>
+            </app-dialogue>
+
         </form>
 
     </div>
