@@ -1,18 +1,18 @@
 @import '../../../assets/scss/vars';
 
-$note-form-width: 30%;
-$note-form-max-width: 500px;
-$note-form-top: 20px;
-$note-form-z-index: 90;
-$note-form-bg-colour: $white;
-$note-form-border: 2px solid $dark-grey;
-$note-form-text-colour: $dark-grey;
-$note-form-padding: 1rem;
-$note-form-field-height: 15rem;
+$note-form-width: 30% !default;
+$note-form-max-width: 500px !default;
+$note-form-top: 20px !default;
+$note-form-z-index: 90 !default;
+$note-form-bg-colour: $white !default;
+$note-form-border: 2px solid $dark-grey !default;
+$note-form-text-colour: $dark-grey !default;
+$note-form-padding: 1rem !default;
+$note-form-field-height: 15rem !default;
 
-$note-form-toggle-bg-colour: rgba($white, .75);
-$note-form-toggle-text-colour: $dark-grey;
-$note-form-toggle-padding: 1rem;
+$note-form-toggle-bg-colour: rgba($white, .75) !default;
+$note-form-toggle-text-colour: $dark-grey !default;
+$note-form-toggle-padding: 1rem !default;
 
 ////////////////////
 
