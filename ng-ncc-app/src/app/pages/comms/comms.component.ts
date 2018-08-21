@@ -8,7 +8,8 @@ import { CommsOption } from '../../classes/comms-option.class';
 import { ContactDetails } from '../../classes/contact-details.class';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
-import { TemplatePreviewSettings } from '../../classes/template-preview-settings.class';
+import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
+import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
 
@@ -47,6 +48,9 @@ export class PageCommsComponent implements OnInit {
             });
     }
 
+    /**
+     * Returns TRUE if the specified communication method is available.
+     */
     isMethodAvailable(type: string): boolean {
         if (this.selected_option) {
             return !!(this.selected_option.hasTemplate(type));
@@ -86,7 +90,7 @@ export class PageCommsComponent implements OnInit {
     }
 
     /**
-     *
+     * Updates the template displayed in the preview area.
      */
     updatePreview() {
         if (this.shouldShowPreview()) {
@@ -95,15 +99,19 @@ export class PageCommsComponent implements OnInit {
                 // We might not have a selected template! If the previously selected method was made invalid, it will happen.
                 return;
             }
-            if (this.preview && this.preview.template_id !== selected.id) {
+            if (this.preview && selected && this.preview.template_id !== selected.id) {
                 return;
             }
-            this.preview = new TemplatePreviewSettings(selected.id, selected.version);
+            this.preview = {
+                template_id: selected.id,
+                version: selected.version,
+                parameters: {}
+            };
         }
     }
 
     /**
-     * Attempts to send a message via GOV.UK Notify.
+     * Attempts to send the selected message via the Notify API.
      */
     sendMessage(event) {
         if (event && event.defaultPrevented) {
@@ -113,53 +121,60 @@ export class PageCommsComponent implements OnInit {
         const template_id: string = this.selected_option.templates[this.selected_details.method].id;
         const method: string = this.selected_details.method;
         const address: string = this.selected_details.getDetail();
-        let subscription;
-        console.log(address);
+        const parameters = this.preview.parameters;
 
         this._sending = true;
+        let observe: Observable<any>;
 
         switch (method) {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
-                console.log('Sending an email to', address);
-                subscription = this.NotifyAPI.sendEmail(address, template_id, {})
-                    .subscribe(
-                        (feedback) => {
-                            console.log('Sent email, got feedback:', feedback);
-                            this.modal.confirmed = true;
-                        },
-                        (error) => {
-                            console.log('Error sending email:', error);
-                            this.modal.error = true;
-                        },
-                        () => {
-                            subscription.unsubscribe();
-                            this._sending = false;
-                        });
+                console.log('send email', address, template_id);
+                observe = this.NotifyAPI.sendEmail(address, template_id, parameters);
                 break;
 
             case CONTACT.METHOD_SMS:
                 // Send a text message.
-                console.log('Sending a text message to', address);
-                subscription = this.NotifyAPI.sendSMS(address, template_id, {})
-                    .subscribe(
-                        (feedback) => {
-                            console.log('Sent text message, got feedback:', feedback);
-                            this.modal.confirmed = true;
-                        },
-                        (error) => {
-                            console.log('Error sending text message:', error);
-                            this.modal.error = true;
-                        },
-                        () => {
-                            subscription.unsubscribe();
-                            this._sending = false;
-                        });
+                console.log('send sms', address, template_id);
+                observe = this.NotifyAPI.sendSMS(address, template_id, {});
                 break;
 
             default:
                 console.log('Unsupported method:', method);
                 this._sending = false;
+        }
+
+        if (observe) {
+            const subscription = observe.subscribe(
+                (feedback) => {
+                    /*
+                    {
+                      "response": {
+                        "content": {
+                          "from_email": "hackney.council.housing.contact@notifications.service.gov.uk",
+                          "body": "...",
+                          "subject": "Your Call With Us"
+                        },
+                        "id": "3151d743-c118-42a7-bad6-85c57c8c1555",
+                        "reference": null,
+                        "uri": "https://api.notifications.service.gov.uk/v2/notifications/...",
+                        "template": {
+                          "id": "6dc4b959-62e1-4c28-abef-faf67376b372",
+                          "uri": "https://api.notifications.service.gov.uk/services/...",
+                          "version": 2
+                        }
+                      }
+                    }
+                    */
+                    this.modal.confirmed = true;
+                },
+                (error) => {
+                    this.modal.error = true;
+                },
+                () => {
+                    subscription.unsubscribe();
+                    this._sending = false;
+                });
         }
     }
 
