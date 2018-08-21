@@ -53,12 +53,11 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
     }
 
     /**
-     *
+     * Returns a list of labels representing placeholders.
      */
     getPlaceholders(): string[] {
         // const regex = new RegExp('\(\(([A-za-z0-9 ]+)\)\)', 'gm');
-        const regex = new RegExp('\(\(Free Type\)\)', 'gm');
-        // At present we're only looking for a "((Free Type))" placeholder.
+        const regex = /\(\(([A-za-z0-9 ]+)\)\)/gm;
         const matches = regex.exec(this.preview);
         let placeholders: string[] = [];
         if (matches) {
