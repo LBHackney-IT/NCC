@@ -63,16 +63,18 @@
                         <span class="value-list value-list--horizontal govuk-body-s">
                             <span class="value-list__label">Telephone</span>
                             <span class="value-list__value">
-                                <span *ngFor="let number of row.getTelephoneNumbers()">
+                                <span class="value-list__value__line" *ngFor="let number of row.getTelephoneNumbers()">
                                     {{ number }}
                                 </span>
+                                <em *ngIf="row.hasNoTelephoneNumbers()">none</em>
                             </span>
 
                             <span class="value-list__label">Email</span>
                             <span class="value-list__value">
-                                <span *ngFor="let email of row.getEmailAddresses()">
+                                <span class="value-list__value__line" *ngFor="let email of row.getEmailAddresses()">
                                     {{ email }}
                                 </span>
+                                <em *ngIf="row.hasNoEmailAddresses()">none</em>
                             </span>
                         </span>
                     </span>
@@ -88,7 +90,7 @@
                             <span class="value-list__value">09/09/1999</span>
                         </span>
 
-                        <button class="govuk-link-button" type="button" name="button">Edit contact details</button>
+                        <button class="govuk-link-button govuk-!-margin-bottom-0" type="button" name="button">Edit contact details</button>
                     </span>
 
                 </label>

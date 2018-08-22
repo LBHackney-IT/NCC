@@ -99,6 +99,11 @@ $value-list-ratio: 100 / ($value-list-horizontal-label-ratio + $value-list-horiz
     margin-bottom: .5rem;
 }
 
+.value-list__value__line {
+    display: block;
+    margin-bottom: .2rem;
+}
+
 .value-list--horizontal {
     display: flex;
     flex-wrap: wrap;

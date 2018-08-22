@@ -83,7 +83,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
         }
 
         // Replace line breaks in the template with BR tags.
-        preview = preview.replace(/\n|\r/, '<br><br>');
+        preview = preview.replace(/\n/g, '<br>');
 
         return preview;
     }

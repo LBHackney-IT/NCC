@@ -10,4 +10,6 @@ export interface Caller {
     getTelephoneNumbers(): string[];
     getEmailAddresses(): string[];
     getPostalAddress(): ContactAddress;
+    hasNoTelephoneNumbers(): boolean;
+    hasNoEmailAddresses(): boolean;
 }
