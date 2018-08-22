@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -34,6 +34,8 @@ import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TabComponent } from './components/tabs/tab/tab.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +46,7 @@ import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.comp
         PageLogCallComponent,
         PageCommsComponent,
         PagePlaygroundComponent,
-        PagePaymentComponent
+        PagePaymentComponent,
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
@@ -59,6 +61,8 @@ import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.comp
         BackLinkConfirmComponent,
         PagePaymentSummaryComponent,
         PagePaymentMakeComponent,
+        TabsComponent,
+        TabComponent,
     ],
     imports: [
         BrowserModule,
@@ -68,6 +72,7 @@ import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.comp
         // Set up routing.
         AppRoutingModule
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         CallerResolver,
         CallNatureResolver,

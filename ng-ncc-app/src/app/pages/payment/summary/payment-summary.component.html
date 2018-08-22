@@ -1,3 +1,84 @@
-<p>
-  payment-summary works!
-</p>
+<!-- Rent balance. -->
+<fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h2 class="govuk-fieldset__heading">
+            Balance
+        </h2>
+    </legend>
+
+    <div class="panel govuk-!-margin-bottom-3">
+        <div class="govuk-grid-row">
+
+            <!-- Current balance. -->
+            <div class="govuk-grid-column-one-quarter">
+                <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Current balance</h3>
+                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">- £9999.99</p>
+            </div>
+
+            <!-- Rent amount. -->
+            <div class="govuk-grid-column-one-quarter">
+                <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Rent amount</h3>
+                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">£70.00</p>
+            </div>
+
+            <!-- Next payment date. -->
+            <div class="govuk-grid-column-one-quarter">
+                <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Next payment</h3>
+                <p class="govuk-!-font-size-24">27/08/2018</p>
+            </div>
+
+            <!-- Agreement plan. -->
+            <div class="govuk-grid-column-one-quarter">
+                <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Agreement plan</h3>
+                <p class="govuk-!-font-size-24">27/08/2019</p>
+            </div>
+
+        </div>
+    </div>
+</fieldset>
+
+<!-- Payment history. -->
+<h2 class="govuk-heading-m">Payment history</h2>
+
+<div class="transactions govuk-!-margin-bottom-2">
+    <table class="govuk-table govuk-!-margin-bottom-1">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">Period</th>
+                <th class="govuk-table__header" scope="col">Date</th>
+                <th class="govuk-table__header" scope="col">Type</th>
+                <th class="govuk-table__header transaction__amount" scope="col">Amount</th>
+                <th class="govuk-table__header transaction__amount" scope="col">Balance</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row" *ngFor="let row of payment_history">
+                <td class="govuk-table__cell" scope="row">{{ row.period }}</td>
+                <td class="govuk-table__cell">{{ row.date }}</td>
+                <td class="govuk-table__cell">{{ row.type }}</td>
+                <td class="govuk-table__cell transaction__amount">{{ row.amount }}</td>
+                <td class="govuk-table__cell transaction__amount">{{ row.balance }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Select information to send. -->
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-!-font-weight-bold" for="form">
+        Select information to send:
+    </label>
+    <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selected_template">
+        <option [ngValue]="null">- select information</option>
+        <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.name }}</option>
+    </select>
+</div>
+
+<!-- Select receipt method. -->
+<!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
+<app-comms-method-select
+    [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
+    [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
+    [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
+    (selected)="onSelectCommsMethod($event)"
+    (invalidated)="onInvalidCommsMethod($event)"></app-comms-method-select>

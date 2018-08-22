@@ -37,11 +37,19 @@ export const AppRoutes: Routes = [
         children: [
             {
                 path: 'summary',
-                component: PagePaymentSummaryComponent
+                component: PagePaymentSummaryComponent,
+                resolve: {
+                    templates: NotifyTemplatesResolver
+                }
             },
             {
                 path: 'make',
                 component: PagePaymentMakeComponent
+            },
+            {
+                // Catch-all (which should go to the summary child page).
+                path: '**',
+                redirectTo: 'summary'
             }
         ]
     },

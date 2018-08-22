@@ -74,14 +74,14 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
      * Returns a list of the caller's email addresses.
      */
     existingEmailAddresses(): string[] {
-        return this.caller.getEmailAddresses();
+        return this.caller ? this.caller.getEmailAddresses() : [];
     }
 
     /**
      * Returns a list of the caller's telephone numbers.
      */
     existingTelephoneNumbers(): string[] {
-        return this.caller.getTelephoneNumbers();
+        return this.caller ? this.caller.getTelephoneNumbers() : [];
     }
 
     /**
@@ -89,9 +89,5 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
      */
     checkDetails() {
         this.selected.emit(this.selection);
-        // Only emit an event if we have completed details (i.e. a selected comms method and the relevant address/number).
-        // if (this.selection.isComplete()) {
-        //     return;
-        // }
     }
 }

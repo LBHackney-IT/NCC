@@ -73,12 +73,12 @@
             <div class="govuk-radios__conditional" id="method-by-post">
 
                 <!-- If the caller is identified, we display their address. -->
-                <div *ngIf="!caller.isAnonymous()">
+                <div *ngIf="caller && !caller.isAnonymous()">
                     {{ caller.getPostalAddress() }}
                 </div>
 
                 <!-- If the caller is anonymous, we display a form for entering an address. -->
-                <div *ngIf="caller.isAnonymous()">
+                <div *ngIf="caller && caller.isAnonymous()">
                     <div class="govuk-form-group">
                         <label class="govuk-label" for="address-line-1">
                             First line of address
