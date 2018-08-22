@@ -6,7 +6,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 @Component({
     selector: 'app-address-tenants-results',
     templateUrl: './address-tenants-results.component.html',
-    styleUrls: ['./address-tenants-results.component.css']
+    styleUrls: ['./address-tenants-results.component.scss']
 })
 export class AddressTenantsResultsComponent implements OnChanges {
     @Input() address: AddressSearchGroupedResult;

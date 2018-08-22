@@ -34,9 +34,9 @@ export class HackneyAPIService {
                     const types = response.result;
 
                     // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
-                    const indexed_types: Array<LogCallType> = Object.keys(types).map(function(value, index) {
-                        return new LogCallType(index, types[index]);
-                    });
+                    const indexed_types: Array<LogCallType> = Object.keys(types).map(
+                        (value, index) => new LogCallType(index, types[index])
+                    );
 
                     return indexed_types;
                 })
@@ -89,7 +89,7 @@ export class HackneyAPIService {
         // very important to set IsAdvanceSearch to false.
 
         return this.http
-            .get('https://sandboxapi.hackney.gov.uk/v1/CitizenIndexSearch?' + query)
+            .get(`https://sandboxapi.hackney.gov.uk/v1/CitizenIndexSearch?${query}`)
             .pipe(
                 map((response: HackneyAPIJSONResult) => {
                     // TODO perhaps filter out any unwanted/unnecessary information.

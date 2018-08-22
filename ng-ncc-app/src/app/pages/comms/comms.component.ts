@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { ContactDetails } from '../../classes/contact-details.class';
+import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
 import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
 import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
@@ -20,9 +21,10 @@ import { CommsMethodDetails } from '../../interfaces/comms-method-details.interf
 export class PageCommsComponent implements OnInit {
 
     CONTACT_METHOD: object;
+    _sending: boolean;
     comms_options: CommsOption[];
     selected_option: CommsOption;
-    selected_details: CommsMethodDetails;
+    selected_details: CommsSelection;
     preview: TemplatePreviewSettings;
     modal: any;
 
@@ -33,7 +35,7 @@ export class PageCommsComponent implements OnInit {
         initAll();
 
         this.CONTACT_METHOD = CONTACT;
-
+        this._sending = false;
         this.selected_option = null;
         this.modal = {
             confirmed: false,
@@ -74,8 +76,9 @@ export class PageCommsComponent implements OnInit {
     /**
      * Called when valid communication method and respective details are entered.
      */
-    onSelectCommsMethod(details: CommsMethodDetails) {
+    onSelectCommsMethod(details: CommsSelection) {
         this.selected_details = details;
+        console.log(details);
         this.updatePreview();
     }
 
@@ -92,6 +95,10 @@ export class PageCommsComponent implements OnInit {
     updatePreview() {
         if (this.shouldShowPreview()) {
             const selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
+            if (!selected) {
+                // We might not have a selected template! If the previously selected method was made invalid, it will happen.
+                return;
+            }
             if (this.preview && selected && this.preview.template_id !== selected.id) {
                 return;
             }
@@ -112,11 +119,14 @@ export class PageCommsComponent implements OnInit {
         }
 
         const template_id: string = this.selected_option.templates[this.selected_details.method].id;
-        const address: string = this.selected_details.details;
+        const method: string = this.selected_details.method;
+        const address: string = this.selected_details.getDetail();
         const parameters = this.preview.parameters;
+
+        this._sending = true;
         let observe: Observable<any>;
 
-        switch (this.selected_details.method) {
+        switch (method) {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
                 console.log('send email', address, template_id);
@@ -130,13 +140,13 @@ export class PageCommsComponent implements OnInit {
                 break;
 
             default:
-                console.log('Unsupported method at present:', this.selected_details.method);
+                console.log('Unsupported method:', method);
+                this._sending = false;
         }
 
         if (observe) {
             const subscription = observe.subscribe(
                 (feedback) => {
-                    console.log(feedback);
                     /*
                     {
                       "response": {
@@ -159,11 +169,11 @@ export class PageCommsComponent implements OnInit {
                     this.modal.confirmed = true;
                 },
                 (error) => {
-                    console.log('Error sending text message:', error);
                     this.modal.error = true;
                 },
                 () => {
                     subscription.unsubscribe();
+                    this._sending = false;
                 });
         }
     }

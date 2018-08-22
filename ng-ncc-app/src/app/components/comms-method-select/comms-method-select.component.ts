@@ -20,7 +20,7 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
     @Input() disableSMS?: boolean;
 
     // Pass the selected comms method and details through an [Observable] event.
-    @Output() selected = new EventEmitter<object>();
+    @Output() selected = new EventEmitter<CommsSelection>();
     @Output() invalidated = new EventEmitter<void>();
 
     // A reference to the Caller we want to contact.
@@ -88,13 +88,10 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
      *
      */
     checkDetails() {
+        this.selected.emit(this.selection);
         // Only emit an event if we have completed details (i.e. a selected comms method and the relevant address/number).
-        if (this.selection.isComplete()) {
-            this.selected.emit({
-                method: this.selection.method,
-                details: this.selection.getDetail()
-            });
-            return;
-        }
+        // if (this.selection.isComplete()) {
+        //     return;
+        // }
     }
 }
