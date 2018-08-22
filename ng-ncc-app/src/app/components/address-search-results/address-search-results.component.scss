@@ -1,15 +1,17 @@
 @import "../../../assets/scss/vars.scss";
 @import "~govuk-frontend/all";
-
 $address-results-button-border: 1px solid $govuk-border-colour !default;
 $address-results-button-padding: 1em !default;
 $address-results-button-text-size: 1.2em !default;
-
 ////////////////////
+:host {
+    display: block;
+    max-height: 50vh;
+    overflow-y: auto;
+}
 
 button {
     @include govuk-focusable;
-
     background: transparent;
     border: $address-results-button-border;
     cursor: pointer;

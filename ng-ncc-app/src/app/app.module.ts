@@ -25,6 +25,8 @@ import { CommsMethodSelectComponent } from './components/comms-method-select/com
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
+import { NoResultsComponent } from './components/no-results/no-results.component';
+import { BackLinkComponent } from './components/back-link/back-link.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
@@ -45,6 +47,8 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         NotifyTemplatePreviewComponent,
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
+        NoResultsComponent,
+        BackLinkComponent
         DialogueComponent,
         DialogueTitleComponent,
         ConfirmDialogueComponent,
