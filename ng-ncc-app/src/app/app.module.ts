@@ -16,6 +16,7 @@ import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
+import { PagePaymentComponent } from './pages/payment/payment.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -31,6 +32,8 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
+import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
+import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +44,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         PageLogCallComponent,
         PageCommsComponent,
         PagePlaygroundComponent,
+        PagePaymentComponent
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
@@ -52,7 +56,9 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         DialogueComponent,
         DialogueTitleComponent,
         ConfirmDialogueComponent,
-        BackLinkConfirmComponent
+        BackLinkConfirmComponent,
+        PagePaymentSummaryComponent,
+        PagePaymentMakeComponent,
     ],
     imports: [
         BrowserModule,

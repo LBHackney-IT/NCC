@@ -6,6 +6,9 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
+import { PagePaymentComponent } from './pages/payment/payment.component';
+import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
+import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
@@ -26,6 +29,21 @@ export const AppRoutes: Routes = [
         // Log Call page.
         path: 'log-call',
         component: PageLogCallComponent
+    },
+    {
+        // Payment page.
+        path: 'payment',
+        component: PagePaymentComponent,
+        children: [
+            {
+                path: 'summary',
+                component: PagePaymentSummaryComponent
+            },
+            {
+                path: 'make',
+                component: PagePaymentMakeComponent
+            }
+        ]
     },
     {
         // Identify page.
