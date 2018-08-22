@@ -37,6 +37,7 @@ export class PageCommsComponent implements OnInit {
         this.CONTACT_METHOD = CONTACT;
         this._sending = false;
         this.selected_option = null;
+        this.selected_details = null;
         this.modal = {
             confirmed: false,
             error: false
@@ -63,7 +64,7 @@ export class PageCommsComponent implements OnInit {
      * Returns TRUE if the messgae preview should be shown.
      */
     shouldShowPreview(): boolean {
-        return null !== this.selected_details;
+        return null !== this.selected_option && null !== this.selected_details;
     }
 
     /**
@@ -99,7 +100,7 @@ export class PageCommsComponent implements OnInit {
                 // We might not have a selected template! If the previously selected method was made invalid, it will happen.
                 return;
             }
-            if (this.preview && selected && this.preview.template_id !== selected.id) {
+            if (this.preview && selected && this.preview.template_id === selected.id) {
                 return;
             }
             this.preview = {

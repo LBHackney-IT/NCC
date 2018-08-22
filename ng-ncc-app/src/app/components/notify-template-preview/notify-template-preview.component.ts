@@ -72,7 +72,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
      */
     getCustomisedPreview(): string {
         let preview = this.preview;
-        if (this.settings.parameters) {
+        if (this.settings && this.settings.parameters) {
             // Replace any placeholders in the template with our custom values.
             const values: { placeholder: string, value: string }[] = Object.keys(this.settings.parameters)
                 .map((key) => ({ placeholder: `((${key}))`, value: this.settings.parameters[key] }))
@@ -81,6 +81,10 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
                 preview = preview.replace(v.placeholder, `<span class="preview__highlight">${v.value}</span>`);
             });
         }
+
+        // Replace line breaks in the template with BR tags.
+        preview = preview.replace(/\n|\r/, '<br><br>');
+
         return preview;
     }
 

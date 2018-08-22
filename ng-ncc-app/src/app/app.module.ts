@@ -48,7 +48,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
         NoResultsComponent,
-        BackLinkComponent
+        BackLinkComponent,
         DialogueComponent,
         DialogueTitleComponent,
         ConfirmDialogueComponent,

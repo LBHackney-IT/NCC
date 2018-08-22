@@ -13,7 +13,7 @@
                         </label>
                         <select class="govuk-select" id="call_type" name="call_type" [(ngModel)]="selected.call_type" (change)="resetCallReason()">
                             <option [ngValue]="null" selected>- select a call type</option>
-                            <option *ngFor="let item of call_types" [ngValue]="item">{{ item.id }}-{{ item.label }}</option>
+                            <option *ngFor="let item of call_types" [ngValue]="item">{{ item.label }}</option>
                         </select>
                     </div>
 
@@ -41,7 +41,7 @@
             </div>
 
             <!-- Next button. -->
-            <button class="govuk-button" *ngIf="canProceed()" (click)="proceed()">
+            <button class="govuk-button" [disabled]="!canProceed()" (click)="proceed()">
                 Continue
             </button>
 

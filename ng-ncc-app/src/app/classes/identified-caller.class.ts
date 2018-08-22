@@ -48,13 +48,12 @@ export class IdentifiedCaller implements Caller {
      * Returns the caller's postal address.
      */
     getPostalAddress(): ContactAddress {
-        const address: ContactAddress = {
-            line_1: this._details.addressLine1,
-            line_2: this._details.addressLine2,
-            town: this._details.addressLine3,
-            county: this._details.addressCity,
-            postcode: this._details.postCode
-        };
+        let address = new ContactAddress;
+        address.line_1 = this._details.addressLine1;
+        address.line_2 = this._details.addressLine2;
+        address.town = this._details.addressLine3;
+        address.county = this._details.addressCity;
+        address.postcode = this._details.postCode;
 
         return address;
     }
