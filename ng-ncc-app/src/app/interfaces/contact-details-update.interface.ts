@@ -12,7 +12,7 @@ export class ContactDetailsUpdate {
         telephone: string;
         email: string;
         mobile: string;
-    }
+    };
 
     // TODO construct from a Caller?
     constructor() {
