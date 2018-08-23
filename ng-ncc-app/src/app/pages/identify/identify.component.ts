@@ -77,6 +77,14 @@ export class PageIdentifyComponent implements OnInit {
     }
 
     /**
+     * Called when we want to edit a tenant's contact details.
+     */
+    tenantToEdit(caller: IdentifiedCaller) {
+        this.Call.setCaller(caller);
+        this.router.navigateByUrl('contact-details');
+    }
+
+    /**
      * Called when the user hits the Anonymous caller button..
      */
     anonymousSelected() {

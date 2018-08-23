@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 import { CallerResolver } from './resolvers/caller-resolver.service';
+import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
@@ -66,6 +67,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
     ],
     providers: [
         CallerResolver,
+        IdentifiedCallerResolver,
         CallNatureResolver,
         NotifyTemplatesResolver
     ],

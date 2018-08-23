@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactDetailsUpdate } from '../../interfaces/contact-details-update.interface';
+import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { CallService } from '../../services/call.service';
 
 @Component({
     selector: 'app-contact-details',
@@ -10,20 +13,44 @@ export class PageContactDetailsComponent implements OnInit {
 
     // TODO this page will require the presence of an *identified* caller.
 
+    caller: IdentifiedCaller;
     details: ContactDetailsUpdate;
     new_telephone: string[];
     new_mobile: string[];
     new_email: string[];
 
-    constructor() { }
+    constructor(private route: ActivatedRoute, private Call: CallService) { }
 
     ngOnInit() {
         // TODO build the details from the caller's information.
-        this.details = new ContactDetailsUpdate;
 
         this.new_telephone = [];
         this.new_mobile = [];
         this.new_email = [];
+
+        this.route.data.subscribe((data) => {
+            this.caller = data.caller;
+            this._buildDetails();
+        });
+    }
+
+    _buildDetails() {
+        this.details = new ContactDetailsUpdate;
+        this.details.title = this.caller.getTitle();
+        this.details.first_name = this.caller.getFirstName();
+        this.details.last_name = this.caller.getLastName();
+        // this.details.telephone = this.caller.getTelephoneNumbers();
+        // - currently no distinction between mobile and telephone numbers.
+        this.details.mobile = this.caller.getTelephoneNumbers();
+        this.details.email = this.caller.getEmailAddresses();
+
+        // If there's only one of each contact method, set it as the default.
+        if (1 === this.details.mobile.length) {
+            this.details.default.mobile = this.details.mobile[0];
+        }
+        if (1 === this.details.email.length) {
+            this.details.default.email = this.details.email[0];
+        }
     }
 
     /**
