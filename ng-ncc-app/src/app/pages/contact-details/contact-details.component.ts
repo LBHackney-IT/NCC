@@ -13,6 +13,7 @@ export class PageContactDetailsComponent implements OnInit {
 
     // TODO this page will require the presence of an *identified* caller.
 
+    MAX_OPTIONS = 5;    // maximum number of each contact method we can have for a caller.
     caller: IdentifiedCaller;
     details: ContactDetailsUpdate;
     new_telephone: string[];
@@ -54,17 +55,6 @@ export class PageContactDetailsComponent implements OnInit {
     }
 
     /**
-     * Add an extra field for a new home telephone number.
-     */
-    addHomeNumber() {
-        // Only add a new field if there are no empty fields.
-        if (this._hasNoEmptyFields(this.new_telephone)) {
-            this.new_telephone.push(null);
-            this.details.default.telephone = null;
-        }
-    }
-
-    /**
      * Add an extra field for a new mobile telephone number.
      */
     addMobileNumber() {
@@ -84,6 +74,18 @@ export class PageContactDetailsComponent implements OnInit {
             this.new_email.push(null);
             this.details.default.email = null;
         }
+    }
+
+    hasEnoughMobileNumbers(): boolean {
+        const existing = this.details.mobile.length;
+        const added = this.new_mobile.length;
+        return this.MAX_OPTIONS <= (existing + added);
+    }
+
+    hasEnoughEmailAddresses(): boolean {
+        const existing = this.details.email.length;
+        const added = this.new_email.length;
+        return this.MAX_OPTIONS <= (existing + added);
     }
 
     /**
