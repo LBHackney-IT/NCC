@@ -33,6 +33,7 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
+import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         DialogueTitleComponent,
         ConfirmDialogueComponent,
         BackLinkConfirmComponent,
+        RouteLoadingComponent,
     ],
     imports: [
         BrowserModule,

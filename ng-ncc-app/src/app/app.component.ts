@@ -3,6 +3,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { initAll } from 'govuk-frontend';
+import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +12,27 @@ import { initAll } from 'govuk-frontend';
 })
 
 export class AppComponent implements OnInit {
-    title = 'ng-ncc-app';
+    title = 'Neighbourhood Call Centre (NCC) CRM';
+    loading: boolean = false;
+
+    constructor(private router: Router) {
+        this.router.events.subscribe((event: Event) => {
+            switch (true) {
+                case event instanceof NavigationStart: {
+                    // Started navigating to a route.
+                    this.loading = true;
+                    break;
+                }
+
+                case event instanceof NavigationEnd:
+                case event instanceof NavigationCancel:
+                case event instanceof NavigationError:
+                    // Navigation came to an end somehow.
+                    this.loading = false;
+                    break;
+            }
+        });
+    }
 
     ngOnInit() {
         initAll(); // initialise GOV.UK Frontend components.
