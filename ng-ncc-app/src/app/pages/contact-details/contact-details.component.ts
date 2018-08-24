@@ -104,4 +104,16 @@ export class PageContactDetailsComponent implements OnInit {
         return index;
     }
 
+    saveDetails(event) {
+        if (event && event.defaultPrevented) {
+            return;
+        }
+        console.log('Name saved as:', this.details.title, this.details.first_name, this.details.last_name);
+        console.log('Telephone number saved as:', this.details.telephone);
+        console.log('Mobile numbers saved as:', this.details.mobile.concat(this.new_mobile));
+        console.log('Email addresses saved as:', this.details.email.concat(this.new_email));
+        console.log('Default mobile number is:', this.details.default.mobile);
+        console.log('Default email address is:', this.details.default.email);
+    }
+
 }
