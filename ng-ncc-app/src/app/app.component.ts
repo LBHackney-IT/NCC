@@ -13,7 +13,7 @@ import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStar
 
 export class AppComponent implements OnInit {
     title = 'Neighbourhood Call Centre (NCC) CRM';
-    loading: boolean = false;
+    loading = false;
 
     constructor(private router: Router) {
         this.router.events.subscribe((event: Event) => {
