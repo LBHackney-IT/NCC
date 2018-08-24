@@ -14,6 +14,9 @@ export class AddressTenantsResultsComponent implements OnChanges {
     // When a tenant is selected and the Continue button is hit.
     @Output() selected = new EventEmitter<IdentifiedCaller>();
 
+    // When a tenant is selected for editing contact details.
+    @Output() beginEdit = new EventEmitter<IdentifiedCaller>();
+
     // When the user hits the back link.
     @Output() back = new EventEmitter<void>();
 
@@ -78,5 +81,9 @@ export class AddressTenantsResultsComponent implements OnChanges {
      */
     goBack() {
         this.back.emit();
+    }
+
+    editContactDetails(citizen: IdentifiedCaller) {
+        this.beginEdit.emit(citizen);
     }
 }

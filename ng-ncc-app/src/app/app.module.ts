@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 import { CallerResolver } from './resolvers/caller-resolver.service';
+import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
@@ -16,6 +17,7 @@ import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
+import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -41,6 +43,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         PageLogCallComponent,
         PageCommsComponent,
         PagePlaygroundComponent,
+        PageContactDetailsComponent,
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
@@ -52,7 +55,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
         DialogueComponent,
         DialogueTitleComponent,
         ConfirmDialogueComponent,
-        BackLinkConfirmComponent
+        BackLinkConfirmComponent,
     ],
     imports: [
         BrowserModule,
@@ -64,6 +67,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
     ],
     providers: [
         CallerResolver,
+        IdentifiedCallerResolver,
         CallNatureResolver,
         NotifyTemplatesResolver
     ],

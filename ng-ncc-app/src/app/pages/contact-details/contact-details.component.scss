@@ -1,0 +1,31 @@
+@import "../../../assets/scss/vars.scss";
+@import "../../../assets/scss/components/radio-text-field.scss";
+@import "~govuk-frontend/all";
+
+$add-new-min-width: 360px !default;
+$add-new-button-colour: #FFF !default;
+$add-new-button-padding: .5rem 1em !default;
+
+////////////////////
+
+.add-new {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    min-width: $add-new-min-width;
+    padding: $govuk-focus-width; // to accommodate the focus border around the button.
+}
+
+.add-new__title {
+    flex-grow: 1;
+}
+
+.add-new__button {
+    @include govuk-focusable;
+    background: $add-new-button-colour;
+    border-color: transparent;
+    display: block;
+    font-weight: bold;
+    padding: $add-new-button-padding;
+}
