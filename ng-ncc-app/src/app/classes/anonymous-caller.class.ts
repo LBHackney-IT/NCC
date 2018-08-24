@@ -27,4 +27,11 @@ export class AnonymousCaller implements Caller {
         return null;
     }
 
+    hasNoEmailAddresses(): boolean {
+        return true;
+    }
+
+    hasNoTelephoneNumbers(): boolean {
+        return true;
+    }
 }

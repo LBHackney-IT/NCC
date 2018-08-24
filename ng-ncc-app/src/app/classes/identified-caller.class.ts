@@ -7,11 +7,7 @@ import { ContactAddress } from '../classes/contact-address.class';
  */
 export class IdentifiedCaller implements Caller {
 
-    _details: CitizenIndexSearchResult;
-
-    constructor(citizen: CitizenIndexSearchResult) {
-        this._details = citizen;
-    }
+    constructor(private _details: CitizenIndexSearchResult) { }
 
     isAnonymous(): boolean {
         return false;
@@ -22,6 +18,27 @@ export class IdentifiedCaller implements Caller {
      */
     getName(): string {
         return this._details.fullName;
+    }
+
+    /**
+     * Returns the caller's first name.
+     */
+    getFirstName(): string {
+        return this._details.firstName;
+    }
+
+    /**
+     * Returns the caller's last name.
+     */
+    getLastName(): string {
+        return this._details.surname;
+    }
+
+    /**
+     * Returns the caller's title.
+     */
+    getTitle(): string {
+        return this._details.title;
     }
 
     /**
@@ -48,15 +65,26 @@ export class IdentifiedCaller implements Caller {
      * Returns the caller's postal address.
      */
     getPostalAddress(): ContactAddress {
-        const address: ContactAddress = {
+        return {
             line_1: this._details.addressLine1,
             line_2: this._details.addressLine2,
             town: this._details.addressLine3,
             county: this._details.addressCity,
-            postcode: this._details.postCode
-        };
-
-        return address;
+            postcode: this._details.postCode,
+        } as ContactAddress;
     }
 
+    /**
+     * Returns TRUE if the caller has no email address[es].
+     */
+    hasNoEmailAddresses(): boolean {
+        return 0 === this.getEmailAddresses().length;
+    }
+
+    /**
+     * Returns TRUE if the caller has no telephone numbers.
+     */
+    hasNoTelephoneNumbers(): boolean {
+        return 0 === this.getTelephoneNumbers().length;
+    }
 }
