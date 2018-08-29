@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
