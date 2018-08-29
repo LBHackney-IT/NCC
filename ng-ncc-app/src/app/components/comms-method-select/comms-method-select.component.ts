@@ -11,8 +11,6 @@ import { Caller } from '../../interfaces/caller.interface';
     styleUrls: ['./comms-method-select.component.css']
 })
 export class CommsMethodSelectComponent implements OnInit, OnChanges {
-    // TODO use Angular instead of GOV.UK Frontend to manage the conditional radio button content.
-
     // Whether to enable or disable communications methods.
     // (Question marks indicate that the properties are optional.)
     @Input() disableEmail?: boolean;

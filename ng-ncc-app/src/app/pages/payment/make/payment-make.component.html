@@ -7,26 +7,25 @@
 <form action="">
 
     <div class="panel govuk-!-margin-bottom-5">
-        <div class="govuk-grid-row">
+        <div class="flex-columns">
 
             <!-- Tenancy reference number. -->
-            <div class="govuk-grid-column-one-third">
-                <b>Tenancy reference no.</b>
+            <div>
+                <b>Tenancy ref no.</b>
+                &nbsp;
                 <a href="">09786/11</a>
             </div>
 
             <!-- The amount to pay. -->
-            <div class="govuk-grid-column-one-third">
-                <label class="govuk-label govuk-!-font-weight-bold" for="amount">
-                    Pay now
-                </label>
+            <div>
+                Pay now
                 £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="text">
             </div>
 
             <!-- The remaining balance. -->
-            <div class="govuk-grid-column-one-third">
+            <div>
                 Remaining balance
-                <b>£ --.--</b>
+                <b>£ 10.00</b>
             </div>
 
         </div>
@@ -96,9 +95,18 @@
         <div class="govuk-grid-column-one-half">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                    <h3 class="govuk-fieldset__heading">
-                        Billing information
-                    </h3>
+
+                    <div class="flex-columns">
+                        <h3 class="govuk-fieldset__heading">
+                            Billing information
+                        </h3>
+                        <div class="govuk-checkboxes__item small-checkbox">
+                            <input class="govuk-checkboxes__input" id="use-home" name="use-home" type="checkbox" value="1">
+                            <label class="govuk-label govuk-checkboxes__label" for="use-home">
+                                Use home address
+                            </label>
+                        </div>
+                    </div>
                 </legend>
 
                 <div class="govuk-form-group">

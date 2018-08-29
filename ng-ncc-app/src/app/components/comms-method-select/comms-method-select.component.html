@@ -12,7 +12,7 @@
                     Email
                 </label>
             </div>
-            <div class="govuk-radios__conditional" id="method-by-email">
+            <div class="govuk-radios__conditional" id="method-by-email" *ngIf="methods.METHOD_EMAIL === selection.method">
 
                 <!-- Which email address? -->
                 <div class="govuk-form-group">
@@ -42,7 +42,7 @@
                     SMS
                 </label>
             </div>
-            <div class="govuk-radios__conditional" id="method-by-sms">
+            <div class="govuk-radios__conditional" id="method-by-sms" *ngIf="methods.METHOD_SMS === selection.method">
                 <div class="govuk-form-group">
 
                     <!-- Existing telephone numbers (from the caller). -->
@@ -70,7 +70,7 @@
                     Post
                 </label>
             </div>
-            <div class="govuk-radios__conditional" id="method-by-post">
+            <div class="govuk-radios__conditional" id="method-by-post" *ngIf="methods.METHOD_POST === selection.method">
 
                 <!-- If the caller is identified, we display their address. -->
                 <div *ngIf="caller && !caller.isAnonymous()">

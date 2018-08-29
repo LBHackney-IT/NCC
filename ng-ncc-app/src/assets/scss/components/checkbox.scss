@@ -1,0 +1,34 @@
+$small-checkbox-size: 24px !default;
+$small-checkbox-text-size: 19 !default;
+
+////////////////////
+
+.govuk-checkboxes__item.small-checkbox {
+    @include govuk-font($size: $small-checkbox-text-size);
+
+    min-height: $small-checkbox-size;
+    padding-left: $small-checkbox-size;
+
+    .govuk-checkboxes__input {
+        width: $small-checkbox-size;
+        height: $small-checkbox-size;
+
+        + .govuk-checkboxes__label::before {
+          width: $small-checkbox-size;
+          height: $small-checkbox-size;
+        }
+
+        + .govuk-checkboxes__label::after {
+            border-width: 0 0 4px 4px;
+            top: 7px;
+            left: 6px;
+            width: 8px;
+            height: 4px;
+        }
+    }
+
+    .govuk-checkboxes__label {
+      padding: 0 govuk-spacing(2) govuk-spacing(1);
+    }
+
+}

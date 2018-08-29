@@ -56,3 +56,7 @@ $value-list-ratio: 100 / ($value-list-horizontal-label-ratio + $value-list-horiz
 .value-list--horizontal .value-list__value {
     width: ($value-list-ratio * $value-list-horizontal-value-ratio) * 1%;
 }
+
+.govuk-fieldset__legend {
+    width: 100%;
+}
