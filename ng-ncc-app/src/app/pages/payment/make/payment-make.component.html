@@ -11,21 +11,23 @@
 
             <!-- Tenancy reference number. -->
             <div>
-                <b>Tenancy ref no.</b>
-                &nbsp;
+                <span class="govuk-!-font-weight-bold govuk-!-margin-right-2">Tenancy ref no.</span>
                 <a href="">09786/11</a>
             </div>
 
             <!-- The amount to pay. -->
             <div>
-                Pay now
-                £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="text">
+                <span class="govuk-!-margin-right-2">Pay now</span>
+                <label>
+                    £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="text">
+                </label>
             </div>
 
             <!-- The remaining balance. -->
+            <!-- TODO this will be automatically updated based on the outstanding balance and how much is to be paid. -->
             <div>
-                Remaining balance
-                <b>£ 10.00</b>
+                <span class="govuk-!-margin-right-2">Remaining balance</span>
+                <span class="govuk-!-font-weight-bold">£ 10.00</span>
             </div>
 
         </div>
@@ -100,7 +102,7 @@
                         <h3 class="govuk-fieldset__heading">
                             Billing information
                         </h3>
-                        <div class="govuk-checkboxes__item small-checkbox">
+                        <div class="govuk-checkboxes__item small-checkbox govuk-!-margin-top-1">
                             <input class="govuk-checkboxes__input" id="use-home" name="use-home" type="checkbox" value="1">
                             <label class="govuk-label govuk-checkboxes__label" for="use-home">
                                 Use home address
