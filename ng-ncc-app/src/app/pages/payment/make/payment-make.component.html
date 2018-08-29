@@ -1,170 +1,154 @@
 <h2 class="govuk-heading-m">Pay rent</h2>
 
-<div class="govuk-inset-text">
-    <b>Agent says:</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid hic modi unde, ducimus nostrum nam in nisi quaerat excepturi perferendis, porro repellendus facilis numquam suscipit ex odit quia tempore magnam.
-</div>
+<p class="govuk-body">
+    You can also pay your rent by visiting: <a href="">https://www.hackney.gov.uk/rentaccount</a>
+</p>
 
 <form action="">
 
     <div class="panel govuk-!-margin-bottom-5">
-        <div class="govuk-form-group govuk-!-margin-bottom-2">
-            <label class="govuk-label govuk-!-font-weight-bold" for="amount">
-                Pay now
-            </label>
-            £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="text">
-        </div>
+        <div class="govuk-grid-row">
 
-        <div class="govuk-body govuk-!-margin-bottom-0">
-            After this payment your balance will be <b>£60.00</b>.
+            <!-- Tenancy reference number. -->
+            <div class="govuk-grid-column-one-third">
+                <b>Tenancy reference no.</b>
+                <a href="">09786/11</a>
+            </div>
+
+            <!-- The amount to pay. -->
+            <div class="govuk-grid-column-one-third">
+                <label class="govuk-label govuk-!-font-weight-bold" for="amount">
+                    Pay now
+                </label>
+                £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="text">
+            </div>
+
+            <!-- The remaining balance. -->
+            <div class="govuk-grid-column-one-third">
+                Remaining balance
+                <b>£ --.--</b>
+            </div>
+
         </div>
     </div>
 
-    <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 class="govuk-fieldset__heading">
-                Credit card details
-            </h3>
-        </legend>
+    <div class="govuk-grid-row">
 
-        <!-- Full name. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="fullname">
-                Full name
-            </label>
-            <input class="govuk-input govuk-!-width-one-half" id="fullname" name="fullname" type="text">
+        <!-- Card details. -->
+        <div class="govuk-grid-column-one-half">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <h3 class="govuk-fieldset__heading">
+                        Credit card details
+                    </h3>
+                </legend>
+
+                <!-- Full name. -->
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="fullname">
+                        Full name
+                    </label>
+                    <input class="govuk-input" id="fullname" name="fullname" type="text">
+                </div>
+
+                <!-- Card type. -->
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="cardtype">
+                        Card type
+                    </label>
+                    <select class="govuk-select" id="cardtype" name="cardtype">
+                        <option value="">select one</option>
+                        <option value="visa">Visa</option>
+                        <option value="visa-debit">Visa Debit</option>
+                        <option value="mastercard">Mastercard</option>
+                    </select>
+                </div>
+
+                <!-- Card number. -->
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="cardnumber">
+                        Card number
+                    </label>
+                    <input class="govuk-input" id="cardnumber" name="cardnumber" type="text">
+                </div>
+
+                <!-- Expiry date. -->
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="expiry-month">
+                        Expiration
+                    </label>
+                    <input class="govuk-input govuk-input--width-2" id="expiry-month" name="expiry-month" type="text" placeholder="MM">
+                    &nbsp;
+                    <input class="govuk-input govuk-input--width-4" id="expiry-year" name="expiry-year" type="text" placeholder="YYYY">
+                </div>
+
+                <!-- Expiry date. -->
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="cvv">
+                        CVV
+                    </label>
+                    <input class="govuk-input govuk-input--width-4" id="cvv" name="cvv" type="text">
+                </div>
+            </fieldset>
         </div>
 
-        <!-- Card type. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="cardtype">
-                Card type
-            </label>
-            <select class="govuk-select govuk-input--width-20" id="cardtype" name="cardtype">
-                <option value="">Visa</option>
-                <option value="">Visa Debit</option>
-                <option value="">Mastercard</option>
-            </select>
+        <!-- Billing information. -->
+        <div class="govuk-grid-column-one-half">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <h3 class="govuk-fieldset__heading">
+                        Billing information
+                    </h3>
+                </legend>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-1">
+                        First line of address
+                    </label>
+                    <input class="govuk-input" id="address-line-1" name="address-line-1" type="text">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-line-2">
+                        Second line of address
+                    </label>
+                    <input class="govuk-input" id="address-line-2" name="address-line-2" type="text">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-town">
+                        Town or city
+                    </label>
+                    <input class="govuk-input" id="address-town" name="address-town" type="text">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-county">
+                        County
+                    </label>
+                    <input class="govuk-input" id="address-county" name="address-county" type="text">
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="address-postcode">
+                        Postcode
+                    </label>
+                    <input class="govuk-input" id="address-postcode" name="address-postcode" type="text">
+                </div>
+
+            </fieldset>
         </div>
 
-        <!-- Card number. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="cardnumber">
-                Card number
-            </label>
-            <input class="govuk-input govuk-input--width-20" id="cardnumber" name="cardnumber" type="text">
-        </div>
-
-        <!-- Expiry date. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="expiry-month">
-                Expiration
-            </label>
-            <input class="govuk-input govuk-input--width-2" id="expiry-month" name="expiry-month" type="text" placeholder="MM">
-            <input class="govuk-input govuk-input--width-4" id="expiry-year" name="expiry-year" type="text" placeholder="YYYY">
-        </div>
-
-        <!-- Expiry date. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="cvv">
-                CVV
-            </label>
-            <input class="govuk-input govuk-input--width-4" id="cvv" name="cvv" type="text">
-        </div>
-    </fieldset>
-
-    <!-- Billing information. -->
-    <!-- (Borrowed from https://design-system.service.gov.uk/patterns/addresses/) -->
-    <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 class="govuk-fieldset__heading">
-                Billing information
-            </h3>
-        </legend>
-
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="address-line-1">
-                First line of address
-            </label>
-            <input class="govuk-input" id="address-line-1" name="address-line-1" type="text">
-        </div>
-
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="address-line-2">
-                Second line of address
-            </label>
-            <input class="govuk-input" id="address-line-2" name="address-line-2" type="text">
-        </div>
-
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="address-town">
-                Town or city
-            </label>
-            <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" type="text">
-        </div>
-
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="address-county">
-                County
-            </label>
-            <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" type="text">
-        </div>
-
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="address-postcode">
-                Postcode
-            </label>
-            <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text">
-        </div>
-
-    </fieldset>
+    </div>
 
     <!-- Where to send a receipt. -->
     <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <h3 class="govuk-fieldset__heading">
-                    Send a receipt
-                </h3>
-            </legend>
-
-            <div class="govuk-radios" data-module="radios">
-
-                <!-- By email. -->
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="how-contacted-conditional-1" name="how-contacted" type="radio" value="email" data-aria-controls="conditional-how-contacted-conditional-1">
-                    <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
-                        Email
-                    </label>
-                </div>
-                <div class="govuk-radios__conditional" id="conditional-how-contacted-conditional-1">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="contact-by-email">
-                            Email address
-                        </label>
-                        <input class="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="text">
-                    </div>
-                </div>
-
-                <!-- By SMS. -->
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="how-contacted-conditional-2" name="how-contacted" type="radio" value="phone" data-aria-controls="conditional-how-contacted-conditional-2">
-                    <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
-                        SMS
-                    </label>
-                </div>
-                <div class="govuk-radios__conditional" id="conditional-how-contacted-conditional-2">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="contact-by-phone">
-                            Mobile number
-                        </label>
-                        <input class="govuk-input govuk-!-width-one-third" id="contact-by-phone" name="contact-by-phone" type="text">
-                    </div>
-                </div>
-            </div>
-        </fieldset>
+        <app-comms-method-select></app-comms-method-select>
     </div>
 
-    <button class="govuk-link-button">Cancel</button>
+    <button type="button" class="link-button">
+        Cancel
+    </button>
 
     <button type="submit" class="govuk-button">
         Make payment

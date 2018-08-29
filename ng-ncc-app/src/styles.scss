@@ -5,6 +5,7 @@
 // TODO only import the GOV.UK Frontend components we are using.
 // TODO divide unorganised CSS into separate SCSS files.
 
+@import "assets/scss/components/link-button";
 @import "assets/scss/components/page";
 @import "assets/scss/components/page-header";
 @import "assets/scss/components/page-footer";
