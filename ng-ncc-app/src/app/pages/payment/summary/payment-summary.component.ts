@@ -39,7 +39,7 @@ export class PagePaymentSummaryComponent implements OnInit {
 
     makeDummyHistory() {
         this.payment_history = [];
-        let rows = Math.random() * 30 + 10;
+        const rows = Math.random() * 30 + 10;
         let amount = (Math.random() * 10000);
         let payment = 0;
         for (let i = 1; i <= rows; i++) {
