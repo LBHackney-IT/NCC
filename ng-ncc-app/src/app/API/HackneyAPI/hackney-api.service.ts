@@ -15,6 +15,8 @@ import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-
 
 export class HackneyAPIService {
 
+    _url = 'https://sandboxapi.hackney.gov.uk/hackneyapi';
+
     constructor(private http: HttpClient) { }
 
     /**
@@ -26,7 +28,7 @@ export class HackneyAPIService {
         // Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
-            .get('https://sandboxapi.hackney.gov.uk/CRMLookups?id=3')
+            .get(`${this._url}/CRMLookups?id=3`)
             .pipe(
                 map((response: HackneyAPIJSONResult) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
@@ -52,7 +54,7 @@ export class HackneyAPIService {
         //
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
-            .get('https://sandboxapi.hackney.gov.uk/CRMEnquiryTypes')
+            .get(`${this._url}/CRMEnquiryTypes`)
             .pipe(
                 map((response: HackneyAPIJSONResult) => {
                     let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
@@ -89,7 +91,7 @@ export class HackneyAPIService {
         // very important to set IsAdvanceSearch to false.
 
         return this.http
-            .get(`https://sandboxapi.hackney.gov.uk/v1/CitizenIndexSearch?${query}`)
+            .get(`${this._url}/v1/CitizenIndexSearch?${query}`)
             .pipe(
                 map((response: HackneyAPIJSONResult) => {
                     // TODO perhaps filter out any unwanted/unnecessary information.
