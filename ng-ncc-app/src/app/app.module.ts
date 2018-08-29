@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 import { CallerResolver } from './resolvers/caller-resolver.service';
+import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
@@ -17,6 +18,7 @@ import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
+import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -32,6 +34,7 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
+import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { TabsComponent } from './components/tabs/tabs.component';
@@ -46,6 +49,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
         PageLogCallComponent,
         PageCommsComponent,
         PagePlaygroundComponent,
+        PageContactDetailsComponent,
         PagePaymentComponent,
         NoteFormComponent,
         ContentAreaComponent,
@@ -59,6 +63,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
         DialogueTitleComponent,
         ConfirmDialogueComponent,
         BackLinkConfirmComponent,
+        RouteLoadingComponent,
         PagePaymentSummaryComponent,
         PagePaymentMakeComponent,
         TabsComponent,
@@ -75,6 +80,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         CallerResolver,
+        IdentifiedCallerResolver,
         CallNatureResolver,
         NotifyTemplatesResolver
     ],

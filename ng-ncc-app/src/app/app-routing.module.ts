@@ -9,7 +9,9 @@ import { PagePlaygroundComponent } from './pages/playground/playground.component
 import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
+import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 
+import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
@@ -60,6 +62,14 @@ export const AppRoutes: Routes = [
         resolve: {
             call_nature: CallNatureResolver,
             templates: NotifyTemplatesResolver
+        }
+    },
+    {
+        // [Edit] Contact Details page.
+        path: 'contact-details',
+        component: PageContactDetailsComponent,
+        resolve: {
+            caller: IdentifiedCallerResolver
         }
     },
     {

@@ -7,11 +7,7 @@ import { ContactAddress } from '../classes/contact-address.class';
  */
 export class IdentifiedCaller implements Caller {
 
-    _details: CitizenIndexSearchResult;
-
-    constructor(citizen: CitizenIndexSearchResult) {
-        this._details = citizen;
-    }
+    constructor(private _details: CitizenIndexSearchResult) { }
 
     isAnonymous(): boolean {
         return false;
@@ -22,6 +18,27 @@ export class IdentifiedCaller implements Caller {
      */
     getName(): string {
         return this._details.fullName;
+    }
+
+    /**
+     * Returns the caller's first name.
+     */
+    getFirstName(): string {
+        return this._details.firstName;
+    }
+
+    /**
+     * Returns the caller's last name.
+     */
+    getLastName(): string {
+        return this._details.surname;
+    }
+
+    /**
+     * Returns the caller's title.
+     */
+    getTitle(): string {
+        return this._details.title;
     }
 
     /**
