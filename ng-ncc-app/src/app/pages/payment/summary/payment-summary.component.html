@@ -29,7 +29,9 @@
 
             <!-- Agreement plan. -->
             <div class="govuk-grid-column-one-quarter">
-                <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Agreement plan</h3>
+                <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                    <a href="">Agreement plan</a>
+                </h3>
                 <p class="govuk-!-font-size-24">27/08/2019</p>
             </div>
 
@@ -63,26 +65,4 @@
     </table>
 </div>
 
-<!-- Select information to send. -->
-<div class="govuk-form-group">
-    <label class="govuk-label govuk-!-font-weight-bold" for="form">
-        Select information to send:
-    </label>
-    <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selected_template">
-        <option [ngValue]="null">- select information</option>
-        <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.name }}</option>
-    </select>
-</div>
-
-<!-- Select receipt method. -->
-<!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
-<app-comms-method-select
-    [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
-    [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
-    [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
-    (selected)="onSelectCommsMethod($event)"
-    (invalidated)="onInvalidCommsMethod($event)"></app-comms-method-select>
-
-<button class="govuk-button">
-    Send
-</button>
+<a href="" class="link-button">View transaction history</a>

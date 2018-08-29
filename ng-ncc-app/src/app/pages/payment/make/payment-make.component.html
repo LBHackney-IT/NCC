@@ -154,11 +154,13 @@
         <app-comms-method-select></app-comms-method-select>
     </div>
 
-    <button type="button" class="link-button">
-        Cancel
-    </button>
-
-    <button type="submit" class="govuk-button">
+    <button type="submit" class="govuk-button" (click)="confirmPayment()">
         Make payment
     </button>
 </form>
+
+
+<app-confirm-dialogue [(show)]="show_confirm" yesButtonText="Yes" noButtonText="Cancel"
+    (selectedYes)="answeredYes()" (selectedNo)="answeredNo()">
+    <app-dialogue-title>Are you sure you want to make this payment?</app-dialogue-title>
+</app-confirm-dialogue>

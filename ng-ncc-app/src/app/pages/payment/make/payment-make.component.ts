@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PagePaymentMakeComponent implements OnInit {
 
+    show_confirm: boolean;
+
     constructor() { }
 
     ngOnInit() {
+    }
+
+    confirmPayment() {
+        this.show_confirm = true;
+    }
+
+    answeredYes() {
+        console.log('Confirmed payment.');
+    }
+
+    answeredNo() {
+        console.log('Cancelled payment.');
     }
 
 }
