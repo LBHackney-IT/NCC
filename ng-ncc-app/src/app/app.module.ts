@@ -19,6 +19,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
+import { PageTransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -66,6 +67,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
         RouteLoadingComponent,
         PagePaymentSummaryComponent,
         PagePaymentMakeComponent,
+        PageTransactionHistoryComponent,
         TabsComponent,
         TabComponent,
     ],
