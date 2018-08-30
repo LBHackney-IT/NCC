@@ -20,7 +20,7 @@ import { CommsMethodDetails } from '../../interfaces/comms-method-details.interf
 })
 export class PageCommsComponent implements OnInit {
 
-    CONTACT_METHOD: object;
+    CONTACT_METHOD = CONTACT;
     _sending: boolean;
     comms_options: CommsOption[];
     selected_option: CommsOption;
@@ -34,7 +34,6 @@ export class PageCommsComponent implements OnInit {
         // Initialise the GOV.UK Frontend components on this page.
         initAll();
 
-        this.CONTACT_METHOD = CONTACT;
         this._sending = false;
         this.selected_option = null;
         this.selected_details = null;
