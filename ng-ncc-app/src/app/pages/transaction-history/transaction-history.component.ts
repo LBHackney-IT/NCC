@@ -24,10 +24,10 @@ export class PageTransactionHistoryComponent implements OnInit {
     /**
      *
      */
-    makeDummyHistory(rows: int = 30) {
+    makeDummyHistory(row_count: number = 30) {
         this.payment_history = [];
         const reasons = ['Housing benefits', 'Rent', 'Interest', 'Charges', 'We felt like it'];
-        const rows = Math.random() * rows + 10;
+        const rows = Math.random() * row_count + 10;
         let amount = (Math.random() * 10000);
         let payment = 0;
         for (let i = 1; i <= rows; i++) {
@@ -66,12 +66,11 @@ export class PageTransactionHistoryComponent implements OnInit {
      * Filter the transaction history by type (case insensitive).
      */
     filterTransactions() {
-        const term = this.transaction_filter.type;
-        console.log('filter by term', term);
-        if (term) {
-            this.filtered_payment_history = this.payment_history.filter(item => -1 !== item.type.toLowerCase().indexOf(term.toLowerCase()));
-        } else {
+        const term: string = this.transaction_filter.type;
+        if (null === term) {
             this.filtered_payment_history = this.payment_history;
+        } else {
+            this.filtered_payment_history = this.payment_history.filter(item => item.type && -1 !== item.type.toLowerCase().indexOf(term.toLowerCase()));
         }
     }
 
