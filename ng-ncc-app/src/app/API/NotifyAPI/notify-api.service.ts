@@ -15,7 +15,7 @@ import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.int
  */
 export class NotifyAPIService {
 
-    _url = 'http://lbhwebapit01:2020/api/GovNotifier';
+    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier';
 
     constructor(private http: HttpClient) { }
 

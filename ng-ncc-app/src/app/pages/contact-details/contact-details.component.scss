@@ -2,7 +2,7 @@
 @import "../../../assets/scss/components/radio-text-field.scss";
 @import "~govuk-frontend/all";
 
-$add-new-min-width: 360px !default;
+$add-new-width: 360px !default;
 $add-new-button-colour: #FFF !default;
 $add-new-button-padding: .5rem 1em !default;
 
@@ -13,7 +13,7 @@ $add-new-button-padding: .5rem 1em !default;
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    min-width: $add-new-min-width;
+    max-width: $add-new-width;
     padding: $govuk-focus-width; // to accommodate the focus border around the button.
 }
 

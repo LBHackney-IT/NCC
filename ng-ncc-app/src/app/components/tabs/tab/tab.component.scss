@@ -1,0 +1,37 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/all";
+
+$tabs-tab-active-bg-colour: #FFF !default;
+$tabs-tab-border-width: 3px !default;
+$tabs-tab-border-colour: #111 !default;
+$tabs-tab-padding: 1em !default;
+$tabs-tab-min-width: 12em !default;
+
+////////////////////
+
+:host {
+    @include govuk-focusable;
+    border: $tabs-tab-border-width solid transparent;
+    border-bottom-color: $tabs-tab-border-colour;
+    display: inline-block;
+
+    &.active {
+        background: $tabs-tab-active-bg-colour;
+        border: $tabs-tab-border-width solid $tabs-tab-border-colour;
+        border-bottom: none;
+    }
+
+    ::ng-deep {
+        // See https://stackoverflow.com/a/36265072/4073160
+        a {
+            background: $tabs-tab-active-bg-colour;
+            color: inherit;
+            display: block;
+            font-weight: bold;
+            min-width: $tabs-tab-min-width;
+            padding: $tabs-tab-padding;
+            text-align: center;
+            text-decoration: none;
+        }
+    }
+}

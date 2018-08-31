@@ -6,6 +6,9 @@ import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
+import { PagePaymentComponent } from './pages/payment/payment.component';
+import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
+import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
@@ -28,6 +31,29 @@ export const AppRoutes: Routes = [
         // Log Call page.
         path: 'log-call',
         component: PageLogCallComponent
+    },
+    {
+        // Payment page.
+        path: 'payment',
+        component: PagePaymentComponent,
+        children: [
+            {
+                path: 'summary',
+                component: PagePaymentSummaryComponent,
+                resolve: {
+                    templates: NotifyTemplatesResolver
+                }
+            },
+            {
+                path: 'make',
+                component: PagePaymentMakeComponent
+            },
+            {
+                // Catch-all (which should go to the summary child page).
+                path: '**',
+                redirectTo: 'summary'
+            }
+        ]
     },
     {
         // Identify page.

@@ -1,0 +1,24 @@
+$tabs-content-bg-colour: #FFF !default;
+$tabs-content-border-width: 3px !default;
+$tabs-content-border-colour: #111 !default;
+$tabs-content-padding: 1em !default;
+$tabs-bottom-margin: 2rem !default;
+
+////////////////////
+
+:host {
+    margin-bottom: $tabs-bottom-margin;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: -$tabs-content-border-width;
+}
+
+.content {
+    background: $tabs-content-bg-colour;
+    border: $tabs-content-border-width solid $tabs-content-border-colour;
+    padding: $tabs-content-padding;
+}
