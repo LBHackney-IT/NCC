@@ -34,6 +34,11 @@
                                 <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio" [(ngModel)]="selected.call_reason" [value]="reason">
                                 <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                             </div>
+                            <!-- "Other" option. -->
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="call-reason-other" name="call_reason" type="radio" [(ngModel)]="selected.call_reason" [value]="'other'">
+                                <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
+                            </div>
                         </div>
                     </fieldset>
 

@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
@@ -17,6 +17,7 @@ import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
+import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 
 import { AppRoutingModule } from './/app-routing.module';
@@ -34,6 +35,10 @@ import { DialogueTitleComponent } from './components/dialogue/title/dialogue-tit
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
+import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
+import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TabComponent } from './components/tabs/tab/tab.component';
 
 @NgModule({
     declarations: [
@@ -45,6 +50,7 @@ import { RouteLoadingComponent } from './components/route-loading/route-loading.
         PageCommsComponent,
         PagePlaygroundComponent,
         PageContactDetailsComponent,
+        PagePaymentComponent,
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
@@ -58,6 +64,10 @@ import { RouteLoadingComponent } from './components/route-loading/route-loading.
         ConfirmDialogueComponent,
         BackLinkConfirmComponent,
         RouteLoadingComponent,
+        PagePaymentSummaryComponent,
+        PagePaymentMakeComponent,
+        TabsComponent,
+        TabComponent,
     ],
     imports: [
         BrowserModule,
@@ -67,6 +77,7 @@ import { RouteLoadingComponent } from './components/route-loading/route-loading.
         // Set up routing.
         AppRoutingModule
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         CallerResolver,
         IdentifiedCallerResolver,
