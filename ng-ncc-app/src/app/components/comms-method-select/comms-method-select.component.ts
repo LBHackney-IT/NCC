@@ -24,14 +24,13 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
     // A reference to the Caller we want to contact.
     caller: Caller;
 
-    methods: object;
+    methods = CONTACT;
     selection: CommsSelection;
 
     constructor(private Call: CallService) { }
 
     ngOnInit() {
         this.caller = this.Call.getCaller();
-        this.methods = CONTACT;
         this.selection = new CommsSelection;
     }
 
