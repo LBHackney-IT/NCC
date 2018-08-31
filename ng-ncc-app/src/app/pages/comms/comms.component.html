@@ -33,7 +33,7 @@
                 [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
                 [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
                 (selected)="onSelectCommsMethod($event)"
-                (invalidated)="onInvalidCommsMethod($event)"></app-comms-method-select>
+                (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
 
             <!-- Previewing the message to be sent. -->
             <div *ngIf="shouldShowPreview()">
