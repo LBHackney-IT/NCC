@@ -70,7 +70,9 @@ export class PageTransactionHistoryComponent implements OnInit {
         if (null === term) {
             this.filtered_payment_history = this.payment_history;
         } else {
-            this.filtered_payment_history = this.payment_history.filter(item => item.type && -1 !== item.type.toLowerCase().indexOf(term.toLowerCase()));
+            this.filtered_payment_history = this.payment_history.filter(
+                item => item.type && -1 !== item.type.toLowerCase().indexOf(term.toLowerCase())
+            );
         }
     }
 
