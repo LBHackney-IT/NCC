@@ -15,7 +15,7 @@ export class PageHistoryComponent {
     filter = { type: null };
 
     /**
-     *
+     * A method to populate the history with fake data.
      */
     makeDummyHistory(row_count: number = 30) {
         const rows = Math.random() * row_count + 10;
@@ -26,14 +26,14 @@ export class PageHistoryComponent {
     }
 
     /**
-     *
+     * Return a fake data row.
      */
     _makeDummyRow(): { [propKey: string]: any } {
         return {};
     }
 
     /**
-     *
+     * Simulate different amounts of dummy data based on the selected period.
      */
     updateDummyHistory() {
         switch (this.period) {
@@ -52,7 +52,8 @@ export class PageHistoryComponent {
     }
 
     /**
-     * Filter the transaction history.
+     * A method used to filter the history.
+     * By default no filtering is actually done.
      */
     filterHistory() {
         this.filtered_history = this.history;

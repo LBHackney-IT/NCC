@@ -37,7 +37,7 @@ export class PageViewNotesComponent extends PageHistoryComponent implements OnIn
     }
 
     /**
-     * Filter the transaction history by type (case insensitive).
+     * Filter the notes history by status (case insensitive).
      */
     filterHistory() {
         const term: string = this.filter.type;
