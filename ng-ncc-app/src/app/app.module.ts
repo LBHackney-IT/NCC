@@ -38,6 +38,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
 import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
+import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
 import { TransactionTypePipe } from './pipes/transaction-type.pipe';
@@ -53,6 +54,7 @@ import { TransactionTypePipe } from './pipes/transaction-type.pipe';
         PagePlaygroundComponent,
         PageContactDetailsComponent,
         PagePaymentComponent,
+        PageViewNotesComponent,
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,
