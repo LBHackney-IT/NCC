@@ -30,7 +30,7 @@
                     Filter by type
                 </label>
                 <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="filter_type" name="filter_type" type="search"
-                    [(ngModel)]="transaction_filter.type">
+                    [(ngModel)]="filter.type">
                 <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
                     Search
                 </button>
@@ -50,8 +50,8 @@
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                    <tr class="govuk-table__row" *ngFor="let row of filtered_payment_history">
-                    <!-- <tr class="govuk-table__row" *ngFor="let row of payment_history | transactionType: transaction_filter"> -->
+                    <tr class="govuk-table__row" *ngFor="let row of filtered_history">
+                    <!-- <tr class="govuk-table__row" *ngFor="let row of history | transactionType: filter"> -->
                         <td class="govuk-table__cell" scope="row">{{ row.period }}</td>
                         <td class="govuk-table__cell">{{ row.date }}</td>
                         <td class="govuk-table__cell">{{ row.type }}</td>
