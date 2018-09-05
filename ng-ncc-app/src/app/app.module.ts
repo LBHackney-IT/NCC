@@ -7,9 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
+import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
-import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
+import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 import { PageHomeComponent } from './pages/home/home.component';
@@ -83,9 +84,10 @@ import { TabComponent } from './components/tabs/tab/tab.component';
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
+        AccountDetailsResolver,
         CallerResolver,
-        IdentifiedCallerResolver,
         CallNatureResolver,
+        IdentifiedCallerResolver,
         NotifyTemplatesResolver
     ],
     bootstrap: [AppComponent]

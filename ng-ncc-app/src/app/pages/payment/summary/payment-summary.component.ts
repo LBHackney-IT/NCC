@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { initAll } from 'govuk-frontend';
 
+import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { CommsOption } from '../../../classes/comms-option.class';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
@@ -15,6 +16,7 @@ import { CONTACT } from '../../../constants/contact.constant';
 export class PagePaymentSummaryComponent implements OnInit {
 
     CONTACT_METHOD = CONTACT;
+    account_details: AccountDetails;
     comms_options: CommsOption[];
     selected_method: CommsSelection;
     selected_template: CommsOption; // what to send.
@@ -34,6 +36,7 @@ export class PagePaymentSummaryComponent implements OnInit {
         this.route.data
             .subscribe((data) => {
                 this.comms_options = data.templates;
+                this.account_details = data.accountDetails;
             });
     }
 

@@ -75,6 +75,13 @@ export class IdentifiedCaller implements Caller {
     }
 
     /**
+     * Returns the caller's CRM contact ID.
+     */
+    getContactID(): string | null {
+        return this._details.crmContactId;
+    }
+
+    /**
      * Returns TRUE if the caller has no email address[es].
      */
     hasNoEmailAddresses(): boolean {

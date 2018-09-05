@@ -12,13 +12,19 @@
             <!-- Current balance. -->
             <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Current balance</h3>
-                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">- £9999.99</p>
+                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                    <span *ngIf="account_details">{{ account_details.currentBalance | currency:'GBP' }}</span>
+                    <span *ngIf="!account_details">--</span>
+                </p>
             </div>
 
             <!-- Rent amount. -->
             <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Rent amount</h3>
-                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">£70.00</p>
+                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                    <span *ngIf="account_details">{{ account_details.rent | currency:'GBP' }}</span>
+                    <span *ngIf="!account_details">--</span>
+                </p>
             </div>
 
             <!-- Next payment date. -->
@@ -58,8 +64,8 @@
                 <td class="govuk-table__cell" scope="row">{{ row.period }}</td>
                 <td class="govuk-table__cell">{{ row.date }}</td>
                 <td class="govuk-table__cell">{{ row.type }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.amount }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.balance }}</td>
+                <td class="govuk-table__cell transaction__amount">{{ row.amount | currency:'GBP' }}</td>
+                <td class="govuk-table__cell transaction__amount">{{ row.balance | currency:'GBP' }}</td>
             </tr>
         </tbody>
     </table>

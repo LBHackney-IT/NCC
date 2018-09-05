@@ -17,6 +17,7 @@ import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
+import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
     // {
@@ -43,6 +44,7 @@ export const AppRoutes: Routes = [
                 path: 'summary',
                 component: PagePaymentSummaryComponent,
                 resolve: {
+                    accountDetails: AccountDetailsResolver,
                     templates: NotifyTemplatesResolver
                 }
             },
