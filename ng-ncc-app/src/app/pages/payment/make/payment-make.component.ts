@@ -15,6 +15,8 @@ export class PagePaymentMakeComponent implements OnInit {
     form = {
         to_pay: null
     };
+    selected_template: string;
+    selected_method: string;
 
     constructor(private route: ActivatedRoute) { }
 

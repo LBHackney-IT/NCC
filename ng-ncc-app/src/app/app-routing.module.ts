@@ -64,7 +64,10 @@ export const AppRoutes: Routes = [
     },
     {
         path: 'transactions',
-        component: PageTransactionHistoryComponent
+        component: PageTransactionHistoryComponent,
+        resolve: {
+            accountDetails: AccountDetailsResolver
+        }
     },
     {
         // Identify page.
