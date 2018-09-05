@@ -1,11 +1,16 @@
 import { Caller } from '../interfaces/caller.interface';
 import { CitizenIndexSearchResult } from '../interfaces/citizen-index-search-result.interface';
 import { ContactAddress } from '../classes/contact-address.class';
+import { AccountDetails } from '../interfaces/account-details.interface';
+import { Transaction } from '../interfaces/transaction.interface';
 
 /**
  * This class represents an identified caller, as selected from the Identify page.
  */
 export class IdentifiedCaller implements Caller {
+
+    _account_details: AccountDetails;
+    _transactions: Transaction[];
 
     constructor(private _details: CitizenIndexSearchResult) { }
 
@@ -94,4 +99,32 @@ export class IdentifiedCaller implements Caller {
     hasNoTelephoneNumbers(): boolean {
         return 0 === this.getTelephoneNumbers().length;
     }
+
+    getAccountDetails(): AccountDetails {
+        return this._account_details;
+    }
+
+    setAccountDetails(data: AccountDetails) {
+        this._account_details = data;
+    }
+
+    getTransactions(): Transaction[] {
+        return this._transactions;
+    }
+
+    setTransactions(data: Transaction[]) {
+        this._transactions = data;
+        if (this._account_details) {
+            this._calculateTransactionBalances();
+        }
+    }
+
+    _calculateTransactionBalances() {
+        let balance = this.account_details.currentBalance;
+        this._transactions = this._transactions.map((row) => {
+            row.balance = balance;
+            balance -= realValue;
+        });
+    }
+
 }

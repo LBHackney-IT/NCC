@@ -44,7 +44,14 @@ export class PagePaymentSummaryComponent implements OnInit {
                 .getTransactions(this.account_details.tagReferenceNumber)
                 .subscribe(
                     (rows) => {
-                        this.transactions = rows;
+                        // this.transactions = rows;
+                        let balance = this.account_details.currentBalance;
+                        this.transactions = rows.map((row) => {
+                            row.balance = balance;
+                            balance -= row.realValue;
+                            return row;
+                        });
+
                     },
                     (error) => {
                         console.error(error);
@@ -71,7 +78,8 @@ export class PagePaymentSummaryComponent implements OnInit {
                 postDate: new Date().toLocaleDateString('en-GB'),   // timestamp
                 realValue: -(Math.random() * 100).toFixed(2),
                 transactionID: '...',
-                debDesc: 'Housing Benefit'
+                debDesc: 'Housing Benefit',
+                balance: 0
             } as Transaction);
         }
     }

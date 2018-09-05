@@ -8,4 +8,5 @@ export interface Transaction {
     realValue: number;
     transactionID: string;
     debDesc: string;
+    balance?: number; // currently calculated by the app.
 }

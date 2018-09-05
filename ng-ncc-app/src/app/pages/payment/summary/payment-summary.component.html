@@ -28,18 +28,18 @@
             </div>
 
             <!-- Next payment date. -->
-            <div class="govuk-grid-column-one-quarter">
+            <!-- <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Next payment</h3>
                 <p class="govuk-!-font-size-24">27/08/2018</p>
-            </div>
+            </div> -->
 
             <!-- Agreement plan. -->
-            <div class="govuk-grid-column-one-quarter">
+            <!-- <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">
                     <a href="">Agreement plan</a>
                 </h3>
                 <p class="govuk-!-font-size-24">27/08/2019</p>
-            </div>
+            </div> -->
 
         </div>
     </div>
@@ -56,7 +56,7 @@
                 <th class="govuk-table__header" scope="col">Date</th>
                 <th class="govuk-table__header" scope="col">Type</th>
                 <th class="govuk-table__header transaction__amount" scope="col">Amount</th>
-                <!-- <th class="govuk-table__header transaction__amount" scope="col">Balance</th> -->
+                <th class="govuk-table__header transaction__amount" scope="col">Balance</th>
             </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -65,7 +65,7 @@
                 <td class="govuk-table__cell">{{ row.postDate | date:'dd/MM/yyyy hh:mm' }}</td>
                 <td class="govuk-table__cell">{{ row.debDesc }}</td>
                 <td class="govuk-table__cell transaction__amount">{{ row.realValue | currency:'GBP' }}</td>
-                <!-- <td class="govuk-table__cell transaction__amount">{{ row.balance | currency:'GBP' }}</td> -->
+                <td class="govuk-table__cell transaction__amount">{{ row.balance | currency:'GBP' }}</td>
             </tr>
         </tbody>
     </table>
