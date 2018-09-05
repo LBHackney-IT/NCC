@@ -11,9 +11,7 @@ import { CallService } from '../../services/call.service';
 })
 export class PageContactDetailsComponent implements OnInit {
 
-    // TODO this page will require the presence of an *identified* caller.
-
-    MAX_OPTIONS = 5;    // maximum number of each contact method we can have for a caller.
+    MAX_OPTIONS = 0;        // maximum number of each contact method we can have for a caller (set to 0 for infinite).
     caller: IdentifiedCaller;
     details: ContactDetailsUpdate;
     new_telephone: string[];
@@ -23,8 +21,6 @@ export class PageContactDetailsComponent implements OnInit {
     constructor(private route: ActivatedRoute, private Call: CallService) { }
 
     ngOnInit() {
-        // TODO build the details from the caller's information.
-
         this.new_telephone = [];
         this.new_mobile = [];
         this.new_email = [];
@@ -35,6 +31,9 @@ export class PageContactDetailsComponent implements OnInit {
         });
     }
 
+    /**
+     * Populates our form model with the identified caller's existing details.
+     */
     _buildDetails() {
         this.details = new ContactDetailsUpdate;
         this.details.title = this.caller.getTitle();
@@ -76,16 +75,22 @@ export class PageContactDetailsComponent implements OnInit {
         }
     }
 
+    /**
+     * Returns TRUE if we have the maximum number of email addresses allowed.
+     */
     hasEnoughMobileNumbers(): boolean {
         const existing = this.details.mobile.length;
         const added = this.new_mobile.length;
-        return this.MAX_OPTIONS <= (existing + added);
+        return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
 
+    /**
+     * Returns TRUE if we have the maximum number of mobile numbers allowed.
+     */
     hasEnoughEmailAddresses(): boolean {
         const existing = this.details.email.length;
         const added = this.new_email.length;
-        return this.MAX_OPTIONS <= (existing + added);
+        return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
 
     /**
@@ -104,6 +109,9 @@ export class PageContactDetailsComponent implements OnInit {
         return index;
     }
 
+    /**
+     * Attempts to save the entered contact details for the caller.
+     */
     saveDetails(event) {
         if (event && event.defaultPrevented) {
             return;
