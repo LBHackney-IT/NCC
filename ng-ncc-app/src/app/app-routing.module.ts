@@ -45,6 +45,7 @@ export const AppRoutes: Routes = [
                 component: PagePaymentSummaryComponent,
                 resolve: {
                     accountDetails: AccountDetailsResolver,
+                    caller: IdentifiedCallerResolver,
                     templates: NotifyTemplatesResolver
                 }
             },
@@ -52,7 +53,8 @@ export const AppRoutes: Routes = [
                 path: 'make',
                 component: PagePaymentMakeComponent,
                 resolve: {
-                    accountDetails: AccountDetailsResolver
+                    accountDetails: AccountDetailsResolver,
+                    caller: IdentifiedCallerResolver
                 }
             },
             {
@@ -66,7 +68,8 @@ export const AppRoutes: Routes = [
         path: 'transactions',
         component: PageTransactionHistoryComponent,
         resolve: {
-            accountDetails: AccountDetailsResolver
+            accountDetails: AccountDetailsResolver,
+            caller: IdentifiedCallerResolver
         }
     },
     {

@@ -21,7 +21,6 @@ export class PagePaymentSummaryComponent implements OnInit {
     comms_options: CommsOption[];
     selected_method: CommsSelection;
     selected_template: CommsOption; // what to send.
-    transactions: Transaction[];
     payment_history: { [propKey: string]: any }[];
 
     constructor(private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) { }
@@ -34,54 +33,7 @@ export class PagePaymentSummaryComponent implements OnInit {
             .subscribe((data) => {
                 this.comms_options = data.templates;
                 this.account_details = data.accountDetails;
-                this._loadTransactions();
             });
-    }
-
-    _loadTransactions() {
-        if (this.account_details) {
-            const subscription = this.ManageATenancyAPI
-                .getTransactions(this.account_details.tagReferenceNumber)
-                .subscribe(
-                    (rows) => {
-                        // this.transactions = rows;
-                        let balance = this.account_details.currentBalance;
-                        this.transactions = rows.map((row) => {
-                            row.balance = balance;
-                            balance -= row.realValue;
-                            return row;
-                        });
-
-                    },
-                    (error) => {
-                        console.error(error);
-                    },
-                    () => {
-                        subscription.unsubscribe();
-                    }
-                );
-        } else {
-            this.makeDummyHistory();
-        }
-    }
-
-    makeDummyHistory() {
-        this.transactions = [];
-        const rows = Math.random() * 30 + 10;
-        for (let i = 1; i <= rows; i++) {
-            this.transactions.push({
-                tagReference: '...',
-                propertyReference: '...',
-                transactionSid: null,
-                houseReference: '...',
-                transactionType: '...',
-                postDate: new Date().toLocaleDateString('en-GB'),   // timestamp
-                realValue: -(Math.random() * 100).toFixed(2),
-                transactionID: '...',
-                debDesc: 'Housing Benefit',
-                balance: 0
-            } as Transaction);
-        }
     }
 
     /**

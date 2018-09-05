@@ -48,27 +48,8 @@
 <!-- Payment history. -->
 <h2 class="govuk-heading-m">Payment history</h2>
 
-<div class="transactions govuk-!-margin-bottom-2">
-    <table class="govuk-table govuk-!-margin-bottom-1">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <!-- <th class="govuk-table__header" scope="col">Period</th> -->
-                <th class="govuk-table__header" scope="col">Date</th>
-                <th class="govuk-table__header" scope="col">Type</th>
-                <th class="govuk-table__header transaction__amount" scope="col">Amount</th>
-                <th class="govuk-table__header transaction__amount" scope="col">Balance</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let row of transactions">
-                <!-- <td class="govuk-table__cell" scope="row">{{ row.period }}</td> -->
-                <td class="govuk-table__cell">{{ row.postDate | date:'dd/MM/yyyy hh:mm' }}</td>
-                <td class="govuk-table__cell">{{ row.debDesc }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.realValue | currency:'GBP' }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.balance | currency:'GBP' }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<app-transactions *ngIf="account_details"
+    [tenancyRef]="account_details.tagReferenceNumber"
+    [currentBalance]="account_details.currentBalance"></app-transactions>
 
 <a routerLink="/transactions" class="link-button">View transaction history</a>

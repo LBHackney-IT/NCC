@@ -42,6 +42,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
 import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
     declarations: [
@@ -73,6 +74,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
         PageTransactionHistoryComponent,
         TabsComponent,
         TabComponent,
+        TransactionsComponent,
     ],
     imports: [
         BrowserModule,
