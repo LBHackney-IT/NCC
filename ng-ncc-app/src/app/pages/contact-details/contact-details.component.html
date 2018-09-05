@@ -4,27 +4,33 @@
         <h1 class="govuk-heading-l">Edit contact details</h1>
 
         <!-- Title. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="title">
+        <div class="govuk-grid-row">
+            <label class="govuk-grid-column-one-third govuk-body govuk-!-font-weight-bold" for="title">
                 Title
             </label>
-            <input class="govuk-input govuk-input--width-5" id="title" name="title" type="text" [(ngModel)]="details.title">
+            <div class="govuk-grid-column-two-thirds govuk-body" id="title">
+                {{ details.title }}
+            </div>
         </div>
 
         <!-- First name. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="first-name">
+        <div class="govuk-grid-row">
+            <label class="govuk-grid-column-one-third govuk-body govuk-!-font-weight-bold" for="first-name">
                 First name
             </label>
-            <input class="govuk-input" id="first-name" name="first-name" type="text" [(ngModel)]="details.first_name">
+            <div class="govuk-grid-column-two-thirds govuk-body" id="first-name">
+                {{ details.first_name }}
+            </div>
         </div>
 
         <!-- Last name. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="last-name">
+        <div class="govuk-grid-row">
+            <label class="govuk-grid-column-one-third govuk-body govuk-!-font-weight-bold" for="last-name">
                 Last name
             </label>
-            <input class="govuk-input" id="last-name" name="last-name" type="text" [(ngModel)]="details.last_name">
+            <div class="govuk-grid-column-two-thirds govuk-body" id="last-name">
+                {{ details.last_name }}
+            </div>
         </div>
 
         <!-- Home number(s). -->
