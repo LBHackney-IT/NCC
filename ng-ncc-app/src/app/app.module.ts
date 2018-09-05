@@ -40,7 +40,6 @@ import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-sum
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
-import { TransactionTypePipe } from './pipes/transaction-type.pipe';
 
 @NgModule({
     declarations: [
@@ -71,7 +70,6 @@ import { TransactionTypePipe } from './pipes/transaction-type.pipe';
         PageTransactionHistoryComponent,
         TabsComponent,
         TabComponent,
-        TransactionTypePipe,
     ],
     imports: [
         BrowserModule,

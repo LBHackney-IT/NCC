@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionTypePipe } from '../../pipes/transaction-type.pipe';
 
 @Component({
     selector: 'app-transaction-history',
