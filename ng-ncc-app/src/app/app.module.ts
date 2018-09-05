@@ -19,7 +19,10 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageTransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { PageTransactionHistoryComponent } from './pages/history/transactions/transaction-history.component';
+import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
+import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
+import { PageViewNotesComponent } from './pages/history/notes/view-notes.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -36,8 +39,6 @@ import { DialogueTitleComponent } from './components/dialogue/title/dialogue-tit
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
-import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
-import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
 
@@ -52,6 +53,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
         PagePlaygroundComponent,
         PageContactDetailsComponent,
         PagePaymentComponent,
+        PageViewNotesComponent,
         NoteFormComponent,
         ContentAreaComponent,
         CommsMethodSelectComponent,

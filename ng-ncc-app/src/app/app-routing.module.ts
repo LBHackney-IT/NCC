@@ -10,7 +10,8 @@ import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageTransactionHistoryComponent } from './pages/transaction-history/transaction-history.component';
+import { PageTransactionHistoryComponent } from './pages/history/transactions/transaction-history.component';
+import { PageViewNotesComponent } from './pages/history/notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
@@ -86,6 +87,11 @@ export const AppRoutes: Routes = [
             call_nature: CallNatureResolver,
             templates: NotifyTemplatesResolver
         }
+    },
+    {
+        // View Notes page.
+        path: 'notes',
+        component: PageViewNotesComponent
     },
     {
         // Empty path (which should go to the home page).

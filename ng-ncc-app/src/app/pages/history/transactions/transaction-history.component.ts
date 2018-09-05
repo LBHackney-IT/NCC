@@ -1,37 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { PageHistoryComponent } from '../history.component';
 
 @Component({
     selector: 'app-transaction-history',
     templateUrl: './transaction-history.component.html',
     styleUrls: ['./transaction-history.component.scss']
 })
-export class PageTransactionHistoryComponent implements OnInit {
-
-    // TODO this page will require an identified caller.
-
-    payment_history: { [propKey: string]: any }[];
-    filtered_payment_history: { [propKey: string]: any }[];
-    period = 'six-months';
-    transaction_filter: { type: null };
+export class PageTransactionHistoryComponent extends PageHistoryComponent implements OnInit {
 
     ngOnInit() {
-        this.makeDummyHistory();
-        this.transaction_filter = { type: null };
-        this.filterTransactions();
+        this.updateDummyHistory();
     }
 
     /**
      *
      */
     makeDummyHistory(row_count: number = 30) {
-        this.payment_history = [];
+        this.history = [];
         const reasons = ['Housing benefits', 'Rent', 'Interest', 'Charges', 'We felt like it'];
         const rows = Math.random() * row_count + 10;
         let amount = (Math.random() * 10000);
         let payment = 0;
         for (let i = 1; i <= rows; i++) {
             payment = Math.random() * 100;
-            this.payment_history.push({
+            this.history.push({
                 period: i.toString(),
                 date: new Date().toLocaleDateString('en-GB'),
                 type: reasons[Math.floor(Math.random() * reasons.length)],
@@ -42,34 +34,15 @@ export class PageTransactionHistoryComponent implements OnInit {
         }
     }
 
-
-    /**
-     *
-     */
-    updateDummyHistory() {
-        switch (this.period) {
-            case 'six-months':
-                this.makeDummyHistory(30);
-                break;
-            case 'twelve-months':
-                this.makeDummyHistory(60);
-                break;
-            case '2017':
-            case '2016':
-                this.makeDummyHistory(80);
-                break;
-        }
-    }
-
     /**
      * Filter the transaction history by type (case insensitive).
      */
     filterTransactions() {
-        const term: string = this.transaction_filter.type;
+        const term: string = this.filter.type;
         if (null === term) {
-            this.filtered_payment_history = this.payment_history;
+            this.filtered_history = this.history;
         } else {
-            this.filtered_payment_history = this.payment_history.filter(
+            this.filtered_history = this.history.filter(
                 item => item.type && -1 !== item.type.toLowerCase().indexOf(term.toLowerCase())
             );
         }
