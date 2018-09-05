@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { initAll } from 'govuk-frontend';
 
 import { AccountDetails } from '../../../interfaces/account-details.interface';
+import { Transaction } from '../../../interfaces/transaction.interface';
 import { CommsOption } from '../../../classes/comms-option.class';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
+import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { CONTACT } from '../../../constants/contact.constant';
 
 @Component({
@@ -20,41 +21,58 @@ export class PagePaymentSummaryComponent implements OnInit {
     comms_options: CommsOption[];
     selected_method: CommsSelection;
     selected_template: CommsOption; // what to send.
+    transactions: Transaction[];
     payment_history: { [propKey: string]: any }[];
 
-    constructor(private NotifyAPI: NotifyAPIService, private route: ActivatedRoute) { }
+    constructor(private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) { }
 
     ngOnInit() {
-        // Initialise the GOV.UK Frontend components on this page.
-        initAll();
-
         this.selected_template = null;
         this.selected_method = null;
-
-        this.makeDummyHistory();
 
         this.route.data
             .subscribe((data) => {
                 this.comms_options = data.templates;
                 this.account_details = data.accountDetails;
+                this._loadTransactions();
             });
     }
 
+    _loadTransactions() {
+        if (this.account_details) {
+            const subscription = this.ManageATenancyAPI
+                .getTransactions(this.account_details.tagReferenceNumber)
+                .subscribe(
+                    (rows) => {
+                        this.transactions = rows;
+                    },
+                    (error) => {
+                        console.error(error);
+                    },
+                    () => {
+                        subscription.unsubscribe();
+                    }
+                );
+        } else {
+            this.makeDummyHistory();
+        }
+    }
+
     makeDummyHistory() {
-        this.payment_history = [];
+        this.transactions = [];
         const rows = Math.random() * 30 + 10;
-        let amount = (Math.random() * 10000);
-        let payment = 0;
         for (let i = 1; i <= rows; i++) {
-            payment = Math.random() * 100;
-            this.payment_history.push({
-                period: i.toString(),
-                date: new Date().toLocaleDateString('en-GB'),
-                type: 'Housing benefits',
-                amount: -payment.toFixed(2),
-                balance: -amount.toFixed(2)
-            });
-            amount -= payment;
+            this.transactions.push({
+                tagReference: '...',
+                propertyReference: '...',
+                transactionSid: null,
+                houseReference: '...',
+                transactionType: '...',
+                postDate: new Date().toLocaleDateString('en-GB'),   // timestamp
+                realValue: -(Math.random() * 100).toFixed(2),
+                transactionID: '...',
+                debDesc: 'Housing Benefit'
+            } as Transaction);
         }
     }
 
@@ -81,6 +99,20 @@ export class PagePaymentSummaryComponent implements OnInit {
      */
     onInvalidCommsMethod() {
         this.selected_method = null;
+    }
+
+    /**
+     *
+     */
+    isInCredit(): boolean {
+        return this.account_details && this.account_details.currentBalance < 0;
+    }
+
+    /**
+     *
+     */
+    isInDebit(): boolean {
+        return this.account_details && this.account_details.currentBalance > 0;
     }
 
 }

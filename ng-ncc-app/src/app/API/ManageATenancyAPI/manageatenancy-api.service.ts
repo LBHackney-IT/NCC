@@ -5,6 +5,7 @@ import { Observable, of, from } from 'rxjs';
 
 import { JSONResponse } from '../../interfaces/json-response.interface';
 import { AccountDetails } from '../../interfaces/account-details.interface';
+import { Transaction } from '../../interfaces/transaction.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -42,8 +43,23 @@ export class ManageATenancyAPIService {
             );
     }
 
-    getTransactions(tag_reference: string) {
+    /**
+     * Returns a list of transactions for the specified tenancy reference.
+     */
+    getTransactions(tenancy_reference: string) {
+        // The tag reference parameter is the tenancy reference.
+        return this.http
+            .get(`${this._url}/v1/Transactions?tagReference=${tenancy_reference}`)
+            .pipe(
+                map((data: JSONResponse) => {
+                    const details: Transaction[] = Array.from(data.results);
 
+                    return details;
+                },
+                    (error) => {
+                        console.log('Error fetching transactions:', error);
+                    })
+            );
     }
 
 }

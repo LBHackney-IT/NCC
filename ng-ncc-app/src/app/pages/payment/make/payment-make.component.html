@@ -12,14 +12,15 @@
             <!-- Tenancy reference number. -->
             <div>
                 <span class="govuk-!-font-weight-bold govuk-!-margin-right-2">Tenancy ref no.</span>
-                <a href="">09786/11</a>
+                <a href="" *ngIf="account_details">{{ account_details.tagReferenceNumber }}</a>
+                <span *ngIf="!account_details">--</span>
             </div>
 
             <!-- The amount to pay. -->
             <div>
                 <span class="govuk-!-margin-right-2">Pay now</span>
                 <label>
-                    £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="text">
+                    £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="number" placeholder="0.00" [(ngModel)]="form.to_pay">
                 </label>
             </div>
 
@@ -27,7 +28,8 @@
             <!-- TODO this will be automatically updated based on the outstanding balance and how much is to be paid. -->
             <div>
                 <span class="govuk-!-margin-right-2">Remaining balance</span>
-                <span class="govuk-!-font-weight-bold">£ 10.00</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ account_details.currentBalance - form.to_pay | currency:'GBP' }}</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="!account_details">--</span>
             </div>
 
         </div>

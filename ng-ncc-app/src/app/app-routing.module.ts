@@ -50,7 +50,10 @@ export const AppRoutes: Routes = [
             },
             {
                 path: 'make',
-                component: PagePaymentMakeComponent
+                component: PagePaymentMakeComponent,
+                resolve: {
+                    accountDetails: AccountDetailsResolver
+                }
             },
             {
                 // Catch-all (which should go to the summary child page).

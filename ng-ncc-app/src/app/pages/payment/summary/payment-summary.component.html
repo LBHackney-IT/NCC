@@ -12,7 +12,7 @@
             <!-- Current balance. -->
             <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Current balance</h3>
-                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold" [class.inCredit]="isInCredit()" [class.inDebit]="isInDebit()">
                     <span *ngIf="account_details">{{ account_details.currentBalance | currency:'GBP' }}</span>
                     <span *ngIf="!account_details">--</span>
                 </p>
@@ -52,20 +52,20 @@
     <table class="govuk-table govuk-!-margin-bottom-1">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Period</th>
+                <!-- <th class="govuk-table__header" scope="col">Period</th> -->
                 <th class="govuk-table__header" scope="col">Date</th>
                 <th class="govuk-table__header" scope="col">Type</th>
                 <th class="govuk-table__header transaction__amount" scope="col">Amount</th>
-                <th class="govuk-table__header transaction__amount" scope="col">Balance</th>
+                <!-- <th class="govuk-table__header transaction__amount" scope="col">Balance</th> -->
             </tr>
         </thead>
         <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let row of payment_history">
-                <td class="govuk-table__cell" scope="row">{{ row.period }}</td>
-                <td class="govuk-table__cell">{{ row.date }}</td>
-                <td class="govuk-table__cell">{{ row.type }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.amount | currency:'GBP' }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.balance | currency:'GBP' }}</td>
+            <tr class="govuk-table__row" *ngFor="let row of transactions">
+                <!-- <td class="govuk-table__cell" scope="row">{{ row.period }}</td> -->
+                <td class="govuk-table__cell">{{ row.postDate | date:'dd/MM/yyyy hh:mm' }}</td>
+                <td class="govuk-table__cell">{{ row.debDesc }}</td>
+                <td class="govuk-table__cell transaction__amount">{{ row.realValue | currency:'GBP' }}</td>
+                <!-- <td class="govuk-table__cell transaction__amount">{{ row.balance | currency:'GBP' }}</td> -->
             </tr>
         </tbody>
     </table>
