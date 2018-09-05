@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import { AccountDetails } from '../../../interfaces/account-details.interface';
-import { Transaction } from '../../../interfaces/transaction.interface';
 import { PageHistoryComponent } from '../history.component';
-import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
-import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 
 @Component({
     selector: 'app-transaction-history',
@@ -14,46 +8,10 @@ import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/managea
 })
 export class PageTransactionHistoryComponent extends PageHistoryComponent implements OnInit {
 
-    account_details: AccountDetails;
-    transactions: Transaction[];
-
-    constructor(private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) {
-        super();
-    }
+    // TODO this page will require an identified caller.
 
     ngOnInit() {
-        this.route.data
-            .subscribe((data) => {
-                this.account_details = data.accountDetails;
-                this._loadTransactions();
-            });
-    }
-
-    _loadTransactions() {
-        if (this.account_details) {
-            const subscription = this.ManageATenancyAPI
-                .getTransactions(this.account_details.tagReferenceNumber)
-                .subscribe(
-                    (rows) => {
-                        // this.transactions = rows;
-                        let balance = this.account_details.currentBalance;
-                        this.history = rows.map((row) => {
-                            row.balance = balance;
-                            balance -= row.realValue;
-                            return row;
-                        });
-                        this.filterTransactions();
-                    },
-                    (error) => {
-                        console.error(error);
-                    },
-                    () => {
-                        subscription.unsubscribe();
-                    }
-                );
-        } else {
-            this.updateDummyHistory();
-        }
+        this.updateDummyHistory();
     }
 
     /**
@@ -68,17 +26,12 @@ export class PageTransactionHistoryComponent extends PageHistoryComponent implem
         for (let i = 1; i <= rows; i++) {
             payment = Math.random() * 100;
             this.history.push({
-                tagReference: '...',
-                propertyReference: '...',
-                transactionSid: null,
-                houseReference: '...',
-                transactionType: '...',
-                postDate: new Date().toLocaleDateString('en-GB'),   // timestamp
-                realValue: -(Math.random() * 100).toFixed(2),
-                transactionID: '...',
-                debDesc: 'Housing Benefit',
-                balance: 0
-            } as Transaction);
+                period: i.toString(),
+                date: new Date().toLocaleDateString('en-GB'),
+                type: reasons[Math.floor(Math.random() * reasons.length)],
+                amount: -payment.toFixed(2),
+                balance: -amount.toFixed(2)
+            });
             amount -= payment;
         }
     }
@@ -92,7 +45,7 @@ export class PageTransactionHistoryComponent extends PageHistoryComponent implem
             this.filtered_history = this.history;
         } else {
             this.filtered_history = this.history.filter(
-                item => item.debDesc && -1 !== item.debDesc.toLowerCase().indexOf(term.toLowerCase())
+                item => item.type && -1 !== item.type.toLowerCase().indexOf(term.toLowerCase())
             );
         }
     }
