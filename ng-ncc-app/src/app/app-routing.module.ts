@@ -17,6 +17,7 @@ import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
+import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
     // {
@@ -43,12 +44,18 @@ export const AppRoutes: Routes = [
                 path: 'summary',
                 component: PagePaymentSummaryComponent,
                 resolve: {
+                    accountDetails: AccountDetailsResolver,
+                    caller: IdentifiedCallerResolver,
                     templates: NotifyTemplatesResolver
                 }
             },
             {
                 path: 'make',
-                component: PagePaymentMakeComponent
+                component: PagePaymentMakeComponent,
+                resolve: {
+                    accountDetails: AccountDetailsResolver,
+                    caller: IdentifiedCallerResolver
+                }
             },
             {
                 // Catch-all (which should go to the summary child page).
@@ -59,7 +66,11 @@ export const AppRoutes: Routes = [
     },
     {
         path: 'transactions',
-        component: PageTransactionHistoryComponent
+        component: PageTransactionHistoryComponent,
+        resolve: {
+            accountDetails: AccountDetailsResolver,
+            caller: IdentifiedCallerResolver
+        }
     },
     {
         // Identify page.

@@ -10,7 +10,7 @@ import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.int
 })
 
 /**
- * NotifyService
+ * NotifyAPIService
  * This service is intended to provide access to the GOV.UK Notify API.
  */
 export class NotifyAPIService {

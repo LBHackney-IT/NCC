@@ -7,9 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
+import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
-import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
+import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 import { PageHomeComponent } from './pages/home/home.component';
@@ -41,7 +42,7 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
 import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
-import { TransactionTypePipe } from './pipes/transaction-type.pipe';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
     declarations: [
@@ -73,7 +74,7 @@ import { TransactionTypePipe } from './pipes/transaction-type.pipe';
         PageTransactionHistoryComponent,
         TabsComponent,
         TabComponent,
-        TransactionTypePipe,
+        TransactionsComponent,
     ],
     imports: [
         BrowserModule,
@@ -85,9 +86,10 @@ import { TransactionTypePipe } from './pipes/transaction-type.pipe';
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
+        AccountDetailsResolver,
         CallerResolver,
-        IdentifiedCallerResolver,
         CallNatureResolver,
+        IdentifiedCallerResolver,
         NotifyTemplatesResolver
     ],
     bootstrap: [AppComponent]

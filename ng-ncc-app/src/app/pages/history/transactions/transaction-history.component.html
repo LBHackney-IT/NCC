@@ -8,15 +8,14 @@
             </div>
 
             <div class="govuk-grid-column-one-third">
+
+                <!-- Liimt displayed transactions to the specified dates. -->
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="period">
                         Show transactions for:
                     </label>
-                    <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="period" (ngModelChange)="updateDummyHistory()">
-                        <option value="six-months">Last 6 months</option>
-                        <option value="twelve-months" selected>Last 12 months</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
+                    <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="filter_date" (ngModelChange)="filterByDate()">
+                        <option *ngFor="let row of period_settings" [value]="row.key">{{ row.label }}</option>
                     </select>
                 </div>
             </div>
@@ -30,7 +29,7 @@
                     Filter by type
                 </label>
                 <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="filter_type" name="filter_type" type="search"
-                    [(ngModel)]="filter.type">
+                    [(ngModel)]="filter_type">
                 <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
                     Search
                 </button>
@@ -38,29 +37,12 @@
         </form>
 
         <!-- Transaction history. -->
-        <div class="transactions govuk-!-margin-bottom-5">
-            <table class="govuk-table govuk-!-margin-bottom-1">
-                <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="col">Period</th>
-                        <th class="govuk-table__header" scope="col">Date</th>
-                        <th class="govuk-table__header" scope="col">Type</th>
-                        <th class="govuk-table__header transaction__amount" scope="col">Amount</th>
-                        <th class="govuk-table__header transaction__amount" scope="col">Rent balance</th>
-                    </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                    <tr class="govuk-table__row" *ngFor="let row of filtered_history">
-                    <!-- <tr class="govuk-table__row" *ngFor="let row of history | transactionType: filter"> -->
-                        <td class="govuk-table__cell" scope="row">{{ row.period }}</td>
-                        <td class="govuk-table__cell">{{ row.date }}</td>
-                        <td class="govuk-table__cell">{{ row.type }}</td>
-                        <td class="govuk-table__cell transaction__amount">{{ row.amount }}</td>
-                        <td class="govuk-table__cell transaction__amount">{{ row.balance }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <app-transactions *ngIf="account_details"
+            [filter]="filter_settings.manual"
+            [minDate]="filter_settings.min_date"
+            [maxDate]="filter_settings.max_date"
+            [tenancyRef]="account_details.tagReferenceNumber"
+            [currentBalance]="account_details.currentBalance"></app-transactions>
 
         <!-- Select a communications method. -->
         <app-comms-method-select></app-comms-method-select>
