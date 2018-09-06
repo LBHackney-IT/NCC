@@ -12,16 +12,30 @@ import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/managea
 export class PageTransactionHistoryComponent implements OnInit {
 
     account_details: AccountDetails;
+    filter_type: string;
+    filter_settings: { [propKey: string]: string };
 
     constructor(private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) { }
 
-    // TODO incorporate the filter into the transactions component.
-
+    /**
+     *
+     */
     ngOnInit() {
+        this.filter_settings = {};
         this.route.data
             .subscribe((data) => {
                 this.account_details = data.accountDetails;
             });
+    }
+
+    /**
+     *
+     */
+    filterTransactions() {
+        this.filter_settings = {
+            debDesc: this.filter_type
+        };
+        console.log(this.filter_settings);
     }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { Transaction } from '../../interfaces/transaction.interface';
 
@@ -7,17 +7,14 @@ import { Transaction } from '../../interfaces/transaction.interface';
     templateUrl: './transactions.component.html',
     styleUrls: ['./transactions.component.scss']
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionsComponent implements OnInit, OnChanges {
     @Input() tenancyRef: string;
     @Input() currentBalance: number;
-    @Input() showFilter: boolean;
+    @Input() filter: { [propKey: string]: string };
 
     _loading: boolean;
     _rows: Transaction[];
     _filtered: Transaction[];
-    _filter = {
-        type: null
-    };
     _period = 'six-months';
     _period_options = [
         { key: 'six-months', label: 'Last 6 months' },
@@ -38,9 +35,14 @@ export class TransactionsComponent implements OnInit {
     /**
      *
      */
-    ngOnChanges() {
-        if (this.tenancyRef) {
+    ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+        if (changes.tenancyRef) {
+            // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
             this._loadTransactions();
+        } else if (changes.filter) {
+            // The filter settings have changed, so update what is displayed.
+            console.log('filter has changed.');
+            this._filterTransactions();
         }
     }
 
@@ -72,22 +74,20 @@ export class TransactionsComponent implements OnInit {
     }
 
     _filterTransactions() {
-        const term: string = this._filter.type;
-        if (null === term) {
-            this._filtered = this._rows;
-        } else {
-            this._filtered = this._rows.filter(
-                item => item.type && -1 !== item.debDesc.toLowerCase().indexOf(term.toLowerCase())
-            );
-        }
-    }
-
-
-    /**
-     *
-     */
-    shouldShowFilter(): boolean {
-        return this.showFilter && (this.transactions && this.transactions.length > 0);
+        this._filtered = this._rows.filter(
+            item => {
+                let outcome = true;
+                if (this.filter) {
+                    Object.keys(this.filter).forEach(
+                        key => {
+                            const term = this.filter[key];
+                            if (null !== term) {
+                                outcome = outcome && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase()));
+                            }
+                        });
+                }
+                return outcome;
+            });
     }
 
 }
