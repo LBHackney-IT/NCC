@@ -16,6 +16,7 @@ import { PageViewNotesComponent } from './pages/history/notes/view-notes.compone
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
+import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
@@ -86,7 +87,8 @@ export const AppRoutes: Routes = [
         path: 'contact-details',
         component: PageContactDetailsComponent,
         resolve: {
-            caller: IdentifiedCallerResolver
+            caller: IdentifiedCallerResolver,
+            details: ContactDetailsResolver
         }
     },
     {

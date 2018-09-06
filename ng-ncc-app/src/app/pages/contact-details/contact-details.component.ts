@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContactDetailsUpdate } from '../../interfaces/contact-details-update.interface';
+import { ContactDetails } from '../../interfaces/contact-details.interface';
+import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
 
@@ -12,7 +13,6 @@ import { CallService } from '../../services/call.service';
 export class PageContactDetailsComponent implements OnInit {
 
     MAX_OPTIONS = 0;        // maximum number of each contact method we can have for a caller (set to 0 for infinite).
-    caller: IdentifiedCaller;
     details: ContactDetailsUpdate;
     new_telephone: string[];
     new_mobile: string[];
@@ -26,23 +26,29 @@ export class PageContactDetailsComponent implements OnInit {
         this.new_email = [];
 
         this.route.data.subscribe((data) => {
-            this.caller = data.caller;
-            this._buildDetails();
+            console.log('Contact details:', data.details);
+            this._buildDetails(data.details);
         });
     }
 
     /**
      * Populates our form model with the identified caller's existing details.
      */
-    _buildDetails() {
+    _buildDetails(details: ContactDetails) {
         this.details = new ContactDetailsUpdate;
-        this.details.title = this.caller.getTitle();
-        this.details.first_name = this.caller.getFirstName();
-        this.details.last_name = this.caller.getLastName();
+        this.details.title = details.title;
+        this.details.first_name = details.firstName;
+        this.details.last_name = details.lastName;
         // this.details.telephone = this.caller.getTelephoneNumbers();
         // - currently no distinction between mobile and telephone numbers.
-        this.details.mobile = this.caller.getTelephoneNumbers();
-        this.details.email = this.caller.getEmailAddresses();
+        this.details.mobile = [
+            details.telephone1,
+            details.telephone2,
+            details.telephone3
+        ].filter(row => row);
+        this.details.email = [
+            details.emailAddress
+        ].filter(row => row);
 
         // If there's only one of each contact method, set it as the default.
         if (1 === this.details.mobile.length) {
