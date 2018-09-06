@@ -8,16 +8,14 @@
             </div>
 
             <div class="govuk-grid-column-one-third">
-                <!-- TODO dropdown to interact with the transaction component. -->
+
+                <!-- Liimt displayed transactions to the specified dates. -->
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="period">
                         Show transactions for:
                     </label>
-                    <select class="govuk-select govuk-input--width-20" id="period" name="period">
-                        <option value="six-months">Last 6 months</option>
-                        <option value="twelve-months" selected>Last 12 months</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
+                    <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="filter_date" (ngModelChange)="filterByDate()">
+                        <option *ngFor="let row of period_settings" [value]="row.key">{{ row.label }}</option>
                     </select>
                 </div>
             </div>
@@ -40,7 +38,9 @@
 
         <!-- Transaction history. -->
         <app-transactions *ngIf="account_details"
-            [filter]="filter_settings"
+            [filter]="filter_settings.manual"
+            [minDate]="filter_settings.min_date"
+            [maxDate]="filter_settings.max_date"
             [tenancyRef]="account_details.tagReferenceNumber"
             [currentBalance]="account_details.currentBalance"></app-transactions>
 

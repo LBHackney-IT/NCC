@@ -11,6 +11,8 @@ export class TransactionsComponent implements OnInit, OnChanges {
     @Input() tenancyRef: string;
     @Input() currentBalance: number;
     @Input() filter: { [propKey: string]: string };
+    @Input() minDate?: Date;
+    @Input() maxDate?: Date;
 
     _loading: boolean;
     _rows: Transaction[];
@@ -39,8 +41,8 @@ export class TransactionsComponent implements OnInit, OnChanges {
         if (changes.tenancyRef) {
             // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
             this._loadTransactions();
-        } else if (changes.filter) {
-            // The filter settings have changed, so update what is displayed.
+        } else {
+            // The filter or date settings have changed, so update what is displayed.
             console.log('filter has changed.');
             this._filterTransactions();
         }
@@ -74,14 +76,27 @@ export class TransactionsComponent implements OnInit, OnChanges {
     }
 
     _filterTransactions() {
+        const min_date = this.minDate ? this.minDate.toISOString() : null;
+        const max_date = this.maxDate ? this.maxDate.toISOString() : null;
+
         this._filtered = this._rows.filter(
             item => {
                 let outcome = true;
-                if (this.filter) {
+
+                // Check against the provided dates (if set).
+                if (outcome && min_date) {
+                    outcome = item.postDate >= min_date;
+                }
+                if (outcome && max_date) {
+                    outcome = item.postDate < max_date;
+                }
+
+                if (outcome && this.filter) {
+                    // Put the item through the filter.
                     Object.keys(this.filter).forEach(
                         key => {
                             const term = this.filter[key];
-                            if (null !== term) {
+                            if (term) {
                                 outcome = outcome && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase()));
                             }
                         });
