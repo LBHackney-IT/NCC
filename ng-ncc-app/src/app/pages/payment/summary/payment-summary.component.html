@@ -12,28 +12,34 @@
             <!-- Current balance. -->
             <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Current balance</h3>
-                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">- £9999.99</p>
+                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold" [class.inCredit]="isInCredit()" [class.inDebit]="isInDebit()">
+                    <span *ngIf="account_details">{{ account_details.currentBalance | currency:'GBP' }}</span>
+                    <span *ngIf="!account_details">--</span>
+                </p>
             </div>
 
             <!-- Rent amount. -->
             <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Rent amount</h3>
-                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">£70.00</p>
+                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                    <span *ngIf="account_details">{{ account_details.rent | currency:'GBP' }}</span>
+                    <span *ngIf="!account_details">--</span>
+                </p>
             </div>
 
             <!-- Next payment date. -->
-            <div class="govuk-grid-column-one-quarter">
+            <!-- <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Next payment</h3>
                 <p class="govuk-!-font-size-24">27/08/2018</p>
-            </div>
+            </div> -->
 
             <!-- Agreement plan. -->
-            <div class="govuk-grid-column-one-quarter">
+            <!-- <div class="govuk-grid-column-one-quarter">
                 <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">
                     <a href="">Agreement plan</a>
                 </h3>
                 <p class="govuk-!-font-size-24">27/08/2019</p>
-            </div>
+            </div> -->
 
         </div>
     </div>
@@ -42,27 +48,8 @@
 <!-- Payment history. -->
 <h2 class="govuk-heading-m">Payment history</h2>
 
-<div class="transactions govuk-!-margin-bottom-2">
-    <table class="govuk-table govuk-!-margin-bottom-1">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Period</th>
-                <th class="govuk-table__header" scope="col">Date</th>
-                <th class="govuk-table__header" scope="col">Type</th>
-                <th class="govuk-table__header transaction__amount" scope="col">Amount</th>
-                <th class="govuk-table__header transaction__amount" scope="col">Balance</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let row of payment_history">
-                <td class="govuk-table__cell" scope="row">{{ row.period }}</td>
-                <td class="govuk-table__cell">{{ row.date }}</td>
-                <td class="govuk-table__cell">{{ row.type }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.amount }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.balance }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<app-transactions *ngIf="account_details"
+    [tenancyRef]="account_details.tagReferenceNumber"
+    [currentBalance]="account_details.currentBalance"></app-transactions>
 
 <a routerLink="/transactions" class="link-button">View transaction history</a>
