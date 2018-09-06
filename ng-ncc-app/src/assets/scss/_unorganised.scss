@@ -11,19 +11,6 @@
     padding: 1rem;
 }
 
-.transactions {
-    border: 1px solid #BFC1C3;
-    /* $govuk-border-colour */
-    max-height: 21rem;
-    overflow: auto;
-    padding: .5rem 1rem;
-}
-
-.transactions .transaction__amount {
-    text-align: right !important;
-}
-/* LINK button style. */
-
 
 $value-list-horizontal-label-ratio: 1 !default;
 $value-list-horizontal-value-ratio: 2 !default; // how wide the value area is compared to the label.

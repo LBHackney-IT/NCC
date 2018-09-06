@@ -6,16 +6,16 @@
             <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col">Date</th>
                 <th class="govuk-table__header" scope="col">Type</th>
-                <th class="govuk-table__header transaction__amount" scope="col">Amount</th>
-                <th class="govuk-table__header transaction__amount" scope="col">Balance</th>
+                <th class="govuk-table__header govuk-table__header--numeric" scope="col">Amount</th>
+                <th class="govuk-table__header govuk-table__header--numeric" scope="col">Balance</th>
             </tr>
         </thead>
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row" *ngFor="let row of _filtered">
                 <td class="govuk-table__cell" scope="row">{{ row.postDate | date:'dd/MM/yyyy hh:mm' }}</td>
                 <td class="govuk-table__cell">{{ row.debDesc }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.realValue | currency:'GBP' }}</td>
-                <td class="govuk-table__cell transaction__amount">{{ row.balance | currency:'GBP' }}</td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.realValue | currency:'GBP' }}</td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.balance | currency:'GBP' }}</td>
             </tr>
         </tbody>
     </table>
