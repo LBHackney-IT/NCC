@@ -10,6 +10,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
+import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
@@ -89,6 +90,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
         AccountDetailsResolver,
         CallerResolver,
         CallNatureResolver,
+        ContactDetailsResolver,
         IdentifiedCallerResolver,
         NotifyTemplatesResolver
     ],
