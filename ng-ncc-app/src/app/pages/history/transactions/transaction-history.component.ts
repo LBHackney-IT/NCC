@@ -75,7 +75,6 @@ export class PageTransactionHistoryComponent implements OnInit {
      * Set the date filtering option for the list of transactions.
      */
     filterByDate() {
-        let today = new Date();
         let min_date = new Date();
         let max_date = new Date();
         switch (this.filter_date) {
@@ -90,7 +89,7 @@ export class PageTransactionHistoryComponent implements OnInit {
             default:
                 // If the selected option is numeric, assume it is a specific year.
                 // Otherwise no date filter will be applied.
-                const year = parseInt(this.filter_date);
+                const year = parseInt(this.filter_date, 10);
                 if (!Number.isNaN(year)) {
                     min_date = new Date(year, 0, 1);
                     max_date = new Date(year + 1, 0, 0);
