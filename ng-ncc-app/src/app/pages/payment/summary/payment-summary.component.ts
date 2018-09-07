@@ -22,12 +22,15 @@ export class PagePaymentSummaryComponent implements OnInit {
     selected_method: CommsSelection;
     selected_template: CommsOption; // what to send.
     payment_history: { [propKey: string]: any }[];
+    summary_cutoff: Date;
 
     constructor(private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.selected_template = null;
         this.selected_method = null;
+        this.summary_cutoff = new Date();
+        this.summary_cutoff.setMonth(this.summary_cutoff.getMonth() - 6);
 
         this.route.data
             .subscribe((data) => {

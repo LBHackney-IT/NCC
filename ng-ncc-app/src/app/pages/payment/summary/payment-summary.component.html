@@ -49,6 +49,7 @@
 <h2 class="govuk-heading-m">Payment history</h2>
 
 <app-transactions *ngIf="account_details"
+    [minDate]="summary_cutoff"
     [tenancyRef]="account_details.tagReferenceNumber"
     [currentBalance]="account_details.currentBalance"></app-transactions>
 
