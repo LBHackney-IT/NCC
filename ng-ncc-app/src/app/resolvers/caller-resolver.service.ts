@@ -12,7 +12,7 @@ export class CallerResolver implements Resolve<any[]> {
 
         if (!this.Call.hasCaller()) {
             console.log('We must have a caller to access this page.');
-            this.router.navigateByUrl('identify');
+            this.router.navigateByUrl('caller-details');
             return of([]);
         }
 

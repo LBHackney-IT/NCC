@@ -2,7 +2,7 @@
     <div class="govuk-grid-column-two-thirds">
 
         <!-- Search for contact details. -->
-        <h2 class="govuk-heading-m">Search for contact details</h2>
+        <h2 class="govuk-heading-m">Caller details</h2>
 
         <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
         <form action="">
@@ -19,10 +19,13 @@
             </div>
         </form>
 
+        <!-- Or... -->
+        <app-or></app-or>
+
         <!-- Option to mark the caller as anonymous. -->
         <p class="govuk-body">
             <button class="link-button govuk-!-margin-bottom-0" (click)="anonymousSelected()">
-                Anonymous caller
+                Caller is anonymous
             </button>
             <app-helper>
                 Select this option if the caller wants to remain anonymous.<br>
