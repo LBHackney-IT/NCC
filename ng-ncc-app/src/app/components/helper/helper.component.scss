@@ -1,0 +1,63 @@
+@import "../../../assets/scss/vars.scss";
+@import "~govuk-frontend/all";
+
+$helper-icon-bg-colour: $govuk-text-colour !default;
+$helper-icon-text-colour: govuk-colour("white") !default;
+$helper-icon-fount-stack: $govuk-font-family;
+
+$helper-text-bg-colour: $govuk-text-colour !default;
+$helper-text-colour: govuk-colour("white") !default;
+$helper-text-radius: 4px !default;
+$helper-text-padding: 1em !default;
+$helper-text-min-width: 300px !default;
+$helper-text-tip-size: 10px !default;
+$helper-text-z-index: 30px !default;
+
+/////////////////////////
+
+:host {
+    position: relative;
+}
+
+.icon {
+    background: $helper-icon-bg-colour;
+    border-radius: 999px;
+    color: $helper-icon-text-colour;
+    cursor: default;
+    display: inline-block;
+    font-family: $helper-icon-fount-stack;
+    font-weight: bold;
+    text-align: center;
+    height: 1.25em;
+    width: 1.25em;
+
+    &:hover + .text {
+        display: block;
+    }
+}
+
+.text {
+    background: $helper-text-bg-colour;
+    border-radius: $helper-text-radius;
+    color: $helper-text-colour;
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: -($helper-text-tip-size * 2);
+    transform: translate(-50%, -100%);
+    min-width: $helper-text-min-width;
+    padding: $helper-text-padding;
+    z-index: $helper-text-z-index;
+
+    &:after {
+        content: "";
+        width: 0;
+        height: 0;
+        border: $helper-text-tip-size solid transparent;
+        border-top-color: $helper-text-bg-colour;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 100%);
+    }
+}
