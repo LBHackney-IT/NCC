@@ -3,8 +3,8 @@
     @extend .govuk-button;
 
     box-shadow: 0 $govuk-border-width-form-element 0 transparent;
-    color: $govuk-text-colour;
     background-color: transparent;
+    color: $govuk-text-colour;
 
     @include govuk-if-ie8 {
         border-bottom-color: transparent;
