@@ -23,10 +23,14 @@
         <app-or></app-or>
 
         <!-- Option to mark the caller as anonymous. -->
-        <p>
+        <p class="govuk-body">
             <button class="link-button govuk-!-margin-bottom-0" (click)="anonymousSelected()">
                 Caller is anonymous
             </button>
+            <app-helper>
+                Select this option if the caller wants to remain anonymous.<br>
+                Anonymous callers will not be able to access sensitive information.
+            </app-helper>
         </p>
 
         <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
