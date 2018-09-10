@@ -1,13 +1,13 @@
 .link-button {
-    // Simply extend the regular GOV.UK Frontend button, but make it resemble a text link.
     @extend .govuk-button;
 
-    box-shadow: 0 $govuk-border-width-form-element 0 transparent;
+    box-shadow: 0 $govuk-border-width-form-element 0 $govuk-border-colour;
     color: $govuk-text-colour;
-    background-color: transparent;
+    background-color: govuk-colour('white');
+    border: 2px solid $govuk-border-colour;
 
     @include govuk-if-ie8 {
-        border-bottom-color: transparent;
+        border-bottom-color: $govuk-border-colour;
     }
 
     &:link,
@@ -19,8 +19,7 @@
 
     &:hover,
     &:focus {
-        background-color: transparent;
-        text-decoration: underline;
+        background-color: govuk-colour('white');
     }
 
     @include govuk-compatibility(govuk_template) {

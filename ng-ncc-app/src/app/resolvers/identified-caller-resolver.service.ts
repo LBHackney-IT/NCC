@@ -14,7 +14,7 @@ export class IdentifiedCallerResolver implements Resolve<any[]> {
 
         if (!(caller && !caller.isAnonymous())) {
             console.log('We must have an identified caller to access this page.');
-            this.router.navigateByUrl('identify');
+            this.router.navigateByUrl('caller-details');
             return of([]);
         }
 
