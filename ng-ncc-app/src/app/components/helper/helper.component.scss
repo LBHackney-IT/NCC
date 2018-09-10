@@ -3,12 +3,13 @@
 
 $helper-icon-bg-colour: $govuk-text-colour !default;
 $helper-icon-text-colour: govuk-colour("white") !default;
+$helper-icon-fount-stack: $govuk-font-family;
 
 $helper-text-bg-colour: $govuk-text-colour !default;
 $helper-text-colour: govuk-colour("white") !default;
 $helper-text-radius: 4px !default;
 $helper-text-padding: 1em !default;
-$helper-text-min-width: 200px !default;
+$helper-text-min-width: 300px !default;
 $helper-text-tip-size: 10px !default;
 $helper-text-z-index: 30px !default;
 
@@ -24,6 +25,7 @@ $helper-text-z-index: 30px !default;
     color: $helper-icon-text-colour;
     cursor: default;
     display: inline-block;
+    font-family: $helper-icon-fount-stack;
     font-weight: bold;
     text-align: center;
     height: 1.25em;

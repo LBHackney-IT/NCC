@@ -20,9 +20,15 @@
         </form>
 
         <!-- Option to mark the caller as anonymous. -->
-        <button class="link-button govuk-!-margin-bottom-0" (click)="anonymousSelected()">
-            Anonymous caller
-        </button>
+        <p class="govuk-body">
+            <button class="link-button govuk-!-margin-bottom-0" (click)="anonymousSelected()">
+                Anonymous caller
+            </button>
+            <app-helper>
+                Select this option if the caller wants to remain anonymous.<br>
+                Anonymous callers will not be able to access sensitive information.
+            </app-helper>
+        </p>
 
         <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
