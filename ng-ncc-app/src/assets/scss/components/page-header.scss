@@ -6,36 +6,17 @@ $page-header-padding: 2rem !default;
 
 ////////////////////
 
+@import "../mixins/hackney-stripes";
+
 .page__header {
+    @include hackney-stripes--bottom;
+
     background: $page-header-bg-colour;
-    border-bottom: $page-header-border-width solid $page-header-border-colour;
     color: $page-header-text-colour;
     padding: $page-header-padding;
-    position: relative;
 
     p {
         color: inherit;
-    }
-
-    &:after,
-    &:before {
-        content: '';
-        display: block;
-        height: 5px;
-        left: 0;
-        position: absolute;
-        right: 0;
-    }
-
-    &:before {
-        background: $hackney-green;
-        bottom: 5px;
-    }
-
-    &:after {
-        background: $hackney-light-green;
-        bottom: -11px;
-        height: 3px;
     }
 }
 @media (min-width: 520px) {

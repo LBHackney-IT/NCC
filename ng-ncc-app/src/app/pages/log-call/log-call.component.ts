@@ -76,7 +76,9 @@ export class PageLogCallComponent implements OnInit {
     proceed() {
         console.log('Call reason was set.');
         this.Call.setCallNature(this.selected);
-        this.router.navigateByUrl('identify');
+
+        // Go to the Caller Details page.
+        this.router.navigateByUrl('caller-details');
     }
 
     /**

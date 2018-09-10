@@ -44,6 +44,8 @@ import { RouteLoadingComponent } from './components/route-loading/route-loading.
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
+import { HelperComponent } from './components/helper/helper.component';
+import { OrComponent } from './components/or/or.component';
 
 @NgModule({
     declarations: [
@@ -76,6 +78,8 @@ import { TransactionsComponent } from './components/transactions/transactions.co
         TabsComponent,
         TabComponent,
         TransactionsComponent,
+        HelperComponent,
+        OrComponent,
     ],
     imports: [
         BrowserModule,

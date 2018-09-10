@@ -75,7 +75,7 @@ export const AppRoutes: Routes = [
     },
     {
         // Identify page.
-        path: 'identify',
+        path: 'caller-details',
         component: PageIdentifyComponent,
         resolve: {
             call_nature: CallNatureResolver,

@@ -2,6 +2,13 @@
 
 <div class="govuk-body" *ngIf="hasResults()">
 
+    <!-- Go back to the address results. -->
+    <button type="button" class="link-button" (click)="goBack()">
+        Back to address results
+    </button>
+
+    <h2 class="govuk-heading-m">Results</h2>
+
     <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
@@ -11,38 +18,31 @@
     </div>
 
     <!-- If we've found contact information... -->
-    <h2 class="govuk-heading-m">Identify caller</h2>
-
-    <button type="button" class="link-button" (click)="goBack()">
-        Back to results
-    </button>
+    <h2 class="govuk-heading-m">Tenancy details</h2>
 
     <!-- Display the address of the property. -->
     <div class="box-panel govuk-!-margin-bottom-3">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
-                <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
-                <p class="govuk-body" [innerHtml]="getAddress()"></p>
-            </div>
-            <div class="govuk-grid-column-two-thirds">
-                <h2 class="govuk-heading-s govuk-!-margin-bottom-2">DPA</h2>
-                <dl class="value-list value-list--horizontal govuk-body-s">
-                    <dt class="value-list__label">Payment reference number</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Date of last payment and amount</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Amount last paid</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Month and year their tenancy began</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Preferred payment method</dt>
-                    <dd class="value-list__value">...</dd>
-                </dl>
-            </div>
-        </div>
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
+        <p class="govuk-body" [innerHtml]="getAddress()"></p>
+
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h2>
+        <dl class="value-list value-list--horizontal govuk-body-s">
+            <dt class="value-list__label">Payment reference number</dt>
+            <dd class="value-list__value">...</dd>
+            <dt class="value-list__label">Date of last payment and amount</dt>
+            <dd class="value-list__value">...</dd>
+            <dt class="value-list__label">Amount last paid</dt>
+            <dd class="value-list__value">...</dd>
+            <dt class="value-list__label">Month and year their tenancy began</dt>
+            <dd class="value-list__value">...</dd>
+            <dt class="value-list__label">Preferred payment method</dt>
+            <dd class="value-list__value">...</dd>
+        </dl>
     </div>
 
     <!-- Display each tenant. -->
+    <h2 class="govuk-heading-m">Tenant details</h2>
+
     <div class="box-panel tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios govuk-radios--inline">
             <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index">
@@ -89,13 +89,12 @@
                             <span class="value-list__label">Date of birth</span>
                             <span class="value-list__value">09/09/1999</span>
                         </span>
-
-                        <button class="link-button govuk-!-margin-bottom-0" type="button" name="button" (click)="editContactDetails(row)">
-                            Edit contact details
-                        </button>
                     </span>
-
                 </label>
+
+                <button class="link-button govuk-!-margin-bottom-3" type="button" name="button" (click)="editContactDetails(row)">
+                    Edit contact details
+                </button>
             </div>
         </div>
 
