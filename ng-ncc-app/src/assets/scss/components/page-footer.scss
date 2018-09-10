@@ -7,37 +7,16 @@ $page-footer-padding: 1.5rem 2rem 1rem !default;
 $page-footer-z-index: 10 !default;
 
 ////////////////////
+@import "../mixins/hackney-stripes";
 
 .page__footer {
+    @include hackney-stripes--top;
+
     background-color: $page-footer-bg-colour;
-    border-top: $page-footer-border-width solid $page-footer-border-colour;
     color: $page-footer-text-colour;
     margin-top: 0;
     padding: $page-footer-padding;
-    position: relative;
     text-align: center;
-
-    &:after,
-    &:before {
-        content: '';
-        display: block;
-        height: 3px;
-        left: 0;
-        position: absolute;
-        right: 0;
-    }
-
-    &:before {
-        background-color: $hackney-green;
-        top: 5px;
-    }
-
-    &:after {
-        background-color: $hackney-light-green;
-        height: 6px;
-        top: -16px;
-        z-index: $page-footer-z-index;
-    }
 
     a {
         color: $page-footer-link-colour;

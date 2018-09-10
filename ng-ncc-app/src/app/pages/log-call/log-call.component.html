@@ -3,13 +3,15 @@
 
         <form action="">
 
+            <h1 class="govuk-heading-m">Log call</h1>
+
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half">
 
                     <!-- The type of call. -->
                     <div class="govuk-form-group">
                         <label class="govuk-fieldset__legend govuk-fieldset__legend--s" for="call_type">
-                            Log call type
+                            Select call type
                         </label>
                         <select class="govuk-select" id="call_type" name="call_type" [(ngModel)]="selected.call_type" (change)="resetCallReason()">
                             <option [ngValue]="null" selected>- select a call type</option>
@@ -25,7 +27,7 @@
                     <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" *ngIf="isCallTypeSelected()">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                             <h2 class="govuk-fieldset__heading">
-                                Log reason for call
+                                Select reason for call
                             </h2>
                         </legend>
 
