@@ -20,13 +20,7 @@ export class PageTransactionHistoryComponent extends PageHistoryComponent implem
         manual: { [propKey: string]: string }
     };
 
-    // PERIOD_SIX_MONTHS = 'six-months';
-    // PERIOD_TWELVE_MONTHS = 'twelve-months';
-    // period_settings: {
-    //     key: string,
-    //     label: string
-    // }[];
-    // period_default = this.PERIOD_SIX_MONTHS;
+    filter_type: string;
 
     constructor(private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) {
         super();
@@ -58,19 +52,19 @@ export class PageTransactionHistoryComponent extends PageHistoryComponent implem
         this.route.data
             .subscribe((data) => {
                 this.account_details = data.accountDetails;
-                // this.filterByDate();
-                // this.filterTransactions();
+                this.filterByDate();
+                this.filterTransactions();
             });
     }
-    //
-    // /**
-    //  * Set the manual filtering options for the list of transactions.
-    //  */
-    // filterTransactions() {
-    //     this.filter_settings.manual = {
-    //         debDesc: this.filter_type
-    //     };
-    // }
+
+    /**
+     * Set the manual filtering options for the list of transactions.
+     */
+    filterTransactions() {
+        this.filter.manual = {
+            debDesc: this.filter_type
+        };
+    }
 
     /**
      * Set the date filtering option for the list of transactions.
@@ -100,6 +94,14 @@ export class PageTransactionHistoryComponent extends PageHistoryComponent implem
 
         this.filter.min_date = min_date;
         this.filter.max_date = max_date;
+    }
+
+    /**
+     *
+     */
+    clearFilter() {
+        this.filter_type = null;
+        this.filterTransactions();
     }
 
 }

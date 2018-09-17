@@ -62,4 +62,8 @@ export class PageHistoryComponent {
         this.filtered_history = this.history;
     }
 
+    clearFilter() {
+        this.filter = {};
+    }
+
 }
