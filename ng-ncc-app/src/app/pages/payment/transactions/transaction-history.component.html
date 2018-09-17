@@ -25,10 +25,10 @@
         <label class="hidden govuk-label govuk-!-font-weight-bold" for="filter-manual">
             Search by type
         </label>
-        <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-2" id="filter-manual" name="filter-manual" type="search"
+        <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="filter-manual" name="filter-manual" type="search"
             placeholder="Search by type"
             [(ngModel)]="filter_type">
-        <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
+        <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1">
             Search
         </button>
         <button type="button" class="link-button govuk-!-margin-bottom-0" (click)="clearFilter()">
@@ -44,11 +44,3 @@
     [maxDate]="filter.max_date"
     [tenancyRef]="account_details.tagReferenceNumber"
     [currentBalance]="account_details.currentBalance"></app-transactions>
-
-<!-- Select a communications method. -->
-<app-comms-method-select></app-comms-method-select>
-
-<!-- Send button. -->
-<button class="govuk-button" type="button" name="button">
-    Send
-</button>
