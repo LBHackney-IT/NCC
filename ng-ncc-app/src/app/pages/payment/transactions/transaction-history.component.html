@@ -39,6 +39,7 @@
 
 <!-- Transaction history. -->
 <app-transactions *ngIf="account_details"
+    [isTall]="true"
     [filter]="filter.manual"
     [minDate]="filter.min_date"
     [maxDate]="filter.max_date"

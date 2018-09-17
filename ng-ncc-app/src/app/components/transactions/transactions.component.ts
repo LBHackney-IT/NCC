@@ -13,6 +13,7 @@ export class TransactionsComponent implements OnInit, OnChanges {
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
+    @Input() isTall?: boolean;
 
     _loading: boolean;
     _rows: Transaction[];
