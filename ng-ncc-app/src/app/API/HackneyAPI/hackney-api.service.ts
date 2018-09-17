@@ -39,69 +39,68 @@ export class HackneyAPIService {
                     const indexed_types: Array<LogCallType> = Object.keys(types).map(
                         // (value, index) => new LogCallType(index, types[index])
                         (value, index) => {
-                            let id = parseInt(value, 10);
+                            const id = parseInt(value, 10);
                             return new LogCallType(id, types[id]);
                         });
-                    );
 
-        return indexed_types;
-    })
+                    return indexed_types;
+                })
             );
-}
+    }
 
-/**
- * Fetching a list of call reasons from the HackneyAPI microservice, and returning them as a formatted list.
- *
- * This method uses an Observable.
- */
-getCallReasons(): Observable < any > {
-    //
-    // https://stackoverflow.com/a/50850777/4073160
-    return this.http
-        .get(`${this._url}/CRMEnquiryTypes`)
-        .pipe(
-            map((response: HackneyAPIJSONResult) => {
-                let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
-                const types = response.result;
+    /**
+     * Fetching a list of call reasons from the HackneyAPI microservice, and returning them as a formatted list.
+     *
+     * This method uses an Observable.
+     */
+    getCallReasons(): Observable<any> {
+        //
+        // https://stackoverflow.com/a/50850777/4073160
+        return this.http
+            .get(`${this._url}/CRMEnquiryTypes`)
+            .pipe(
+                map((response: HackneyAPIJSONResult) => {
+                    let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
+                    const types = response.result;
 
-                groups = {};
-                Object.keys(types)
-                    .map(function(key) {
-                        const call_type = parseInt(types[key].enquiryCallType, 10);
-                        const reason: LogCallReason = new LogCallReason(types[key].enquiryTypeId, types[key].enquiryType);
-                        if (undefined === groups[call_type]) {
-                            groups[call_type] = [];
-                        }
-                        groups[call_type].push(reason);
-                    });
-                return groups;
-            })
-        );
-}
+                    groups = {};
+                    Object.keys(types)
+                        .map(function(key) {
+                            const call_type = parseInt(types[key].enquiryCallType, 10);
+                            const reason: LogCallReason = new LogCallReason(types[key].enquiryTypeId, types[key].enquiryType);
+                            if (undefined === groups[call_type]) {
+                                groups[call_type] = [];
+                            }
+                            groups[call_type].push(reason);
+                        });
+                    return groups;
+                })
+            );
+    }
 
-/**
- * Searches for citizens and returns a list of results.
- */
-getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
-Observable < CitizenIndexSearchResult[] > {
+    /**
+     * Searches for citizens and returns a list of results.
+     */
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
+        Observable<CitizenIndexSearchResult[]> {
 
-    // Build the query part of the URL.
-    let query = '';
-    if(first_name) { query += `firstname=${first_name}`; }
-        if(last_name) { query += `surname=${last_name}`; }
-        if(address) { query += `addressline12=${address}`; }
-        if(postcode) { query += `postcode=${postcode}`; }
+        // Build the query part of the URL.
+        let query = '';
+        if (first_name) { query += `firstname=${first_name}`; }
+        if (last_name) { query += `surname=${last_name}`; }
+        if (address) { query += `addressline12=${address}`; }
+        if (postcode) { query += `postcode=${postcode}`; }
         query += '&IsAdvanceSearch=false';
-    // very important to set IsAdvanceSearch to false.
+        // very important to set IsAdvanceSearch to false.
 
-    return this.http
-        .get(`${this._url}/v1/CitizenIndexSearch?${query}`)
-        .pipe(
-            map((response: HackneyAPIJSONResult) => {
-                // TODO perhaps filter out any unwanted/unnecessary information.
-                return response.results;
-            })
-        );
-}
+        return this.http
+            .get(`${this._url}/v1/CitizenIndexSearch?${query}`)
+            .pipe(
+                map((response: HackneyAPIJSONResult) => {
+                    // TODO perhaps filter out any unwanted/unnecessary information.
+                    return response.results;
+                })
+            );
+    }
 
 }
