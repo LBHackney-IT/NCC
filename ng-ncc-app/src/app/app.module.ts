@@ -21,7 +21,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageTransactionHistoryComponent } from './pages/history/transactions/transaction-history.component';
+import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { PageViewNotesComponent } from './pages/history/notes/view-notes.component';

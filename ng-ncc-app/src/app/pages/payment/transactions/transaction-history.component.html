@@ -1,0 +1,50 @@
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-m">Full transaction history</h1>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+        <!-- Liimt displayed transactions to the specified dates. -->
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="period">
+                Show transactions for:
+            </label>
+            <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="period" (ngModelChange)="filterByDate()">
+                <option *ngFor="let row of period_options" [value]="row.key">{{ row.label }}</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+
+<!-- Transaction filter. -->
+<form class="panel govuk-!-margin-bottom-5" (submit)="filterTransactions()">
+    <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <label class="govuk-label govuk-!-font-weight-bold" for="filter_type">
+            Filter by type
+        </label>
+        <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="filter_type" name="filter_type" type="search"
+            [(ngModel)]="filter_type">
+        <button type="submit" class="govuk-button govuk-!-margin-bottom-0">
+            Search
+        </button>
+    </div>
+</form>
+
+<!-- Transaction history. -->
+<app-transactions *ngIf="account_details"
+    [filter]="filter.manual"
+    [minDate]="filter.min_date"
+    [maxDate]="filter.max_date"
+    [tenancyRef]="account_details.tagReferenceNumber"
+    [currentBalance]="account_details.currentBalance"></app-transactions>
+
+<!-- Select a communications method. -->
+<app-comms-method-select></app-comms-method-select>
+
+<!-- Send button. -->
+<button class="govuk-button" type="button" name="button">
+    Send
+</button>

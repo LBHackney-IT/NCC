@@ -1,18 +1,21 @@
 export class PageHistoryComponent {
 
+    PERIOD_SIX_MONTHS = 'six-months';
+    PERIOD_TWELVE_MONTHS = 'twelve-months';
+
     // PROPERTIES.
     history: { [propKey: string]: any }[];
     filtered_history: { [propKey: string]: any }[];
 
     // PROPERTIES WITH VALUES.
-    period = 'six-months';
+    period = this.PERIOD_SIX_MONTHS;
     period_options = [
-        { key: 'six-months', label: 'Last 6 months' },
-        { key: 'twelve-months', label: 'Last 12 months' },
+        { key: this.PERIOD_SIX_MONTHS, label: 'Last 6 months' },
+        { key: this.PERIOD_TWELVE_MONTHS, label: 'Last 12 months' },
         { key: '2017', label: '2017' },
         { key: '2016', label: '2016' }
     ];
-    filter = { type: null };
+    filter: { [propKey: string]: any };
 
     /**
      * A method to populate the history with fake data.
@@ -37,10 +40,10 @@ export class PageHistoryComponent {
      */
     updateDummyHistory() {
         switch (this.period) {
-            case 'six-months':
+            case this.PERIOD_SIX_MONTHS:
                 this.makeDummyHistory(30);
                 break;
-            case 'twelve-months':
+            case this.PERIOD_TWELVE_MONTHS:
                 this.makeDummyHistory(60);
                 break;
             case '2017':
