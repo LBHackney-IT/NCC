@@ -11,6 +11,7 @@ import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-sum
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
+import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 import { PageViewNotesComponent } from './pages/history/notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
@@ -61,6 +62,14 @@ export const AppRoutes: Routes = [
             {
                 path: 'make',
                 component: PagePaymentMakeComponent,
+                resolve: {
+                    accountDetails: AccountDetailsResolver,
+                    caller: IdentifiedCallerResolver
+                }
+            },
+            {
+                path: 'communications',
+                component: PageRentCommunicationsComponent,
                 resolve: {
                     accountDetails: AccountDetailsResolver,
                     caller: IdentifiedCallerResolver
