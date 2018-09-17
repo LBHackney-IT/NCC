@@ -10,7 +10,7 @@ import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageTransactionHistoryComponent } from './pages/history/transactions/transaction-history.component';
+import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageViewNotesComponent } from './pages/history/notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
@@ -51,6 +51,14 @@ export const AppRoutes: Routes = [
                 }
             },
             {
+                path: 'transactions',
+                component: PageTransactionHistoryComponent,
+                resolve: {
+                    accountDetails: AccountDetailsResolver,
+                    caller: IdentifiedCallerResolver
+                }
+            },
+            {
                 path: 'make',
                 component: PagePaymentMakeComponent,
                 resolve: {
@@ -64,14 +72,6 @@ export const AppRoutes: Routes = [
                 redirectTo: 'summary'
             }
         ]
-    },
-    {
-        path: 'transactions',
-        component: PageTransactionHistoryComponent,
-        resolve: {
-            accountDetails: AccountDetailsResolver,
-            caller: IdentifiedCallerResolver
-        }
     },
     {
         // Identify page.
