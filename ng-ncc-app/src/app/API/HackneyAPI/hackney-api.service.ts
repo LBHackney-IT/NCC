@@ -37,8 +37,11 @@ export class HackneyAPIService {
 
                     // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
                     const indexed_types: Array<LogCallType> = Object.keys(types).map(
-                        (value, index) => new LogCallType(index, types[index])
-                    );
+                        // (value, index) => new LogCallType(index, types[index])
+                        (value, index) => {
+                            const id = parseInt(value, 10);
+                            return new LogCallType(id, types[id]);
+                        });
 
                     return indexed_types;
                 })
