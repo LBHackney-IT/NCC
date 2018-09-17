@@ -136,7 +136,7 @@ export class PageCommsComponent implements OnInit {
             case CONTACT.METHOD_SMS:
                 // Send a text message.
                 console.log('send sms', address, template_id);
-                observe = this.NotifyAPI.sendSMS(address, template_id, {});
+                observe = this.NotifyAPI.sendSMS(address, template_id, parameters);
                 break;
 
             default:

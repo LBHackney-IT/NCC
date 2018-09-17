@@ -53,7 +53,7 @@ export class NotifyAPIService {
     /**
      * Send an email message through GOV.UK Notify.
      */
-    sendEmail(email: string, template_id: string, data: any) {
+    sendEmail(email: string, template_id: string, data: { [propKey: string]: string }) {
         // NOTE: A gotcha with this endpoint is that it takes GET style parameters instead of via POST.
         const template_data = JSON.stringify(data);
         return this.http
@@ -68,7 +68,7 @@ export class NotifyAPIService {
     /**
      * Send a text message (SMS) through GOV.UK Notify.
      */
-    sendSMS(mobile: string, template_id: string, data: any) {
+    sendSMS(mobile: string, template_id: string, data: { [propKey: string]: string }) {
         // NOTE: A gotcha with this endpoint is that it takes GET style parameters instead of via POST.
         const template_data = JSON.stringify(data);
         return this.http
