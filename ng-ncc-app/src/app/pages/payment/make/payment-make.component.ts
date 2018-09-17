@@ -30,16 +30,32 @@ export class PagePaymentMakeComponent implements OnInit {
             });
     }
 
+    /**
+     * Displays a dialogue for confirming whether to make a payment.
+     */
     confirmPayment() {
         this.show_confirm = true;
     }
 
+    /**
+     * A callback for if the user confirms making a payment.
+     */
     answeredYes() {
         console.log('Confirmed payment.');
     }
 
+    /**
+     * A callback for if the user cancels making a payment.
+     */
     answeredNo() {
         console.log('Cancelled payment.');
+    }
+
+    /**
+     * Returns the remaining balance calculated from an entered amount to pay.
+     */
+    getCalculatedBalance(): number {
+        return this.account_details.currentBalance - this.form.to_pay;
     }
 
 }

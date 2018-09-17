@@ -1,7 +1,7 @@
-<h2 class="govuk-heading-m">Pay rent</h2>
-
-<p class="govuk-body">
-    You can also pay your rent by visiting: <a href="">https://www.hackney.gov.uk/rentaccount</a>
+<p class="govuk-inset-text">
+    Remind the caller that they can pay their rent via <a href="">https://www.hackney.gov.uk/rentaccount</a>
+    or the 24 hour payment line 020 8356 5050.<br>
+    Ask if they would like you to email or text them a link to either.
 </p>
 
 <form action="">
@@ -20,15 +20,15 @@
             <div>
                 <span class="govuk-!-margin-right-2">Pay now</span>
                 <label>
-                    £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="number" placeholder="0.00" [(ngModel)]="form.to_pay">
+                    £ <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="number" placeholder="0.00"
+                        [(ngModel)]="form.to_pay">
                 </label>
             </div>
 
             <!-- The remaining balance. -->
-            <!-- TODO this will be automatically updated based on the outstanding balance and how much is to be paid. -->
             <div>
-                <span class="govuk-!-margin-right-2">Remaining balance</span>
-                <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ account_details.currentBalance - form.to_pay | currency:'GBP' }}</span>
+                <span class="govuk-!-margin-right-2">Balance after this payment</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ getCalculatedBalance() | currency:'GBP' }}</span>
                 <span class="govuk-!-font-weight-bold" *ngIf="!account_details">--</span>
             </div>
 
@@ -154,9 +154,9 @@
     </div>
 
     <!-- Where to send a receipt. -->
-    <div class="govuk-form-group">
+    <!-- <div class="govuk-form-group">
         <app-comms-method-select></app-comms-method-select>
-    </div>
+    </div> -->
 
     <button type="submit" class="govuk-button" (click)="confirmPayment()">
         Make payment
