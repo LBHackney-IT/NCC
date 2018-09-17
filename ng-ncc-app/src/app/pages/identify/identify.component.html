@@ -11,7 +11,7 @@
                     <label class="govuk-label govuk-!-font-weight-bold" for="query">
                         Search by postcode:
                     </label>
-                    <input class="govuk-input govuk-!-width-one-half" id="query" name="query" type="text" [(ngModel)]="postcode" [disabled]="_searching">
+                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text" [(ngModel)]="postcode" [disabled]="_searching">
                     <button type="submit" class="govuk-button govuk-!-margin-bottom-0" (click)="performSearch()" [disabled]="!canPerformSearch()">
                         Search
                     </button>

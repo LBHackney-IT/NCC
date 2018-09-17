@@ -6,6 +6,7 @@ $transactions-loading-padding: 1rem;
 $transactions-border-colour: $govuk-border-colour !default;
 $transactions-border-width: 1px !default;
 $transactions-max-height: 21rem !default;
+$transactions-tall-max-height: 50rem !default;
 $transactions-padding: .5rem 1rem !default;
 
 
@@ -22,4 +23,8 @@ $transactions-padding: .5rem 1rem !default;
     max-height: $transactions-max-height;
     overflow: auto;
     padding: $transactions-padding;
+}
+
+.transactions--tall {
+    max-height: $transactions-tall-max-height;
 }
