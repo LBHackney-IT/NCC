@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
     <form class="govuk-grid-column-two-thirds" (submit)="saveDetails($event)">
 
-        <h1 class="govuk-heading-l">Edit contact details</h1>
+        <h1 class="govuk-heading-l">Edit tenant details</h1>
 
         <!-- Title. -->
         <div class="govuk-grid-row">
@@ -37,15 +37,34 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    <div class="add-new">
+                    <div class="add-new govuk-!-padding-0">
                         <h2 class="govuk-fieldset__heading add-new__title">
                             Home number
                         </h2>
+                        <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughTelephoneNumbers()" (click)="addTelephoneNumber()">+ Add new</button>
                     </div>
                 </legend>
                 <div class="govuk-radios">
 
-                    <input class="govuk-input" type="text" name="telephone" [(ngModel)]="details.telephone">
+                    <!-- Existing home numbers. -->
+                    <div class="govuk-radios__item" *ngFor="let row of details.telephone; let i = index">
+                        <input class="govuk-radios__input" id="existing-telephone-{{ i }}" name="telephone-default" type="radio"
+                            [(ngModel)]="details.default.telephone" [value]="details.telephone[i]">
+                        <label class="govuk-label govuk-radios__label" for="existing-telephone-{{ i }}">
+                            {{ row }}
+                        </label>
+                    </div>
+
+                    <!-- New home number(s). -->
+                    <div class="govuk-radios__item" *ngFor="let row of new_telephone; let i = index; trackBy:trackByIndex;">
+                        <!-- See the component for trackByIndex(). -->
+                        <input class="govuk-radios__input" id="new-home-{{ i }}" name="telephone-default" type="radio"
+                            [(ngModel)]="details.default.telephone" [value]="row">
+                        <label class="govuk-label govuk-radios__label radio-text-field" for="new-telephone-{{ i }}">
+                            <input class="govuk-input" type="text" name="new_telephone_{{ i }}" [(ngModel)]="new_telephone[i]"
+                                (focus)="details.default.telephone = row;" (blur)="details.default.telephone = row;">
+                        </label>
+                    </div>
 
                 </div>
             </fieldset>
@@ -55,7 +74,7 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    <div class="add-new">
+                    <div class="add-new govuk-!-padding-0">
                         <h2 class="govuk-fieldset__heading add-new__title">
                             Mobile number
                         </h2>
@@ -92,7 +111,7 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    <div class="add-new">
+                    <div class="add-new govuk-!-padding-0">
                         <h2 class="govuk-fieldset__heading add-new__title">
                             Email
                         </h2>
