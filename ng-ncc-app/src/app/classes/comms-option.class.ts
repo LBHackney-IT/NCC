@@ -29,6 +29,7 @@ export class CommsOption {
             this.displayName = this.name.replace(this.SENSITIVE_PREFIX, '');
         } else {
             // This is not a sensitive comms template.
+            this._sensitive = false;
             this.displayName = this.name;
         }
     }

@@ -1,0 +1,10 @@
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-!-font-weight-bold" for="form">
+        {{ title || default_title }}
+    </label>
+    <select class="govuk-select govuk-!-width-one-half" id="form" name="form"
+        [(ngModel)]="_selected" (ngModelChange)="selectedTemplate()" [disabled]="_loading">
+        <option [ngValue]="null">- select a form</option>
+        <option *ngFor="let option of _options" [ngValue]="option">{{ option.displayName }}</option>
+    </select>
+</div>

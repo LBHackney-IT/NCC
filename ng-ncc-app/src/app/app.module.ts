@@ -46,6 +46,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { HelperComponent } from './components/helper/helper.component';
 import { OrComponent } from './components/or/or.component';
+import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 
 @NgModule({
     declarations: [
@@ -80,6 +81,7 @@ import { OrComponent } from './components/or/or.component';
         TransactionsComponent,
         HelperComponent,
         OrComponent,
+        CommsTemplatesComponent,
     ],
     imports: [
         BrowserModule,
