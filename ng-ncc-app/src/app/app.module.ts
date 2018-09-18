@@ -25,6 +25,7 @@ import { PageTransactionHistoryComponent } from './pages/payment/transactions/tr
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
 import { PageViewNotesComponent } from './pages/history/notes/view-notes.component';
+import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -75,6 +76,7 @@ import { OrComponent } from './components/or/or.component';
         PagePaymentSummaryComponent,
         PagePaymentMakeComponent,
         PageTransactionHistoryComponent,
+        PageRentCommunicationsComponent,
         TabsComponent,
         TabComponent,
         TransactionsComponent,
