@@ -12,7 +12,6 @@ import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
-import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
@@ -97,8 +96,7 @@ import { CommsTemplatesComponent } from './components/comms-templates/comms-temp
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,
-        IdentifiedCallerResolver,
-        NotifyTemplatesResolver
+        IdentifiedCallerResolver
     ],
     bootstrap: [AppComponent]
 })
