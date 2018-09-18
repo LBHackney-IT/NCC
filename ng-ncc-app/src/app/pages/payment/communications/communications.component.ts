@@ -74,6 +74,18 @@ export class PageRentCommunicationsComponent implements OnInit {
     }
 
     /**
+     *
+     */
+    selectedOption(option: CommsOption) {
+        this.selected_option = option;
+        if (option.isSensitive()) {
+            this.modal.dpa = true;
+        } else {
+            this.updatePreview();
+        }
+    }
+
+    /**
      * Called when valid communication method and respective details are entered.
      */
     onSelectCommsMethod(details: CommsSelection) {

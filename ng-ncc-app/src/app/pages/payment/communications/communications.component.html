@@ -1,15 +1,7 @@
 <form (submit)="sendMessage($event)">
 
     <!-- Select the form to send. -->
-    <div class="govuk-form-group">
-        <label class="govuk-label govuk-!-font-weight-bold" for="form">
-            Select form to send:
-        </label>
-        <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selected_option" (change)="updatePreview()">
-            <option [ngValue]="null">- select a form</option>
-            <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.name }}</option>
-        </select>
-    </div>
+    <app-comms-templates title="Select an item to send:" includeSensitive="true" (selected)="selectedOption($event)"></app-comms-templates>
 
     <!-- Select the communications method. -->
     <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
