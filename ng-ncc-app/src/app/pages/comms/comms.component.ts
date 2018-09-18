@@ -74,6 +74,14 @@ export class PageCommsComponent implements OnInit {
     }
 
     /**
+     * Called when a communications option is selected.
+     */
+    selectedOption(option: CommsOption) {
+        this.selected_option = option;
+        this.updatePreview();
+    }
+
+    /**
      * Called when valid communication method and respective details are entered.
      */
     onSelectCommsMethod(details: CommsSelection) {
@@ -93,8 +101,6 @@ export class PageCommsComponent implements OnInit {
      * Updates the template displayed in the preview area.
      */
     updatePreview() {
-        console.log('The selected template', this.selected_option.isSensitive() ? 'is' : 'is not', 'considered sensitive.');
-
         if (this.shouldShowPreview()) {
             const selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
             if (!selected) {
