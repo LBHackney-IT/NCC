@@ -1,3 +1,86 @@
-<p>
-  This space for rent...
-</p>
+<form (submit)="sendMessage($event)">
+
+    <!-- Select the form to send. -->
+    <div class="govuk-form-group">
+        <label class="govuk-label govuk-!-font-weight-bold" for="form">
+            Select form to send:
+        </label>
+        <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selected_option" (change)="updatePreview()">
+            <option [ngValue]="null">- select a form</option>
+            <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.name }}</option>
+        </select>
+    </div>
+
+    <!-- Select the communications method. -->
+    <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
+    <app-comms-method-select
+        [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
+        [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
+        [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
+        (selected)="onSelectCommsMethod($event)"
+        (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
+
+    <!-- Previewing the message to be sent. -->
+    <div *ngIf="shouldShowPreview()">
+        <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
+        <app-notify-template-preview [(settings)]="preview"></app-notify-template-preview>
+    </div>
+
+    <!-- Send the message to the caller. -->
+    <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
+        Send
+    </button>
+
+    <!-- Confirmation modal. -->
+    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+        Message sent successfully.
+    </app-dialogue>
+
+    <app-dialogue [(show)]="modal.error">
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <span class="govuk-warning-text__text govuk-!-font-size-24 govuk-!-font-weight-bold">
+                There was a problem with sending the message.
+            </span>
+        </div>
+    </app-dialogue>
+
+    <app-dialogue [(show)]="modal.dpa">
+        <div id="u497_text" class="text " style="top: 28px; transform-origin: 550px 307.5px 0px;">
+            <h2 class="govuk-heading-m">Data Protection Act questions</h2>
+
+            <div class="govuk-grid-row">
+
+                <div class="govuk-grid-column-one-third">
+                    address
+                </div>
+
+                <div class="govuk-grid-column-two-thirds">
+                    DPA info
+                </div>
+
+            </div>
+
+            <p class="govuk-!-weight-bold">Tenant details</p>
+            <div class="govuk-grid-row">
+
+                <div class="govuk-grid-column-full">
+                    Mr D Bell<br>
+                    Advocate - Mrs J Bell A
+                </div>
+
+                <div class="govuk-grid-column-one-third">
+                    Contact details
+                </div>
+
+                <div class="govuk-grid-column-two-thirds">
+                    DPA
+                </div>
+
+            </div>
+
+        </div>
+    </app-dialogue>
+
+
+</form>
