@@ -5,6 +5,10 @@
 
 <button class="govuk-button" type="button" name="button" (click)="openModal()">Show dialogue...</button>
 
+<app-comms-templates (selected)="selectedTemplate($event)"></app-comms-templates>
+<app-comms-templates title="Custom title..." (selected)="selectedTemplate($event)"></app-comms-templates>
+<app-comms-templates title="Include sensitive templates:" includeSensitive="false" (selected)="selectedTemplate($event)"></app-comms-templates>
+
 <p>
     Helper text demo:
     <app-helper>Some helper text here.</app-helper>
