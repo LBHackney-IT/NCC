@@ -70,8 +70,7 @@ export const AppRoutes: Routes = [
                 component: PageRentCommunicationsComponent,
                 resolve: {
                     accountDetails: AccountDetailsResolver,
-                    caller: IdentifiedCallerResolver,
-                    templates: NotifyTemplatesResolver
+                    caller: IdentifiedCallerResolver
                 }
             },
             {
