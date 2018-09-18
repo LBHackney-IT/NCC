@@ -12,7 +12,6 @@ import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
-import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
@@ -47,6 +46,7 @@ import { TabComponent } from './components/tabs/tab/tab.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { HelperComponent } from './components/helper/helper.component';
 import { OrComponent } from './components/or/or.component';
+import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 
 @NgModule({
     declarations: [
@@ -82,6 +82,7 @@ import { OrComponent } from './components/or/or.component';
         TransactionsComponent,
         HelperComponent,
         OrComponent,
+        CommsTemplatesComponent,
     ],
     imports: [
         BrowserModule,
@@ -97,8 +98,7 @@ import { OrComponent } from './components/or/or.component';
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,
-        IdentifiedCallerResolver,
-        NotifyTemplatesResolver
+        IdentifiedCallerResolver
     ],
     bootstrap: [AppComponent]
 })
