@@ -93,12 +93,15 @@ export class PageCommsComponent implements OnInit {
      * Updates the template displayed in the preview area.
      */
     updatePreview() {
+        console.log('The selected template', this.selected_option.isSensitive() ? 'is' : 'is not', 'considered sensitive.');
+
         if (this.shouldShowPreview()) {
             const selected: CommsTemplate = this.selected_option.templates[this.selected_details.method];
             if (!selected) {
                 // We might not have a selected template! If the previously selected method was made invalid, it will happen.
                 return;
             }
+
             if (this.preview && selected && this.preview.template_id === selected.id) {
                 return;
             }

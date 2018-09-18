@@ -22,7 +22,7 @@
                 </label>
                 <select class="govuk-select govuk-!-width-one-half" id="form" name="form" [(ngModel)]="selected_option" (change)="updatePreview()">
                     <option [ngValue]="null">- select a form</option>
-                    <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.name }}</option>
+                    <option *ngFor="let option of comms_options" [ngValue]="option">{{ option.displayName }}</option>
                 </select>
             </div>
 
