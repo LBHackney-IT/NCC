@@ -123,5 +123,10 @@
       }
     }
   },
-  "defaultProject": "ng-ncc-app"
+  "defaultProject": "ng-ncc-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

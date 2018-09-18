@@ -18,7 +18,6 @@ import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
-import { NotifyTemplatesResolver } from './resolvers/notify-templates-resolver.service';
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
@@ -47,8 +46,7 @@ export const AppRoutes: Routes = [
                 component: PagePaymentSummaryComponent,
                 resolve: {
                     accountDetails: AccountDetailsResolver,
-                    caller: IdentifiedCallerResolver,
-                    templates: NotifyTemplatesResolver
+                    caller: IdentifiedCallerResolver
                 }
             },
             {
@@ -88,8 +86,7 @@ export const AppRoutes: Routes = [
         path: 'caller-details',
         component: PageIdentifyComponent,
         resolve: {
-            call_nature: CallNatureResolver,
-            templates: NotifyTemplatesResolver
+            call_nature: CallNatureResolver
         }
     },
     {
@@ -107,8 +104,7 @@ export const AppRoutes: Routes = [
         component: PageCommsComponent,
         resolve: {
             caller: CallerResolver,
-            call_nature: CallNatureResolver,
-            templates: NotifyTemplatesResolver
+            call_nature: CallNatureResolver
         }
     },
     {

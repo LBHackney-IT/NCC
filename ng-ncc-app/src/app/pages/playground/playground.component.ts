@@ -21,4 +21,8 @@ export class PagePlaygroundComponent implements OnInit {
     handleClose() {
         console.log('Modal was closed.');
     }
+
+    selectedTemplate(option: any) {
+        console.log(option.name, option.isSensitive());
+    }
 }

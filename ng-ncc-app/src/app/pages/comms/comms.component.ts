@@ -74,6 +74,14 @@ export class PageCommsComponent implements OnInit {
     }
 
     /**
+     * Called when a communications option is selected.
+     */
+    selectedOption(option: CommsOption) {
+        this.selected_option = option;
+        this.updatePreview();
+    }
+
+    /**
      * Called when valid communication method and respective details are entered.
      */
     onSelectCommsMethod(details: CommsSelection) {
@@ -99,6 +107,7 @@ export class PageCommsComponent implements OnInit {
                 // We might not have a selected template! If the previously selected method was made invalid, it will happen.
                 return;
             }
+
             if (this.preview && selected && this.preview.template_id === selected.id) {
                 return;
             }
