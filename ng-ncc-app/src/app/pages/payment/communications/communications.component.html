@@ -44,7 +44,7 @@
             <div class="govuk-grid-row">
 
                 <div class="govuk-grid-column-one-third">
-                    address
+                    {{ caller.getPostalAddress().toString() }}
                 </div>
 
                 <div class="govuk-grid-column-two-thirds">
@@ -57,12 +57,27 @@
             <div class="govuk-grid-row">
 
                 <div class="govuk-grid-column-full">
-                    Mr D Bell<br>
-                    Advocate - Mrs J Bell A
+                    {{ caller.getName() }}
                 </div>
 
                 <div class="govuk-grid-column-one-third">
-                    Contact details
+                    <span class="value-list value-list--horizontal govuk-body-s">
+                        <span class="value-list__label">Telephone</span>
+                        <span class="value-list__value">
+                            <span class="value-list__value__line" *ngFor="let number of caller.getTelephoneNumbers()">
+                                {{ number }}
+                            </span>
+                            <em *ngIf="caller.hasNoTelephoneNumbers()">none</em>
+                        </span>
+
+                        <span class="value-list__label">Email</span>
+                        <span class="value-list__value">
+                            <span class="value-list__value__line" *ngFor="let email of caller.getEmailAddresses()">
+                                {{ email }}
+                            </span>
+                            <em *ngIf="caller.hasNoEmailAddresses()">none</em>
+                        </span>
+                    </span>
                 </div>
 
                 <div class="govuk-grid-column-two-thirds">

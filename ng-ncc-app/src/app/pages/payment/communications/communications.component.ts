@@ -3,8 +3,10 @@ import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
+import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
 import { CommsOption } from '../../../classes/comms-option.class';
+import { IdentifiedCaller } from '../../../classes/identified-caller-option.class';
 import { ContactDetails } from '../../../classes/contact-details.class';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { CommsTemplate } from '../../../classes/comms-template.class';
@@ -21,6 +23,8 @@ import { CommsMethodDetails } from '../../../interfaces/comms-method-details.int
 export class PageRentCommunicationsComponent implements OnInit {
     CONTACT_METHOD = CONTACT;
     _sending: boolean;
+    account_details: AccountDetails;
+    caller: IdentifiedCaller;
     comms_options: CommsOption[];
     selected_option: CommsOption;
     selected_details: CommsSelection;
@@ -44,7 +48,8 @@ export class PageRentCommunicationsComponent implements OnInit {
 
         this.route.data
             .subscribe((data) => {
-                this.comms_options = data.templates;
+                this.account_details = data.accountDetails;
+                this.caller = data.caller;
             });
     }
 
