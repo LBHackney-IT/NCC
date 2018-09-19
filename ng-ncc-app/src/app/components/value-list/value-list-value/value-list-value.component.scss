@@ -8,6 +8,6 @@ $value-list-value-width: 40% !default;
 
 :host {
     margin: $value-list-value-margin;
-    text-align: right;
+    // text-align: right;
     width: $value-list-value-width;
 }
