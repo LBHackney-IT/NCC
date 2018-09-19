@@ -48,6 +48,7 @@ import { HelperComponent } from './components/helper/helper.component';
 import { OrComponent } from './components/or/or.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
+import { CommunicationsPageComponent } from './components/communications-page/communications-page.component';
 
 @NgModule({
     declarations: [
@@ -85,6 +86,7 @@ import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.com
         OrComponent,
         CommsTemplatesComponent,
         DPADialogueComponent,
+        CommunicationsPageComponent,
     ],
     imports: [
         BrowserModule,
