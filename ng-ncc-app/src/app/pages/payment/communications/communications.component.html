@@ -37,57 +37,73 @@
         </div>
     </app-dialogue>
 
-    <app-dialogue [(show)]="modal.dpa">
-        <div id="u497_text" class="text " style="top: 28px; transform-origin: 550px 307.5px 0px;">
-            <h2 class="govuk-heading-m">Data Protection Act questions</h2>
+    <!-- Data protection Act (DPA) questions prompt. -->
+    <app-dpa-dialogue [(show)]="modal.dpa" buttonText="Close">
+        <app-dialogue-title>Data Protection Act questions</app-dialogue-title>
 
-            <div class="govuk-grid-row">
+        <div class="govuk-grid-row">
 
-                <div class="govuk-grid-column-one-third">
-                    {{ caller.getPostalAddress().toString() }}
-                </div>
+            <!-- The tenancy address. -->
+            <div class="govuk-grid-column-one-third" [innerHtml]="caller.getPostalAddressHTML()"></div>
 
-                <div class="govuk-grid-column-two-thirds">
-                    DPA info
-                </div>
-
-            </div>
-
-            <p class="govuk-!-weight-bold">Tenant details</p>
-            <div class="govuk-grid-row">
-
-                <div class="govuk-grid-column-full">
-                    {{ caller.getName() }}
-                </div>
-
-                <div class="govuk-grid-column-one-third">
-                    <span class="value-list value-list--horizontal govuk-body-s">
-                        <span class="value-list__label">Telephone</span>
-                        <span class="value-list__value">
-                            <span class="value-list__value__line" *ngFor="let number of caller.getTelephoneNumbers()">
-                                {{ number }}
-                            </span>
-                            <em *ngIf="caller.hasNoTelephoneNumbers()">none</em>
-                        </span>
-
-                        <span class="value-list__label">Email</span>
-                        <span class="value-list__value">
-                            <span class="value-list__value__line" *ngFor="let email of caller.getEmailAddresses()">
-                                {{ email }}
-                            </span>
-                            <em *ngIf="caller.hasNoEmailAddresses()">none</em>
-                        </span>
-                    </span>
-                </div>
-
-                <div class="govuk-grid-column-two-thirds">
-                    DPA
-                </div>
-
+            <!-- DPA questions relating to the tenancy address(?). -->
+            <div class="govuk-grid-column-two-thirds">
+                <dl class="value-list value-list--horizontal govuk-body-s">
+                    <dt class="value-list__label">Payment reference number</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Date of last payment and amount</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Amount last paid</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Month and year their tenancy began</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Preferred payment method</dt>
+                    <dd class="value-list__value">...</dd>
+                </dl>
             </div>
 
         </div>
-    </app-dialogue>
 
+        <h3 class="govuk-heading-s">Tenant details</h3>
+        <div class="govuk-grid-row">
+
+            <!-- The tenant's name (and optional advocate's name). -->
+            <div class="govuk-grid-column-full govuk-body">
+                {{ caller.getName() }}
+            </div>
+
+            <!-- Contact details. -->
+            <div class="govuk-grid-column-one-half govuk-body-s">
+                <span class="value-list value-list--horizontal">
+                    <span class="value-list__label">Telephone</span>
+                    <span class="value-list__value">
+                        <span class="value-list__value__line" *ngFor="let number of caller.getTelephoneNumbers()">
+                            {{ number }}
+                        </span>
+                        <em *ngIf="caller.hasNoTelephoneNumbers()">none</em>
+                    </span>
+
+                    <span class="value-list__label">Email</span>
+                    <span class="value-list__value">
+                        <span class="value-list__value__line" *ngFor="let email of caller.getEmailAddresses()">
+                            {{ email }}
+                        </span>
+                        <em *ngIf="caller.hasNoEmailAddresses()">none</em>
+                    </span>
+                </span>
+            </div>
+
+            <!-- DPA questions for the tenant. -->
+            <div class="govuk-grid-column-one-half govuk-body-s">
+                <dl class="value-list value-list--horizontal">
+                    <dt class="value-list__label">National Insurance number</dt>
+                    <dd class="value-list__value">...</dd>
+                    <dt class="value-list__label">Date of birth</dt>
+                    <dd class="value-list__value">...</dd>
+                </dl>
+            </div>
+
+        </div>
+    </app-dpa-dialogue>
 
 </form>

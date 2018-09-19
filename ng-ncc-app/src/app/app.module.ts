@@ -47,6 +47,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { HelperComponent } from './components/helper/helper.component';
 import { OrComponent } from './components/or/or.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
+import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
 
 @NgModule({
     declarations: [
@@ -83,6 +84,7 @@ import { CommsTemplatesComponent } from './components/comms-templates/comms-temp
         HelperComponent,
         OrComponent,
         CommsTemplatesComponent,
+        DPADialogueComponent,
     ],
     imports: [
         BrowserModule,

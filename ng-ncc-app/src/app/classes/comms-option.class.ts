@@ -2,7 +2,8 @@ import { CONTACT } from '../constants/contact.constant';
 import { CommsTemplate } from '../classes/comms-template.class';
 
 export class CommsOption {
-    SENSITIVE_PREFIX = 'Sensitive: ';
+    SENSITIVE_PREFIX_SEARCH = 'Sensitive: ';
+    SENSITIVE_PREFIX_REPLACE = 'DPA: ';
 
     _sensitive: boolean;
     displayName: string;
@@ -23,10 +24,10 @@ export class CommsOption {
      * Checks whether this comms template is considered "sensitive", i.e. requires DPA identification to access.
      */
     _checkForSensitivity() {
-        if (-1 !== this.name.indexOf(this.SENSITIVE_PREFIX)) {
+        if (-1 !== this.name.indexOf(this.SENSITIVE_PREFIX_SEARCH)) {
             // This is a sensitive comms template.
             this._sensitive = true;
-            this.displayName = this.name.replace(this.SENSITIVE_PREFIX, '');
+            this.displayName = this.name.replace(this.SENSITIVE_PREFIX_SEARCH, this.SENSITIVE_PREFIX_REPLACE);
         } else {
             // This is not a sensitive comms template.
             this._sensitive = false;

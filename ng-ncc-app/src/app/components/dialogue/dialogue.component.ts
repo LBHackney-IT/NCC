@@ -8,6 +8,7 @@ import { Component, EventEmitter, HostListener, Input, Output, ElementRef, ViewC
 export class DialogueComponent implements OnChanges {
     @Input() show: boolean;
     @Input() buttonText: string;
+    @Input() large?: boolean;
     @Output() showChange = new EventEmitter<boolean>();
     @Output() closed = new EventEmitter<void>();
 

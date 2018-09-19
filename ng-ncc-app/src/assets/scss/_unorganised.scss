@@ -12,7 +12,7 @@
 }
 
 
-$value-list-horizontal-label-ratio: 1 !default;
+$value-list-horizontal-label-ratio: 3 !default;
 $value-list-horizontal-value-ratio: 2 !default; // how wide the value area is compared to the label.
 $value-list-horizontal-gap-ratio: 0.1 !default; // how wide the gap is compared to the label.
 $value-list-ratio: 100 / ($value-list-horizontal-label-ratio + $value-list-horizontal-value-ratio + $value-list-horizontal-gap-ratio);

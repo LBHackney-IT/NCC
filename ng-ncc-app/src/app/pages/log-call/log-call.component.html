@@ -13,7 +13,8 @@
                         <label class="govuk-fieldset__legend govuk-fieldset__legend--s" for="call_type">
                             Select call type
                         </label>
-                        <select class="govuk-select" id="call_type" name="call_type" [(ngModel)]="selected.call_type" (change)="resetCallReason()">
+                        <select class="govuk-select" id="call_type" name="call_type"
+                            [(ngModel)]="selected.call_type" [disabled]="!this.call_types" (change)="resetCallReason()">
                             <option [ngValue]="null" selected>- select a call type</option>
                             <option *ngFor="let item of call_types" [ngValue]="item">{{ item.label }}</option>
                         </select>

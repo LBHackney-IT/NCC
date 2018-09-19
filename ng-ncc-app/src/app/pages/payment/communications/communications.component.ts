@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
 import { CommsOption } from '../../../classes/comms-option.class';
-import { IdentifiedCaller } from '../../../classes/identified-caller-option.class';
+import { IdentifiedCaller } from '../../../classes/identified-caller.class';
 import { ContactDetails } from '../../../classes/contact-details.class';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { CommsTemplate } from '../../../classes/comms-template.class';
