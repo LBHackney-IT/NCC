@@ -58,11 +58,19 @@
                     <!-- New home number(s). -->
                     <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_telephone; let i = index; trackBy:trackByIndex;">
                         <!-- See the component for trackByIndex(). -->
-                        <input class="govuk-radios__input" id="new-home-{{ i }}" name="telephone-default" type="radio"
-                            [(ngModel)]="details.default.telephone" [value]="row">
+
+                        <!-- radio button... -->
+                        <input class="govuk-radios__input" id="new-telephone-{{ i }}" name="telephone-default" type="radio"
+                        [(ngModel)]="details.default.telephone" [value]="row">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="new-telephone-{{ i }}"></label>
-                        <input class="govuk-input govuk-!-margin-left-3" type="text" name="new_telephone_{{ i }}" [(ngModel)]="new_telephone[i]"
-                            (focus)="details.default.telephone = row;" (blur)="details.default.telephone = row;">
+
+                        <!-- text field... -->
+                        <div class="govuk-form-group govuk-!-margin-left-3">
+                            <label class="govuk-label hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
+                            <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}"
+                            [(ngModel)]="new_telephone[i]" (focus)="details.default.telephone = row;" (blur)="details.default.telephone = row;">
+                        </div>
+
                     </div>
 
                 </div>
@@ -93,12 +101,19 @@
 
                     <!-- New mobile number(s). -->
                     <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_mobile; let i = index; trackBy:trackByIndex;">
-                        <!-- See the component for trackByIndex(). -->
-                        <input class="govuk-radios__input" id="new-home-{{ i }}" name="mobile-default" type="radio"
+
+                        <!-- radio button... -->
+                        <input class="govuk-radios__input" id="new-mobile-{{ i }}" name="mobile-default" type="radio"
                         [(ngModel)]="details.default.mobile" [value]="row">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="new-mobile-{{ i }}"></label>
-                        <input class="govuk-input govuk-!-margin-left-3" type="text" name="new_mobile_{{ i }}" [(ngModel)]="new_mobile[i]"
-                            (focus)="details.default.mobile = row;" (blur)="details.default.mobile = row;">
+
+                        <!-- text field... -->
+                        <div class="govuk-form-group govuk-!-margin-left-3">
+                            <label class="govuk-label hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
+                            <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}"
+                                [(ngModel)]="new_mobile[i]" (focus)="details.default.mobile = row;" (blur)="details.default.mobile = row;">
+                        </div>
+
                     </div>
 
                 </div>
@@ -129,12 +144,19 @@
 
                     <!-- New email address(es). -->
                     <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_email; let i = index; trackBy:trackByIndex;">
-                        <!-- See the component for trackByIndex(). -->
+
+                        <!-- radio button... -->
                         <input class="govuk-radios__input" id="new-email-{{ i }}" name="email-default" type="radio"
-                            [(ngModel)]="details.default.email" [value]="row">
+                        [(ngModel)]="details.default.email" [value]="row">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="new-email-{{ i }}"></label>
-                        <input class="govuk-input govuk-!-margin-left-3" type="email" name="new_email_{{ i }}" [(ngModel)]="new_email[i]" email="true"
-                            (focus)="details.default.email = row;" (blur)="details.default.email = row;">
+
+                        <!-- text field... -->
+                        <div class="govuk-form-group govuk-!-margin-left-3">
+                            <label class="govuk-label hidden" for="new-email-{{ i }}-value">New email {{ i + 1 }}</label>
+                            <input class="govuk-input" type="text" id="new-email-{{ i }}-value" name="new_email_{{ i }}"
+                                [(ngModel)]="new_email[i]" (focus)="details.default.email = row;" (blur)="details.default.email = row;">
+                        </div>
+
                     </div>
 
                 </div>
