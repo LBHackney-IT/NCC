@@ -8,7 +8,7 @@ import { Caller } from '../../interfaces/caller.interface';
 @Component({
     selector: 'app-comms-method-select',
     templateUrl: './comms-method-select.component.html',
-    styleUrls: ['./comms-method-select.component.css']
+    styleUrls: ['./comms-method-select.component.scss']
 })
 export class CommsMethodSelectComponent implements OnInit, OnChanges {
     // Whether to enable or disable communications methods.
