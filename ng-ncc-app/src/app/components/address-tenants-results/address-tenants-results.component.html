@@ -38,7 +38,7 @@
             <app-value-list-label>Preferred payment method</app-value-list-label>
             <app-value-list-value>...</app-value-list-value>
         </app-value-list>
-    </div>
+    </app-panel>
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">Tenant details</h2>
@@ -48,6 +48,12 @@
             <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index">
                 <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
                 <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-{{i}}">
+                    <!--
+                    NOTE: inline tags (such as LABEL) CAN contain block level elements,
+                          as long as the inline element isn't within another inline element.
+                          They should also be styled with display: block.
+                    https://stackoverflow.com/questions/6061869/are-block-level-elements-allowed-inside-inline-level-elements-in-html5
+                    -->
 
                     <!-- The contact's name. -->
                     <span class="govuk-grid-column-full govuk-!-margin-bottom-5">

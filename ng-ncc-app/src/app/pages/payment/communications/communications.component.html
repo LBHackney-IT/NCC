@@ -48,18 +48,18 @@
 
             <!-- DPA questions relating to the tenancy address(?). -->
             <div class="govuk-grid-column-two-thirds">
-                <dl class="value-list value-list--horizontal govuk-body-s">
-                    <dt class="value-list__label">Payment reference number</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Date of last payment and amount</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Amount last paid</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Month and year their tenancy began</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Preferred payment method</dt>
-                    <dd class="value-list__value">...</dd>
-                </dl>
+                <app-value-list class="govuk-body-s">
+                    <app-value-list-label>Payment reference number</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Date of last payment and amount</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Amount last paid</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Month and year their tenancy began</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Preferred payment method</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                </app-value-list>
             </div>
 
         </div>
@@ -74,33 +74,33 @@
 
             <!-- Contact details. -->
             <div class="govuk-grid-column-one-half govuk-body-s">
-                <span class="value-list value-list--horizontal">
-                    <span class="value-list__label">Telephone</span>
-                    <span class="value-list__value">
-                        <span class="value-list__value__line" *ngFor="let number of caller.getTelephoneNumbers()">
+                <app-value-list>
+                    <app-value-list-label>Telephone</app-value-list-label>
+                    <app-value-list-value>
+                        <div *ngFor="let number of caller.getTelephoneNumbers()">
                             {{ number }}
-                        </span>
+                        </div>
                         <em *ngIf="caller.hasNoTelephoneNumbers()">none</em>
-                    </span>
+                    </app-value-list-value>
 
-                    <span class="value-list__label">Email</span>
-                    <span class="value-list__value">
-                        <span class="value-list__value__line" *ngFor="let email of caller.getEmailAddresses()">
+                    <app-value-list-label>Email</app-value-list-label>
+                    <app-value-list-value>
+                        <div *ngFor="let email of caller.getEmailAddresses()">
                             {{ email }}
-                        </span>
+                        </div>
                         <em *ngIf="caller.hasNoEmailAddresses()">none</em>
-                    </span>
-                </span>
+                    </app-value-list-value>
+                </app-value-list>
             </div>
 
             <!-- DPA questions for the tenant. -->
             <div class="govuk-grid-column-one-half govuk-body-s">
-                <dl class="value-list value-list--horizontal">
-                    <dt class="value-list__label">National Insurance number</dt>
-                    <dd class="value-list__value">...</dd>
-                    <dt class="value-list__label">Date of birth</dt>
-                    <dd class="value-list__value">...</dd>
-                </dl>
+                <app-value-list>
+                    <app-value-list-label>National Insurance number</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Date of birth</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                </app-value-list>
             </div>
 
         </div>
