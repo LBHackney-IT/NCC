@@ -1,17 +1,4 @@
 
-.panel {
-    background: #DEE0E2;
-    /* govuk-colour("grey-3") */
-    padding: 1rem;
-}
-
-.box-panel {
-    border: 1px solid #DEE0E2;
-    /* govuk-colour("grey-3") */
-    padding: 1rem;
-}
-
-
 $value-list-horizontal-label-ratio: 1 !default;
 $value-list-horizontal-value-ratio: 2 !default; // how wide the value area is compared to the label.
 $value-list-horizontal-gap-ratio: 0.1 !default; // how wide the gap is compared to the label.

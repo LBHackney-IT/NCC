@@ -21,7 +21,7 @@
     <h2 class="govuk-heading-m">Tenancy details</h2>
 
     <!-- Display the address of the property. -->
-    <div class="box-panel govuk-!-margin-bottom-3">
+    <app-panel boxStyle="true" class="govuk-!-margin-bottom-3">
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
@@ -38,12 +38,12 @@
             <dt class="value-list__label">Preferred payment method</dt>
             <dd class="value-list__value">...</dd>
         </dl>
-    </div>
+    </app-panel>
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">Tenant details</h2>
 
-    <div class="box-panel tenant-list govuk-!-margin-bottom-3">
+    <app-panel boxStyle="true" class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios govuk-radios--inline">
             <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index">
                 <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-    </div>
+    </app-panel>
 
     <!-- Select this information. -->
     <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">
