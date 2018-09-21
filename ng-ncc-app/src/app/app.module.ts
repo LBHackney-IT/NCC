@@ -49,6 +49,10 @@ import { OrComponent } from './components/or/or.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
 import { CommunicationsPageComponent } from './components/communications-page/communications-page.component';
+import { ValueListComponent } from './components/value-list/value-list.component';
+import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
+import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
+import { PanelComponent } from './components/panel/panel.component';
 
 @NgModule({
     declarations: [
@@ -87,6 +91,10 @@ import { CommunicationsPageComponent } from './components/communications-page/co
         CommsTemplatesComponent,
         DPADialogueComponent,
         CommunicationsPageComponent,
+        ValueListComponent,
+        ValueListLabelComponent,
+        ValueListValueComponent,
+        PanelComponent,
     ],
     imports: [
         BrowserModule,

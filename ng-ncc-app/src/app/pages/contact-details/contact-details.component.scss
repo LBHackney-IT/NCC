@@ -13,18 +13,20 @@ $add-new-button-padding: .5rem 1em !default;
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    max-width: $add-new-width;
+    // max-width: $add-new-width;
     padding: $govuk-focus-width; // to accommodate the focus border around the button.
 }
 
 .add-new__title {
-    flex-grow: 1;
+    // flex-grow: 1;
+    flex-basis: 33.3%;
 }
 
 .add-new__button {
     @include govuk-focusable;
     background: $add-new-button-colour;
     border-color: transparent;
+    cursor: pointer;
     display: block;
     font-weight: bold;
     padding: $add-new-button-padding;

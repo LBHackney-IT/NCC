@@ -5,8 +5,8 @@
         <h2 class="govuk-heading-l">Caller details</h2>
 
         <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
-        <form action="">
-            <div class="panel govuk-!-margin-bottom-5">
+        <app-panel class="govuk-!-margin-bottom-5">
+            <form action="">
                 <div class="govuk-form-group govuk-!-margin-bottom-2">
                     <label class="govuk-label govuk-!-font-weight-bold" for="query">
                         Search by postcode:
@@ -16,15 +16,15 @@
                         Search
                     </button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </app-panel>
 
         <!-- Or... -->
         <app-or></app-or>
 
         <!-- Option to mark the caller as anonymous. -->
         <p class="govuk-body">
-            <button class="link-button govuk-!-margin-bottom-0" (click)="anonymousSelected()">
+            <button class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" (click)="anonymousSelected()">
                 Caller is anonymous
             </button>
             <app-helper>

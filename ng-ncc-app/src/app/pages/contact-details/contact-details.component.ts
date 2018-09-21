@@ -39,6 +39,7 @@ export class PageContactDetailsComponent implements OnInit {
         this.details.title = details.title;
         this.details.first_name = details.firstName;
         this.details.last_name = details.lastName;
+        this.details.telephone = [];
         // this.details.telephone = this.caller.getTelephoneNumbers();
         // - currently no distinction between mobile and telephone numbers.
         this.details.mobile = [
@@ -51,11 +52,25 @@ export class PageContactDetailsComponent implements OnInit {
         ].filter(row => row);
 
         // If there's only one of each contact method, set it as the default.
+        if (1 === this.details.telephone.length) {
+            this.details.default.telephone = this.details.telephone[0];
+        }
         if (1 === this.details.mobile.length) {
             this.details.default.mobile = this.details.mobile[0];
         }
         if (1 === this.details.email.length) {
             this.details.default.email = this.details.email[0];
+        }
+    }
+
+    /**
+     * Add an extra field for a new [home] telephone number.
+     */
+    addTelephoneNumber() {
+        // Only add a new field if there are no empty fields.
+        if (this._hasNoEmptyFields(this.new_telephone)) {
+            this.new_telephone.push(null);
+            this.details.default.telephone = null;
         }
     }
 
@@ -82,7 +97,16 @@ export class PageContactDetailsComponent implements OnInit {
     }
 
     /**
-     * Returns TRUE if we have the maximum number of email addresses allowed.
+     * Returns TRUE if we have the maximum number of telephone numbers allowed.
+     */
+    hasEnoughTelephoneNumbers(): boolean {
+        const existing = this.details.telephone.length;
+        const added = this.new_telephone.length;
+        return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
+    }
+
+    /**
+     * Returns TRUE if we have the maximum number of mobile numbers allowed.
      */
     hasEnoughMobileNumbers(): boolean {
         const existing = this.details.mobile.length;
@@ -91,7 +115,7 @@ export class PageContactDetailsComponent implements OnInit {
     }
 
     /**
-     * Returns TRUE if we have the maximum number of mobile numbers allowed.
+     * Returns TRUE if we have the maximum number of email addresses allowed.
      */
     hasEnoughEmailAddresses(): boolean {
         const existing = this.details.email.length;
