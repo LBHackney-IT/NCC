@@ -5,6 +5,7 @@
     color: $govuk-text-colour;
     background-color: govuk-colour('white');
     border: 2px solid $govuk-border-colour;
+    vertical-align: middle; // for the benefit of anything appearing next to it horizontally.
 
     @include govuk-if-ie8 {
         border-bottom-color: $govuk-border-colour;
