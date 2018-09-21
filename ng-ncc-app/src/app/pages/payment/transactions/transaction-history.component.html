@@ -3,21 +3,23 @@
     <div class="govuk-grid-column-two-thirds">
 
         <!-- Transaction filter. -->
-        <form class="panel govuk-!-margin-bottom-5" (submit)="filterTransactions()">
-            <div class="govuk-form-group govuk-!-margin-bottom-2">
-                <label class="hidden govuk-label govuk-!-font-weight-bold" for="filter-manual">
-                    Search by type
-                </label>
-                <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="filter-manual" name="filter-manual" type="search"
-                    placeholder="Search by type"
-                    [(ngModel)]="filter_type">
-                <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1">
-                    Search
-                </button>
-                <button type="button" class="link-button govuk-!-margin-bottom-0" (click)="clearFilter()">
-                    Reset
-                </button>
-            </div>
+        <form class="govuk-!-margin-bottom-5" (submit)="filterTransactions()">
+            <app-panel>
+                <div class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="hidden govuk-label govuk-!-font-weight-bold" for="filter-manual">
+                        Search by type
+                    </label>
+                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="filter-manual" name="filter-manual" type="search"
+                        placeholder="Search by type"
+                        [(ngModel)]="filter_type">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1">
+                        Search
+                    </button>
+                    <button type="button" class="link-button govuk-!-margin-bottom-0" (click)="clearFilter()">
+                        Reset
+                    </button>
+                </div>
+            </app-panel>
         </form>
 
     </div>
