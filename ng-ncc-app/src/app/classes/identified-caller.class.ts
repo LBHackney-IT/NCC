@@ -75,6 +75,19 @@ export class IdentifiedCaller implements Caller {
     }
 
     /**
+     * Returns the caller's postal address as HTML.
+     */
+    getPostalAddressHTML(): string {
+        return [
+            this._details.addressLine1,
+            this._details.addressLine2,
+            this._details.addressLine3,
+            this._details.addressCity,
+            this._details.postCode
+        ].join('<br>');
+    }
+
+    /**
      * Returns the caller's CRM contact ID.
      */
     getContactID(): string | null {

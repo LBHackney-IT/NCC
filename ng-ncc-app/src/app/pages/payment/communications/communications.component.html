@@ -1,3 +1,109 @@
-<p>
-  This space for rent...
-</p>
+<form (submit)="sendMessage($event)">
+
+    <!-- Select the form to send. -->
+    <app-comms-templates title="Select an item to send:" includeSensitive="true" (selected)="selectedOption($event)"></app-comms-templates>
+
+    <!-- Select the communications method. -->
+    <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
+    <app-comms-method-select
+        [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
+        [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
+        [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
+        (selected)="onSelectCommsMethod($event)"
+        (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
+
+    <!-- Previewing the message to be sent. -->
+    <div *ngIf="shouldShowPreview()">
+        <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
+        <app-notify-template-preview [(settings)]="preview"></app-notify-template-preview>
+    </div>
+
+    <!-- Send the message to the caller. -->
+    <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
+        Send
+    </button>
+
+    <!-- Confirmation modal. -->
+    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+        Message sent successfully.
+    </app-dialogue>
+
+    <app-dialogue [(show)]="modal.error">
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <span class="govuk-warning-text__text govuk-!-font-size-24 govuk-!-font-weight-bold">
+                There was a problem with sending the message.
+            </span>
+        </div>
+    </app-dialogue>
+
+    <!-- Data protection Act (DPA) questions prompt. -->
+    <app-dpa-dialogue [(show)]="modal.dpa" buttonText="Close">
+        <app-dialogue-title>Data Protection Act questions</app-dialogue-title>
+
+        <div class="govuk-grid-row">
+
+            <!-- The tenancy address. -->
+            <div class="govuk-grid-column-one-third" [innerHtml]="caller.getPostalAddressHTML()"></div>
+
+            <!-- DPA questions relating to the tenancy address(?). -->
+            <div class="govuk-grid-column-two-thirds">
+                <app-value-list class="govuk-body-s">
+                    <app-value-list-label>Payment reference number</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Date of last payment and amount</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Amount last paid</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Month and year their tenancy began</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Preferred payment method</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                </app-value-list>
+            </div>
+
+        </div>
+
+        <h3 class="govuk-heading-s">Tenant details</h3>
+        <div class="govuk-grid-row">
+
+            <!-- The tenant's name (and optional advocate's name). -->
+            <div class="govuk-grid-column-full govuk-body">
+                {{ caller.getName() }}
+            </div>
+
+            <!-- Contact details. -->
+            <div class="govuk-grid-column-one-half govuk-body-s">
+                <app-value-list>
+                    <app-value-list-label>Telephone</app-value-list-label>
+                    <app-value-list-value>
+                        <div *ngFor="let number of caller.getTelephoneNumbers()">
+                            {{ number }}
+                        </div>
+                        <em *ngIf="caller.hasNoTelephoneNumbers()">none</em>
+                    </app-value-list-value>
+
+                    <app-value-list-label>Email</app-value-list-label>
+                    <app-value-list-value>
+                        <div *ngFor="let email of caller.getEmailAddresses()">
+                            {{ email }}
+                        </div>
+                        <em *ngIf="caller.hasNoEmailAddresses()">none</em>
+                    </app-value-list-value>
+                </app-value-list>
+            </div>
+
+            <!-- DPA questions for the tenant. -->
+            <div class="govuk-grid-column-one-half govuk-body-s">
+                <app-value-list>
+                    <app-value-list-label>National Insurance number</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-label>Date of birth</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value>
+                </app-value-list>
+            </div>
+
+        </div>
+    </app-dpa-dialogue>
+
+</form>

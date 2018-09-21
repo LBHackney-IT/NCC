@@ -26,11 +26,16 @@
                     </div>
 
                     <!-- Enter a new email address. -->
-                    <div class="govuk-radios__item">
+                    <div class="govuk-radios__item govuk-!-width-one-half">
+
+                        <!-- radio button. -->
                         <input class="govuk-radios__input" id="method-email-new" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="null">
-                        <label class="govuk-label govuk-radios__label" for="method-email-new">
-                            <input class="govuk-input" type="email" name="new_email" [(ngModel)]="selection.create[methods.METHOD_EMAIL]" (focus)="prepareNewDetail(methods.METHOD_EMAIL)" (ngModelChange)="checkDetails()">
-                        </label>
+                        <label class="govuk-label govuk-radios__label radio-text-field" for="method-email-new"></label>
+
+                        <!-- text field. -->
+                        <label class="govuk-label hidden" for="method-email-new-value">Use a different email address</label>
+                        <input id="method-email-new-value" class="govuk-input govuk-!-margin-left-3" type="email" name="new_email" [(ngModel)]="selection.create[methods.METHOD_EMAIL]" (focus)="prepareNewDetail(methods.METHOD_EMAIL)" (ngModelChange)="checkDetails()">
+
                     </div>
                 </div>
             </div>
@@ -54,11 +59,16 @@
                     </div>
 
                     <!-- Enter a new [mobile] phone number. -->
-                    <div class="govuk-radios__item">
+                    <div class="govuk-radios__item govuk-!-width-one-half">
+
+                        <!-- radio button. -->
                         <input class="govuk-radios__input" id="method-mobile-new" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="null">
-                        <label class="govuk-label govuk-radios__label" for="method-mobile-new">
-                            <input class="govuk-input" type="tel" name="new_mobile" [(ngModel)]="selection.create[methods.METHOD_SMS]" (focus)="prepareNewDetail(methods.METHOD_SMS)" (ngModelChange)="checkDetails()">
-                        </label>
+                        <label class="govuk-label govuk-radios__label radio-text-field" for="method-mobile-new"></label>
+
+                        <!-- text field. -->
+                        <label class="govuk-label hidden" for="method-mobile-new-value">Use a different mobile number</label>
+                        <input id="method-mobile-new-value" class="govuk-input govuk-!-margin-left-3" type="tel" name="new_mobile" [(ngModel)]="selection.create[methods.METHOD_SMS]" (focus)="prepareNewDetail(methods.METHOD_SMS)" (ngModelChange)="checkDetails()">
+
                     </div>
                 </div>
             </div>
@@ -71,6 +81,7 @@
                 </label>
             </div>
             <div class="govuk-radios__conditional" id="method-by-post" *ngIf="methods.METHOD_POST === selection.method">
+                <!-- TODO we've been informed we won't enter a mailing address here, the agent will manually make a note of it. -->
 
                 <!-- If the caller is identified, we display their address. -->
                 <div *ngIf="caller && !caller.isAnonymous()">

@@ -41,13 +41,13 @@ export class PageIdentifyComponent implements OnInit {
         const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
             .subscribe(
                 (rows) => {
-                    this._searching = false;
                     this.results = rows;
                 },
                 (error) => {
                     console.error(error);
                 },
                 () => {
+                    this._searching = false;
                     subscription.unsubscribe();
                 }
             );
