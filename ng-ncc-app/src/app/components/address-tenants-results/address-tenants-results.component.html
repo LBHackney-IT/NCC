@@ -26,19 +26,19 @@
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h2>
-        <dl class="value-list value-list--horizontal govuk-body-s">
-            <dt class="value-list__label">Payment reference number</dt>
-            <dd class="value-list__value">...</dd>
-            <dt class="value-list__label">Date of last payment and amount</dt>
-            <dd class="value-list__value">...</dd>
-            <dt class="value-list__label">Amount last paid</dt>
-            <dd class="value-list__value">...</dd>
-            <dt class="value-list__label">Month and year their tenancy began</dt>
-            <dd class="value-list__value">...</dd>
-            <dt class="value-list__label">Preferred payment method</dt>
-            <dd class="value-list__value">...</dd>
-        </dl>
-    </app-panel>
+        <app-value-list class="govuk-body-s">
+            <app-value-list-label>Payment reference number</app-value-list-label>
+            <app-value-list-value>...</app-value-list-value>
+            <app-value-list-label>Date of last payment and amount</app-value-list-label>
+            <app-value-list-value>...</app-value-list-value>
+            <app-value-list-label>Amount last paid</app-value-list-label>
+            <app-value-list-value>...</app-value-list-value>
+            <app-value-list-label>Month and year their tenancy began</app-value-list-label>
+            <app-value-list-value>...</app-value-list-value>
+            <app-value-list-label>Preferred payment method</app-value-list-label>
+            <app-value-list-value>...</app-value-list-value>
+        </app-value-list>
+    </div>
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">Tenant details</h2>
@@ -60,35 +60,36 @@
                     <!-- Contact details. -->
                     <span class="govuk-grid-column-one-half">
                         <span class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</span>
-                        <span class="value-list value-list--horizontal govuk-body-s">
-                            <span class="value-list__label">Telephone</span>
-                            <span class="value-list__value">
-                                <span class="value-list__value__line" *ngFor="let number of row.getTelephoneNumbers()">
-                                    {{ number }}
-                                </span>
-                                <em *ngIf="row.hasNoTelephoneNumbers()">none</em>
-                            </span>
 
-                            <span class="value-list__label">Email</span>
-                            <span class="value-list__value">
-                                <span class="value-list__value__line" *ngFor="let email of row.getEmailAddresses()">
+                        <app-value-list class="govuk-body-s">
+                            <app-value-list-label>Telephone</app-value-list-label>
+                            <app-value-list-value>
+                                <div *ngFor="let number of row.getTelephoneNumbers()">
+                                    {{ number }}
+                                </div>
+                                <em *ngIf="row.hasNoTelephoneNumbers()">none</em>
+                            </app-value-list-value>
+
+                            <app-value-list-label>Email</app-value-list-label>
+                            <app-value-list-value>
+                                <div *ngFor="let email of row.getEmailAddresses()">
                                     {{ email }}
-                                </span>
+                                </div>
                                 <em *ngIf="row.hasNoEmailAddresses()">none</em>
-                            </span>
-                        </span>
+                            </app-value-list-value>
+                        </app-value-list>
                     </span>
 
                     <!-- DPA. -->
                     <span class="govuk-grid-column-one-half">
                         <span class="govuk-heading-s govuk-!-margin-bottom-2">DPA</span>
-                        <span class="value-list value-list--horizontal govuk-body-s">
-                            <span class="value-list__label">NI number</span>
-                            <span class="value-list__value">AB 12 34 56 C</span>
+                        <app-value-list class="govuk-body-s">
+                            <app-value-list-label>NI number</app-value-list-label>
+                            <app-value-list-value>AB 12 34 56 C</app-value-list-value>
 
-                            <span class="value-list__label">Date of birth</span>
-                            <span class="value-list__value">09/09/1999</span>
-                        </span>
+                            <app-value-list-label>Date of birth</app-value-list-label>
+                            <app-value-list-value>09/09/1999</app-value-list-value>
+                        </app-value-list>
                     </span>
                 </label>
 

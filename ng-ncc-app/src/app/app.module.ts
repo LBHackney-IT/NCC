@@ -47,6 +47,9 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { HelperComponent } from './components/helper/helper.component';
 import { OrComponent } from './components/or/or.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
+import { ValueListComponent } from './components/value-list/value-list.component';
+import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
+import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { PanelComponent } from './components/panel/panel.component';
 
 @NgModule({
@@ -84,6 +87,9 @@ import { PanelComponent } from './components/panel/panel.component';
         HelperComponent,
         OrComponent,
         CommsTemplatesComponent,
+        ValueListComponent,
+        ValueListLabelComponent,
+        ValueListValueComponent,
         PanelComponent,
     ],
     imports: [

@@ -1,0 +1,13 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/all";
+
+$value-list-label-margin: .25rem 0 !default;
+$value-list-label-width: 60% !default;
+
+////////////////////
+
+:host {
+    font-weight: bold;
+    margin: $value-list-label-margin;
+    width: $value-list-label-width;
+}
