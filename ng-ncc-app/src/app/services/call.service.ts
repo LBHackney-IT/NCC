@@ -40,6 +40,11 @@ export class CallService {
         return !!(this.call_nature);
     }
 
+    getCallID(): string {
+        return this.call_id;
+    }
+
+
     /**
      * Returns the caller associated with the call.
      */
@@ -81,12 +86,29 @@ export class CallService {
         this.call_nature = selection;
     }
 
+    /**
+     * Reset the call to a new state.
+     */
     reset() {
         this.caller = null;
         this.call_nature = null;
         this.call_id = null;
         this.ticket_number = null;
         console.log('Call was reset.');
+    }
+
+    /**
+     * Record a note against the call.
+     */
+    recordNote(note_content: string, automatic: boolean = false) {
+        return this.NCCAPI.createNote(
+            this.call_id,
+            this.ticket_number,
+            this.call_nature.call_reason.id,
+            this.caller.getContactID(),
+            note_content,
+            automatic
+        );
     }
 
 }
