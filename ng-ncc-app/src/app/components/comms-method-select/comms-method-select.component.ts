@@ -43,12 +43,14 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
                     } else {
                         this.details = data;
                     }
-                    this._setDefaults();
                 },
                 (error) => {
                     // No contact details (with defaults) were available for this caller, so we will use
                     // available information from the caller.
                     this._useCallerInformation();
+                },
+                () => {
+                    this._setDefaults();
                 });
     }
 
@@ -57,17 +59,16 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
      */
     _useCallerInformation() {
         console.log('No contact details found, using caller information.');
-        let details = new ContactDetailsUpdate;
+        const details = new ContactDetailsUpdate;
         details.mobile = this.caller.getTelephoneNumbers();
         details.email = this.caller.getEmailAddresses();
         this.details = details;
     }
 
     _setDefaults() {
-        if (this.details.default) {
-            this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email;
-            this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile;
-        }
+        console.log('Setting defaults...');
+        this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email || [].concat(this.details.email).pop();
+        this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile || [].concat(this.details.mobile).pop();
     }
 
     /**

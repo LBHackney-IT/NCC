@@ -158,7 +158,7 @@ export class PageContactDetailsComponent implements OnInit {
 
         const caller = this.Call.getCaller();
 
-        let new_details = Object.assign(new ContactDetailsUpdate, this.details.update); // Create a copy.
+        const new_details = Object.assign(new ContactDetailsUpdate, this.details.update); // Create a copy.
         new_details.telephone = new_details.telephone.concat(this.new_telephone);
         new_details.mobile = new_details.mobile.concat(this.new_mobile);
         new_details.email = new_details.email.concat(this.new_email);
