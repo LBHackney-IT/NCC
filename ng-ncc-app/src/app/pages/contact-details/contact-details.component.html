@@ -9,7 +9,7 @@
                 Title
             </label>
             <div class="govuk-grid-column-two-thirds govuk-body" id="title">
-                {{ details.title }}
+                {{ details.original.title }}
             </div>
         </div>
 
@@ -19,7 +19,7 @@
                 First name
             </label>
             <div class="govuk-grid-column-two-thirds govuk-body" id="first-name">
-                {{ details.first_name }}
+                {{ details.original.firstName }}
             </div>
         </div>
 
@@ -29,7 +29,7 @@
                 Last name
             </label>
             <div class="govuk-grid-column-two-thirds govuk-body" id="last-name">
-                {{ details.last_name }}
+                {{ details.original.lastName }}
             </div>
         </div>
 
@@ -47,9 +47,9 @@
                 <div class="govuk-radios">
 
                     <!-- Existing home numbers. -->
-                    <div class="govuk-radios__item" *ngFor="let row of details.telephone; let i = index">
+                    <div class="govuk-radios__item" *ngFor="let row of details.update.telephone; let i = index">
                         <input class="govuk-radios__input" id="existing-telephone-{{ i }}" name="telephone-default" type="radio"
-                            [(ngModel)]="details.default.telephone" [value]="details.telephone[i]">
+                            [(ngModel)]="details.update.default.telephone" [value]="details.update.telephone[i]">
                         <label class="govuk-label govuk-radios__label" for="existing-telephone-{{ i }}">
                             {{ row }}
                         </label>
@@ -61,14 +61,15 @@
 
                         <!-- radio button... -->
                         <input class="govuk-radios__input" id="new-telephone-{{ i }}" name="telephone-default" type="radio"
-                        [(ngModel)]="details.default.telephone" [value]="row">
+                        [(ngModel)]="details.update.default.telephone" [value]="row">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="new-telephone-{{ i }}"></label>
 
                         <!-- text field... -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
                             <label class="govuk-label hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
                             <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}"
-                            [(ngModel)]="new_telephone[i]" (focus)="details.default.telephone = row;" (blur)="details.default.telephone = row;">
+                            [(ngModel)]="new_telephone[i]" (focus)="details.update.default.telephone = row;" (blur)="details.update.default.telephone = row;"
+                            [disabled]="saving">
                         </div>
 
                     </div>
@@ -91,9 +92,9 @@
                 <div class="govuk-radios">
 
                     <!-- Existing mobile numbers. -->
-                    <div class="govuk-radios__item" *ngFor="let row of details.mobile; let i = index">
+                    <div class="govuk-radios__item" *ngFor="let row of details.update.mobile; let i = index">
                         <input class="govuk-radios__input" id="existing-mobile-{{ i }}" name="mobile-default" type="radio"
-                            [(ngModel)]="details.default.mobile" [value]="details.mobile[i]">
+                            [(ngModel)]="details.update.default.mobile" [value]="details.update.mobile[i]">
                         <label class="govuk-label govuk-radios__label" for="existing-mobile-{{ i }}">
                             {{ row }}
                         </label>
@@ -104,14 +105,15 @@
 
                         <!-- radio button... -->
                         <input class="govuk-radios__input" id="new-mobile-{{ i }}" name="mobile-default" type="radio"
-                        [(ngModel)]="details.default.mobile" [value]="row">
+                        [(ngModel)]="details.update.default.mobile" [value]="row">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="new-mobile-{{ i }}"></label>
 
                         <!-- text field... -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
                             <label class="govuk-label hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
                             <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}"
-                                [(ngModel)]="new_mobile[i]" (focus)="details.default.mobile = row;" (blur)="details.default.mobile = row;">
+                                [(ngModel)]="new_mobile[i]" (focus)="details.update.default.mobile = row;" (blur)="details.update.default.mobile = row;"
+                                [disabled]="saving">
                         </div>
 
                     </div>
@@ -134,9 +136,9 @@
                 <div class="govuk-radios">
 
                     <!-- Existing email addresses. -->
-                    <div class="govuk-radios__item" *ngFor="let row of details.email; let i = index">
+                    <div class="govuk-radios__item" *ngFor="let row of details.update.email; let i = index">
                         <input class="govuk-radios__input" id="existing-email-{{ i }}" name="email-default" type="radio"
-                            [(ngModel)]="details.default.email" [value]="details.email[i]">
+                            [(ngModel)]="details.update.default.email" [value]="details.update.email[i]">
                         <label class="govuk-label govuk-radios__label" for="existing-email-{{ i }}">
                             {{ row }}
                         </label>
@@ -147,14 +149,15 @@
 
                         <!-- radio button... -->
                         <input class="govuk-radios__input" id="new-email-{{ i }}" name="email-default" type="radio"
-                        [(ngModel)]="details.default.email" [value]="row">
+                        [(ngModel)]="details.update.default.email" [value]="row">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="new-email-{{ i }}"></label>
 
                         <!-- text field... -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
                             <label class="govuk-label hidden" for="new-email-{{ i }}-value">New email {{ i + 1 }}</label>
                             <input class="govuk-input" type="text" id="new-email-{{ i }}-value" name="new_email_{{ i }}"
-                                [(ngModel)]="new_email[i]" (focus)="details.default.email = row;" (blur)="details.default.email = row;">
+                                [(ngModel)]="new_email[i]" (focus)="details.update.default.email = row;" (blur)="details.update.default.email = row;"
+                                [disabled]="saving">
                         </div>
 
                     </div>
@@ -163,7 +166,7 @@
             </fieldset>
         </div>
 
-        <button class="govuk-button" type="submit" name="button">
+        <button class="govuk-button" type="submit" name="button" [disabled]="saving">
             Save
         </button>
 
