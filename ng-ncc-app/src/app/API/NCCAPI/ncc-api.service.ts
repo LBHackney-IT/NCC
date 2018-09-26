@@ -80,6 +80,21 @@ export class NCCAPIService {
     }
 
     /**
+     * Obtains contact details for a person, including defaults.
+     */
+    getContactDetails(crm_contact_id: string) {
+        const parameters = {
+            contactid: crm_contact_id
+        };
+
+        return this.http
+            .get(`${this._url}CRM/GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: JSONResponse) => {
+                return JSON.parse(data.response.communicationdetails) as ContactDetailsUpdate;
+            }));
+    }
+
+    /**
      * TODO create a generic API service class with this method.
      */
     _buildQueryString(parameters: { [propKey: string]: any }): string {
