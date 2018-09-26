@@ -37,15 +37,37 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
         this.selection = new CommsSelection;
         this.NCCAPI.getContactDetails(this.caller.getContactID())
             .subscribe(
-                (data: ContactDetailsUpdate) => { this.details = data; },
+                (data: ContactDetailsUpdate) => {
+                    if (null === data) {
+                        this._useCallerInformation();
+                    } else {
+                        this.details = data;
+                    }
+                    this._setDefaults();
+                },
                 (error) => {
                     // No contact details (with defaults) were available for this caller, so we will use
                     // available information from the caller.
-                    let details = new ContactDetailsUpdate;
-                    details.mobile = this.caller.getTelephoneNumbers();
-                    details.email = this.caller.getEmailAddresses();
-                    this.details = details;
+                    this._useCallerInformation();
                 });
+    }
+
+    /**
+     *
+     */
+    _useCallerInformation() {
+        console.log('No contact details found, using caller information.');
+        let details = new ContactDetailsUpdate;
+        details.mobile = this.caller.getTelephoneNumbers();
+        details.email = this.caller.getEmailAddresses();
+        this.details = details;
+    }
+
+    _setDefaults() {
+        if (this.details.default) {
+            this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email;
+            this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile;
+        }
     }
 
     /**
