@@ -29,7 +29,7 @@ export class PageContactDetailsComponent implements OnInit {
     ngOnInit() {
         this.details = {
             original: null,
-            update: new ContactDetailsUpdate;
+            update: new ContactDetailsUpdate
         };
         this.new_telephone = [];
         this.new_mobile = [];

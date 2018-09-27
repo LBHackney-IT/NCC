@@ -36,31 +36,11 @@
             </app-panel>
         </form>
 
-        <!-- Transaction history. -->
-        <div class="transactions govuk-!-margin-bottom-5">
-            <table class="govuk-table govuk-!-margin-bottom-1">
-                <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="col">Date</th>
-                        <th class="govuk-table__header" scope="col">Type</th>
-                        <th class="govuk-table__header" scope="col">Status</th>
-                        <th class="govuk-table__header" scope="col">Entered by</th>
-                        <th class="govuk-table__header" scope="col">Comments</th>
-                        <th class="govuk-table__header" scope="col">Attachments</th>
-                    </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                    <tr class="govuk-table__row" *ngFor="let row of filtered_history">
-                        <td class="govuk-table__cell" scope="row">{{ row.date }}</td>
-                        <td class="govuk-table__cell">{{ row.type }}</td>
-                        <td class="govuk-table__cell">{{ row.status }}</td>
-                        <td class="govuk-table__cell">{{ row.agent }}</td>
-                        <td class="govuk-table__cell">{{ row.comments }}</td>
-                        <td class="govuk-table__cell">{{ row.attachments }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <!-- A list of notes. -->
+        <app-notes [crmContactID]="caller.getContactID()"
+            [filter]="filter.manual"
+            [minDate]="filter.min_date"
+            [maxDate]="filter.max_date"></app-notes>
 
     </div>
 </div>

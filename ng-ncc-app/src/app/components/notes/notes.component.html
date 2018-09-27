@@ -1,0 +1,30 @@
+<div class="notes govuk-!-margin-bottom-2">
+
+    <!-- Table of notes. -->
+    <table class="govuk-table govuk-!-margin-bottom-1">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">Date</th>
+                <th class="govuk-table__header" scope="col">Caller</th>
+                <th class="govuk-table__header" scope="col">Type</th>
+                <th class="govuk-table__header" scope="col">Reason</th>
+                <th class="govuk-table__header" scope="col">Note</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row" *ngFor="let row of _filtered">
+                <td class="govuk-table__cell" scope="row">{{ row.createdOn | date:'dd/MM/yyyy hh:mm' }}</td>
+                <td class="govuk-table__cell">...</td>
+                <td class="govuk-table__cell">{{ row.notesType }}</td>
+                <td class="govuk-table__cell">...</td>
+                <td class="govuk-table__cell">{{ row.notes }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Loading prompt. -->
+    <div *ngIf="_loading" class="loading">
+        Loading...
+    </div>
+
+</div>
