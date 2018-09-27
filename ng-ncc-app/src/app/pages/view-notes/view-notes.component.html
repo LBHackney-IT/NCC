@@ -27,9 +27,10 @@
                                 <label class="hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-caller">
                                     Search by caller
                                 </label>
-                                <input class="govuk-input govuk-!-margin-right-1" id="filter-manual-caller" name="filter-manual-caller" type="search"
-                                    placeholder="Search by caller"
-                                    [(ngModel)]="filter_caller">
+                                <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_caller">
+                                    <option [value]="null">All tenants</option>
+                                    <option *ngFor="let row of tenants" [value]="row.contact_id">{{ row.full_name }}</option>
+                                </select>
                             </div>
 
                             <!-- Buttons. -->
@@ -64,6 +65,7 @@
 
         <!-- A list of notes. -->
         <app-notes [crmContactID]="caller.getContactID()"
+            [tenants]="tenants"
             [filter]="filter.manual"
             [minDate]="filter.min_date"
             [maxDate]="filter.max_date"></app-notes>

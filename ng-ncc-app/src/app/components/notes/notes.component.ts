@@ -11,6 +11,7 @@ import { NCCNote } from '../../interfaces/ncc-note.interface';
 })
 export class NotesComponent implements OnInit, OnChanges {
     @Input() crmContactID: string;
+    @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
@@ -97,11 +98,22 @@ export class NotesComponent implements OnInit, OnChanges {
             });
     }
 
-    getNoteTypeBadgeClass(note: NCCNote): string {
+    /**
+     *
+     */
+    getNoteTypeBadgeClass(note: NCCNote) {
         return {
             'call-type--automatic': 'Automatic' === note.notesType,
             'call-type--manual': 'Manual' === note.notesType
-        }
+        };
+    }
+
+    /**
+     *
+     */
+    getTenantName(crm_contact_id: string): string {
+        const tenant = this.tenants.filter((row) => row.contact_id === crm_contact_id);
+        return tenant.length ? tenant.shift().full_name : 'n/a';
     }
 
 }
