@@ -13,6 +13,7 @@ export class NoteFormComponent implements OnInit {
     containerStyle: Object; // used to control the inline style of .note-form__container.
     comment: string;
     show: boolean;          // whether the note component is visible on the page.
+    saving: boolean;        // set to TRUE when saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
 
     constructor(private inj: Injector, private Call: CallService) {
@@ -58,6 +59,10 @@ export class NoteFormComponent implements OnInit {
         return this.Call.getCaller().getName();
     }
 
+    getCallID(): string {
+        return this.Call.getCallID();
+    }
+
     /**
      * Reposition the button and form at the specified scroll position.
      * Using only CSS, the component would appear over the vertical scrollbar (if there is one) if its position is fixed.
@@ -71,11 +76,32 @@ export class NoteFormComponent implements OnInit {
     }
 
     /**
+     * Returns TRUE if we have enough information to save a note.
+     */
+    canSaveNote(): boolean {
+        return !this.saving && !!(this.comment) && !!(this.getCallID());
+    }
+
+    /**
      * This is called when the form is submitted.
      */
-    saveComment() {
-        console.log('Added a comment.');
-        this._resetComment();
+    saveNote() {
+        if (this.canSaveNote()) {
+            this.saving = true;
+            this.Call.recordNote(this.comment, false)
+                .subscribe(
+                    () => {
+                        console.log('Added a note.');
+                        this._resetComment();
+                    },
+                    (error) => {
+                        console.log(error);
+                    },
+                    () => {
+                        this.saving = false;
+                    }
+                );
+        }
     }
 
     /**

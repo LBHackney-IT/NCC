@@ -2,4 +2,5 @@
 export interface JSONResponse {
     result?: Array<any>;
     results?: Array<any>; // we should have consistency...
+    response?: any;
 }
