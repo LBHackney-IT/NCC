@@ -1,0 +1,47 @@
+@import "../../../assets/scss/vars.scss";
+@import "~govuk-frontend/all";
+
+$call-type-automatic-bg-colour: $govuk-border-colour !default;
+$call-type-automatic-text-colour: $govuk-text-colour !default;
+
+$call-type-manual-bg-colour: $govuk-text-colour !default;
+$call-type-manual-text-colour: govuk-colour("white") !default;
+
+////////////////////
+
+.notes-table {
+    table-layout: fixed;
+}
+
+.notes-table__type {
+    text-align: center;
+}
+
+.call-type {
+    &:before {
+        border-radius: 100px;
+        display: inline-block;
+        min-width: 1.25em;
+        padding: .2rem;
+        text-align: center;
+        text-transform: uppercase;
+    }
+}
+
+.call-type--automatic {
+    &:before {
+        background: $call-type-automatic-bg-colour;
+        color: $call-type-automatic-text-colour;
+        &:before {
+            content: "A";
+        }
+    }
+}
+
+.call-type--manual {
+    &:before {
+        background: $call-type-manual-bg-colour;
+        color: $call-type-manual-text-colour;
+        content: "M";
+    }
+}

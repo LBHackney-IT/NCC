@@ -19,7 +19,8 @@ export class PageViewNotesComponent extends PageHistoryComponent implements OnIn
         manual: { [propKey: string]: string }
     };
 
-    filter_type: string;
+    filter_reason: string;
+    filter_caller: string;
 
     constructor(private route: ActivatedRoute) {
         super();
