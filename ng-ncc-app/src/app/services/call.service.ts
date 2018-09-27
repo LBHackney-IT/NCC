@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Caller } from '../interfaces/caller.interface';
 import { LogCallSelection } from '../interfaces/log-call-selection.interface';
+import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
+import { IdentifiedCaller } from '../classes/identified-caller.class';
+import { CRMServiceRequest } from '../interfaces/crmservicerequest.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +19,10 @@ export class CallService {
 
     private caller: Caller;
     private call_nature: LogCallSelection;
+    private call_id: string;
+    private ticket_number: string;
 
-    constructor() {
+    constructor(private NCCAPI: NCCAPIService) {
         this.reset();
     }
 
@@ -33,6 +38,13 @@ export class CallService {
      */
     hasCallNature(): boolean {
         return !!(this.call_nature);
+    }
+
+    /**
+     *
+     */
+    getCallID(): string {
+        return this.call_id;
     }
 
     /**
@@ -55,7 +67,18 @@ export class CallService {
     setCaller(caller: Caller) {
         this.caller = caller;
         console.log('Caller has been set to:', this.caller.getName());
-        console.log(`The caller ${this.caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
+        console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
+
+        // Create a call to record notes against.
+        // TODO an anonymous caller user is to be created.
+        if (caller instanceof IdentifiedCaller) {
+            this.NCCAPI.createCall(caller.getContactID())
+                .subscribe((data: CRMServiceRequest) => {
+                    this.call_id = data.id;
+                    this.ticket_number = data.ticketNumber;
+                    console.log(`Call ${data.id} was created.`);
+                });
+        }
     }
 
     /**
@@ -65,10 +88,30 @@ export class CallService {
         this.call_nature = selection;
     }
 
+    /**
+     * Reset the call to a new state.
+     */
     reset() {
         this.caller = null;
         this.call_nature = null;
+        this.call_id = null;
+        this.ticket_number = null;
+        this.contact_details = null;
         console.log('Call was reset.');
+    }
+
+    /**
+     * Record a note against the call.
+     */
+    recordNote(note_content: string, automatic: boolean = false) {
+        return this.NCCAPI.createNote(
+            this.call_id,
+            this.ticket_number,
+            this.call_nature.call_reason.id,
+            this.caller.getContactID(),
+            note_content,
+            automatic
+        );
     }
 
 }

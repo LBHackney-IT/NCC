@@ -4,6 +4,7 @@ import { ContactDetails } from '../../interfaces/contact-details.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
+import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 
 @Component({
     selector: 'app-contact-details',
@@ -13,14 +14,23 @@ import { CallService } from '../../services/call.service';
 export class PageContactDetailsComponent implements OnInit {
 
     MAX_OPTIONS = 0;        // maximum number of each contact method we can have for a caller (set to 0 for infinite).
-    details: ContactDetailsUpdate;
     new_telephone: string[];
     new_mobile: string[];
     new_email: string[];
+    saving: boolean;
 
-    constructor(private route: ActivatedRoute, private Call: CallService) { }
+    details: {
+        original: ContactDetails,
+        update: ContactDetailsUpdate
+    };
+
+    constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService, private Call: CallService) { }
 
     ngOnInit() {
+        this.details = {
+            original: null,
+            update: new ContactDetailsUpdate;
+        };
         this.new_telephone = [];
         this.new_mobile = [];
         this.new_email = [];
@@ -35,31 +45,30 @@ export class PageContactDetailsComponent implements OnInit {
      * Populates our form model with the identified caller's existing details.
      */
     _buildDetails(details: ContactDetails) {
-        this.details = new ContactDetailsUpdate;
-        this.details.title = details.title;
-        this.details.first_name = details.firstName;
-        this.details.last_name = details.lastName;
-        this.details.telephone = [];
+        this.details.original = details;
+        // this.details.update = new ContactDetailsUpdate;
+
+        this.details.update.telephone = [];
         // this.details.telephone = this.caller.getTelephoneNumbers();
         // - currently no distinction between mobile and telephone numbers.
-        this.details.mobile = [
+        this.details.update.mobile = [
             details.telephone1,
             details.telephone2,
             details.telephone3
         ].filter(row => row);
-        this.details.email = [
+        this.details.update.email = [
             details.emailAddress
         ].filter(row => row);
 
         // If there's only one of each contact method, set it as the default.
-        if (1 === this.details.telephone.length) {
-            this.details.default.telephone = this.details.telephone[0];
+        if (1 === this.details.update.telephone.length) {
+            this.details.update.default.telephone = this.details.update.telephone[0];
         }
-        if (1 === this.details.mobile.length) {
-            this.details.default.mobile = this.details.mobile[0];
+        if (1 === this.details.update.mobile.length) {
+            this.details.update.default.mobile = this.details.update.mobile[0];
         }
-        if (1 === this.details.email.length) {
-            this.details.default.email = this.details.email[0];
+        if (1 === this.details.update.email.length) {
+            this.details.update.default.email = this.details.update.email[0];
         }
     }
 
@@ -70,7 +79,7 @@ export class PageContactDetailsComponent implements OnInit {
         // Only add a new field if there are no empty fields.
         if (this._hasNoEmptyFields(this.new_telephone)) {
             this.new_telephone.push(null);
-            this.details.default.telephone = null;
+            this.details.update.default.telephone = null;
         }
     }
 
@@ -81,7 +90,7 @@ export class PageContactDetailsComponent implements OnInit {
         // Only add a new field if there are no empty fields.
         if (this._hasNoEmptyFields(this.new_mobile)) {
             this.new_mobile.push(null);
-            this.details.default.mobile = null;
+            this.details.update.default.mobile = null;
         }
     }
 
@@ -92,7 +101,7 @@ export class PageContactDetailsComponent implements OnInit {
         // Only add a new field if there are no empty fields.
         if (this._hasNoEmptyFields(this.new_email)) {
             this.new_email.push(null);
-            this.details.default.email = null;
+            this.details.update.default.email = null;
         }
     }
 
@@ -100,7 +109,7 @@ export class PageContactDetailsComponent implements OnInit {
      * Returns TRUE if we have the maximum number of telephone numbers allowed.
      */
     hasEnoughTelephoneNumbers(): boolean {
-        const existing = this.details.telephone.length;
+        const existing = this.details.update.telephone.length;
         const added = this.new_telephone.length;
         return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
@@ -109,7 +118,7 @@ export class PageContactDetailsComponent implements OnInit {
      * Returns TRUE if we have the maximum number of mobile numbers allowed.
      */
     hasEnoughMobileNumbers(): boolean {
-        const existing = this.details.mobile.length;
+        const existing = this.details.update.mobile.length;
         const added = this.new_mobile.length;
         return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
@@ -118,7 +127,7 @@ export class PageContactDetailsComponent implements OnInit {
      * Returns TRUE if we have the maximum number of email addresses allowed.
      */
     hasEnoughEmailAddresses(): boolean {
-        const existing = this.details.email.length;
+        const existing = this.details.update.email.length;
         const added = this.new_email.length;
         return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
@@ -146,12 +155,36 @@ export class PageContactDetailsComponent implements OnInit {
         if (event && event.defaultPrevented) {
             return;
         }
-        console.log('Name saved as:', this.details.title, this.details.first_name, this.details.last_name);
-        console.log('Telephone number saved as:', this.details.telephone);
-        console.log('Mobile numbers saved as:', this.details.mobile.concat(this.new_mobile));
-        console.log('Email addresses saved as:', this.details.email.concat(this.new_email));
-        console.log('Default mobile number is:', this.details.default.mobile);
-        console.log('Default email address is:', this.details.default.email);
+
+        const caller = this.Call.getCaller();
+
+        const new_details = Object.assign(new ContactDetailsUpdate, this.details.update); // Create a copy.
+        new_details.telephone = new_details.telephone.concat(this.new_telephone);
+        new_details.mobile = new_details.mobile.concat(this.new_mobile);
+        new_details.email = new_details.email.concat(this.new_email);
+
+        new_details.sanitise();
+
+        console.log('Telephone number saved as:', new_details.telephone);
+        console.log('Mobile numbers saved as:', new_details.mobile);
+        console.log('Email addresses saved as:', new_details.email);
+        console.log('Default telephone number is:', new_details.default.telephone);
+        console.log('Default mobile number is:', new_details.default.mobile);
+        console.log('Default email address is:', new_details.default.email);
+
+        this.saving = true;
+
+        this.NCCAPI.saveContactDetails(caller.getContactID(), new_details)
+            .subscribe(
+                () => {
+                    this.details.update = new_details;
+                    this.new_telephone = [];
+                    this.new_mobile = [];
+                    this.new_email = [];
+                },
+                (error) => { console.log(error); },
+                () => { this.saving = false; },
+        );
     }
 
 }

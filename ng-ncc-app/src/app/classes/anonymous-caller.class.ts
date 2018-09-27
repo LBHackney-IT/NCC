@@ -10,6 +10,10 @@ export class AnonymousCaller implements Caller {
         return true;
     }
 
+    getContactID(): string | null {
+        return null;
+    }
+
     getName(): string {
         return null;
         // TODO would an anonymous caller be able to provide a name?

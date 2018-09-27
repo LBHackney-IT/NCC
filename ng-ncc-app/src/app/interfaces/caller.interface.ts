@@ -8,6 +8,7 @@ export interface Caller {
     isAnonymous(): boolean;
     getName(): string;
     getTelephoneNumbers(): string[];
+    getContactID(): string | null;
     getEmailAddresses(): string[];
     getPostalAddress(): ContactAddress;
     hasNoTelephoneNumbers(): boolean;
