@@ -9,7 +9,7 @@
         <form class="note-form__container__form" #commentForm="ngForm" (ngSubmit)="saveNote()">
 
             <!-- Caller details. -->
-            <app-value-list class="govuk-body-s">
+            <app-value-list class="govuk-body-s" emphasise="value">
                 <app-value-list-label>Call ID</app-value-list-label>
                 <app-value-list-value>
                     {{ getCallID() }}
