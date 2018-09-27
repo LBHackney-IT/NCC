@@ -4,14 +4,17 @@
 $helper-icon-bg-colour: $govuk-text-colour !default;
 $helper-icon-text-colour: govuk-colour("white") !default;
 $helper-icon-fount-stack: $govuk-font-family;
+$helper-icon-padding: .25rem !default;
+$helper-icon-width: 2rem !default;
+$helper-icon-height: 1.5rem !default;
 
 $helper-text-bg-colour: $govuk-text-colour !default;
 $helper-text-colour: govuk-colour("white") !default;
-$helper-text-radius: 4px !default;
-$helper-text-padding: 1em !default;
+$helper-text-radius: .25rem !default;
+$helper-text-padding: 1rem !default;
 $helper-text-min-width: 300px !default;
 $helper-text-tip-size: 10px !default;
-$helper-text-z-index: 30px !default;
+$helper-text-z-index: 30 !default;
 
 /////////////////////////
 
@@ -19,34 +22,19 @@ $helper-text-z-index: 30px !default;
     position: relative;
 }
 
-.icon {
-    background: $helper-icon-bg-colour;
-    border-radius: 999px;
-    color: $helper-icon-text-colour;
-    cursor: default;
-    display: inline-block;
-    font-family: $helper-icon-fount-stack;
-    font-weight: bold;
-    text-align: center;
-    height: 1.25em;
-    width: 1.25em;
-
-    &:hover + .text {
-        display: block;
-    }
-}
-
-.text {
+@mixin helper-text($width: $helper-text-min-width, $padding: $helper-text-padding) {
     background: $helper-text-bg-colour;
     border-radius: $helper-text-radius;
     color: $helper-text-colour;
+    cursor: pointer;
     display: none;
     position: absolute;
     left: 50%;
     top: -($helper-text-tip-size * 2);
     transform: translate(-50%, -100%);
-    min-width: $helper-text-min-width;
-    padding: $helper-text-padding;
+    min-width: $width;
+    user-select: none;
+    padding: $padding;
     z-index: $helper-text-z-index;
 
     &:after {
@@ -60,4 +48,31 @@ $helper-text-z-index: 30px !default;
         left: 50%;
         transform: translate(-50%, 100%);
     }
+}
+
+@mixin helper-icon {
+    background: $helper-icon-bg-colour;
+    border-radius: 50%;
+    color: $helper-icon-text-colour;
+    cursor: default;
+    display: inline-block;
+    font-family: $helper-icon-fount-stack;
+    font-weight: bold;
+    text-align: center;
+    min-height: $helper-icon-height;
+    min-width: $helper-icon-width;
+    padding: $helper-icon-padding;
+    vertical-align: middle;
+}
+
+.icon {
+    @include helper-icon;
+
+    &:hover + .text {
+        display: block;
+    }
+}
+
+.text {
+    @include helper-text();
 }

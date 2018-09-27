@@ -5,6 +5,7 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 
 import { CRMServiceRequest } from '../../interfaces/crmservicerequest.interface';
 import { JSONResponse } from '../../interfaces/json-response.interface';
+import { NCCNote } from '../../interfaces/ncc-note.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 
 @Injectable({
@@ -24,7 +25,7 @@ export class NCCAPIService {
     NOTE_TYPE_AUTOMATIC = 1;
     NOTE_TYPE_MANUAL = 2;
 
-    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/';
+    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/CRM/';
 
     constructor(private http: HttpClient) { }
 
@@ -40,7 +41,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post(`${this._url}CRM/CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
+            .post(`${this._url}CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
             .pipe(
                 map((data: JSONResponse) => {
                     return data.response.servicerequest as CRMServiceRequest;
@@ -63,7 +64,19 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post(`${this._url}CRM/CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
+    }
+
+    getNotes(crm_contact_id: string) {
+        const parameters = {
+            contactid: crm_contact_id,
+        };
+
+        return this.http
+            .get(`${this._url}GetAllNCCInteractions?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: JSONResponse) => {
+                return data ? data.results as NCCNote[] : [];
+            }));
     }
 
     /**
@@ -76,7 +89,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post(`${this._url}CRM/SetDefaultComms?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}SetDefaultComms?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
@@ -88,7 +101,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .get(`${this._url}CRM/GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
+            .get(`${this._url}GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: JSONResponse) => {
                 return JSON.parse(data.response.communicationdetails) as ContactDetailsUpdate;
             }));

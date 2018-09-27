@@ -72,6 +72,7 @@ export class PageIdentifyComponent implements OnInit {
      */
     tenantSelected(caller: IdentifiedCaller) {
         this.Call.setCaller(caller);
+        this.Call.setTenancy(this.selected_address);
         this.nextStep();
     }
 
@@ -80,6 +81,7 @@ export class PageIdentifyComponent implements OnInit {
      */
     tenantToEdit(caller: IdentifiedCaller) {
         this.Call.setCaller(caller);
+        this.Call.setTenancy(this.selected_address);
         this.router.navigateByUrl('contact-details');
     }
 

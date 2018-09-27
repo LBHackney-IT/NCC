@@ -4,6 +4,7 @@ import { LogCallSelection } from '../interfaces/log-call-selection.interface';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { CRMServiceRequest } from '../interfaces/crmservicerequest.interface';
+import { AddressSearchGroupedResult } from '../interfaces/address-search-grouped-result.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,8 @@ export class CallService {
     private caller: Caller;
     private call_nature: LogCallSelection;
     private call_id: string;
+    private tenancy: AddressSearchGroupedResult;
+    private tenants: { [propKey: string]: string }[];
     private ticket_number: string;
 
     constructor(private NCCAPI: NCCAPIService) {
@@ -89,6 +92,34 @@ export class CallService {
     }
 
     /**
+     *
+     */
+    getTenancy(): AddressSearchGroupedResult {
+        return this.tenancy;
+    }
+
+    /**
+     *
+     */
+    setTenancy(tenancy: AddressSearchGroupedResult) {
+        this.tenancy = tenancy;
+        this._buildTenantsList();
+    }
+
+    _buildTenantsList() {
+        this.tenants = this.tenancy.results.map((row) => {
+            return {
+                contact_id: row.crmContactId,
+                full_name: row.fullName
+            };
+        });
+    }
+
+    getTenants() {
+        return this.tenants;
+    }
+
+    /**
      * Reset the call to a new state.
      */
     reset() {
@@ -96,7 +127,7 @@ export class CallService {
         this.call_nature = null;
         this.call_id = null;
         this.ticket_number = null;
-        this.contact_details = null;
+        this.tenancy = null;
         console.log('Call was reset.');
     }
 
