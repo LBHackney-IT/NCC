@@ -8,7 +8,7 @@ $call-type-automatic-text-colour: $govuk-text-colour !default;
 $call-type-manual-bg-colour: $govuk-text-colour !default;
 $call-type-manual-text-colour: govuk-colour("white") !default;
 
-$call-type-helper-text-padding: .5em !default;
+$call-type-helper-text-padding: .5rem !default;
 $call-type-helper-text-width: 140px !default;
 
 ////////////////////
@@ -17,15 +17,12 @@ $call-type-helper-text-width: 140px !default;
     position: relative;
 
     &:before {
-        border-radius: 100px;
-        display: inline-block;
-        min-width: 1.25em;
-        padding: .2rem;
-        text-align: center;
+        @include helper-icon;
+        min-width: $helper-icon-height;
         text-transform: uppercase;
     }
     &:hover {
-        .text {
+        > .text {
             display: block;
         }
     }
@@ -40,9 +37,7 @@ $call-type-helper-text-width: 140px !default;
     &:before {
         background: $call-type-automatic-bg-colour;
         color: $call-type-automatic-text-colour;
-        &:before {
-            content: "A";
-        }
+        content: "A";
     }
 }
 
