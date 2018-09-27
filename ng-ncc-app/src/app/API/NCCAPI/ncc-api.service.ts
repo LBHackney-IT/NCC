@@ -5,6 +5,7 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 
 import { CRMServiceRequest } from '../../interfaces/crmservicerequest.interface';
 import { JSONResponse } from '../../interfaces/json-response.interface';
+import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 
 @Injectable({
     providedIn: 'root'
@@ -63,6 +64,34 @@ export class NCCAPIService {
 
         return this.http
             .post(`${this._url}CRM/CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
+    }
+
+    /**
+     * Saves contact details for a person, including default information.
+     */
+    saveContactDetails(crm_contact_id: string, details: ContactDetailsUpdate) {
+        const parameters = {
+            contactid: crm_contact_id,
+            CommObject: JSON.stringify(details)
+        };
+
+        return this.http
+            .post(`${this._url}CRM/SetDefaultComms?${this._buildQueryString(parameters)}`, {});
+    }
+
+    /**
+     * Obtains contact details for a person, including defaults.
+     */
+    getContactDetails(crm_contact_id: string) {
+        const parameters = {
+            contactid: crm_contact_id
+        };
+
+        return this.http
+            .get(`${this._url}CRM/GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: JSONResponse) => {
+                return JSON.parse(data.response.communicationdetails) as ContactDetailsUpdate;
+            }));
     }
 
     /**

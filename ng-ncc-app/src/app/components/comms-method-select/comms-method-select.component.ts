@@ -4,6 +4,8 @@ import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
 import { CallService } from '../../services/call.service';
 import { Caller } from '../../interfaces/caller.interface';
+import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 
 @Component({
     selector: 'app-comms-method-select',
@@ -23,15 +25,50 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
 
     // A reference to the Caller we want to contact.
     caller: Caller;
-
-    methods = CONTACT;
+    details: ContactDetailsUpdate;
     selection: CommsSelection;
 
-    constructor(private Call: CallService) { }
+    methods = CONTACT;
+
+    constructor(private Call: CallService, private NCCAPI: NCCAPIService) { }
 
     ngOnInit() {
         this.caller = this.Call.getCaller();
         this.selection = new CommsSelection;
+        this.NCCAPI.getContactDetails(this.caller.getContactID())
+            .subscribe(
+                (data: ContactDetailsUpdate) => {
+                    if (null === data) {
+                        this._useCallerInformation();
+                    } else {
+                        this.details = data;
+                    }
+                },
+                (error) => {
+                    // No contact details (with defaults) were available for this caller, so we will use
+                    // available information from the caller.
+                    this._useCallerInformation();
+                },
+                () => {
+                    this._setDefaults();
+                });
+    }
+
+    /**
+     *
+     */
+    _useCallerInformation() {
+        console.log('No contact details found, using caller information.');
+        const details = new ContactDetailsUpdate;
+        details.mobile = this.caller.getTelephoneNumbers();
+        details.email = this.caller.getEmailAddresses();
+        this.details = details;
+    }
+
+    _setDefaults() {
+        console.log('Setting defaults...');
+        this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email || [].concat(this.details.email).pop();
+        this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile || [].concat(this.details.mobile).pop();
     }
 
     /**
@@ -71,14 +108,14 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
      * Returns a list of the caller's email addresses.
      */
     existingEmailAddresses(): string[] {
-        return this.caller ? this.caller.getEmailAddresses() : [];
+        return this.details.email;
     }
 
     /**
      * Returns a list of the caller's telephone numbers.
      */
     existingTelephoneNumbers(): string[] {
-        return this.caller ? this.caller.getTelephoneNumbers() : [];
+        return this.details.mobile;
     }
 
     /**

@@ -40,10 +40,12 @@ export class CallService {
         return !!(this.call_nature);
     }
 
+    /**
+     *
+     */
     getCallID(): string {
         return this.call_id;
     }
-
 
     /**
      * Returns the caller associated with the call.
@@ -94,6 +96,7 @@ export class CallService {
         this.call_nature = null;
         this.call_id = null;
         this.ticket_number = null;
+        this.contact_details = null;
         console.log('Call was reset.');
     }
 
