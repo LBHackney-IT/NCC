@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageHistoryComponent } from '../history/history.component';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { CallService } from '../../services/call.service';
 
 @Component({
     selector: 'app-view-notes',
@@ -12,6 +13,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 export class PageViewNotesComponent extends PageHistoryComponent implements OnInit {
 
     caller: IdentifiedCaller;
+    tenants: { [propKey: string]: string }[];
 
     filter_settings: {
         min_date: Date,
@@ -22,7 +24,7 @@ export class PageViewNotesComponent extends PageHistoryComponent implements OnIn
     filter_reason: string;
     filter_caller: string;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute, private Call: CallService) {
         super();
     }
 
@@ -36,6 +38,7 @@ export class PageViewNotesComponent extends PageHistoryComponent implements OnIn
             max_date: null,
             manual: {}
         };
+        this.clearFilter();
 
         // Set up the period options.
         const current_year = new Date().getFullYear();
@@ -52,6 +55,7 @@ export class PageViewNotesComponent extends PageHistoryComponent implements OnIn
         this.route.data
             .subscribe((data) => {
                 this.caller = data.caller;
+                this.tenants = this.Call.getTenants();
             });
     }
 
@@ -60,7 +64,8 @@ export class PageViewNotesComponent extends PageHistoryComponent implements OnIn
      */
     filterTransactions() {
         this.filter.manual = {
-            //debDesc: this.filter_type
+            callReasonType: this.filter_reason,
+            crmContactID: this.filter_caller
         };
     }
 
@@ -98,7 +103,8 @@ export class PageViewNotesComponent extends PageHistoryComponent implements OnIn
      *
      */
     clearFilter() {
-        this.filter_type = null;
+        this.filter_reason = null;
+        this.filter_caller = null;
         this.filterTransactions();
     }
 

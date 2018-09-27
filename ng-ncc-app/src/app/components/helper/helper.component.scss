@@ -19,6 +19,34 @@ $helper-text-z-index: 30px !default;
     position: relative;
 }
 
+@mixin helper-text($width: $helper-text-min-width, $padding: $helper-text-padding) {
+    background: $helper-text-bg-colour;
+    border-radius: $helper-text-radius;
+    color: $helper-text-colour;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: -($helper-text-tip-size * 2);
+    transform: translate(-50%, -100%);
+    min-width: $width;
+    user-select: none;
+    padding: $padding;
+    z-index: $helper-text-z-index;
+
+    &:after {
+        content: "";
+        width: 0;
+        height: 0;
+        border: $helper-text-tip-size solid transparent;
+        border-top-color: $helper-text-bg-colour;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 100%);
+    }
+}
+
 .icon {
     background: $helper-icon-bg-colour;
     border-radius: 999px;
@@ -37,27 +65,5 @@ $helper-text-z-index: 30px !default;
 }
 
 .text {
-    background: $helper-text-bg-colour;
-    border-radius: $helper-text-radius;
-    color: $helper-text-colour;
-    display: none;
-    position: absolute;
-    left: 50%;
-    top: -($helper-text-tip-size * 2);
-    transform: translate(-50%, -100%);
-    min-width: $helper-text-min-width;
-    padding: $helper-text-padding;
-    z-index: $helper-text-z-index;
-
-    &:after {
-        content: "";
-        width: 0;
-        height: 0;
-        border: $helper-text-tip-size solid transparent;
-        border-top-color: $helper-text-bg-colour;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, 100%);
-    }
+    @include helper-text();
 }

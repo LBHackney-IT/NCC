@@ -1,4 +1,5 @@
 @import "../../../assets/scss/vars.scss";
+@import "../helper/helper.component.scss";
 @import "~govuk-frontend/all";
 
 $call-type-automatic-bg-colour: $govuk-border-colour !default;
@@ -7,17 +8,14 @@ $call-type-automatic-text-colour: $govuk-text-colour !default;
 $call-type-manual-bg-colour: $govuk-text-colour !default;
 $call-type-manual-text-colour: govuk-colour("white") !default;
 
+$call-type-helper-text-padding: .5em !default;
+$call-type-helper-text-width: 140px !default;
+
 ////////////////////
 
-.notes-table {
-    table-layout: fixed;
-}
-
-.notes-table__type {
-    text-align: center;
-}
-
 .call-type {
+    position: relative;
+
     &:before {
         border-radius: 100px;
         display: inline-block;
@@ -25,6 +23,16 @@ $call-type-manual-text-colour: govuk-colour("white") !default;
         padding: .2rem;
         text-align: center;
         text-transform: uppercase;
+    }
+    &:hover {
+        .text {
+            display: block;
+        }
+    }
+
+    .text {
+        @include helper-text($call-type-helper-text-width, $call-type-helper-text-padding);
+        text-align: center;
     }
 }
 
