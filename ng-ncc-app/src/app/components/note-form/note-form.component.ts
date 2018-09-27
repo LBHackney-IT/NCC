@@ -35,7 +35,7 @@ export class NoteFormComponent implements OnInit {
      * Returns TRUE if the component should be made visible.
      */
     shouldShow(): boolean {
-        return this.Call.hasCaller() && this.Call.hasCallNature();
+        return this.Call.isCallerIdentified() && this.Call.hasCallNature();
     }
 
     /**

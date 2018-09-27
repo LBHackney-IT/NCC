@@ -1,12 +1,12 @@
 <div class="note-form__container" [ngStyle]="containerStyle" *ngIf="shouldShow()">
 
     <!-- Toggle button for displaying the form. -->
-    <button class="note-form__container__toggle" type="button" name="button" (click)="toggle()">
+    <button class="note-form__container__toggle govuk-body govuk-!-margin-bottom-0" type="button" name="button" (click)="toggle()">
         Add a note
     </button>
 
     <div *ngIf="expanded">
-        <form class="note-form__container__form" #commentForm="ngForm" (ngSubmit)="saveNote()">
+        <form class="note-form__container__form govuk-body" #commentForm="ngForm" (ngSubmit)="saveNote()">
 
             <!-- Caller details. -->
             <app-value-list class="govuk-body-s" emphasise="value">
@@ -28,11 +28,12 @@
                     [(ngModel)]="comment" [disabled]="saving" rows="4" aria-describedby="more-detail-hint"></textarea>
             </div>
 
-            <div class="govuk-form-group">
+            <div class="govuk-form-group govuk-!-margin-bottom-2">
                 <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="2" [disabled]="!canSaveNote()">
                     Save
                 </button>
-                <a class="link-button govuk-!-margin-bottom-0" tabindex="3" routerLink="/notes">View old notes</a>
+                <a class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="3" routerLink="/notes">View notes</a>
+                <button type="button" class="link-button govuk-!-margin-bottom-0" tabindex="4" (click)="toggle()">Cancel</button>
             </div>
 
         </form>

@@ -1,4 +1,5 @@
 @import '../../../assets/scss/vars';
+@import "~govuk-frontend/all";
 
 $note-form-width: 30% !default;
 $note-form-max-width: 500px !default;
@@ -10,7 +11,8 @@ $note-form-text-colour: $dark-grey !default;
 $note-form-padding: 1rem !default;
 $note-form-field-height: 15rem !default;
 
-$note-form-toggle-bg-colour: rgba($white, .75) !default;
+$note-form-toggle-bg-colour: rgba($white, .85) !default;
+$note-form-toggle-border: 2px solid $govuk-text-colour !default;
 $note-form-toggle-text-colour: $dark-grey !default;
 $note-form-toggle-padding: 1rem !default;
 
@@ -21,14 +23,17 @@ $note-form-toggle-padding: 1rem !default;
     position: absolute;
     right: 0;
     top: $note-form-top;
-    width: $note-form-width;
+    // width: $note-form-width;
     z-index: $note-form-z-index;
     text-align: right;
 }
 
+// The "Add note" button.
 .note-form__container__toggle {
     background: $note-form-toggle-bg-colour;
+    border: $note-form-toggle-border;
     color: $note-form-toggle-text-colour;
+    cursor: pointer;
     display: inline-block;
     padding: $note-form-toggle-padding;
 }
@@ -40,6 +45,7 @@ $note-form-toggle-padding: 1rem !default;
     border-right: none;
     padding: $note-form-padding;
     text-align: left;
+    width: 100%;
 }
 
 .note-form__field {

@@ -36,6 +36,10 @@ export class CallService {
         return (undefined !== this.caller && null !== this.caller);
     }
 
+    isCallerIdentified(): boolean {
+        return this.hasCaller() && !this.caller.isAnonymous();
+    }
+
     /**
      * Returns TRUE if a caller has been defined.
      */
