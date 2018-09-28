@@ -1,18 +1,14 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <form action="">
+        <h1 class="govuk-heading-l">Log call</h1>
 
-            <h1 class="govuk-heading-l">Log call</h1>
+        <app-call-nature (changed)="selectedCallNature($event)"></app-call-nature>
 
-            <app-call-nature (changed)="selectedCallNature($event)"></app-call-nature>
-
-            <!-- Next button. -->
-            <button class="govuk-button" [disabled]="!canProceed()" (click)="proceed()">
-                Continue
-            </button>
-
-        </form>
+        <!-- Next button. -->
+        <button class="govuk-button" [disabled]="!canProceed()" (click)="proceed()">
+            Continue
+        </button>
 
     </div>
 </div>
