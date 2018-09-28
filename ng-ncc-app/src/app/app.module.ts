@@ -17,6 +17,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
+import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
@@ -81,6 +82,7 @@ import { ValueListValueComponent } from './components/value-list/value-list-valu
         PageContactDetailsComponent,
         PageHomeComponent,
         PageIdentifyComponent,
+        PageLogAdditionalComponent,
         PageLogCallComponent,
         PagePaymentComponent,
         PagePaymentMakeComponent,
