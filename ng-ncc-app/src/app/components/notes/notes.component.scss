@@ -8,6 +8,9 @@ $call-type-automatic-text-colour: $govuk-text-colour !default;
 $call-type-manual-bg-colour: $govuk-text-colour !default;
 $call-type-manual-text-colour: govuk-colour("white") !default;
 
+$call-type-diary-bg-colour: govuk-colour("light-green") !default;
+$call-type-diary-text-colour: govuk-colour("white") !default;
+
 $call-type-helper-text-padding: .5rem !default;
 $call-type-helper-text-width: 140px !default;
 
@@ -46,5 +49,13 @@ $call-type-helper-text-width: 140px !default;
         background: $call-type-manual-bg-colour;
         color: $call-type-manual-text-colour;
         content: "M";
+    }
+}
+
+.call-type--diary {
+    &:before {
+        background: $call-type-diary-bg-colour;
+        color: $call-type-diary-text-colour;
+        content: "D";
     }
 }
