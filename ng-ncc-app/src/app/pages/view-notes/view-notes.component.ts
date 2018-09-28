@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { PageHistoryComponent } from '../history/history.component';
+import { PageHistory } from '../abstract/history';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
 
@@ -10,7 +10,7 @@ import { CallService } from '../../services/call.service';
     templateUrl: './view-notes.component.html',
     styleUrls: ['./view-notes.component.scss']
 })
-export class PageViewNotesComponent extends PageHistoryComponent implements OnInit {
+export class PageViewNotesComponent extends PageHistory implements OnInit {
 
     caller: IdentifiedCaller;
     tenants: { [propKey: string]: string }[];

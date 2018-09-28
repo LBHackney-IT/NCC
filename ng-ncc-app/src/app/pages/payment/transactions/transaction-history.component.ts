@@ -3,14 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
-import { PageHistoryComponent } from '../../history/history.component';
+import { PageHistory } from '../../abstract/history';
 
 @Component({
     selector: 'app-transaction-history',
     templateUrl: './transaction-history.component.html',
     styleUrls: ['./transaction-history.component.scss']
 })
-export class PageTransactionHistoryComponent extends PageHistoryComponent implements OnInit {
+export class PageTransactionHistoryComponent extends PageHistory implements OnInit {
 
     account_details: AccountDetails;
 
