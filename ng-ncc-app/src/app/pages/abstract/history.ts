@@ -1,4 +1,4 @@
-export class PageHistoryComponent {
+export class PageHistory {
 
     PERIOD_SIX_MONTHS = 'six-months';
     PERIOD_TWELVE_MONTHS = 'twelve-months';

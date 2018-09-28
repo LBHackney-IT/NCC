@@ -1,3 +1,14 @@
-<p>
-  log-additional works!
-</p>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">Log additional requests</h1>
+
+        <app-call-nature (changed)="selectedCallNature($event)"></app-call-nature>
+
+        <!-- Next button. -->
+        <button class="govuk-button" [disabled]="!canProceed()" (click)="proceed()">
+            Continue
+        </button>
+
+    </div>
+</div>
