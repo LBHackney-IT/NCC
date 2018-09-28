@@ -116,7 +116,7 @@ export const AppRoutes: Routes = [
         }
     },
     {
-        // View Notes page.
+        // Log Additional Request page.
         path: 'log-additional',
         component: PageLogAdditionalComponent,
         resolve: {
