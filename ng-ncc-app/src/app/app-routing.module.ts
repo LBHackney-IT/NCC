@@ -112,7 +112,8 @@ export const AppRoutes: Routes = [
         path: 'notes',
         component: PageViewNotesComponent,
         resolve: {
-            caller: IdentifiedCallerResolver
+            caller: CallerResolver
+            // caller: IdentifiedCallerResolver
         }
     },
     {
