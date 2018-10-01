@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+    production: false,
+    anonymousUserID: "9078B253-15C3-E811-A96B-002248072FE8"
 };
 
 /*

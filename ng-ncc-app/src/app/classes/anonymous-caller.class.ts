@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 import { Caller } from '../interfaces/caller.interface';
 import { ContactAddress } from '../classes/contact-address.class';
 
@@ -10,8 +12,8 @@ export class AnonymousCaller implements Caller {
         return true;
     }
 
-    getContactID(): string | null {
-        return null;
+    getContactID(): string {
+        return environment.anonymousUserID;
     }
 
     getName(): string {
