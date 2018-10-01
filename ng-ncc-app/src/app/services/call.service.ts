@@ -73,9 +73,9 @@ export class CallService {
         console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
 
         // Create a call to record notes against.
-        // TODO an anonymous caller user is to be created.
-        if (caller instanceof IdentifiedCaller) {
-            this.NCCAPI.createCall(caller.getContactID())
+        const contact_id = caller.getContactID();
+        if (contact_id) {
+            this.NCCAPI.createCall(contact_id)
                 .subscribe((data: CRMServiceRequest) => {
                     this.call_id = data.id;
                     this.ticket_number = data.ticketNumber;
