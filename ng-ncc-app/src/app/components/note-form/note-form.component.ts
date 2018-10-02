@@ -41,7 +41,14 @@ export class NoteFormComponent implements OnInit {
         // - the caller is NOT anonymous.
         // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
         // However, it was mentioned that anonymous callers should only have "automatic" notes.
-        return (this.Call.hasCaller() && !this.isCallerAnonymous()) && this.Call.hasCallNature();
+        const outcome: boolean = (this.Call.hasCaller() && !this.isCallerAnonymous()) && this.Call.hasCallNature();
+
+        // Make sure the form is closed if we shouldn't show it.
+        if (!outcome) {
+            this.expanded = false;
+        }
+
+        return outcome;
     }
 
     /**
