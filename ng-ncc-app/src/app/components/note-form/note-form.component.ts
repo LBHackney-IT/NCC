@@ -37,7 +37,20 @@ export class NoteFormComponent implements OnInit {
      * Returns TRUE if the component should be made visible.
      */
     shouldShow(): boolean {
-        return this.Call.isCallerIdentified() && this.Call.hasCallNature();
+        // The component should be visible if:
+        // - we have a call type and reason selected;
+        // - we have a caller selected;
+        // - the caller is NOT anonymous.
+        // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
+        // However, it was mentioned that anonymous callers should only have "automatic" notes.
+        const outcome: boolean = this.Call.isCallerIdentified() && this.Call.hasCallNature();
+
+        // Make sure the form is closed if we shouldn't show it.
+        if (!outcome) {
+            this.expanded = false;
+        }
+
+        return outcome;
     }
 
     /**
