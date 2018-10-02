@@ -1,4 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
 
@@ -16,7 +17,7 @@ export class NoteFormComponent implements OnInit {
     saving: boolean;        // set to TRUE when saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
 
-    constructor(private inj: Injector, private Call: CallService) {
+    constructor(private inj: Injector, private router: Router, private Call: CallService) {
         // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
         // https://stackoverflow.com/a/40026333/4073160
         const parentComponent = this.inj.get(ContentAreaComponent);
@@ -49,7 +50,7 @@ export class NoteFormComponent implements OnInit {
      * Returns TRUE if the caller is anonymous.
      */
     isCallerAnonymous(): boolean {
-        return this.Call.getCaller().isAnonymous();
+        return !this.Call.isCallerIdentified();
     }
 
     /**
@@ -80,6 +81,13 @@ export class NoteFormComponent implements OnInit {
      */
     canSaveNote(): boolean {
         return !this.saving && !!(this.comment) && !!(this.getCallID());
+    }
+
+    /**
+     * Navigate to the view notes page.
+     */
+    viewNotes() {
+        this.router.navigateByUrl('/notes');
     }
 
     /**

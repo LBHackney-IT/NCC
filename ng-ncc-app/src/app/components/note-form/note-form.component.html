@@ -29,11 +29,22 @@
             </div>
 
             <div class="govuk-form-group govuk-!-margin-bottom-2">
+
+                <!-- Save button. -->
                 <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="2" [disabled]="!canSaveNote()">
                     Save
                 </button>
-                <a class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="3" routerLink="/notes">View notes</a>
-                <button type="button" class="link-button govuk-!-margin-bottom-0" tabindex="4" (click)="toggle()">Cancel</button>
+
+                <!-- View notes button. -->
+                <button type="button" class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="3" (click)="viewNotes()">
+                    View notes
+                </button>
+
+                <!-- Close button. -->
+                <button type="button" class="link-button govuk-!-margin-bottom-0" tabindex="4" (click)="toggle()">
+                    Close
+                </button>
+
             </div>
 
         </form>
