@@ -7,4 +7,8 @@
         <option [ngValue]="null">- select</option>
         <option *ngFor="let option of _options" [ngValue]="option">{{ option.displayName }}</option>
     </select>
+
+    <app-helper class="govuk-!-margin-left-3" title="">
+        New items may be added to this dropdown via GOV.UK Notify.
+    </app-helper>
 </div>

@@ -110,11 +110,15 @@ export class NotesComponent implements OnInit, OnChanges {
     }
 
     /**
-     *
+     * Returns the name of a tenant matching the specified CRM contact ID.
      */
     getTenantName(crm_contact_id: string): string {
-        const tenant = this.tenants.filter((row) => row.contact_id === crm_contact_id);
-        return tenant.length ? tenant.shift().full_name : 'n/a';
+        if (this.tenants) {
+            const tenant = this.tenants.filter((row) => row.contact_id === crm_contact_id);
+            return tenant.length ? tenant.shift().full_name : 'n/a';
+        }
+
+        return 'anonymous';
     }
 
 }

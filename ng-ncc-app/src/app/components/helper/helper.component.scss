@@ -6,7 +6,7 @@ $helper-icon-text-colour: govuk-colour("white") !default;
 $helper-icon-fount-stack: $govuk-font-family;
 $helper-icon-padding: .25rem !default;
 $helper-icon-width: 2rem !default;
-$helper-icon-height: 1.5rem !default;
+$helper-icon-height: 2rem !default;
 
 $helper-text-bg-colour: $govuk-text-colour !default;
 $helper-text-colour: govuk-colour("white") !default;
@@ -61,6 +61,7 @@ $helper-text-z-index: 30 !default;
     text-align: center;
     min-height: $helper-icon-height;
     min-width: $helper-icon-width;
+    line-height: ($helper-icon-height - $helper-icon-padding * 2);
     padding: $helper-icon-padding;
     vertical-align: middle;
 }

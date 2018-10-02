@@ -21,7 +21,9 @@ $call-type-helper-text-width: 140px !default;
 
     &:before {
         @include helper-icon;
+        line-height: $helper-icon-height;
         min-width: $helper-icon-height;
+        padding: 0;
         text-transform: uppercase;
     }
     &:hover {

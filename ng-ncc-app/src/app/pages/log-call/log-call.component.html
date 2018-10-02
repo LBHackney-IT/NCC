@@ -1,59 +1,14 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <form action="">
+        <h1 class="govuk-heading-l">Log call</h1>
 
-            <h1 class="govuk-heading-l">Log call</h1>
+        <app-call-nature (changed)="selectedCallNature($event)"></app-call-nature>
 
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-half">
-
-                    <!-- The type of call. -->
-                    <div class="govuk-form-group">
-                        <label class="govuk-fieldset__legend govuk-fieldset__legend--s" for="call_type">
-                            Select call type
-                        </label>
-                        <select class="govuk-select" id="call_type" name="call_type"
-                            [(ngModel)]="selected.call_type" [disabled]="!this.call_types" (change)="resetCallReason()">
-                            <option [ngValue]="null" selected>- select a call type</option>
-                            <option *ngFor="let item of call_types" [ngValue]="item">{{ item.label }}</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="govuk-grid-column-one-half">
-
-                    <!-- The reason for the call. -->
-                    <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" *ngIf="isCallTypeSelected()">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                            <h2 class="govuk-fieldset__heading">
-                                Select reason for call
-                            </h2>
-                        </legend>
-
-                        <div class="govuk-radios" data-module="radios">
-                            <div class="govuk-radios__item" *ngFor="let reason of getCallTypeReasons()">
-                                <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio" [(ngModel)]="selected.call_reason" [value]="reason">
-                                <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
-                            </div>
-                            <!-- "Other" option. -->
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="call-reason-other" name="call_reason" type="radio" [(ngModel)]="selected.call_reason" [value]="'other'">
-                                <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                </div>
-            </div>
-
-            <!-- Next button. -->
-            <button class="govuk-button" [disabled]="!canProceed()" (click)="proceed()">
-                Continue
-            </button>
-
-        </form>
+        <!-- Next button. -->
+        <button class="govuk-button" [disabled]="!canProceed()" (click)="proceed()">
+            Continue
+        </button>
 
     </div>
 </div>

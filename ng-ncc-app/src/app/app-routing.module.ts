@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PageLogCallComponent } from './pages/log-call/log-call.component';
+import { PageCommsComponent } from './pages/comms/comms.component';
+import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
-import { PageCommsComponent } from './pages/comms/comms.component';
-import { PagePlaygroundComponent } from './pages/playground/playground.component';
+import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
+import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
-import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
-import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
+import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
+import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
+import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
@@ -111,7 +112,16 @@ export const AppRoutes: Routes = [
         path: 'notes',
         component: PageViewNotesComponent,
         resolve: {
-            caller: IdentifiedCallerResolver
+            caller: CallerResolver
+            // caller: IdentifiedCallerResolver
+        }
+    },
+    {
+        // Log Additional Request page.
+        path: 'log-additional',
+        component: PageLogAdditionalComponent,
+        resolve: {
+            caller: CallerResolver
         }
     },
     {
