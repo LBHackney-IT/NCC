@@ -111,7 +111,7 @@ export class NCCAPIService {
      * TODO create a generic API service class with this method.
      */
     _buildQueryString(parameters: { [propKey: string]: any }): string {
-        const output = Object.keys(parameters).map((key) => undefined !== parameters[key] ?
+        const output = Object.keys(parameters).map((key) => -1 === [undefined, null].indexOf(parameters[key]) ?
             `${key}=${encodeURIComponent(parameters[key].toString())}` : null);
         return output.join('&');
     }
