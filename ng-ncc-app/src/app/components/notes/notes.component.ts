@@ -104,7 +104,8 @@ export class NotesComponent implements OnInit, OnChanges {
     getNoteTypeBadgeClass(note: NCCNote) {
         return {
             'call-type--automatic': 'Automatic' === note.notesType,
-            'call-type--manual': 'Manual' === note.notesType
+            'call-type--manual': 'Manual' === note.notesType,
+            'call-type--diary': 'Action Diary' === note.notesType // TBC
         };
     }
 

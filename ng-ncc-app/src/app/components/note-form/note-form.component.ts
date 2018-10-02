@@ -1,4 +1,5 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
 
@@ -8,6 +9,7 @@ import { CallService } from '../../services/call.service';
     styleUrls: ['./note-form.component.scss']
 })
 export class NoteFormComponent implements OnInit {
+    @ViewChild('commentField') commentField: ElementRef;
 
     TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
     containerStyle: Object; // used to control the inline style of .note-form__container.
@@ -16,7 +18,7 @@ export class NoteFormComponent implements OnInit {
     saving: boolean;        // set to TRUE when saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
 
-    constructor(private inj: Injector, private Call: CallService) {
+    constructor(private inj: Injector, private router: Router, private Call: CallService) {
         // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
         // https://stackoverflow.com/a/40026333/4073160
         const parentComponent = this.inj.get(ContentAreaComponent);
@@ -41,7 +43,7 @@ export class NoteFormComponent implements OnInit {
         // - the caller is NOT anonymous.
         // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
         // However, it was mentioned that anonymous callers should only have "automatic" notes.
-        const outcome: boolean = (this.Call.hasCaller() && !this.isCallerAnonymous()) && this.Call.hasCallNature();
+        const outcome: boolean = this.Call.isCallerIdentified() && this.Call.hasCallNature();
 
         // Make sure the form is closed if we shouldn't show it.
         if (!outcome) {
@@ -56,13 +58,19 @@ export class NoteFormComponent implements OnInit {
      */
     toggle() {
         this.expanded = !this.expanded;
+
+        // Set the focus on the comment field if the form is visible.
+        // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
+        if (this.expanded) {
+            setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
+        }
     }
 
     /**
      * Returns TRUE if the caller is anonymous.
      */
     isCallerAnonymous(): boolean {
-        return this.Call.getCaller().isAnonymous();
+        return !this.Call.isCallerIdentified();
     }
 
     /**
@@ -93,6 +101,13 @@ export class NoteFormComponent implements OnInit {
      */
     canSaveNote(): boolean {
         return !this.saving && !!(this.comment) && !!(this.getCallID());
+    }
+
+    /**
+     * Navigate to the view notes page.
+     */
+    viewNotes() {
+        this.router.navigateByUrl('/notes');
     }
 
     /**
