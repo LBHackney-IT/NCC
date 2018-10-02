@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
@@ -9,6 +9,7 @@ import { CallService } from '../../services/call.service';
     styleUrls: ['./note-form.component.scss']
 })
 export class NoteFormComponent implements OnInit {
+    @ViewChild('commentField') commentField: ElementRef;
 
     TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
     containerStyle: Object; // used to control the inline style of .note-form__container.
@@ -44,6 +45,12 @@ export class NoteFormComponent implements OnInit {
      */
     toggle() {
         this.expanded = !this.expanded;
+
+        // Set the focus on the comment field if the form is visible.
+        // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
+        if (this.expanded) {
+            setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
+        }
     }
 
     /**

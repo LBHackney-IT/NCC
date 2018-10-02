@@ -24,7 +24,7 @@
             <!-- Comment field. -->
             <div class="govuk-form-group">
                 <label class="govuk-label" for="more-detail">Comments</label>
-                <textarea class="govuk-textarea note-form__field" id="more-detail" required name="comment" tabindex="1"
+                <textarea #commentField class="govuk-textarea note-form__field" id="more-detail" name="comment" required tabindex="1"
                     [(ngModel)]="comment" [disabled]="saving" rows="4" aria-describedby="more-detail-hint"></textarea>
             </div>
 
