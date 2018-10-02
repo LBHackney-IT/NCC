@@ -22,4 +22,12 @@ export class NavigationComponent {
         this.Call.reset();
         this.router.navigateByUrl('/log-call');
     }
+
+    /**
+     * Returns TRUE if a call is currently active.
+     * This is used to show/hide the end call link.
+     */
+    isCallActive(): boolean {
+        return null !== this.Call.getCallID();
+    }
 }

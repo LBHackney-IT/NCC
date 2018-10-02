@@ -18,7 +18,7 @@
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a routerLink="/notes">View notes</a>
         </li>
-        <li class="navigation__item">
+        <li class="navigation__item" *ngIf="isCallActive()">
             <a (click)="endCall()">End call</a>
         </li>
     </ul>
