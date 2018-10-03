@@ -52,6 +52,7 @@ import { RouteLoadingComponent } from './components/route-loading/route-loading.
 import { TabComponent } from './components/tabs/tab/tab.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
+import { UHNotesComponent } from './components/uh-notes/uh-notes.component';
 import { ValueListComponent } from './components/value-list/value-list.component';
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
@@ -97,6 +98,7 @@ import { CallNatureComponent } from './components/call-nature/call-nature.compon
         TabComponent,
         TabsComponent,
         TransactionsComponent,
+        UHNotesComponent,
         ValueListComponent,
         ValueListLabelComponent,
         ValueListValueComponent,

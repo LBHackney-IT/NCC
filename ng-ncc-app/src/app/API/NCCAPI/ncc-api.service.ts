@@ -6,6 +6,7 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 import { CRMServiceRequest } from '../../interfaces/crmservicerequest.interface';
 import { JSONResponse } from '../../interfaces/json-response.interface';
 import { NCCNote } from '../../interfaces/ncc-note.interface';
+import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 
 @Injectable({
@@ -67,6 +68,9 @@ export class NCCAPIService {
             .post(`${this._url}CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
     }
 
+    /**
+     * Fetches a list of notes associated with the specified CRM contact ID.
+     */
     getNotes(crm_contact_id: string) {
         const parameters = {
             contactid: crm_contact_id,
@@ -76,6 +80,34 @@ export class NCCAPIService {
             .get(`${this._url}GetAllNCCInteractions?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: JSONResponse) => {
                 return data ? data.results as NCCNote[] : [];
+            }));
+    }
+
+    /**
+     * Fetches a list of Action Diary entries and notes associated with the specified CRM contact ID.
+     * This also requires a housing reference, which isn't currently provided.
+     */
+    getDiaryAndNotes(crm_contact_id: string) {
+        const parameters = {
+            contactId: crm_contact_id,
+            tenancyAgreementId: '0100810/01' // TODO
+        };
+
+        return this.http
+            .get(`https://sandboxapi.hackney.gov.uk/lbhnccapi/api/UH/GetAllActionDiaryAndNotes?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: JSONResponse) => {
+                // The notes from this endpoint are returned as groups of notes: one for Action Diary entries, another for manual notes.
+                const notes: NCCUHNote[] = [];
+                data.forEach((rows) => {
+                    if (null !== rows) {
+                        notes = notes.concat(rows);
+                    }
+                });
+
+                // Sort the notes by their creation date (descending order).
+                notes.sort((a, b) => (a.createdOn > b.createdOn) ? -1 : (a.createdOn < b.createdOn) ? 1 : 0);
+
+                return notes;
             }));
     }
 
