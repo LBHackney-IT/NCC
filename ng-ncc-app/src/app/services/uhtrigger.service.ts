@@ -40,6 +40,21 @@ export class UHTriggerService {
     }
 
     /**
+     * Called when a comms template has been sent to the caller.
+     */
+    madePayment(payment_reference: string, amount: number) {
+        console.log(payment_reference, amount);
+
+        // Only continue if there is an identified caller.
+        if (!this.Call.isCallerIdentified()) {
+            return;
+        }
+
+        // TODO we would get the information from a successful payment.
+        this.Call.recordActionDiaryNote(`Rent payment taken: £${amount} ref: ${payment_reference}`);
+    }
+
+    /**
      * Handle a comms template sent as a result of the Rent call type.
      */
     _sentRentComms(call_reason: string, template: string, method: string, data: { [propKey: string]: string }) {

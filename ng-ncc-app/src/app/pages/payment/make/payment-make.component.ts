@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AccountDetails } from '../../../interfaces/account-details.interface';
+import { UHTriggerService } from '../../../services/uhtrigger.service';
 
 @Component({
     selector: 'app-payment-make',
@@ -18,7 +19,7 @@ export class PagePaymentMakeComponent implements OnInit {
     selected_template: string;
     selected_method: string;
 
-    constructor(private route: ActivatedRoute) { }
+    constructor(private UHTrigger: UHTriggerService, private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.selected_template = null;
@@ -42,6 +43,7 @@ export class PagePaymentMakeComponent implements OnInit {
      */
     answeredYes() {
         console.log('Confirmed payment.');
+        this.UHTrigger.madePayment('abcdef', 100);
     }
 
     /**
