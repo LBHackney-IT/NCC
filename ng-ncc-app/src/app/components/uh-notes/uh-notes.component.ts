@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
+import { NOTES } from '../../constants/notes.constant';
 
 // TODO along with transactions, extend a component providing basic functionality.
 
@@ -17,7 +17,6 @@ export class UHNotesComponent implements OnInit, OnChanges {
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
 
-    _pipe: DatePipe;
     _loading: boolean;
     _rows: NCCUHNote[];
     _filtered: NCCUHNote[];
@@ -29,7 +28,6 @@ export class UHNotesComponent implements OnInit, OnChanges {
      */
     ngOnInit() {
         this._loading = false;
-        this._pipe = new DatePipe();
     }
 
     /**
@@ -104,18 +102,11 @@ export class UHNotesComponent implements OnInit, OnChanges {
     /**
      *
      */
-    getNoteCreatedOnDate(note: NCCUHNote) {
-        return 'Action Diary' === note.notesType ? note.createdOn : this._pipe.transform(new Date(note.createdOn), 'dd/MM/yyyy hh:mm');
-    }
-
-    /**
-     *
-     */
     getNoteTypeBadgeClass(note: NCCUHNote) {
         return {
-            'call-type--automatic': 'Automatic' === note.notesType,
-            'call-type--manual': 'Manual' === note.notesType,
-            'call-type--diary': 'Action Diary' === note.notesType
+            'call-type--automatic': NOTES.TYPE_AUTOMATIC === note.notesType,
+            'call-type--manual': NOTES.TYPE_MANUAL === note.notesType,
+            'call-type--diary': NOTES.TYPE_ACTION_DIARY === note.notesType
         };
     }
 

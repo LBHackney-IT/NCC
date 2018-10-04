@@ -3,11 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { Observable, forkJoin, of, from } from 'rxjs';
 
+import * as moment from 'moment';
+
 import { CRMServiceRequest } from '../../interfaces/crmservicerequest.interface';
 import { JSONResponse } from '../../interfaces/json-response.interface';
 import { NCCNote } from '../../interfaces/ncc-note.interface';
 import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
+import { NOTES } from '../../constants/notes.constant';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +29,7 @@ export class NCCAPIService {
     NOTE_TYPE_AUTOMATIC = 1;
     NOTE_TYPE_MANUAL = 2;
 
-    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/CRM/';
+    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/';
 
     constructor(private http: HttpClient) { }
 
@@ -42,7 +45,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post(`${this._url}CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
+            .post(`${this._url}CRM/CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
             .pipe(
                 map((data: JSONResponse) => {
                     return data.response.servicerequest as CRMServiceRequest;
@@ -65,7 +68,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post(`${this._url}CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}CRM/CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
@@ -77,7 +80,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .get(`${this._url}GetAllNCCInteractions?${this._buildQueryString(parameters)}`, {})
+            .get(`${this._url}CRM/GetAllNCCInteractions?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: JSONResponse) => {
                 return data ? data.results as NCCNote[] : [];
             }));
@@ -89,23 +92,48 @@ export class NCCAPIService {
      */
     getDiaryAndNotes(crm_contact_id: string) {
         const parameters = {
-            contactId: crm_contact_id,
-            tenancyAgreementId: '0100810/01' // TODO
+            contactId: crm_contact_id
         };
 
         return this.http
-            .get(`https://sandboxapi.hackney.gov.uk/lbhnccapi/api/UH/GetAllActionDiaryAndNotes?${this._buildQueryString(parameters)}`, {})
+            .get(`${this._url}UH/GetAllActionDiaryAndNotes?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: JSONResponse) => {
-                // The notes from this endpoint are returned as groups of notes: one for Action Diary entries, another for manual notes.
-                const notes: NCCUHNote[] = [];
-                data.forEach((rows) => {
-                    if (null !== rows) {
-                        notes = notes.concat(rows);
+                // data should be an array with a single item, representing all the notes associated with the CRM contact ID.
+                const rows = data[0];
+                if (!rows) {
+                    return [];
+                }
+
+                let notes: NCCUHNote[] = rows.map((row) => {
+                    // Format the created on date ahead of time.
+                    // We're using moment.js fo this, because Angular's DatePipe behaves inconsistently - often giving an error.
+                    let date;
+                    if (NOTES.TYPE_ACTION_DIARY === row.notesType) {
+                        // Action Diary entries have a preformatted date, but moment.js can't interpret it without help.
+                        date = moment(row.createdOn, 'DD/MM/YYYY hh:mm');
+                    } else {
+                        date = moment(row.createdOn);
+                        row.createdOn = date.format('DD/MM/YYYY hh:mm');
                     }
+
+                    // We also want the date formatted differently for sorting purposes.
+                    row.createdOnSort = date.format('YYYYMMDDhhmm');
+
+                    return row;
                 });
 
                 // Sort the notes by their creation date (descending order).
-                notes.sort((a, b) => (a.createdOn > b.createdOn) ? -1 : (a.createdOn < b.createdOn) ? 1 : 0);
+                notes.sort((a: NCCUHNote, b: NCCUHNote) =>
+                    if (a.createdOnSort > b.createdOnSort) {
+                    return -1;
+                }
+                    if (a.createdOnSort < b.createdOnSort) {
+                        return 1;
+                    }
+                    return 0;
+                );
+
+                console.log(notes);
 
                 return notes;
             }));
@@ -121,7 +149,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post(`${this._url}SetDefaultComms?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}CRM/SetDefaultComms?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
@@ -133,7 +161,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .get(`${this._url}GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
+            .get(`${this._url}CRM/GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: JSONResponse) => {
                 return JSON.parse(data.response.communicationdetails) as ContactDetailsUpdate;
             }));

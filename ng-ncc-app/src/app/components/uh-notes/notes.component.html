@@ -18,7 +18,7 @@
         </thead>
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row" *ngFor="let row of _filtered">
-                <td class="govuk-table__cell" scope="row">{{ getNoteCreatedOnDate(row) }}</td>
+                <td class="govuk-table__cell" scope="row">{{ row.createdOn }}</td>
                 <td class="govuk-table__cell">
                     <span class="call-type" [ngClass]="getNoteTypeBadgeClass(row)">
                         <span class="text govuk-body-s">{{ row.notesType }}</span>
