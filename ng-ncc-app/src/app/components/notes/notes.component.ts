@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { NCCNote } from '../../interfaces/ncc-note.interface';
+import { NOTES } from '../../constants/notes.constant';
 
 // TODO along with transactions, extend a component providing basic functionality.
 
@@ -33,13 +34,11 @@ export class NotesComponent implements OnInit, OnChanges {
      *
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        console.log('notes component', changes);
         if (changes.crmContactID) {
             // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
             this._loadNotes();
         } else {
             // The filter or date settings have changed, so update what is displayed.
-            console.log('filter has changed.');
             this._filterNotes();
         }
     }
@@ -103,9 +102,9 @@ export class NotesComponent implements OnInit, OnChanges {
      */
     getNoteTypeBadgeClass(note: NCCNote) {
         return {
-            'call-type--automatic': 'Automatic' === note.notesType,
-            'call-type--manual': 'Manual' === note.notesType,
-            'call-type--diary': 'Action Diary' === note.notesType // TBC
+            'call-type--automatic': NOTES.TYPE_AUTOMATIC === note.notesType,
+            'call-type--manual': NOTES.TYPE_MANUAL === note.notesType,
+            'call-type--diary': NOTES.TYPE_ACTION_DIARY === note.notesType
         };
     }
 

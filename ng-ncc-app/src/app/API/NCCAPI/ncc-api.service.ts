@@ -133,8 +133,6 @@ export class NCCAPIService {
                     return 0;
                 );
 
-                console.log(notes);
-
                 return notes;
             }));
     }
