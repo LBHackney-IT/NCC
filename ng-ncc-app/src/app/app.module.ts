@@ -44,7 +44,6 @@ import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.com
 import { HelperComponent } from './components/helper/helper.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { NoteFormComponent } from './components/note-form/note-form.component';
-import { NotesComponent } from './components/notes/notes.component';
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { OrComponent } from './components/or/or.component';
 import { PanelComponent } from './components/panel/panel.component';
@@ -77,7 +76,6 @@ import { CallNatureComponent } from './components/call-nature/call-nature.compon
         HelperComponent,
         NoResultsComponent,
         NoteFormComponent,
-        NotesComponent,
         NotifyTemplatePreviewComponent,
         OrComponent,
         PageCommsComponent,
