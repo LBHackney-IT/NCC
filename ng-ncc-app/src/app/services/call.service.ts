@@ -109,6 +109,13 @@ export class CallService {
     }
 
     /**
+     * Returns the account details associated with the caller.
+     */
+    getAccount(): AccountDetails {
+        return this.account;
+    }
+
+    /**
      * Sets the nature (type and reason) of the call.
      */
     setCallNature(selection: LogCallSelection) {

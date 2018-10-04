@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { UHTriggerService } from '../../../services/uhtrigger.service';
+import { CallService } from '../../../services/call.service';
 
 @Component({
     selector: 'app-payment-make',
@@ -19,15 +20,16 @@ export class PagePaymentMakeComponent implements OnInit {
     selected_template: string;
     selected_method: string;
 
-    constructor(private UHTrigger: UHTriggerService, private route: ActivatedRoute) { }
+    constructor(private Call: CallService, private UHTrigger: UHTriggerService, private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.selected_template = null;
         this.selected_method = null;
+        this.account_details = this.Call.getAccount();
 
         this.route.data
             .subscribe((data) => {
-                this.account_details = data.accountDetails;
+                //this.account_details = data.accountDetails;
             });
     }
 
@@ -42,8 +44,8 @@ export class PagePaymentMakeComponent implements OnInit {
      * A callback for if the user confirms making a payment.
      */
     answeredYes() {
-        console.log('Confirmed payment.');
-        this.UHTrigger.madePayment('abcdef', 100);
+        console.log(`Confirmed payment of £${this.form.to_pay}.`);
+        this.UHTrigger.madePayment(this.Call.getTenancyReference(), this.form.to_pay);
     }
 
     /**
