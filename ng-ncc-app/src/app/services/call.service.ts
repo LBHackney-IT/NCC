@@ -149,4 +149,13 @@ export class CallService {
         );
     }
 
+    /**
+     * Record an Action Diary entry against the tenancy associated with the call (if present).
+     */
+    recordActionDiaryNote(note_content: string) {
+        if (this.tenancy) {
+            return this.NCCAPI.createActionDiaryEntry(this.tenancy.id, note_content);
+        }
+    }
+
 }
