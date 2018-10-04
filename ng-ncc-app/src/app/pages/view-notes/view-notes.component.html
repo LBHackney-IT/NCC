@@ -64,11 +64,16 @@
         </form>
 
         <!-- A list of notes. -->
-        <app-notes [crmContactID]="caller.getContactID()"
+        <app-uh-notes [crmContactID]="caller.getContactID()"
             [tenants]="tenants"
             [filter]="filter.manual"
             [minDate]="filter.min_date"
-            [maxDate]="filter.max_date"></app-notes>
+            [maxDate]="filter.max_date"></app-uh-notes>
+        <!-- <app-notes [crmContactID]="caller.getContactID()"
+            [tenants]="tenants"
+            [filter]="filter.manual"
+            [minDate]="filter.min_date"
+            [maxDate]="filter.max_date"></app-notes> -->
 
     </div>
 </div>

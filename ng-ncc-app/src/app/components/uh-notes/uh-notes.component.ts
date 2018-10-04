@@ -1,15 +1,16 @@
 import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { NCCNote } from '../../interfaces/ncc-note.interface';
+import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
+import { NOTES } from '../../constants/notes.constant';
 
 // TODO along with transactions, extend a component providing basic functionality.
 
 @Component({
-    selector: 'app-notes',
+    selector: 'app-uh-notes',
     templateUrl: './notes.component.html',
     styleUrls: ['./notes.component.scss']
 })
-export class NotesComponent implements OnInit, OnChanges {
+export class UHNotesComponent implements OnInit, OnChanges {
     @Input() crmContactID: string;
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
@@ -17,8 +18,8 @@ export class NotesComponent implements OnInit, OnChanges {
     @Input() maxDate?: Date;
 
     _loading: boolean;
-    _rows: NCCNote[];
-    _filtered: NCCNote[];
+    _rows: NCCUHNote[];
+    _filtered: NCCUHNote[];
 
     constructor(private NCCAPI: NCCAPIService) { }
 
@@ -49,7 +50,7 @@ export class NotesComponent implements OnInit, OnChanges {
      */
     _loadNotes() {
         this._loading = true;
-        const subscription = this.NCCAPI.getNotes(this.crmContactID)
+        const subscription = this.NCCAPI.getDiaryAndNotes(this.crmContactID)
             .subscribe(
                 (rows) => {
                     this._rows = rows;
@@ -101,11 +102,11 @@ export class NotesComponent implements OnInit, OnChanges {
     /**
      *
      */
-    getNoteTypeBadgeClass(note: NCCNote) {
+    getNoteTypeBadgeClass(note: NCCUHNote) {
         return {
-            'call-type--automatic': 'Automatic' === note.notesType,
-            'call-type--manual': 'Manual' === note.notesType,
-            'call-type--diary': 'Action Diary' === note.notesType // TBC
+            'call-type--automatic': NOTES.TYPE_AUTOMATIC === note.notesType,
+            'call-type--manual': NOTES.TYPE_MANUAL === note.notesType,
+            'call-type--diary': NOTES.TYPE_ACTION_DIARY === note.notesType
         };
     }
 
