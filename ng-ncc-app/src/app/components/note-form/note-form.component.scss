@@ -21,6 +21,7 @@ $note-form-toggle-padding: 1rem !default;
 
 .note-form__container {
     max-width: $note-form-max-width;
+    width: 100%;
     position: absolute;
     right: 0;
     top: $note-form-top;
