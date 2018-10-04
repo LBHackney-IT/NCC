@@ -154,7 +154,9 @@ export class CallService {
      */
     recordActionDiaryNote(note_content: string) {
         if (this.tenancy) {
-            return this.NCCAPI.createActionDiaryEntry(this.tenancy.id, note_content);
+            // TODO We don't yet have the tenancy reference ID!
+            return this.NCCAPI.createActionDiaryEntry('0100810/01', note_content).subscribe();
+            // return this.NCCAPI.createActionDiaryEntry(this.tenancy.id, note_content).subscribe();
         }
     }
 

@@ -46,25 +46,47 @@ export class UHTriggerService {
         call_reason = call_reason.toLowerCase();
         template = template.toLowerCase();
 
-        switch (template) {
-            case 'dpa: rent statement (with balance)':
-                // A statement was sent.
-                if ('statement' === call_reason) {
-                    console.log('A Statement was sent: record Action Diary note.');
+        switch (call_reason) {
+            // switch (template) {
+            case 'statement':
+                switch (template) {
+                    case 'dpa: rent statement (with balance)':
+                        console.log('A Statement was sent: record Action Diary note.');
+                        this.Call.recordActionDiaryNote('Copy of statement sent');
+                        break;
                 }
                 break;
 
-            case 'rent refund form':
-                // A link to a refund form was sent.
-                if ('refund' === call_reason) {
-                    console.log('A Refund form was sent: record Action Diary note.');
+            case 'refund':
+                switch (template) {
+                    case 'rent refund form':
+                        // A link to a refund form was sent.
+                        console.log('A Refund form link was sent: record Action Diary note.');
+                        this.Call.recordActionDiaryNote('Refund link sent');
+                        break;
                 }
                 break;
 
             case 'payment methods':
                 // A link to payment methods was sent.
-                if ('payment methods' === call_reason) {
-                    console.log('A Payment methods link was sent: record Action Diary note.');
+                switch (template) {
+                    case 'payment methods':
+                        console.log('A Payment methods link was sent: record Action Diary note.');
+                        this.Call.recordActionDiaryNote('Copy of statement sent');
+                        break;
+
+                    case 'direct debit':
+                        console.log('A direct debit form link was sent: record Action Diary note.');
+                        this.Call.recordActionDiaryNote('Direct debit form link sent');
+                        break;
+
+                    case 'standing order (major works)':
+                    case 'standing order (rent)':
+                    case 'standing order (service charge)':
+                        console.log('Standing order information was sent: record Action Diary note.');
+                        this.Call.recordActionDiaryNote('Standing order information sent');
+                        break;
+
                 }
                 break;
         }
