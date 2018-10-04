@@ -104,7 +104,7 @@ export class NCCAPIService {
                     return [];
                 }
 
-                let notes: NCCUHNote[] = rows.map((row) => {
+                const notes: NCCUHNote[] = rows.map((row) => {
                     // Format the created on date ahead of time.
                     // We're using moment.js fo this, because Angular's DatePipe behaves inconsistently - often giving an error.
                     let date;
@@ -123,15 +123,15 @@ export class NCCAPIService {
                 });
 
                 // Sort the notes by their creation date (descending order).
-                notes.sort((a: NCCUHNote, b: NCCUHNote) =>
+                notes.sort((a: NCCUHNote, b: NCCUHNote) => {
                     if (a.createdOnSort > b.createdOnSort) {
-                    return -1;
-                }
+                        return -1;
+                    }
                     if (a.createdOnSort < b.createdOnSort) {
                         return 1;
                     }
                     return 0;
-                );
+                });
 
                 return notes;
             }));

@@ -5,4 +5,5 @@ export interface NCCUHNote {
     callReasonType: string;
     createdBy: string;
     createdOn: string; // timestamp
+    createdOnSort?: string; // timestamp
 }
