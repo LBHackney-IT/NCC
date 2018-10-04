@@ -80,6 +80,16 @@ export class NoteFormComponent implements OnInit {
         return this.Call.getCaller().getName();
     }
 
+    /**
+     *
+     */
+    getTenancyReference(): string {
+        return this.Call.getTenancyReference();
+    }
+
+    /**
+     *
+     */
     getCallID(): string {
         return this.Call.getCallID();
     }
