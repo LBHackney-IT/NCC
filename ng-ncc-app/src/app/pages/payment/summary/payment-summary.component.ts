@@ -25,7 +25,8 @@ export class PagePaymentSummaryComponent implements OnInit {
     payment_history: { [propKey: string]: any }[];
     summary_cutoff: Date;
 
-    constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) { }
+    constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.selected_template = null;

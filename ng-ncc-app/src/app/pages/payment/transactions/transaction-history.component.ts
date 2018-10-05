@@ -42,7 +42,7 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
 
         this.route.data
             .subscribe((data) => {
-                //this.account_details = data.accountDetails;
+                // this.account_details = data.accountDetails;
                 this.filterByDate();
                 this.filterTransactions();
             });
