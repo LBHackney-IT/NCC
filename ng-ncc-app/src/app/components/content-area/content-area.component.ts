@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
 
 @Component({
     selector: 'app-content-area',
@@ -12,6 +12,8 @@ import { Component, EventEmitter, HostListener, Output } from '@angular/core';
  * https://embed.plnkr.co/6TslzP/
  */
 export class ContentAreaComponent {
+    SCROLL_INCREMENT = 50;
+    SCROLL_INTERVAL = 16;
 
     // Define a custom event for when the content area is scrolled.
     // The event will provide a number relating to the vertical scroll position of the content area.
@@ -24,4 +26,19 @@ export class ContentAreaComponent {
         this.eventScrolled.emit(event.srcElement.scrollTop);
     }
 
+    constructor(private elRef: ElementRef) { }
+
+    /**
+     * A method that scrolls this component's element to the top.
+     */
+    scrollToTop() {
+        const scrollToTop = window.setInterval(() => {
+            const pos = this.elRef.nativeElement.scrollTop;
+            if (pos > 0) {
+                this.elRef.nativeElement.scrollTo(0, pos - this.SCROLL_INCREMENT); // how far to scroll on each step
+            } else {
+                window.clearInterval(scrollToTop);
+            }
+        }, this.SCROLL_INTERVAL);
+    }
 }

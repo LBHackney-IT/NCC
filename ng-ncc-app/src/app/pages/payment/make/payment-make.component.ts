@@ -29,7 +29,7 @@ export class PagePaymentMakeComponent implements OnInit {
 
         this.route.data
             .subscribe((data) => {
-                //this.account_details = data.accountDetails;
+                // this.account_details = data.accountDetails;
             });
     }
 
