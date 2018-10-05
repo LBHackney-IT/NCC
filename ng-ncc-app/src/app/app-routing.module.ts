@@ -46,7 +46,6 @@ export const AppRoutes: Routes = [
                 path: 'summary',
                 component: PagePaymentSummaryComponent,
                 resolve: {
-                    accountDetails: AccountDetailsResolver,
                     caller: IdentifiedCallerResolver
                 }
             },
@@ -54,7 +53,6 @@ export const AppRoutes: Routes = [
                 path: 'transactions',
                 component: PageTransactionHistoryComponent,
                 resolve: {
-                    accountDetails: AccountDetailsResolver,
                     caller: IdentifiedCallerResolver
                 }
             },
@@ -62,7 +60,6 @@ export const AppRoutes: Routes = [
                 path: 'make',
                 component: PagePaymentMakeComponent,
                 resolve: {
-                    accountDetails: AccountDetailsResolver,
                     caller: IdentifiedCallerResolver
                 }
             },
@@ -70,7 +67,6 @@ export const AppRoutes: Routes = [
                 path: 'communications',
                 component: PageRentCommunicationsComponent,
                 resolve: {
-                    accountDetails: AccountDetailsResolver,
                     caller: IdentifiedCallerResolver
                 }
             },
@@ -135,17 +131,6 @@ export const AppRoutes: Routes = [
         path: '**',
         redirectTo: '/log-call'
     }
-    // {
-    //     // Empty path (which should go to the home page).
-    //     path: '',
-    //     redirectTo: '/home',
-    //     pathMatch: 'full'
-    // },
-    // {
-    //     // Catch-all (which should go to the home page).
-    //     path: '**',
-    //     redirectTo: '/home'
-    // }
 ];
 
 @NgModule({

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { AccountDetails } from '../../interfaces/account-details.interface';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
+import { CallService } from '../../services/call.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { ContactDetails } from '../../classes/contact-details.class';
@@ -14,6 +15,7 @@ import { TemplatePreviewSettings } from '../../interfaces/template-preview-setti
 import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
+import { UHTriggerService } from '../../services/uhtrigger.service';
 
 @Component({
     selector: 'app-communications-page',
@@ -31,7 +33,8 @@ export class CommunicationsPageComponent implements OnInit {
     preview: TemplatePreviewSettings;
     modal: { [propKey: string]: boolean };
 
-    constructor(private NotifyAPI: NotifyAPIService, private route: ActivatedRoute) { }
+    constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private UHTrigger: UHTriggerService,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this._sending = false;
@@ -87,7 +90,6 @@ export class CommunicationsPageComponent implements OnInit {
      */
     onSelectCommsMethod(details: CommsSelection) {
         this.selected_details = details;
-        console.log(details);
         this.updatePreview();
     }
 
@@ -128,6 +130,7 @@ export class CommunicationsPageComponent implements OnInit {
         }
 
         const template_id: string = this.selected_option.templates[this.selected_details.method].id;
+        const template_name: string = this.selected_option.name;
         const method: string = this.selected_details.method;
         const address: string = this.selected_details.getDetail();
         const parameters = this.preview.parameters;
@@ -176,6 +179,8 @@ export class CommunicationsPageComponent implements OnInit {
                     }
                     */
                     this.modal.confirmed = true;
+
+                    this.UHTrigger.sentComms(template_name, method, parameters);
                 },
                 (error) => {
                     this.modal.error = true;

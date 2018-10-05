@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Caller } from '../interfaces/caller.interface';
 import { LogCallSelection } from '../interfaces/log-call-selection.interface';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
+import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { CRMServiceRequest } from '../interfaces/crmservicerequest.interface';
 import { AddressSearchGroupedResult } from '../interfaces/address-search-grouped-result.interface';
+import { AccountDetails } from '../interfaces/account-details.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +18,11 @@ export class CallService {
     // - a caller (who could be identified or anonymous);
     // - a call type;
     // - a call reason;
+    // - a list of tenants at the property;
+    // - account details associated with the caller;
     // - notes relating to the call.
 
+    private account: AccountDetails;
     private caller: Caller;
     private call_nature: LogCallSelection;
     private call_id: string;
@@ -25,7 +30,7 @@ export class CallService {
     private tenants: { [propKey: string]: string }[];
     private ticket_number: string;
 
-    constructor(private NCCAPI: NCCAPIService) {
+    constructor(private ManageATenancyAPI: ManageATenancyAPIService, private NCCAPI: NCCAPIService) {
         this.reset();
     }
 
@@ -76,16 +81,38 @@ export class CallService {
         console.log('Caller has been set to:', this.caller.getName());
         console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
 
-        // Create a call to record notes against.
         const contact_id = caller.getContactID();
         if (contact_id) {
+            // Create a call to record notes against.
             this.NCCAPI.createCall(contact_id)
                 .subscribe((data: CRMServiceRequest) => {
                     this.call_id = data.id;
                     this.ticket_number = data.ticketNumber;
                     console.log(`Call ${data.id} was created.`);
                 });
+
+            // We can also obtain the associated tenancy reference via the Manage A Tenancy API.
+            // The tenancy reference is required to record Action Diary entries.
+            this.ManageATenancyAPI.getAccountDetails(contact_id)
+                .subscribe((data: AccountDetails) => {
+                    this.account = data;
+                    console.log(`Account details were obtained.`);
+                });
         }
+    }
+
+    /**
+     * Returns the tenancy reference number associated with the caller.
+     */
+    getTenancyReference(): string {
+        return this.account ? this.account.tagReferenceNumber : null;
+    }
+
+    /**
+     * Returns the account details associated with the caller.
+     */
+    getAccount(): AccountDetails {
+        return this.account;
     }
 
     /**
@@ -147,6 +174,16 @@ export class CallService {
             note_content,
             automatic
         );
+    }
+
+    /**
+     * Record an Action Diary entry against the tenancy associated with the call (if present).
+     */
+    recordActionDiaryNote(note_content: string) {
+        const tenancy_reference = this.getTenancyReference();
+        if (tenancy_reference) {
+            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note_content).subscribe();
+        }
     }
 
 }

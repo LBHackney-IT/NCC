@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { PageHistory } from '../../abstract/history';
+import { CallService } from '../../../services/call.service';
 
 @Component({
     selector: 'app-transaction-history',
@@ -22,7 +23,7 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
 
     filter_type: string;
 
-    constructor(private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) {
+    constructor(private Call: CallService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) {
         super();
     }
 
@@ -37,9 +38,11 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
             manual: {}
         };
 
+        this.account_details = this.Call.getAccount();
+
         this.route.data
             .subscribe((data) => {
-                this.account_details = data.accountDetails;
+                // this.account_details = data.accountDetails;
                 this.filterByDate();
                 this.filterTransactions();
             });

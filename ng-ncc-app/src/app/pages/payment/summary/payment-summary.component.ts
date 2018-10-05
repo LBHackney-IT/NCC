@@ -8,6 +8,7 @@ import { CommsSelection } from '../../../classes/comms-selection.class';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { CONTACT } from '../../../constants/contact.constant';
+import { CallService } from '../../../services/call.service';
 
 @Component({
     selector: 'app-payment-summary',
@@ -24,18 +25,19 @@ export class PagePaymentSummaryComponent implements OnInit {
     payment_history: { [propKey: string]: any }[];
     summary_cutoff: Date;
 
-    constructor(private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) { }
+    constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.selected_template = null;
         this.selected_method = null;
         this.summary_cutoff = new Date();
         this.summary_cutoff.setMonth(this.summary_cutoff.getMonth() - 6);
+        this.account_details = this.Call.getAccount();
 
         this.route.data
             .subscribe((data) => {
                 this.comms_options = data.templates;
-                this.account_details = data.accountDetails;
             });
     }
 

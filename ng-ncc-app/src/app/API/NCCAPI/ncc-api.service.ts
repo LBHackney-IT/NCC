@@ -72,6 +72,19 @@ export class NCCAPIService {
     }
 
     /**
+     * Create an Action Diary entry against a call.
+     */
+    createActionDiaryEntry(tenancyReference: string, content: string) {
+        const parameters = {
+            tenancyAgreementId: tenancyReference,
+            notes: content
+        };
+
+        return this.http
+            .post(`${this._url}UH/CreateArearsActionDiary?${this._buildQueryString(parameters)}`, {});
+    }
+
+    /**
      * Fetches a list of notes associated with the specified CRM contact ID.
      */
     getNotes(crm_contact_id: string) {
