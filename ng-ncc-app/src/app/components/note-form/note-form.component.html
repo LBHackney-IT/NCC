@@ -3,10 +3,15 @@
     <!-- Toggle button for displaying the form. -->
     <button class="note-form__container__toggle govuk-body govuk-!-margin-bottom-0" type="button" name="button" (click)="toggle()">
         Add a note
+        <span class="note-form__container__toggle__icon">{{ expanded ? '&minus;' : '&#43;' }}</span>
     </button>
 
     <div *ngIf="expanded">
         <form class="note-form__container__form govuk-body" #commentForm="ngForm" (ngSubmit)="saveNote()">
+
+            <a class="note-form__container__close" (click)="toggle()">&times;</a>
+
+            <h2 class="govuk-header-m">Add a note</h2>
 
             <!-- Caller details. -->
             <app-value-list class="govuk-body-s">
@@ -14,7 +19,7 @@
                 <app-value-list-label *ngIf="!isCallerAnonymous()">Tenancy reference</app-value-list-label>
                 <app-value-list-value *ngIf="!isCallerAnonymous()">{{ getTenancyReference() }}</app-value-list-value>
 
-                <app-value-list-label>Caller</app-value-list-label>
+                <app-value-list-label>Tenant</app-value-list-label>
                 <app-value-list-value>
                     <span *ngIf="!isCallerAnonymous()">{{ getCallerName() }}</span>
                     <em *ngIf="isCallerAnonymous()">anonymous</em>
@@ -27,6 +32,11 @@
                 <label class="govuk-label" for="more-detail">Comments</label>
                 <textarea #commentField class="govuk-textarea note-form__field" id="more-detail" name="comment" required tabindex="1"
                     [(ngModel)]="comment" [disabled]="saving" rows="4" aria-describedby="more-detail-hint"></textarea>
+
+                <!-- View notes link. -->
+                <a class="govuk-body-s note-form__view-notes" routerLink="/notes">
+                    View notes
+                </a>
             </div>
 
             <div class="govuk-form-group govuk-!-margin-bottom-2">
@@ -37,13 +47,8 @@
                     Save
                 </button>
 
-                <!-- View notes button. -->
-                <button type="button" class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="3" (click)="viewNotes()">
-                    View notes
-                </button>
-
                 <!-- Close button. -->
-                <button type="button" class="link-button govuk-!-margin-bottom-0" tabindex="4" (click)="toggle()">
+                <button type="button" class="govuk-button govuk-!-margin-bottom-0" tabindex="4" (click)="toggle()">
                     Cancel
                 </button>
 
