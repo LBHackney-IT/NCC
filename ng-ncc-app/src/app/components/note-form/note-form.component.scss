@@ -12,6 +12,9 @@ $note-form-text-colour: $dark-grey !default;
 $note-form-padding: 1rem !default;
 $note-form-field-height: 15rem !default;
 
+$note-form-close-size: 2rem !default;
+$note-form-close-offset: 1rem !default;
+
 $note-form-toggle-bg-colour: rgba($white, .85) !default;
 $note-form-toggle-border: 2px solid $govuk-text-colour !default;
 $note-form-toggle-text-colour: $dark-grey !default;
@@ -46,10 +49,28 @@ $note-form-toggle-padding: 1rem !default;
     color: $note-form-text-colour;
     margin-top: -$note-form-border-width;
     padding: $note-form-padding;
+    position: relative;
     text-align: left;
     width: 100%;
 }
 
+.note-form__container__close {
+    cursor: pointer;
+    font-size: $note-form-close-size;
+    display: block;
+    text-align: center;
+    position: absolute;
+    right: $note-form-close-offset;
+    top: $note-form-close-offset;
+    width: $note-form-close-size;
+    height: $note-form-close-size;
+    line-height: $note-form-close-size;
+}
+
 .note-form__field {
     max-height: $note-form-field-height;
+}
+
+.note-form__view-notes {
+    text-decoration: underline;
 }
