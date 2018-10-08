@@ -66,4 +66,12 @@ export class PageViewNotesComponent extends PageHistory implements OnInit {
         this.filterTransactions();
     }
 
+    /**
+     *
+     */
+    trackByTenants(index: number, item: { [propKey: string]: string }): string {
+        // TODO: item should use an interface.
+        return item.contact_id;
+    }
+
 }

@@ -37,6 +37,10 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
         }
     }
 
+    trackByMethod(index: number, item: string): number {
+        return index;
+    }
+
     /**
      *
      */

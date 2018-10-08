@@ -77,7 +77,7 @@
                 <app-value-list>
                     <app-value-list-label>Telephone</app-value-list-label>
                     <app-value-list-value>
-                        <div *ngFor="let number of caller.getTelephoneNumbers()">
+                        <div *ngFor="let number of caller.getTelephoneNumbers(); trackBy: trackByIndex">
                             {{ number }}
                         </div>
                         <em *ngIf="caller.hasNoTelephoneNumbers()">none</em>
@@ -85,7 +85,7 @@
 
                     <app-value-list-label>Email</app-value-list-label>
                     <app-value-list-value>
-                        <div *ngFor="let email of caller.getEmailAddresses()">
+                        <div *ngFor="let email of caller.getEmailAddresses(); trackBy: trackByIndex">
                             {{ email }}
                         </div>
                         <em *ngIf="caller.hasNoEmailAddresses()">none</em>

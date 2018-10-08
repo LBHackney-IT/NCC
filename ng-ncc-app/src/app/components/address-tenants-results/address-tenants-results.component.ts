@@ -41,6 +41,10 @@ export class AddressTenantsResultsComponent implements OnChanges {
         }
     }
 
+    trackByMethod(index: number, item: IdentifiedCaller): number {
+        return index;
+    }
+
     /**
      * Returns TRUE if there are no search results.
      */

@@ -12,7 +12,7 @@
     <div class="govuk-grid-column-one-half">
 
         <!-- Fields for any customisable text. -->
-        <div class="govuk-form-group" *ngFor="let label of getPlaceholders()">
+        <div class="govuk-form-group" *ngFor="let label of getPlaceholders(); trackBy: trackByMethod">
             <label class="govuk-label" for="preview-ph-{{ label }}">
                 {{ label }}
             </label>

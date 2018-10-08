@@ -18,7 +18,7 @@
                 <div class="govuk-form-group">
 
                     <!-- Existing email addresses (from the caller). -->
-                    <div class="govuk-radios__item" *ngFor="let email_address of existingEmailAddresses(); let i = index">
+                    <div class="govuk-radios__item" *ngFor="let email_address of existingEmailAddresses(); let i = index; trackBy: trackByMethod">
                         <input class="govuk-radios__input" id="method-email-{{ i }}" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="email_address">
                         <label class="govuk-label govuk-radios__label" for="method-email-{{ i }}">
                             {{ email_address }}
@@ -51,7 +51,7 @@
                 <div class="govuk-form-group">
 
                     <!-- Existing telephone numbers (from the caller). -->
-                    <div class="govuk-radios__item" *ngFor="let telephone_number of existingTelephoneNumbers(); let i = index">
+                    <div class="govuk-radios__item" *ngFor="let telephone_number of existingTelephoneNumbers(); let i = index; trackBy: trackByMethod">
                         <input class="govuk-radios__input" id="method-mobile-{{ i }}" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="telephone_number">
                         <label class="govuk-label govuk-radios__label" for="method-mobile-{{ i }}">
                             {{ telephone_number }}
