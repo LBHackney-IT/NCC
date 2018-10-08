@@ -96,6 +96,10 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
         }
     }
 
+    trackByMethod(index: number, item: string): number {
+        return index;
+    }
+
     /**
      * Called if we're beginning to add a new detail for the selected method.
      */
@@ -122,6 +126,7 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
      *
      */
     checkDetails() {
+        console.log(this.selection);
         this.selected.emit(this.selection);
     }
 }

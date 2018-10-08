@@ -49,6 +49,10 @@ export class TransactionsComponent implements OnInit, OnChanges {
         }
     }
 
+    trackByMethod(index: number, item: Transaction): string {
+        return item.transactionID;
+    }
+
     /**
      *
      */

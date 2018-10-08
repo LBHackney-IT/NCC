@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let row of getLastCalls()">
+            <tr class="govuk-table__row" *ngFor="let row of getLastCalls(); trackBy: trackByIndex">
                 <th class="govuk-table__header" scope="row">
                     <a href="">{{ row.reference }}</a>
                 </th>

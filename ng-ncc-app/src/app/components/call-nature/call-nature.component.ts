@@ -47,6 +47,14 @@ export class CallNatureComponent implements OnInit {
             );
     }
 
+    trackByCallType(index: number, item: string): number {
+        return index;
+    }
+
+    trackByCallReason(index: number, item: LogCallReason): string {
+        return item.id;
+    }
+
     /**
      *
      */

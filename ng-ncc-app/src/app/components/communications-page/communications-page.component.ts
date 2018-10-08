@@ -20,7 +20,6 @@ import { UHTriggerService } from '../../services/uhtrigger.service';
 @Component({
     selector: 'app-communications-page',
     templateUrl: './communications-page.component.html',
-    styleUrls: ['./communications-page.component.scss']
 })
 export class CommunicationsPageComponent implements OnInit {
     CONTACT_METHOD = CONTACT;
@@ -190,6 +189,13 @@ export class CommunicationsPageComponent implements OnInit {
                     this._sending = false;
                 });
         }
+    }
+
+    /**
+     *
+     */
+    trackByIndex(index: number, item: {}): number {
+        return index;
     }
 
 }

@@ -45,6 +45,10 @@ export class UHNotesComponent implements OnInit, OnChanges {
         }
     }
 
+    trackByMethod(index: number, item: NCCUHNote): number {
+        return index;
+    }
+
     /**
      *
      */

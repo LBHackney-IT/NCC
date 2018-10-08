@@ -32,6 +32,10 @@ export class CommsTemplatesComponent implements OnInit {
         );
     }
 
+    trackByMethod(index: number, item: CommsOption): number {
+        return index;
+    }
+
     /**
      * Performs filtering on a list of communications options.
      */

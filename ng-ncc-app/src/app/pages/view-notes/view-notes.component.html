@@ -29,7 +29,7 @@
                                 </label>
                                 <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_caller">
                                     <option [value]="null">All tenants</option>
-                                    <option *ngFor="let row of tenants" [value]="row.contact_id">{{ row.full_name }}</option>
+                                    <option *ngFor="let row of tenants; trackBy: trackByTenants" [value]="row.contact_id">{{ row.full_name }}</option>
                                 </select>
                             </div>
 
@@ -56,7 +56,7 @@
                             Show transactions for:
                         </label>
                         <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="period" (ngModelChange)="filterByDate()">
-                            <option *ngFor="let row of period_options" [value]="row.key">{{ row.label }}</option>
+                            <option *ngFor="let row of period_options; trackBy: trackByMethod" [value]="row.key">{{ row.label }}</option>
                         </select>
                     </div>
                 </div>
