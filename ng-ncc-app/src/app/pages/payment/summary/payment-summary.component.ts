@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { Transaction } from '../../../interfaces/transaction.interface';
@@ -15,7 +17,9 @@ import { CallService } from '../../../services/call.service';
     templateUrl: './payment-summary.component.html',
     styleUrls: ['./payment-summary.component.scss']
 })
-export class PagePaymentSummaryComponent implements OnInit {
+export class PagePaymentSummaryComponent implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
 
     CONTACT_METHOD = CONTACT;
     account_details: AccountDetails;
@@ -36,9 +40,16 @@ export class PagePaymentSummaryComponent implements OnInit {
         this.account_details = this.Call.getAccount();
 
         this.route.data
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe((data) => {
                 this.comms_options = data.templates;
             });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**

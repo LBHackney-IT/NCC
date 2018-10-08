@@ -1,4 +1,7 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { Transaction } from '../../interfaces/transaction.interface';
 
@@ -7,13 +10,15 @@ import { Transaction } from '../../interfaces/transaction.interface';
     templateUrl: './transactions.component.html',
     styleUrls: ['./transactions.component.scss']
 })
-export class TransactionsComponent implements OnInit, OnChanges {
+export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() tenancyRef: string;
     @Input() currentBalance: number;
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
     @Input() isTall?: boolean;
+
+    private _destroyed$ = new Subject();
 
     _loading: boolean;
     _rows: Transaction[];
@@ -49,6 +54,10 @@ export class TransactionsComponent implements OnInit, OnChanges {
         }
     }
 
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
     /**
      *
      */
@@ -56,6 +65,9 @@ export class TransactionsComponent implements OnInit, OnChanges {
         this._loading = true;
         const subscription = this.ManageATenancyAPI
             .getTransactions(this.tenancyRef)
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 (rows) => {
                     let balance = this.currentBalance;
