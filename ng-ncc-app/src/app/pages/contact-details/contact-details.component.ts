@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { ContactDetails } from '../../interfaces/contact-details.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
@@ -17,7 +18,7 @@ export class PageContactDetailsComponent implements OnInit {
     new_telephone: string[];
     new_mobile: string[];
     new_email: string[];
-    saving: boolean;
+    _saving: boolean;
 
     details: {
         original: ContactDetails,
@@ -151,13 +152,8 @@ export class PageContactDetailsComponent implements OnInit {
     /**
      * Attempts to save the entered contact details for the caller.
      */
-    saveDetails(event) {
-        if (event && event.defaultPrevented) {
-            return;
-        }
-
+    saveDetails() {
         const caller = this.Call.getCaller();
-
         const new_details = Object.assign(new ContactDetailsUpdate, this.details.update); // Create a copy.
         new_details.telephone = new_details.telephone.concat(this.new_telephone);
         new_details.mobile = new_details.mobile.concat(this.new_mobile);
@@ -172,7 +168,7 @@ export class PageContactDetailsComponent implements OnInit {
         console.log('Default mobile number is:', new_details.default.mobile);
         console.log('Default email address is:', new_details.default.email);
 
-        this.saving = true;
+        this._saving = true;
 
         this.NCCAPI.saveContactDetails(caller.getContactID(), new_details)
             .subscribe(
@@ -183,7 +179,7 @@ export class PageContactDetailsComponent implements OnInit {
                     this.new_email = [];
                 },
                 (error) => { console.log(error); },
-                () => { this.saving = false; },
+                () => { this._saving = false; },
         );
     }
 

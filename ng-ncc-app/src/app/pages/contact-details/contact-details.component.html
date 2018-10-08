@@ -1,5 +1,9 @@
 <div class="govuk-grid-row">
-    <form class="govuk-grid-column-two-thirds" (submit)="saveDetails($event)">
+    <form #formContactDetails="ngForm" class="govuk-grid-column-two-thirds" (ngSubmit)="saveDetails()">
+        <!-- #formContactDetails="ngForm" -->
+        <!-- This creates a local template variable called formContactDetails, which is bound to ngForm. -->
+        <!-- We can now use formContactDetails.valid and other methods to check the validation status of the form. -->
+        <!-- Similarly we can use #name="ngModel" on input fields to bind the model of an input field to a local variable. -->
 
         <h1 class="govuk-heading-l">Edit tenant details</h1>
 
@@ -67,9 +71,11 @@
                         <!-- text field... -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
                             <label class="govuk-label hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
-                            <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}"
-                            [(ngModel)]="new_telephone[i]" (focus)="details.update.default.telephone = row;" (blur)="details.update.default.telephone = row;"
-                            [disabled]="saving">
+                            <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}" required
+                            [(ngModel)]="new_telephone[i]"
+                            (focus)="details.update.default.telephone = row;"
+                            (blur)="details.update.default.telephone = row;"
+                            [disabled]="_saving">
                         </div>
 
                     </div>
@@ -111,9 +117,10 @@
                         <!-- text field... -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
                             <label class="govuk-label hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
-                            <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}"
-                                [(ngModel)]="new_mobile[i]" (focus)="details.update.default.mobile = row;" (blur)="details.update.default.mobile = row;"
-                                [disabled]="saving">
+                            <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}" required
+                                [(ngModel)]="new_mobile[i]" (focus)="details.update.default.mobile = row;"
+                                (blur)="details.update.default.mobile = row;"
+                                [disabled]="_saving">
                         </div>
 
                     </div>
@@ -130,7 +137,8 @@
                         <h2 class="govuk-fieldset__heading add-new__title">
                             Email
                         </h2>
-                        <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughEmailAddresses()" (click)="addEmailAddress()">+ Add new</button>
+                        <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughEmailAddresses()"
+                            (click)="addEmailAddress()">+ Add new</button>
                     </div>
                 </legend>
                 <div class="govuk-radios">
@@ -153,11 +161,13 @@
                         <label class="govuk-label govuk-radios__label radio-text-field" for="new-email-{{ i }}"></label>
 
                         <!-- text field... -->
+                        <!-- This uses Angular's email validator. -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
                             <label class="govuk-label hidden" for="new-email-{{ i }}-value">New email {{ i + 1 }}</label>
-                            <input class="govuk-input" type="text" id="new-email-{{ i }}-value" name="new_email_{{ i }}"
-                                [(ngModel)]="new_email[i]" (focus)="details.update.default.email = row;" (blur)="details.update.default.email = row;"
-                                [disabled]="saving">
+                            <input class="govuk-input" type="email" id="new-email-{{ i }}-value" name="new_email_{{ i }}" email required
+                                [(ngModel)]="new_email[i]" (focus)="details.update.default.email = row;"
+                                (blur)="details.update.default.email = row;"
+                                [disabled]="_saving">
                         </div>
 
                     </div>
@@ -166,7 +176,9 @@
             </fieldset>
         </div>
 
-        <button class="govuk-button" type="submit" name="button" [disabled]="saving">
+        <!-- The submit button. -->
+        <!-- It should be disabled if we have any empty fields or an invalid email address. -->
+        <button class="govuk-button" type="submit" name="button" [disabled]="!formContactDetails.valid || _saving">
             Save
         </button>
 
