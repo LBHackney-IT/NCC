@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from './auth/auth.guard';
+
+import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
@@ -13,6 +16,7 @@ import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-sum
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
+import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
@@ -28,108 +32,118 @@ export const AppRoutes: Routes = [
     //     component: PageHomeComponent
     // },
     {
-        // Playground page (for testing things).
+        path: 'try-again',
+        component: PageTryAgainComponent
+    },
+    {
         path: 'playground',
         component: PagePlaygroundComponent
     },
     {
-        // Log Call page.
-        path: 'log-call',
-        component: PageLogCallComponent
-    },
-    {
-        // Payment page.
-        path: 'payment',
-        component: PagePaymentComponent,
+        path: 'auth/:code',
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
         children: [
             {
-                path: 'summary',
-                component: PagePaymentSummaryComponent,
+                // Log Call page.
+                path: 'log-call',
+                component: PageLogCallComponent
+            },
+            {
+                // Payment page.
+                path: 'payment',
+                component: PagePaymentComponent,
+                children: [
+                    {
+                        path: 'summary',
+                        component: PagePaymentSummaryComponent,
+                        resolve: {
+                            caller: IdentifiedCallerResolver
+                        }
+                    },
+                    {
+                        path: 'transactions',
+                        component: PageTransactionHistoryComponent,
+                        resolve: {
+                            caller: IdentifiedCallerResolver
+                        }
+                    },
+                    {
+                        path: 'make',
+                        component: PagePaymentMakeComponent,
+                        resolve: {
+                            caller: IdentifiedCallerResolver
+                        }
+                    },
+                    {
+                        path: 'communications',
+                        component: PageRentCommunicationsComponent,
+                        resolve: {
+                            caller: IdentifiedCallerResolver
+                        }
+                    },
+                    {
+                        // Catch-all (which should go to the summary child page).
+                        path: '**',
+                        redirectTo: 'summary'
+                    }
+                ]
+            },
+            {
+                // Identify page.
+                path: 'caller-details',
+                component: PageIdentifyComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    call_nature: CallNatureResolver
                 }
             },
             {
-                path: 'transactions',
-                component: PageTransactionHistoryComponent,
+                // [Edit] Contact Details page.
+                path: 'contact-details',
+                component: PageContactDetailsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: IdentifiedCallerResolver,
+                    details: ContactDetailsResolver
                 }
             },
             {
-                path: 'make',
-                component: PagePaymentMakeComponent,
+                // Comms page.
+                path: 'comms',
+                component: PageCommsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: CallerResolver,
+                    call_nature: CallNatureResolver
                 }
             },
             {
-                path: 'communications',
-                component: PageRentCommunicationsComponent,
+                // View Notes page.
+                path: 'notes',
+                component: PageViewNotesComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: CallerResolver
+                    // caller: IdentifiedCallerResolver
                 }
             },
             {
-                // Catch-all (which should go to the summary child page).
-                path: '**',
-                redirectTo: 'summary'
+                // Log Additional Request page.
+                path: 'log-additional',
+                component: PageLogAdditionalComponent,
+                resolve: {
+                    caller: CallerResolver
+                }
             }
         ]
     },
+    // {
+    //     // Empty path (which should go to the home page).
+    //     path: '',
+    //     redirectTo: '/try-again',
+    //     pathMatch: 'full'
+    // },
     {
-        // Identify page.
-        path: 'caller-details',
-        component: PageIdentifyComponent,
-        resolve: {
-            call_nature: CallNatureResolver
-        }
-    },
-    {
-        // [Edit] Contact Details page.
-        path: 'contact-details',
-        component: PageContactDetailsComponent,
-        resolve: {
-            caller: IdentifiedCallerResolver,
-            details: ContactDetailsResolver
-        }
-    },
-    {
-        // Comms page.
-        path: 'comms',
-        component: PageCommsComponent,
-        resolve: {
-            caller: CallerResolver,
-            call_nature: CallNatureResolver
-        }
-    },
-    {
-        // View Notes page.
-        path: 'notes',
-        component: PageViewNotesComponent,
-        resolve: {
-            caller: CallerResolver
-            // caller: IdentifiedCallerResolver
-        }
-    },
-    {
-        // Log Additional Request page.
-        path: 'log-additional',
-        component: PageLogAdditionalComponent,
-        resolve: {
-            caller: CallerResolver
-        }
-    },
-    {
-        // Empty path (which should go to the home page).
-        path: '',
-        redirectTo: '/log-call',
-        pathMatch: 'full'
-    },
-    {
-        // Catch-all (which should go to the home page).
+        // Catch-all route.
         path: '**',
-        redirectTo: '/log-call'
+        redirectTo: '/try-again'
     }
 ];
 

@@ -11,6 +11,7 @@ import { NCCNote } from '../../interfaces/ncc-note.interface';
 import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
+import { IAuthentication } from '../../interfaces/authentication';
 
 @Injectable({
     providedIn: 'root'
@@ -175,6 +176,21 @@ export class NCCAPIService {
             .get(`${this._url}CRM/GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: JSONResponse) => {
                 return JSON.parse(data.response.communicationdetails) as ContactDetailsUpdate;
+            }));
+    }
+
+    /**
+     *
+     */
+    authenticate(code: string): Observable<IAuthentication> {
+        const parameters = {
+            userdata: code
+        };
+
+        return this.http
+            .get(`${this._url}SSO/Authenticate?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((json: JSONResponse) => {
+                return <IAuthentication>json.response.UserData;
             }));
     }
 
