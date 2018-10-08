@@ -42,8 +42,18 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
         }
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: string): number {
+        return index;
     }
 
     /**

@@ -45,7 +45,7 @@
 
     <app-panel boxStyle="true" class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios govuk-radios--inline">
-            <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index">
+            <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index; trackBy: trackByMethod">
                 <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
                 <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-{{i}}">
                     <!--
@@ -70,7 +70,7 @@
                         <app-value-list class="govuk-body-s">
                             <app-value-list-label>Telephone</app-value-list-label>
                             <app-value-list-value>
-                                <div *ngFor="let number of row.getTelephoneNumbers()">
+                                <div *ngFor="let number of row.getTelephoneNumbers(); trackBy: trackByMethod">
                                     {{ number }}
                                 </div>
                                 <em *ngIf="row.hasNoTelephoneNumbers()">none</em>
@@ -78,7 +78,7 @@
 
                             <app-value-list-label>Email</app-value-list-label>
                             <app-value-list-value>
-                                <div *ngFor="let email of row.getEmailAddresses()">
+                                <div *ngFor="let email of row.getEmailAddresses(); trackBy: trackByMethod">
                                     {{ email }}
                                 </div>
                                 <em *ngIf="row.hasNoEmailAddresses()">none</em>

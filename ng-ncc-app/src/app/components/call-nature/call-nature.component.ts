@@ -53,8 +53,25 @@ export class CallNatureComponent implements OnInit {
             );
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByCallType(index: number, item: string): number {
+        return index;
+    }
+
+    /**
+     *
+     */
+    trackByCallReason(index: number, item: LogCallReason): string {
+        return item.id;
     }
 
     /**

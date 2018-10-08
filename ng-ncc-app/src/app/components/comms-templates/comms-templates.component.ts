@@ -44,6 +44,10 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
         this._destroyed$.next();
     }
 
+    trackByMethod(index: number, item: CommsOption): number {
+        return index;
+    }
+
     /**
      * Performs filtering on a list of communications options.
      */

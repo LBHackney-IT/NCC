@@ -105,8 +105,18 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
         }
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: string): number {
+        return index;
     }
 
     /**
@@ -135,6 +145,7 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
      *
      */
     checkDetails() {
+        console.log(this.selection);
         this.selected.emit(this.selection);
     }
 }

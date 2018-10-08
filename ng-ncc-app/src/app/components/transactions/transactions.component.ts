@@ -54,8 +54,18 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: Transaction): string {
+        return item.transactionID;
     }
 
     /**

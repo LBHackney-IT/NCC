@@ -50,8 +50,18 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: NCCUHNote): number {
+        return index;
     }
 
     /**
