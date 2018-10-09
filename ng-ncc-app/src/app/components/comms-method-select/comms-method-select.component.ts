@@ -1,4 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
@@ -12,7 +15,7 @@ import { ContactDetailsUpdate } from '../../classes/contact-details-update.class
     templateUrl: './comms-method-select.component.html',
     styleUrls: ['./comms-method-select.component.scss']
 })
-export class CommsMethodSelectComponent implements OnInit, OnChanges {
+export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy {
     // Whether to enable or disable communications methods.
     // (Question marks indicate that the properties are optional.)
     @Input() disableEmail?: boolean;
@@ -22,6 +25,8 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
     // Pass the selected comms method and details through an [Observable] event.
     @Output() selected = new EventEmitter<CommsSelection>();
     @Output() invalidated = new EventEmitter<void>();
+
+    private _destroyed$ = new Subject();
 
     // A reference to the Caller we want to contact.
     caller: Caller;
@@ -36,6 +41,9 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
         this.caller = this.Call.getCaller();
         this.selection = new CommsSelection;
         this.NCCAPI.getContactDetails(this.caller.getContactID())
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 (data: ContactDetailsUpdate) => {
                     if (null === data) {
@@ -52,6 +60,7 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
                 () => {
                     this._setDefaults();
                 });
+
     }
 
     /**
@@ -96,6 +105,16 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges {
         }
     }
 
+    /**
+     *
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
     trackByMethod(index: number, item: string): number {
         return index;
     }

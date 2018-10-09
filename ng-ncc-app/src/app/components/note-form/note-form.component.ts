@@ -1,5 +1,8 @@
-import { Component, Injector, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Injector, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
 
@@ -8,8 +11,10 @@ import { CallService } from '../../services/call.service';
     templateUrl: './note-form.component.html',
     styleUrls: ['./note-form.component.scss']
 })
-export class NoteFormComponent implements OnInit {
+export class NoteFormComponent implements OnInit, OnDestroy {
     @ViewChild('commentField') commentField: ElementRef;
+
+    private _destroyed$ = new Subject();
 
     TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
     containerStyle: Object; // used to control the inline style of .note-form__container.
@@ -24,13 +29,21 @@ export class NoteFormComponent implements OnInit {
         const parentComponent = this.inj.get(ContentAreaComponent);
         if (parentComponent) {
             // Subscribe to the ContentAreaComponent's eventScrolled [Observable] event.
-            parentComponent.eventScrolled.subscribe(value => this._reposition(value));
+            parentComponent.eventScrolled
+                .pipe(
+                    takeUntil(this._destroyed$)
+                )
+                .subscribe(value => this._reposition(value));
         }
     }
 
     ngOnInit() {
         this.expanded = false;
         this._resetComment();
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
@@ -126,7 +139,7 @@ export class NoteFormComponent implements OnInit {
     saveNote() {
         if (this.canSaveNote()) {
             this.saving = true;
-            this.Call.recordNote(this.comment, false)
+            const subscription = this.Call.recordNote(this.comment, false)
                 .subscribe(
                     () => {
                         console.log('Added a note.');
@@ -137,6 +150,7 @@ export class NoteFormComponent implements OnInit {
                     },
                     () => {
                         this.saving = false;
+                        subscription.unsubscribe();
                     }
                 );
         }

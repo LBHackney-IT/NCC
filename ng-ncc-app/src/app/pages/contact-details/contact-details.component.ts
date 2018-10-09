@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ContactDetails } from '../../interfaces/contact-details.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
@@ -12,7 +14,9 @@ import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
     templateUrl: './contact-details.component.html',
     styleUrls: ['./contact-details.component.scss']
 })
-export class PageContactDetailsComponent implements OnInit {
+export class PageContactDetailsComponent implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
 
     MAX_OPTIONS = 0;        // maximum number of each contact method we can have for a caller (set to 0 for infinite).
     new_telephone: string[];
@@ -36,10 +40,18 @@ export class PageContactDetailsComponent implements OnInit {
         this.new_mobile = [];
         this.new_email = [];
 
-        this.route.data.subscribe((data) => {
-            console.log('Contact details:', data.details);
-            this._buildDetails(data.details);
-        });
+        this.route.data
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
+            .subscribe((data) => {
+                console.log('Contact details:', data.details);
+                this._buildDetails(data.details);
+            });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
@@ -170,7 +182,7 @@ export class PageContactDetailsComponent implements OnInit {
 
         this._saving = true;
 
-        this.NCCAPI.saveContactDetails(caller.getContactID(), new_details)
+        const subscription = this.NCCAPI.saveContactDetails(caller.getContactID(), new_details)
             .subscribe(
                 () => {
                     this.details.update = new_details;
@@ -179,8 +191,11 @@ export class PageContactDetailsComponent implements OnInit {
                     this.new_email = [];
                 },
                 (error) => { console.log(error); },
-                () => { this._saving = false; },
-        );
+                () => {
+                    subscription.unsubscribe();
+                    this._saving = false;
+                }
+            );
     }
 
 }

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
 import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
@@ -13,7 +16,9 @@ import { Router } from '@angular/router';
     templateUrl: './identify.component.html',
     styleUrls: ['./identify.component.css']
 })
-export class PageIdentifyComponent implements OnInit {
+export class PageIdentifyComponent implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
 
     _searching: boolean;
     postcode: string;
@@ -24,6 +29,10 @@ export class PageIdentifyComponent implements OnInit {
 
     ngOnInit() {
         this._searching = false;
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
@@ -39,6 +48,9 @@ export class PageIdentifyComponent implements OnInit {
         this._searching = true;
 
         const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 (rows) => {
                     this.results = rows;

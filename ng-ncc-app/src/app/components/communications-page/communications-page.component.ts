@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AccountDetails } from '../../interfaces/account-details.interface';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
@@ -21,7 +22,10 @@ import { UHTriggerService } from '../../services/uhtrigger.service';
     selector: 'app-communications-page',
     templateUrl: './communications-page.component.html',
 })
-export class CommunicationsPageComponent implements OnInit {
+export class CommunicationsPageComponent implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
+
     CONTACT_METHOD = CONTACT;
     _sending: boolean;
     account_details: AccountDetails;
@@ -46,10 +50,17 @@ export class CommunicationsPageComponent implements OnInit {
         };
 
         this.route.data
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe((data) => {
                 this.account_details = data.accountDetails;
                 this.caller = data.caller;
             });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**

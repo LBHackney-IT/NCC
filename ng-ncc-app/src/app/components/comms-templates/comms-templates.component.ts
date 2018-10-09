@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { CommsOption } from '../../classes/comms-option.class';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
@@ -8,11 +10,13 @@ import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
     templateUrl: './comms-templates.component.html',
     styleUrls: ['./comms-templates.component.scss']
 })
-export class CommsTemplatesComponent implements OnInit {
+export class CommsTemplatesComponent implements OnInit, OnDestroy {
     @Input() title?: string;
     @Input() includeSensitive?: boolean;
 
     @Output() selected = new EventEmitter<CommsOption>();
+
+    private _destroyed$ = new Subject();
 
     _loading = false;
     _options: CommsOption[];
@@ -24,12 +28,20 @@ export class CommsTemplatesComponent implements OnInit {
     ngOnInit() {
         // Fetch a list of available templates from the Notify API.
         this._loading = true;
-        this.NotifyAPI.getAllTemplates().subscribe(
-            (data) => {
-                this._options = this._filterTemplates(data);
-                this._loading = false;
-            }
-        );
+        this.NotifyAPI.getAllTemplates()
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
+            .subscribe(
+                (data) => {
+                    this._options = this._filterTemplates(data);
+                    this._loading = false;
+                }
+            );
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     trackByMethod(index: number, item: CommsOption): number {

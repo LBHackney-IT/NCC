@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { map, take } from 'rxjs/operators';
+import { Observable, forkJoin, of, from } from 'rxjs';
+
 import { Caller } from '../interfaces/caller.interface';
 import { LogCallSelection } from '../interfaces/log-call-selection.interface';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
@@ -83,21 +86,39 @@ export class CallService {
 
         const contact_id = caller.getContactID();
         if (contact_id) {
-            // Create a call to record notes against.
-            this.NCCAPI.createCall(contact_id)
-                .subscribe((data: CRMServiceRequest) => {
-                    this.call_id = data.id;
-                    this.ticket_number = data.ticketNumber;
-                    console.log(`Call ${data.id} was created.`);
-                });
 
-            // We can also obtain the associated tenancy reference via the Manage A Tenancy API.
-            // The tenancy reference is required to record Action Diary entries.
-            this.ManageATenancyAPI.getAccountDetails(contact_id)
-                .subscribe((data: AccountDetails) => {
-                    this.account = data;
-                    console.log(`Account details were obtained.`);
-                });
+            // We're subscribing to two API endpoints, so we can use forkJoin here to ensure that both are successful.
+            // If either one fails we will get an error.
+            const subscription = forkJoin(
+                // Create a call to record notes against.
+                this.NCCAPI.createCall(contact_id),
+
+                // We can also obtain the associated tenancy reference via the Manage A Tenancy API.
+                // The tenancy reference is required to record Action Diary entries.
+                this.ManageATenancyAPI.getAccountDetails(contact_id)
+            )
+                .pipe(
+                    map(data => {
+                        return { call: <CRMServiceRequest>data[0], account: <AccountDetails>data[1] };
+                    })
+                )
+                .subscribe(
+                    (response) => {
+                        // Deal with the created call.
+                        this.call_id = response.call.id;
+                        this.ticket_number = response.call.ticketNumber;
+                        console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
+
+                        // Handle the tenant's account data.
+                        this.account = response.account;
+                        console.log(`Account details were obtained.`);
+                    },
+                    (error) => {
+                        console.error(error);
+                    },
+                    () => {
+                        subscription.unsubscribe();
+                    });
         }
     }
 
