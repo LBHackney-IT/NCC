@@ -30,7 +30,7 @@
                                 </label>
                                 <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_caller">
                                     <option [value]="null">All tenants</option>
-                                    <option *ngFor="let row of tenants; trackBy: trackByTenants" [value]="row.contact_id">
+                                    <option *ngFor="let row of tenants; trackBy: trackByTenants" [value]="row.full_name">
                                         {{ row.full_name }}
                                     </option>
                                 </select>

@@ -115,7 +115,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                     Object.keys(this.filter).forEach(
                         key => {
                             const term = this.filter[key];
-                            if (term) {
+                            if (term && 'null' !== term) {
                                 outcome = outcome && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase()));
                             }
                         });

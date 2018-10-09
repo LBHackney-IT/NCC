@@ -42,16 +42,8 @@ export class PageViewNotesComponent extends PageHistory implements OnInit, OnDes
             max_date: null,
             manual: {}
         };
+        this.tenants = this.Call.getTenants();
         this.clearFilter();
-
-        // this.route.data
-        //     .pipe(
-        //         takeUntil(this._destroyed$)
-        //     )
-        //     .subscribe((data) => {
-        //         this.caller = data.caller;
-        //         this.tenants = this.Call.getTenants();
-        //     });
     }
 
     ngOnDestroy() {
@@ -68,7 +60,7 @@ export class PageViewNotesComponent extends PageHistory implements OnInit, OnDes
     filterTransactions() {
         this.filter.manual = {
             callReasonType: this.filter_reason,
-            contactId: this.filter_caller
+            clientName: this.filter_caller
         };
     }
 

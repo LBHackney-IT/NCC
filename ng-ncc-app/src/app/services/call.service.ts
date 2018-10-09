@@ -203,7 +203,9 @@ export class CallService {
     recordActionDiaryNote(note_content: string) {
         const tenancy_reference = this.getTenancyReference();
         if (tenancy_reference) {
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note_content).subscribe();
+            // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
+            const note = `${this.caller.getName()}: ${note_content}`;
+            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note).subscribe();
         }
     }
 
