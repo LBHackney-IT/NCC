@@ -12,7 +12,7 @@ import { LogCallType } from '../../classes/log-call-type.class';
     templateUrl: './call-nature.component.html',
     styleUrls: ['./call-nature.component.scss']
 })
-export class CallNatureComponent implements OnInit {
+export class CallNatureComponent implements OnInit, OnDestroy {
     @Output() changed = new EventEmitter<LogCallSelection>();
 
     private _destroyed$ = new Subject();

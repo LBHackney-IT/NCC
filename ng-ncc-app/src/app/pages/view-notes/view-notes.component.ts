@@ -51,7 +51,7 @@ export class PageViewNotesComponent extends PageHistory implements OnInit, OnDes
     }
 
     getTenancyReference(): string {
-        return this.Call.getTenancyReference()
+        return this.Call.getTenancyReference();
     }
 
     /**
