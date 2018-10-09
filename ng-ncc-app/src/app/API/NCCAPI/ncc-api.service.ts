@@ -103,9 +103,9 @@ export class NCCAPIService {
      * Fetches a list of Action Diary entries and notes associated with the specified CRM contact ID.
      * This also requires a housing reference, which isn't currently provided.
      */
-    getDiaryAndNotes(crm_contact_id: string) {
+    getDiaryAndNotes(tenancyReference: string) {
         const parameters = {
-            contactId: crm_contact_id
+            housingRef: tenancyReference
         };
 
         return this.http

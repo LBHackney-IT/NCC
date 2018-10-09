@@ -14,7 +14,7 @@ import { NOTES } from '../../constants/notes.constant';
     styleUrls: ['./notes.component.scss']
 })
 export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() crmContactID: string;
+    @Input() tenancyReference: string;
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
@@ -40,8 +40,8 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         console.log('notes component', changes);
-        if (changes.crmContactID) {
-            // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
+        if (changes.tenancyReference) {
+            // The tenancy reference has changed, so load the notes associated with the tenancy reference.
             this._loadNotes();
         } else {
             // The filter or date settings have changed, so update what is displayed.
@@ -68,8 +68,12 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     _loadNotes() {
+        if (this._loading || null === this.tenancyReference) {
+            return;
+        }
+
         this._loading = true;
-        this.NCCAPI.getDiaryAndNotes(this.crmContactID)
+        this.NCCAPI.getDiaryAndNotes(this.tenancyReference)
             .pipe(
                 takeUntil(this._destroyed$)
             )
@@ -134,13 +138,8 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Returns the name of a tenant matching the specified CRM contact ID.
      */
-    getTenantName(crm_contact_id: string): string {
-        if (this.tenants) {
-            const tenant = this.tenants.filter((row) => row.contact_id === crm_contact_id);
-            return tenant.length ? tenant.shift().full_name : 'n/a';
-        }
-
-        return 'anonymous';
+    getTenantName(note: NCCUHNote): string {
+        return note.clientName ? note.clientName : 'anonymous';
     }
 
 }

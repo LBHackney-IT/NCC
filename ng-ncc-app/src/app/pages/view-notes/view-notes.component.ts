@@ -44,18 +44,22 @@ export class PageViewNotesComponent extends PageHistory implements OnInit, OnDes
         };
         this.clearFilter();
 
-        this.route.data
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
-            .subscribe((data) => {
-                this.caller = data.caller;
-                this.tenants = this.Call.getTenants();
-            });
+        // this.route.data
+        //     .pipe(
+        //         takeUntil(this._destroyed$)
+        //     )
+        //     .subscribe((data) => {
+        //         this.caller = data.caller;
+        //         this.tenants = this.Call.getTenants();
+        //     });
     }
 
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    getTenancyReference(): string {
+        return this.Call.getTenancyReference()
     }
 
     /**

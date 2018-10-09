@@ -17,7 +17,8 @@
                                 <label class="hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-reason">
                                     Search by call reason
                                 </label>
-                                <input class="govuk-input govuk-!-margin-right-1" id="filter-manual-reason" name="filter-manual-reason" type="search"
+                                <input class="govuk-input govuk-!-margin-right-1" id="filter-manual-reason" name="filter-manual-reason"
+                                    type="search"
                                     placeholder="Search by reason"
                                     [(ngModel)]="filter_reason">
                             </div>
@@ -29,7 +30,9 @@
                                 </label>
                                 <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_caller">
                                     <option [value]="null">All tenants</option>
-                                    <option *ngFor="let row of tenants; trackBy: trackByTenants" [value]="row.contact_id">{{ row.full_name }}</option>
+                                    <option *ngFor="let row of tenants; trackBy: trackByTenants" [value]="row.contact_id">
+                                        {{ row.full_name }}
+                                    </option>
                                 </select>
                             </div>
 
@@ -55,7 +58,8 @@
                         <label class="govuk-label" for="period">
                             Show transactions for:
                         </label>
-                        <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="period" (ngModelChange)="filterByDate()">
+                        <select class="govuk-select govuk-input--width-20" id="period" name="period"
+                            [(ngModel)]="period" (ngModelChange)="filterByDate()">
                             <option *ngFor="let row of period_options; trackBy: trackByMethod" [value]="row.key">{{ row.label }}</option>
                         </select>
                     </div>
@@ -64,16 +68,10 @@
         </form>
 
         <!-- A list of notes. -->
-        <app-uh-notes [crmContactID]="caller.getContactID()"
+        <app-uh-notes [tenancyReference]="getTenancyReference()"
             [tenants]="tenants"
             [filter]="filter.manual"
             [minDate]="filter.min_date"
             [maxDate]="filter.max_date"></app-uh-notes>
-        <!-- <app-notes [crmContactID]="caller.getContactID()"
-            [tenants]="tenants"
-            [filter]="filter.manual"
-            [minDate]="filter.min_date"
-            [maxDate]="filter.max_date"></app-notes> -->
-
     </div>
 </div>
