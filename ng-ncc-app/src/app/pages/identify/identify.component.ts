@@ -33,7 +33,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
         this.searching = false;
         this.existing_call = false;
 
-        if (this.Call.hasCaller()) {
+        if (this.Call.hasTenancy()) {
             this.existing_call = true;
             this.addressSelected(this.Call.getTenancy());
         }
