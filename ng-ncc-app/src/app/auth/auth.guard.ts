@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Route, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Route, Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthGuard implements CanActivate {
 
-    constructor(private Auth: AuthService) { }
+    constructor(private Auth: AuthService, private router: Router) { }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         const code = next.params.code;
@@ -29,6 +29,11 @@ export class AuthGuard implements CanActivate {
                 .pipe(
                     map((outcome: boolean) => {
                         console.log('authenticated?', outcome, this.Auth.getMessage());
+
+                        // If the authentication was successful, redirect to the "log call" page/
+                        // If unsuccessful, redirect to the "try again" page.
+                        this.router.navigate([outcome ? '/log-call' : '/try-again']);
+
                         return outcome;
                     }));
         }

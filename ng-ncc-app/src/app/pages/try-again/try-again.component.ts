@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-try-again',
     templateUrl: './try-again.component.html',
     styleUrls: ['./try-again.component.scss']
 })
-export class PageTryAgainComponent implements OnInit {
+export class PageTryAgainComponent {
 
-    constructor() { }
+    constructor(private Auth: AuthService) { }
 
-    ngOnInit() {
+    /**
+     *
+     */
+    getAuthMessage(): string {
+        return this.Auth.getMessage();
     }
 
 }

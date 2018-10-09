@@ -184,7 +184,7 @@ export class NCCAPIService {
      */
     authenticate(code: string): Observable<IAuthentication> {
         const parameters = {
-            userdata: code
+            userdata: `${code}=` // the equal sign is important!
         };
 
         return this.http
