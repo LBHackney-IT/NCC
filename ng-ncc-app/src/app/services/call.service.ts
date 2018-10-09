@@ -193,15 +193,29 @@ export class CallService {
     /**
      * Record a note against the call.
      */
-    recordNote(note_content: string, automatic: boolean = false) {
-        return this.NCCAPI.createNote(
-            this.call_id,
-            this.ticket_number,
-            this.call_nature.call_reason.id,
-            this.caller.getContactID(),
-            note_content,
-            automatic
-        );
+    recordNote(note_content: string, automatic: boolean = false): Observable<void> {
+        if (automatic) {
+            return forkJoin(
+                this.NCCAPI.createAutomaticNote(
+                    this.call_id,
+                    this.ticket_number,
+                    this.getTenancyReference(),
+                    this.call_nature.call_reason.id,
+                    this.caller.getContactID(),
+                    note_content
+                ),
+                this.recordActionDiaryNote(note_content)
+            );
+        } else {
+            return this.NCCAPI.createManualNote(
+                this.call_id,
+                this.ticket_number,
+                this.call_nature.call_reason.id,
+                this.caller.getContactID(),
+                note_content,
+                automatic
+            );
+        }
     }
 
     /**
@@ -212,7 +226,7 @@ export class CallService {
         if (tenancy_reference) {
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
             const note = `${this.caller.getName()}: ${note_content}`;
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note).subscribe();
+            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
         }
     }
 

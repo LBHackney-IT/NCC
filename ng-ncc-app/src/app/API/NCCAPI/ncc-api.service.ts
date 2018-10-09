@@ -54,9 +54,22 @@ export class NCCAPIService {
     }
 
     /**
-     * Create a note against a call.
+     * Create a manual note against a call.
      */
-    createNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string,
+    createManualNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string) {
+        return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, false);
+    }
+
+    /**
+     * Create an automatic note against a call.
+     * Automatic notes are also added to the Action Diary.
+     */
+    createAutomaticNote(call_id: string, ticket_number: string, tenancy_reference: string, call_reason_id: string, crm_contact_id: string,
+        content: string) {
+        return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, true);
+    }
+
+    _createNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string,
         automatic: boolean = false) {
         const parameters = {
             callReasonId: call_reason_id,
