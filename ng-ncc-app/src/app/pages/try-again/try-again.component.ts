@@ -18,4 +18,13 @@ export class PageTryAgainComponent {
         return this.Auth.getMessage();
     }
 
+    /**
+     *
+     */
+    retry() {
+        const location = window.location;
+        const url = `${location.protocol}//${location.hostname}:4040`;
+        window.open(url, '_self');
+    }
+
 }
