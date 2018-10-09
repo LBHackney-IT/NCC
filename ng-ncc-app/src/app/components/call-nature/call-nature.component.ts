@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Observable, forkJoin, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
@@ -13,6 +14,8 @@ import { LogCallType } from '../../classes/log-call-type.class';
 })
 export class CallNatureComponent implements OnInit {
     @Output() changed = new EventEmitter<LogCallSelection>();
+
+    private _destroyed$ = new Subject();
 
     call_types: LogCallType[];
     call_reasons: Array<any>;
@@ -30,6 +33,9 @@ export class CallNatureComponent implements OnInit {
             this.HackneyAPI.getCallTypes(),
             this.HackneyAPI.getCallReasons()
         )
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 data => {
                     this.call_types = data[0];
@@ -45,6 +51,27 @@ export class CallNatureComponent implements OnInit {
                     console.log('Error fetching call types and reasons:', error);
                 }
             );
+    }
+
+    /**
+     *
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByCallType(index: number, item: string): number {
+        return index;
+    }
+
+    /**
+     *
+     */
+    trackByCallReason(index: number, item: LogCallReason): string {
+        return item.id;
     }
 
     /**

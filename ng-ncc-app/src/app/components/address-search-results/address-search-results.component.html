@@ -2,7 +2,7 @@
 <div *ngIf="hasResults()">
     <h2 class="govuk-heading-m">Results</h2>
     <ul class="govuk-list">
-        <li class="govuk-!-margin-bottom-2" *ngFor="let row of grouped_results">
+        <li class="govuk-!-margin-bottom-2" *ngFor="let row of grouped_results; trackBy: trackByMethod">
             <button class="govuk-link govuk-!-font-size-19" type="button" (click)="selectRow(row)">{{ row.address }}</button>
         </li>
     </ul>

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { PageHistory } from '../abstract/history';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
@@ -10,7 +12,9 @@ import { CallService } from '../../services/call.service';
     templateUrl: './view-notes.component.html',
     styleUrls: ['./view-notes.component.scss']
 })
-export class PageViewNotesComponent extends PageHistory implements OnInit {
+export class PageViewNotesComponent extends PageHistory implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
 
     caller: IdentifiedCaller;
     tenants: { [propKey: string]: string }[];
@@ -41,10 +45,17 @@ export class PageViewNotesComponent extends PageHistory implements OnInit {
         this.clearFilter();
 
         this.route.data
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe((data) => {
                 this.caller = data.caller;
                 this.tenants = this.Call.getTenants();
             });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
@@ -64,6 +75,14 @@ export class PageViewNotesComponent extends PageHistory implements OnInit {
         this.filter_reason = null;
         this.filter_caller = null;
         this.filterTransactions();
+    }
+
+    /**
+     *
+     */
+    trackByTenants(index: number, item: { [propKey: string]: string }): string {
+        // TODO: item should use an interface.
+        return item.contact_id;
     }
 
 }

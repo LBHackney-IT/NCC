@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AccountDetails } from '../../../interfaces/account-details.interface';
 import { UHTriggerService } from '../../../services/uhtrigger.service';
@@ -10,7 +12,9 @@ import { CallService } from '../../../services/call.service';
     templateUrl: './payment-make.component.html',
     styleUrls: ['./payment-make.component.scss']
 })
-export class PagePaymentMakeComponent implements OnInit {
+export class PagePaymentMakeComponent implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
 
     account_details: AccountDetails;
     show_confirm: boolean;
@@ -28,9 +32,16 @@ export class PagePaymentMakeComponent implements OnInit {
         this.account_details = this.Call.getAccount();
 
         this.route.data
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe((data) => {
                 // this.account_details = data.accountDetails;
             });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**

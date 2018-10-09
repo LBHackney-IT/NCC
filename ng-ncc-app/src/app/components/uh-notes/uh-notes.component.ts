@@ -1,4 +1,7 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
 import { NOTES } from '../../constants/notes.constant';
@@ -10,12 +13,14 @@ import { NOTES } from '../../constants/notes.constant';
     templateUrl: './notes.component.html',
     styleUrls: ['./notes.component.scss']
 })
-export class UHNotesComponent implements OnInit, OnChanges {
+export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     @Input() crmContactID: string;
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
+
+    private _destroyed$ = new Subject();
 
     _loading: boolean;
     _rows: NCCUHNote[];
@@ -48,9 +53,26 @@ export class UHNotesComponent implements OnInit, OnChanges {
     /**
      *
      */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: NCCUHNote): number {
+        return index;
+    }
+
+    /**
+     *
+     */
     _loadNotes() {
         this._loading = true;
-        const subscription = this.NCCAPI.getDiaryAndNotes(this.crmContactID)
+        this.NCCAPI.getDiaryAndNotes(this.crmContactID)
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 (rows) => {
                     this._rows = rows;
@@ -60,7 +82,6 @@ export class UHNotesComponent implements OnInit, OnChanges {
                     console.error(error);
                 },
                 () => {
-                    subscription.unsubscribe();
                     this._loading = false;
                 }
             );

@@ -22,6 +22,10 @@ export class AddressSearchResultsComponent implements OnChanges {
         this._organiseResults();
     }
 
+    trackByMethod(index: number, item: AddressSearchGroupedResult): string {
+        return item.id;
+    }
+
     /**
      * Returns TRUE if there are no search results.
      */

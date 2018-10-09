@@ -101,4 +101,11 @@ export class PageHistory {
         this.filter.max_date = max_date;
     }
 
+    /**
+     *
+     */
+    trackByIndex(index: number, item: { key: string, label: string }): string {
+        return item.key;
+    }
+
 }
