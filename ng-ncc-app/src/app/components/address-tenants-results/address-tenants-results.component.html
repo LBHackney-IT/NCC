@@ -3,7 +3,7 @@
 <div class="govuk-body" *ngIf="hasResults()">
 
     <!-- Go back to the address results. -->
-    <button type="button" class="link-button" (click)="goBack()">
+    <button type="button" class="link-button" (click)="goBack()" *ngIf="showBackButton">
         Back to address results
     </button>
 

@@ -1,44 +1,48 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <!-- Search for contact details. -->
-        <h2 class="govuk-heading-l">Caller details</h2>
+        <div *ngIf="!existing_call">
 
-        <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
-        <app-panel class="govuk-!-margin-bottom-5">
-            <form action="" class="govuk-form-group govuk-!-margin-bottom-2">
-                <label class="govuk-label govuk-!-font-weight-bold" for="query">
-                    Search by postcode:
-                </label>
-                <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text" [(ngModel)]="postcode" [disabled]="_searching">
-                <button type="submit" class="govuk-button govuk-!-margin-bottom-0" (click)="performSearch()" [disabled]="!canPerformSearch()">
-                    Search
+            <!-- Search for contact details. -->
+            <h2 class="govuk-heading-l">Caller details</h2>
+
+            <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
+            <app-panel class="govuk-!-margin-bottom-5">
+                <form action="" class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="govuk-label govuk-!-font-weight-bold" for="query">
+                        Search by postcode:
+                    </label>
+                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text" [(ngModel)]="postcode" [disabled]="_searching">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" (click)="performSearch()" [disabled]="!canPerformSearch()">
+                        Search
+                    </button>
+                </form>
+            </app-panel>
+
+            <!-- Or... -->
+            <app-or></app-or>
+
+            <!-- Option to mark the caller as anonymous. -->
+            <p class="govuk-body">
+                <button class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" (click)="anonymousSelected()">
+                    Caller is anonymous
                 </button>
-            </form>
-        </app-panel>
+                <app-helper>
+                    Select this option if the caller wants to remain anonymous.<br>
+                    Anonymous callers will not be able to access sensitive information.
+                </app-helper>
+            </p>
 
-        <!-- Or... -->
-        <app-or></app-or>
+            <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-        <!-- Option to mark the caller as anonymous. -->
-        <p class="govuk-body">
-            <button class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" (click)="anonymousSelected()">
-                Caller is anonymous
-            </button>
-            <app-helper>
-                Select this option if the caller wants to remain anonymous.<br>
-                Anonymous callers will not be able to access sensitive information.
-            </app-helper>
-        </p>
-
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-
-        <!-- A list of addresses matching the search query. -->
-        <app-address-search-results [results]="results" *ngIf="shouldShowAddresses()"
-            (selected)="addressSelected($event)"></app-address-search-results>
+            <!-- A list of addresses matching the search query. -->
+            <app-address-search-results [results]="results" *ngIf="shouldShowAddresses()"
+                (selected)="addressSelected($event)"></app-address-search-results>
+        </div>
 
         <!-- A list of tenants at the selected address. -->
         <app-address-tenants-results [address]="selected_address" *ngIf="shouldShowTenants()"
+            [showBackButton]="!existing_call"
             (beginEdit)="tenantToEdit($event)"
             (selected)="tenantSelected($event)"
             (back)="backToAddresses()">
