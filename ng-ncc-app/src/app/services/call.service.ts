@@ -158,6 +158,13 @@ export class CallService {
         this._buildTenantsList();
     }
 
+    /**
+     *
+     */
+    hasTenancy(): boolean {
+        return null !== this.tenancy;
+    }
+
     _buildTenantsList() {
         this.tenants = this.tenancy.results.map((row) => {
             return {
