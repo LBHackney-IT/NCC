@@ -8,16 +8,14 @@
 
             <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
             <app-panel class="govuk-!-margin-bottom-5">
-                <form action="">
-                    <div class="govuk-form-group govuk-!-margin-bottom-2">
-                        <label class="govuk-label govuk-!-font-weight-bold" for="query">
-                            Search by postcode:
-                        </label>
-                        <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text" [(ngModel)]="postcode" [disabled]="_searching">
-                        <button type="submit" class="govuk-button govuk-!-margin-bottom-0" (click)="performSearch()" [disabled]="!canPerformSearch()">
-                            Search
-                        </button>
-                    </div>
+                <form action="" class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="govuk-label govuk-!-font-weight-bold" for="query">
+                        Search by postcode:
+                    </label>
+                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text" [(ngModel)]="postcode" [disabled]="_searching">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" (click)="performSearch()" [disabled]="!canPerformSearch()">
+                        Search
+                    </button>
                 </form>
             </app-panel>
 
