@@ -10,6 +10,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 })
 export class AddressTenantsResultsComponent implements OnChanges {
     @Input() address: AddressSearchGroupedResult;
+    @Input() showBackButton: boolean;
 
     // When a tenant is selected and the Continue button is hit.
     @Output() selected = new EventEmitter<IdentifiedCaller>();

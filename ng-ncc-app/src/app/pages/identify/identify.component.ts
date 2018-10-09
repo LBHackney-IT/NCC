@@ -20,7 +20,9 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    _searching: boolean;
+
+    existing_call: boolean;
+    searching: boolean;
     postcode: string;
     results: CitizenIndexSearchResult[];
     selected_address: AddressSearchGroupedResult;
@@ -28,7 +30,13 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService) { }
 
     ngOnInit() {
-        this._searching = false;
+        this.searching = false;
+        this.existing_call = false;
+
+        if (this.Call.hasCaller()) {
+            this.existing_call = true;
+            this.addressSelected(this.Call.getTenancy());
+        }
     }
 
     ngOnDestroy() {
@@ -40,12 +48,12 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      */
     performSearch() {
         // For the time being, we are only searching for people by postcode.
-        if (this._searching) {
+        if (this.searching) {
             return;
         }
         this.results = null;
         this.selected_address = null;
-        this._searching = true;
+        this.searching = true;
 
         const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
             .pipe(
@@ -59,7 +67,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
                     console.error(error);
                 },
                 () => {
-                    this._searching = false;
+                    this.searching = false;
                     subscription.unsubscribe();
                 }
             );
@@ -69,7 +77,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      * Returns TRUE if the user can peform a search for details.
      */
     canPerformSearch() {
-        return !this._searching && !!(this.postcode);
+        return !this.searching && !!(this.postcode);
     }
 
     /**
@@ -136,6 +144,9 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
         this.selected_address = null;
     }
 
+    /**
+     * Navigats to the next step, having selected a tenant (or an anonymous caller).
+     */
     nextStep() {
         if (this.Call.hasCaller()) {
             this.router.navigateByUrl('comms');
