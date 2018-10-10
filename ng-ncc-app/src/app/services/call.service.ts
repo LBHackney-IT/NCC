@@ -193,7 +193,7 @@ export class CallService {
     /**
      * Record a note against the call.
      */
-    recordNote(note_content: string, automatic: boolean = false): Observable<void> {
+    recordNote(note_content: string, automatic: boolean = false): Observable<any> {
         if (automatic) {
             return forkJoin(
                 this.NCCAPI.createAutomaticNote(
@@ -212,8 +212,7 @@ export class CallService {
                 this.ticket_number,
                 this.call_nature.call_reason.id,
                 this.caller.getContactID(),
-                note_content,
-                automatic
+                note_content
             );
         }
     }
