@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnChanges, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
