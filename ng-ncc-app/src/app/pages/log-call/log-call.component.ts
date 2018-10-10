@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
+import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 import { CallService } from '../../services/call.service';

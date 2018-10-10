@@ -1,13 +1,14 @@
-import { Caller } from '../interfaces/caller.interface';
-import { CitizenIndexSearchResult } from '../interfaces/citizen-index-search-result.interface';
+import { ICaller } from '../interfaces/caller';
+import { ICitizenIndexSearchResult } from '../interfaces/citizen-index-search-result';
 import { ContactAddress } from '../classes/contact-address.class';
+import * as moment from 'moment';
 
 /**
  * This class represents an identified caller, as selected from the Identify page.
  */
-export class IdentifiedCaller implements Caller {
+export class IdentifiedCaller implements ICaller {
 
-    constructor(private _details: CitizenIndexSearchResult) { }
+    constructor(private _details: ICitizenIndexSearchResult) { }
 
     isAnonymous(): boolean {
         return false;
@@ -59,6 +60,14 @@ export class IdentifiedCaller implements Caller {
      */
     getEmailAddresses(): string[] {
         return [this._details.emailAddress].filter((n) => null !== n);
+    }
+
+    getDateOfBirth(): string | null {
+        if (this._details.dateOfBirth) {
+            const date = moment(this._details.dateOfBirth, 'YYYY-MM-DD');
+            return date.format('DD/MM/YYYY');
+        }
+        return null;
     }
 
     /**

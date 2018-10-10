@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { Observable, forkJoin, of, from } from 'rxjs';
 
-import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
+import { INotifyAPIJSONResult } from '../../interfaces/notify-api-json-result';
 import { CommsOption } from '../../classes/comms-option.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
-import { NotifyAPITemplate } from '../../interfaces/notify-api-template.interface';
+import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
 import { CONTACT } from '../../constants/contact.constant';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class NotifyAPIService {
         return this.http
             .get(`${this._url}/GetAllTemplates?TemplateType=${ofType}`)
             .pipe(
-                map((data: NotifyAPIJSONResult) => {
+                map((data: INotifyAPIJSONResult) => {
                     // Prepare the data returned from the microservice as a list of templates.
                     const templates: Array<object> = Array.from(data.response.templates);
 
@@ -71,7 +71,7 @@ export class NotifyAPIService {
         return this.http
             .get(`${this._url}/GetTemplateByIdAndVersion?TemplateId=${template_id}&Version=${version}`)
             .pipe(
-                map((data: NotifyAPIJSONResult) => data.response.body)
+                map((data: INotifyAPIJSONResult) => data.response.body)
             );
     }
 
@@ -107,7 +107,7 @@ export class NotifyAPIService {
         const options: CommsOption[] = new Array<CommsOption>();
 
         // Group the templates by their name.
-        templates.forEach(function(template: NotifyAPITemplate) {
+        templates.forEach(function(template: INotifyAPITemplate) {
             let option: CommsOption;
             const index = options.findIndex(function(existing_option: CommsOption) {
                 // Do a case insensitive comparison.

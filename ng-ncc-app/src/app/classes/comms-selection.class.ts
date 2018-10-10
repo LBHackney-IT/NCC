@@ -1,15 +1,15 @@
-import { ContactDetails } from './contact-details.class';
+import { IContactDetails } from './contact-details.class';
 import { CONTACT } from '../constants/contact.constant';
 
 export class CommsSelection {
     method: string;
-    existing: ContactDetails;
-    create: ContactDetails;
+    existing: IContactDetails;
+    create: IContactDetails;
 
     constructor() {
         this.method = null;
-        this.existing = new ContactDetails;
-        this.create = new ContactDetails;
+        this.existing = new IContactDetails;
+        this.create = new IContactDetails;
     }
 
     /**

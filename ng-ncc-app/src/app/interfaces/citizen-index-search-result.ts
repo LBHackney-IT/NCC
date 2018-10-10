@@ -1,5 +1,5 @@
 // An interface for Citizen Index Search results provided by the Hackney API/microservice.
-export interface CitizenIndexSearchResult {
+export interface ICitizenIndexSearchResult {
     id?: any; // optional
     hackneyhomesId: string;
     title: string;

@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
-import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
+import { IAccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
@@ -56,6 +56,7 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
+import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 
 @NgModule({
@@ -102,6 +103,7 @@ import { CurrentCallerComponent } from './components/current-caller/current-call
         ValueListLabelComponent,
         ValueListValueComponent,
         CallNatureComponent,
+        DPATenancyComponent,
         CurrentCallerComponent,
     ],
     imports: [
@@ -114,7 +116,7 @@ import { CurrentCallerComponent } from './components/current-caller/current-call
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
-        AccountDetailsResolver,
+        IAccountDetailsResolver,
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,

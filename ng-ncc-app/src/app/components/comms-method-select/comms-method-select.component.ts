@@ -4,9 +4,9 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsSelection } from '../../classes/comms-selection.class';
-import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
+import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { CallService } from '../../services/call.service';
-import { Caller } from '../../interfaces/caller.interface';
+import { ICaller } from '../../interfaces/caller';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 
@@ -28,8 +28,8 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
 
     private _destroyed$ = new Subject();
 
-    // A reference to the Caller we want to contact.
-    caller: Caller;
+    // A reference to the ICaller we want to contact.
+    caller: ICaller;
     details: ContactDetailsUpdate;
     selection: CommsSelection;
 

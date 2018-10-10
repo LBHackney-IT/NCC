@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AccountDetails } from '../../../interfaces/account-details.interface';
-import { Transaction } from '../../../interfaces/transaction.interface';
+import { IAccountDetails } from '../../../interfaces/account-details';
+import { ITransaction } from '../../../interfaces/transaction';
 import { CommsOption } from '../../../classes/comms-option.class';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
@@ -22,7 +22,7 @@ export class PagePaymentSummaryComponent implements OnInit, OnDestroy {
     private _destroyed$ = new Subject();
 
     CONTACT_METHOD = CONTACT;
-    account_details: AccountDetails;
+    account_details: IAccountDetails;
     comms_options: CommsOption[];
     selected_method: CommsSelection;
     selected_template: CommsOption; // what to send.

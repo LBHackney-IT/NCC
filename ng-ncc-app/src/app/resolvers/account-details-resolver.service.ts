@@ -6,7 +6,7 @@ import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 
 @Injectable()
-export class AccountDetailsResolver implements Resolve<any[]> {
+export class IAccountDetailsResolver implements Resolve<any[]> {
 
     constructor(private router: Router, private Call: CallService, private ManageATenancyAPI: ManageATenancyAPIService) { }
 

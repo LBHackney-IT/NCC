@@ -41,25 +41,14 @@
     <app-dpa-dialogue [(show)]="modal.dpa" buttonText="Close">
         <app-dialogue-title>Data Protection Act questions</app-dialogue-title>
 
-        <div class="govuk-grid-row">
+        <div class="govuk-grid-row govuk-!-margin-bottom-5">
 
             <!-- The tenancy address. -->
             <div class="govuk-grid-column-one-third" [innerHtml]="caller.getPostalAddressHTML()"></div>
 
             <!-- DPA questions relating to the tenancy address(?). -->
             <div class="govuk-grid-column-two-thirds">
-                <app-value-list class="govuk-body-s">
-                    <app-value-list-label>Payment reference number</app-value-list-label>
-                    <app-value-list-value>...</app-value-list-value>
-                    <app-value-list-label>Date of last payment and amount</app-value-list-label>
-                    <app-value-list-value>...</app-value-list-value>
-                    <app-value-list-label>Amount last paid</app-value-list-label>
-                    <app-value-list-value>...</app-value-list-value>
-                    <app-value-list-label>Month and year their tenancy began</app-value-list-label>
-                    <app-value-list-value>...</app-value-list-value>
-                    <app-value-list-label>Preferred payment method</app-value-list-label>
-                    <app-value-list-value>...</app-value-list-value>
-                </app-value-list>
+                <app-dpa-tenancy [crmContactID]="caller.getContactID()"></app-dpa-tenancy>
             </div>
 
         </div>
@@ -68,7 +57,7 @@
         <div class="govuk-grid-row">
 
             <!-- The tenant's name (and optional advocate's name). -->
-            <div class="govuk-grid-column-full govuk-body">
+            <div class="govuk-grid-column-full">
                 {{ caller.getName() }}
             </div>
 
@@ -99,7 +88,7 @@
                     <app-value-list-label>National Insurance number</app-value-list-label>
                     <app-value-list-value>...</app-value-list-value>
                     <app-value-list-label>Date of birth</app-value-list-label>
-                    <app-value-list-value>...</app-value-list-value>
+                    <app-value-list-value>{{ caller.getDateOfBirth() }}</app-value-list-value>
                 </app-value-list>
             </div>
 
