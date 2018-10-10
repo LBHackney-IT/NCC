@@ -26,18 +26,7 @@
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h2>
-        <app-value-list class="govuk-body-s">
-            <app-value-list-label>Payment reference number</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Date of last payment and amount</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Amount last paid</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Month and year their tenancy began</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Preferred payment method</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-        </app-value-list>
+        <app-dpa-tenancy [crmContactID]="crm_contact_id"></app-dpa-tenancy>
     </app-panel>
 
     <!-- Display each tenant. -->
@@ -94,7 +83,7 @@
                             <app-value-list-value>AB 12 34 56 C</app-value-list-value>
 
                             <app-value-list-label>Date of birth</app-value-list-label>
-                            <app-value-list-value>09/09/1999</app-value-list-value>
+                            <app-value-list-value>{{ row.getDateOfBirth() }}</app-value-list-value>
                         </app-value-list>
                     </span>
                 </label>

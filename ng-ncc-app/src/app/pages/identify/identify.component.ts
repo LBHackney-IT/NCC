@@ -11,6 +11,8 @@ import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
 import { Router } from '@angular/router';
 
+import { ICaller } from '../../interfaces/caller';
+
 @Component({
     selector: 'app-page-identify',
     templateUrl: './identify.component.html',
@@ -19,7 +21,6 @@ import { Router } from '@angular/router';
 export class PageIdentifyComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
-
 
     existing_call: boolean;
     searching: boolean;
