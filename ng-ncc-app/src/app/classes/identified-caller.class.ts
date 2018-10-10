@@ -64,7 +64,7 @@ export class IdentifiedCaller implements ICaller {
 
     getDateOfBirth(): string | null {
         if (this._details.dateOfBirth) {
-            const date = moment(this._details.dateOfBirth, 'YYYY-MM-DD')
+            const date = moment(this._details.dateOfBirth, 'YYYY-MM-DD');
             return date.format('DD/MM/YYYY');
         }
         return null;
