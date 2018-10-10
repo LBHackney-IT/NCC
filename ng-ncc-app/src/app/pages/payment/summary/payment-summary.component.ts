@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { IAccountDetails } from '../../../interfaces/account-details';
-import { Transaction } from '../../../interfaces/transaction.interface';
+import { ITransaction } from '../../../interfaces/transaction';
 import { CommsOption } from '../../../classes/comms-option.class';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';

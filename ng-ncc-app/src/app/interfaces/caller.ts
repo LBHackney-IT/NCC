@@ -1,5 +1,5 @@
 /**
- * This Caller interface allows us to define both identified and anonymous callers.
+ * This ICaller interface allows us to define both identified and anonymous callers.
  */
 
 import { ContactAddress } from '../classes/contact-address.class';

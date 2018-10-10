@@ -5,10 +5,10 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 
 import * as moment from 'moment';
 
-import { CRMServiceRequest } from '../../interfaces/crmservicerequest.interface';
+import { ICRMServiceRequest } from '../../interfaces/crmservicerequest';
 import { IJSONResponse } from '../../interfaces/json-response';
-import { NCCNote } from '../../interfaces/ncc-note.interface';
-import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
+import { INCCNote } from '../../interfaces/ncc-note';
+import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
 
@@ -48,7 +48,7 @@ export class NCCAPIService {
             .post(`${this._url}CRM/CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
             .pipe(
                 map((data: IJSONResponse) => {
-                    return data.response.servicerequest as CRMServiceRequest;
+                    return data.response.servicerequest as ICRMServiceRequest;
                 })
             );
     }
@@ -108,7 +108,7 @@ export class NCCAPIService {
         return this.http
             .get(`${this._url}CRM/GetAllNCCInteractions?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: IJSONResponse) => {
-                return data ? data.results as NCCNote[] : [];
+                return data ? data.results as INCCNote[] : [];
             }));
     }
 
@@ -130,7 +130,7 @@ export class NCCAPIService {
                     return [];
                 }
 
-                const notes: NCCUHNote[] = rows.map((row) => {
+                const notes: INCCUHNote[] = rows.map((row) => {
                     // Format the created on date ahead of time.
                     // We're using moment.js fo this, because Angular's DatePipe behaves inconsistently - often giving an error.
                     let date;
@@ -149,7 +149,7 @@ export class NCCAPIService {
                 });
 
                 // Sort the notes by their creation date (descending order).
-                notes.sort((a: NCCUHNote, b: NCCUHNote) => {
+                notes.sort((a: INCCUHNote, b: INCCUHNote) => {
                     if (a.createdOnSort > b.createdOnSort) {
                         return -1;
                     }

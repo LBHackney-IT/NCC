@@ -3,11 +3,11 @@ import { map, take } from 'rxjs/operators';
 import { Observable, forkJoin, of, from } from 'rxjs';
 
 import { ICaller } from '../interfaces/caller';
-import { LogCallSelection } from '../interfaces/log-call-selection.interface';
+import { ILogCallSelection } from '../interfaces/log-call-selection';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
-import { CRMServiceRequest } from '../interfaces/crmservicerequest.interface';
+import { ICRMServiceRequest } from '../interfaces/crmservicerequest';
 import { IAddressSearchGroupedResult } from '../interfaces/address-search-grouped-result';
 import { IAccountDetails } from '../interfaces/account-details';
 
@@ -27,7 +27,7 @@ export class CallService {
 
     private account: IAccountDetails;
     private caller: ICaller;
-    private call_nature: LogCallSelection;
+    private call_nature: ILogCallSelection;
     private call_id: string;
     private tenancy: IAddressSearchGroupedResult;
     private tenants: { [propKey: string]: string }[];
@@ -72,7 +72,7 @@ export class CallService {
     /**
      * Returns the call type and reason (as their respective IDs).
      */
-    getCallNature(): LogCallSelection {
+    getCallNature(): ILogCallSelection {
         return this.call_nature;
     }
 
@@ -81,7 +81,7 @@ export class CallService {
      */
     setCaller(caller: ICaller) {
         this.caller = caller;
-        console.log('Caller has been set to:', this.caller.getName());
+        console.log('ICaller has been set to:', this.caller.getName());
         console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
 
         const contact_id = caller.getContactID();
@@ -99,7 +99,7 @@ export class CallService {
             )
                 .pipe(
                     map(data => {
-                        return { call: <CRMServiceRequest>data[0], account: <IAccountDetails>data[1] };
+                        return { call: <ICRMServiceRequest>data[0], account: <IAccountDetails>data[1] };
                     })
                 )
                 .subscribe(
@@ -139,7 +139,7 @@ export class CallService {
     /**
      * Sets the nature (type and reason) of the call.
      */
-    setCallNature(selection: LogCallSelection) {
+    setCallNature(selection: ILogCallSelection) {
         this.call_nature = selection;
     }
 

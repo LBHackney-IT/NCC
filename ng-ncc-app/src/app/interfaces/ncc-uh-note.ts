@@ -1,4 +1,4 @@
-export interface NCCUHNote {
+export interface INCCUHNote {
     notes: string;
     notesType: string;
     callType: string;

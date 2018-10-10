@@ -1,4 +1,4 @@
-export interface Transaction {
+export interface ITransaction {
     tagReference: string;
     propertyReference: string;
     transactionSid: string | null;

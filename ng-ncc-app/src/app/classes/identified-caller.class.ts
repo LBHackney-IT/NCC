@@ -1,5 +1,5 @@
 import { ICaller } from '../interfaces/caller';
-import { CitizenIndexSearchResult } from '../interfaces/citizen-index-search-result.interface';
+import { ICitizenIndexSearchResult } from '../interfaces/citizen-index-search-result';
 import { ContactAddress } from '../classes/contact-address.class';
 import * as moment from 'moment';
 
@@ -8,7 +8,7 @@ import * as moment from 'moment';
  */
 export class IdentifiedCaller implements ICaller {
 
-    constructor(private _details: CitizenIndexSearchResult) { }
+    constructor(private _details: ICitizenIndexSearchResult) { }
 
     isAnonymous(): boolean {
         return false;

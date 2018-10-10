@@ -6,8 +6,8 @@ import { Observable, of, from } from 'rxjs';
 // see https://stackoverflow.com/questions/42376972/best-way-to-import-observable-from-rxjs
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
-import { HackneyAPIJSONResult } from '../../interfaces/hackney-api-json-result.interface';
-import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
+import { IHackneyAPIJSONResult } from '../../interfaces/hackney-api-json-result';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +30,7 @@ export class HackneyAPIService {
         return this.http
             .get(`${this._url}/CRMLookups?id=3`)
             .pipe(
-                map((response: HackneyAPIJSONResult) => {
+                map((response: IHackneyAPIJSONResult) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
                     // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
                     const types = response.result;
@@ -59,7 +59,7 @@ export class HackneyAPIService {
         return this.http
             .get(`${this._url}/CRMEnquiryTypes`)
             .pipe(
-                map((response: HackneyAPIJSONResult) => {
+                map((response: IHackneyAPIJSONResult) => {
                     let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
                     const types = response.result;
 
@@ -82,7 +82,7 @@ export class HackneyAPIService {
      * Searches for citizens and returns a list of results.
      */
     getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
-        Observable<CitizenIndexSearchResult[]> {
+        Observable<ICitizenIndexSearchResult[]> {
 
         // Build the query part of the URL.
         let query = '';
@@ -96,7 +96,7 @@ export class HackneyAPIService {
         return this.http
             .get(`${this._url}/v1/CitizenIndexSearch?${query}`)
             .pipe(
-                map((response: HackneyAPIJSONResult) => {
+                map((response: IHackneyAPIJSONResult) => {
                     // TODO perhaps filter out any unwanted/unnecessary information.
                     return response.results;
                 })

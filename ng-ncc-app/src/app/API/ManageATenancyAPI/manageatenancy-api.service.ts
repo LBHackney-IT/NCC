@@ -6,7 +6,7 @@ import { Observable, of, from } from 'rxjs';
 import { IJSONResponse } from '../../interfaces/json-response';
 import { IAccountDetails } from '../../interfaces/account-details';
 import { IContactDetails } from '../../interfaces/contact-details';
-import { Transaction } from '../../interfaces/transaction.interface';
+import { ITransaction } from '../../interfaces/transaction';
 
 @Injectable({
     providedIn: 'root'
@@ -71,7 +71,7 @@ export class ManageATenancyAPIService {
             .get(`${this._url}/Transactions?tagReference=${tenancy_reference}`)
             .pipe(
                 map((data: IJSONResponse) => {
-                    const details: Transaction[] = Array.from(data.results);
+                    const details: ITransaction[] = Array.from(data.results);
 
                     return details;
                 },

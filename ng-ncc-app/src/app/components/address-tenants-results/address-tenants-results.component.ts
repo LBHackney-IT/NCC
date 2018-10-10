@@ -1,8 +1,5 @@
-import { Component, EventEmitter, Input, Output, OnChanges, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
-import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { DPAService } from '../../services/dpa.service';
@@ -12,7 +9,7 @@ import { DPAService } from '../../services/dpa.service';
     templateUrl: './address-tenants-results.component.html',
     styleUrls: ['./address-tenants-results.component.scss']
 })
-export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
+export class AddressTenantsResultsComponent implements OnChanges {
     @Input() address: IAddressSearchGroupedResult;
     @Input() showBackButton: boolean;
 

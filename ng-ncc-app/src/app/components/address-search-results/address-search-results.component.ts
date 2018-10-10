@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 
 @Component({
@@ -8,7 +8,7 @@ import { IAddressSearchGroupedResult } from '../../interfaces/address-search-gro
     styleUrls: ['./address-search-results.component.scss']
 })
 export class AddressSearchResultsComponent implements OnChanges {
-    @Input() results: CitizenIndexSearchResult[];
+    @Input() results: ICitizenIndexSearchResult[];
     @Output() selected = new EventEmitter<IAddressSearchGroupedResult>();
 
     grouped_results: IAddressSearchGroupedResult[];
@@ -56,7 +56,7 @@ export class AddressSearchResultsComponent implements OnChanges {
             // Group the results by their household ID.
             // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_groupby
             const grouped_results = this.results.reduce(
-                (r, v: CitizenIndexSearchResult, i, a, k = v.householdId) => (
+                (r, v: ICitizenIndexSearchResult, i, a, k = v.householdId) => (
                     (r[k] || (r[k] = {
                         id: k,
                         address: v.fullAddressDisplay,
