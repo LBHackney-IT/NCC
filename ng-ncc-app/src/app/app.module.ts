@@ -57,6 +57,7 @@ import { ValueListLabelComponent } from './components/value-list/value-list-labe
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
+import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 
 @NgModule({
     declarations: [
@@ -103,6 +104,7 @@ import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.componen
         ValueListValueComponent,
         CallNatureComponent,
         DPATenancyComponent,
+        CurrentCallerComponent,
     ],
     imports: [
         BrowserModule,

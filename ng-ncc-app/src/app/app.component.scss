@@ -1,5 +1,11 @@
 :host {
     // This selector targets the host (i.e. <app-root/>).
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
     display: flex;
     flex-grow: 1;
     position: relative;
