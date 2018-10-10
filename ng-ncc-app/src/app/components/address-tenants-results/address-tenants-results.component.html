@@ -27,16 +27,16 @@
 
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h2>
         <app-value-list class="govuk-body-s">
-            <app-value-list-label>Payment reference number</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Date of last payment and amount</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Amount last paid</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Month and year their tenancy began</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Preferred payment method</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
+
+            <app-value-list-label>Tenancy reference number</app-value-list-label>
+            <app-value-list-value>{{ getTenancyDPAReference() }}</app-value-list-value>
+
+            <app-value-list-label>Current balance</app-value-list-label>
+            <app-value-list-value>{{ getTenancyDPABalance() | currency:'GBP' }}</app-value-list-value>
+
+            <app-value-list-label>Rent amount</app-value-list-label>
+            <app-value-list-value>{{ getTenancyDPARent() | currency:'GBP' }}</app-value-list-value>
+
         </app-value-list>
     </app-panel>
 

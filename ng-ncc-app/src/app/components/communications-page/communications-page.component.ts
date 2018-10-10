@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AccountDetails } from '../../interfaces/account-details.interface';
+import { IAccountDetails } from '../../interfaces/account-details';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CallService } from '../../services/call.service';
 import { CommsOption } from '../../classes/comms-option.class';
@@ -28,7 +28,7 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
 
     CONTACT_METHOD = CONTACT;
     _sending: boolean;
-    account_details: AccountDetails;
+    account_details: IAccountDetails;
     caller: IdentifiedCaller;
     comms_options: CommsOption[];
     selected_option: CommsOption;
@@ -54,7 +54,7 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
                 takeUntil(this._destroyed$)
             )
             .subscribe((data) => {
-                this.account_details = data.accountDetails;
+                this.account_details = data.IAccountDetails;
                 this.caller = data.caller;
             });
     }

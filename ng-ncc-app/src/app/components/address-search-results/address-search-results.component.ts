@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
-import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 
 @Component({
     selector: 'app-address-search-results',
@@ -9,9 +9,9 @@ import { AddressSearchGroupedResult } from '../../interfaces/address-search-grou
 })
 export class AddressSearchResultsComponent implements OnChanges {
     @Input() results: CitizenIndexSearchResult[];
-    @Output() selected = new EventEmitter<AddressSearchGroupedResult>();
+    @Output() selected = new EventEmitter<IAddressSearchGroupedResult>();
 
-    grouped_results: AddressSearchGroupedResult[];
+    grouped_results: IAddressSearchGroupedResult[];
 
     constructor() { }
 
@@ -22,7 +22,7 @@ export class AddressSearchResultsComponent implements OnChanges {
         this._organiseResults();
     }
 
-    trackByMethod(index: number, item: AddressSearchGroupedResult): string {
+    trackByMethod(index: number, item: IAddressSearchGroupedResult): string {
         return item.id;
     }
 
@@ -43,7 +43,7 @@ export class AddressSearchResultsComponent implements OnChanges {
     /**
      * Called when a result is selected from the list.
      */
-    selectRow(result: AddressSearchGroupedResult) {
+    selectRow(result: IAddressSearchGroupedResult) {
         this.selected.emit(result);
     }
 
@@ -77,8 +77,8 @@ export class AddressSearchResultsComponent implements OnChanges {
     /**
      *
      */
-    _sortedGroupedResults(grouped_results): AddressSearchGroupedResult[] {
-        const results: AddressSearchGroupedResult[] = Object.values(grouped_results);
+    _sortedGroupedResults(grouped_results): IAddressSearchGroupedResult[] {
+        const results: IAddressSearchGroupedResult[] = Object.values(grouped_results);
         results.sort((a, b) => {
             const checks = [
                 this._compare(a, b, 'addressLine2'),

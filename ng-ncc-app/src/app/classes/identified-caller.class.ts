@@ -1,11 +1,11 @@
-import { Caller } from '../interfaces/caller.interface';
+import { ICaller } from '../interfaces/caller';
 import { CitizenIndexSearchResult } from '../interfaces/citizen-index-search-result.interface';
 import { ContactAddress } from '../classes/contact-address.class';
 
 /**
  * This class represents an identified caller, as selected from the Identify page.
  */
-export class IdentifiedCaller implements Caller {
+export class IdentifiedCaller implements ICaller {
 
     constructor(private _details: CitizenIndexSearchResult) { }
 

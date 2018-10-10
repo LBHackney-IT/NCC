@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AccountDetails } from '../../../interfaces/account-details.interface';
+import { IAccountDetails } from '../../../interfaces/account-details';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { PageHistory } from '../../abstract/history';
 import { CallService } from '../../../services/call.service';
@@ -17,7 +17,7 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
 
     private _destroyed$ = new Subject();
 
-    account_details: AccountDetails;
+    account_details: IAccountDetails;
 
     filter_settings: {
         min_date: Date,
@@ -49,7 +49,7 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
                 takeUntil(this._destroyed$)
             )
             .subscribe((data) => {
-                // this.account_details = data.accountDetails;
+                // this.account_details = data.IAccountDetails;
                 this.filterByDate();
                 this.filterTransactions();
             });

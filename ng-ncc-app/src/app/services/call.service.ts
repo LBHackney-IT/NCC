@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { map, take } from 'rxjs/operators';
 import { Observable, forkJoin, of, from } from 'rxjs';
 
-import { Caller } from '../interfaces/caller.interface';
+import { ICaller } from '../interfaces/caller';
 import { LogCallSelection } from '../interfaces/log-call-selection.interface';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { CRMServiceRequest } from '../interfaces/crmservicerequest.interface';
-import { AddressSearchGroupedResult } from '../interfaces/address-search-grouped-result.interface';
-import { AccountDetails } from '../interfaces/account-details.interface';
+import { IAddressSearchGroupedResult } from '../interfaces/address-search-grouped-result';
+import { IAccountDetails } from '../interfaces/account-details';
 
 @Injectable({
     providedIn: 'root'
@@ -25,11 +25,11 @@ export class CallService {
     // - account details associated with the caller;
     // - notes relating to the call.
 
-    private account: AccountDetails;
-    private caller: Caller;
+    private account: IAccountDetails;
+    private caller: ICaller;
     private call_nature: LogCallSelection;
     private call_id: string;
-    private tenancy: AddressSearchGroupedResult;
+    private tenancy: IAddressSearchGroupedResult;
     private tenants: { [propKey: string]: string }[];
     private ticket_number: string;
 
@@ -65,7 +65,7 @@ export class CallService {
     /**
      * Returns the caller associated with the call.
      */
-    getCaller(): Caller {
+    getCaller(): ICaller {
         return this.caller;
     }
 
@@ -79,7 +79,7 @@ export class CallService {
     /**
      * Sets the caller for this call.
      */
-    setCaller(caller: Caller) {
+    setCaller(caller: ICaller) {
         this.caller = caller;
         console.log('Caller has been set to:', this.caller.getName());
         console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
@@ -99,7 +99,7 @@ export class CallService {
             )
                 .pipe(
                     map(data => {
-                        return { call: <CRMServiceRequest>data[0], account: <AccountDetails>data[1] };
+                        return { call: <CRMServiceRequest>data[0], account: <IAccountDetails>data[1] };
                     })
                 )
                 .subscribe(
@@ -132,7 +132,7 @@ export class CallService {
     /**
      * Returns the account details associated with the caller.
      */
-    getAccount(): AccountDetails {
+    getAccount(): IAccountDetails {
         return this.account;
     }
 
@@ -146,14 +146,14 @@ export class CallService {
     /**
      *
      */
-    getTenancy(): AddressSearchGroupedResult {
+    getTenancy(): IAddressSearchGroupedResult {
         return this.tenancy;
     }
 
     /**
      *
      */
-    setTenancy(tenancy: AddressSearchGroupedResult) {
+    setTenancy(tenancy: IAddressSearchGroupedResult) {
         this.tenancy = tenancy;
         this._buildTenantsList();
     }

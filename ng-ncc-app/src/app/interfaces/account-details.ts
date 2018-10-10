@@ -1,4 +1,4 @@
-export interface AccountDetails {
+export interface IAccountDetails {
     propertyReferenceNumber: string;
     benefit: number;
     tagReferenceNumber: string;

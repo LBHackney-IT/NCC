@@ -4,7 +4,7 @@
 
 import { ContactAddress } from '../classes/contact-address.class';
 
-export interface Caller {
+export interface ICaller {
     isAnonymous(): boolean;
     getName(): string;
     getTelephoneNumbers(): string[];

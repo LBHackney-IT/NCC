@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { CONTACT } from '../constants/contact.constant';
 import { CallService } from './call.service';
-import { Caller } from '../interfaces/caller.interface';
+import { ICaller } from '../interfaces/caller';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,7 @@ export class UHTriggerService {
 
     constructor(private Call: CallService) { }
 
-    _getCaller(): Caller {
+    _getCaller(): ICaller {
         return this.Call.getCaller();
     }
 
@@ -73,7 +73,7 @@ export class UHTriggerService {
         call_reason = call_reason.toLowerCase();
         template = template.toLowerCase();
 
-        let observable: Observable<void>;
+        let observable: Observable<any>;
 
         switch (template) {
             case 'dpa: rent statement (with balance)':

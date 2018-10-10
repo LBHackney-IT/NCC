@@ -1,15 +1,20 @@
-import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
-import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { DPAService } from '../../services/dpa.service';
+import { ITenancyDPA } from '../../interfaces/tenancy-dpa';
 
 @Component({
     selector: 'app-address-tenants-results',
     templateUrl: './address-tenants-results.component.html',
     styleUrls: ['./address-tenants-results.component.scss']
 })
-export class AddressTenantsResultsComponent implements OnChanges {
-    @Input() address: AddressSearchGroupedResult;
+export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
+    @Input() address: IAddressSearchGroupedResult;
     @Input() showBackButton: boolean;
 
     // When a tenant is selected and the Continue button is hit.
@@ -27,6 +32,10 @@ export class AddressTenantsResultsComponent implements OnChanges {
     // A list of tenants under the address passed to this component.
     tenants: IdentifiedCaller[];
 
+    private _destroyed$ = new Subject();
+
+    constructor(private DPA: DPAService) { }
+
     ngOnChanges() {
         this._selected = null;
         if (this.address) {
@@ -39,9 +48,51 @@ export class AddressTenantsResultsComponent implements OnChanges {
             if (1 === this.tenants.length) {
                 this._selected = this.tenants[0];
             }
+
+            this.getDPAAnswers();
         }
     }
 
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    getDPAAnswers() {
+        const crm_contact_id = this.tenants[0].getContactID();
+        this.DPA.build(crm_contact_id)
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
+            .subscribe();
+    }
+
+    /**
+     *
+     */
+    getTenancyDPAReference(): string {
+        return this.DPA.getTenancyReference() || '...';
+    }
+
+    /**
+     *
+     */
+    getTenancyDPABalance(): string {
+        return this.DPA.getTenancyRentBalance() || '...';
+    }
+
+    /**
+     *
+     */
+    getTenancyDPARent(): string {
+        return this.DPA.getTenancyRentAmount() || '...';
+    }
+
+    /**
+     *
+     */
     trackByMethod(index: number, item: IdentifiedCaller): number {
         return index;
     }
