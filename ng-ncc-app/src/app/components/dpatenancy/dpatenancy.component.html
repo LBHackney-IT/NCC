@@ -1,0 +1,12 @@
+<app-value-list class="govuk-body-s">
+
+    <app-value-list-label>Tenancy reference number</app-value-list-label>
+    <app-value-list-value>{{ getTenancyDPAReference() }}</app-value-list-value>
+
+    <app-value-list-label>Current balance</app-value-list-label>
+    <app-value-list-value>{{ getTenancyDPABalance() | currency:'GBP' }}</app-value-list-value>
+
+    <app-value-list-label>Rent amount</app-value-list-label>
+    <app-value-list-value>{{ getTenancyDPARent() | currency:'GBP' }}</app-value-list-value>
+
+</app-value-list>

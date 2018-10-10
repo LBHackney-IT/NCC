@@ -6,7 +6,6 @@ import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { DPAService } from '../../services/dpa.service';
-import { ITenancyDPA } from '../../interfaces/tenancy-dpa';
 
 @Component({
     selector: 'app-address-tenants-results',
@@ -31,6 +30,8 @@ export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
 
     // A list of tenants under the address passed to this component.
     tenants: IdentifiedCaller[];
+
+    crm_contact_id: string;
 
     private _destroyed$ = new Subject();
 
@@ -61,12 +62,7 @@ export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
      *
      */
     getDPAAnswers() {
-        const crm_contact_id = this.tenants[0].getContactID();
-        this.DPA.build(crm_contact_id)
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
-            .subscribe();
+        this.crm_contact_id = this.tenants[0].getContactID();
     }
 
     /**
