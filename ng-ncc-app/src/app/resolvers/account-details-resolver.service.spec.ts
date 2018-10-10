@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { IAccountDetailsResolver } from './account-details-resolver.service';
+import { AccountDetailsResolver } from './account-details-resolver.service';
 
-describe('IAccountDetailsResolver', () => {
+describe('AccountDetailsResolver', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [IAccountDetailsResolver]
+            providers: [AccountDetailsResolver]
         });
     });
 
-    it('should be created', inject([IAccountDetailsResolver], (service: IAccountDetailsResolver) => {
+    it('should be created', inject([AccountDetailsResolver], (service: AccountDetailsResolver) => {
         expect(service).toBeTruthy();
     }));
 });

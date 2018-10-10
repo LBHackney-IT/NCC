@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
-import { IAccountDetailsResolver } from './resolvers/account-details-resolver.service';
+import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
@@ -116,7 +116,7 @@ import { CurrentCallerComponent } from './components/current-caller/current-call
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
-        IAccountDetailsResolver,
+        AccountDetailsResolver,
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,
