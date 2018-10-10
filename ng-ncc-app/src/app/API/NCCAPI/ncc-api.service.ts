@@ -6,7 +6,7 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 import * as moment from 'moment';
 
 import { CRMServiceRequest } from '../../interfaces/crmservicerequest.interface';
-import { JSONResponse } from '../../interfaces/json-response.interface';
+import { IJSONResponse } from '../../interfaces/json-response';
 import { NCCNote } from '../../interfaces/ncc-note.interface';
 import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
@@ -47,7 +47,7 @@ export class NCCAPIService {
         return this.http
             .post(`${this._url}CRM/CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
             .pipe(
-                map((data: JSONResponse) => {
+                map((data: IJSONResponse) => {
                     return data.response.servicerequest as CRMServiceRequest;
                 })
             );
@@ -107,7 +107,7 @@ export class NCCAPIService {
 
         return this.http
             .get(`${this._url}CRM/GetAllNCCInteractions?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: JSONResponse) => {
+            .pipe(map((data: IJSONResponse) => {
                 return data ? data.results as NCCNote[] : [];
             }));
     }
@@ -123,7 +123,7 @@ export class NCCAPIService {
 
         return this.http
             .get(`${this._url}UH/GetAllActionDiaryAndNotes?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: JSONResponse) => {
+            .pipe(map((data: IJSONResponse) => {
                 // data should be an array with a single item, representing all the notes associated with the CRM contact ID.
                 const rows = data[0];
                 if (!rows) {
@@ -186,7 +186,7 @@ export class NCCAPIService {
 
         return this.http
             .get(`${this._url}CRM/GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: JSONResponse) => {
+            .pipe(map((data: IJSONResponse) => {
                 return JSON.parse(data.response.communicationdetails) as ContactDetailsUpdate;
             }));
     }

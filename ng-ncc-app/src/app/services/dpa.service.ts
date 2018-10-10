@@ -38,21 +38,21 @@ export class DPAService {
      *
      */
     getTenancyReference(): string {
-        return this._tenancy.tenancy_reference;
+        return this._tenancy ? this._tenancy.tenancy_reference : null;
     }
 
     /**
      *
      */
-    getTenancyRentBalance(): string {
-        return this._tenancy.rent_balance;
+    getTenancyRentBalance(): number {
+        return this._tenancy ? this._tenancy.rent_balance : null;
     }
 
     /**
      *
      */
-    getTenancyRentAmount(): string {
-        return this._tenancy.rent_amount;
+    getTenancyRentAmount(): number {
+        return this._tenancy ? this._tenancy.rent_amount : null;
     }
 
 }

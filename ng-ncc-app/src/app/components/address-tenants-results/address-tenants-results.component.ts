@@ -73,21 +73,23 @@ export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
      *
      */
     getTenancyDPAReference(): string {
-        return this.DPA.getTenancyReference() || '...';
+        return this.DPA.getTenancyReference();
     }
 
     /**
      *
      */
     getTenancyDPABalance(): string {
-        return this.DPA.getTenancyRentBalance() || '...';
+        const result = this.DPA.getTenancyRentBalance();
+        return result ? result.toString() : null;
     }
 
     /**
      *
      */
     getTenancyDPARent(): string {
-        return this.DPA.getTenancyRentAmount() || '...';
+        const result = this.DPA.getTenancyRentAmount();
+        return result ? result.toString() : null;
     }
 
     /**

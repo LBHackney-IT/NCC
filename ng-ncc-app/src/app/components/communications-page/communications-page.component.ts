@@ -9,7 +9,7 @@ import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CallService } from '../../services/call.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { ContactDetails } from '../../classes/contact-details.class';
+import { IContactDetails } from '../../classes/contact-details.class';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
 import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';

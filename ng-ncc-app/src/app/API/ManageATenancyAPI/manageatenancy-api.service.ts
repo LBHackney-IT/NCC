@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, of, from } from 'rxjs';
 
-import { JSONResponse } from '../../interfaces/json-response.interface';
+import { IJSONResponse } from '../../interfaces/json-response';
 import { IAccountDetails } from '../../interfaces/account-details';
-import { ContactDetails } from '../../interfaces/contact-details.interface';
+import { IContactDetails } from '../../interfaces/contact-details';
 import { Transaction } from '../../interfaces/transaction.interface';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class ManageATenancyAPIService {
         return this.http
             .get(`${this._url}/Accounts/AccountDetailsByContactId?contactid=${crm_contact_id}`)
             .pipe(
-                map((data: JSONResponse) => {
+                map((data: IJSONResponse) => {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
                     const details: IAccountDetails = Array.from(data.results)[0];
@@ -54,7 +54,7 @@ export class ManageATenancyAPIService {
             .get(`${this._url}/Contacts/GetContactDetails?contactid=${crm_contact_id}`)
             .pipe(
                 map((data) => {
-                    return data as ContactDetails;
+                    return data as IContactDetails;
                 },
                     (error) => {
                         console.log('Error fetching account details:', error);
@@ -70,7 +70,7 @@ export class ManageATenancyAPIService {
         return this.http
             .get(`${this._url}/Transactions?tagReference=${tenancy_reference}`)
             .pipe(
-                map((data: JSONResponse) => {
+                map((data: IJSONResponse) => {
                     const details: Transaction[] = Array.from(data.results);
 
                     return details;
