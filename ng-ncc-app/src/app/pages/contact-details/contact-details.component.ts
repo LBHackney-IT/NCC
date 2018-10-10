@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { ContactDetails } from '../../interfaces/contact-details.interface';
+import { IContactDetails } from '../../interfaces/contact-details';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
@@ -25,7 +25,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     _saving: boolean;
 
     details: {
-        original: ContactDetails,
+        original: IContactDetails,
         update: ContactDetailsUpdate
     };
 
@@ -57,7 +57,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     /**
      * Populates our form model with the identified caller's existing details.
      */
-    _buildDetails(details: ContactDetails) {
+    _buildDetails(details: IContactDetails) {
         this.details.original = details;
         // this.details.update = new ContactDetailsUpdate;
 

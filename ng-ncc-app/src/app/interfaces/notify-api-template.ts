@@ -1,4 +1,4 @@
-export interface NotifyAPITemplate {
+export interface INotifyAPITemplate {
     id: string;
     name: string;
     subject: string;

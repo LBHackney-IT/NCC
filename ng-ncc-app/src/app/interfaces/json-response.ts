@@ -1,5 +1,5 @@
 // A basic interface for JSON responses.
-export interface JSONResponse {
+export interface IJSONResponse {
     result?: Array<any>;
     results?: Array<any>; // we should have consistency...
     response?: any;

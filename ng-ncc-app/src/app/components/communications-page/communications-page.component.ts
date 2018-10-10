@@ -4,18 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AccountDetails } from '../../interfaces/account-details.interface';
+import { IAccountDetails } from '../../interfaces/account-details';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CallService } from '../../services/call.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { ContactDetails } from '../../classes/contact-details.class';
+import { IContactDetails } from '../../classes/contact-details.class';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
-import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
-import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
+import { ITemplatePreviewSettings } from '../../interfaces/template-preview-settings';
+import { INotifyAPIJSONResult } from '../../interfaces/notify-api-json-result';
 import { CONTACT } from '../../constants/contact.constant';
-import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
+import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { UHTriggerService } from '../../services/uhtrigger.service';
 
 @Component({
@@ -28,12 +28,12 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
 
     CONTACT_METHOD = CONTACT;
     _sending: boolean;
-    account_details: AccountDetails;
+    account_details: IAccountDetails;
     caller: IdentifiedCaller;
     comms_options: CommsOption[];
     selected_option: CommsOption;
     selected_details: CommsSelection;
-    preview: TemplatePreviewSettings;
+    preview: ITemplatePreviewSettings;
     modal: { [propKey: string]: boolean };
 
     constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private UHTrigger: UHTriggerService,

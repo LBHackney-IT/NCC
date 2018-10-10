@@ -3,11 +3,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
-import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
-import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
+import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
-import { Caller } from '../../interfaces/caller.interface';
+import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
 import { Router } from '@angular/router';
 
@@ -24,8 +24,8 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     existing_call: boolean;
     searching: boolean;
     postcode: string;
-    results: CitizenIndexSearchResult[];
-    selected_address: AddressSearchGroupedResult;
+    results: ICitizenIndexSearchResult[];
+    selected_address: IAddressSearchGroupedResult;
 
     constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService) { }
 
@@ -83,7 +83,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     /**
      * Called when an address is selected from search results.
      */
-    addressSelected(result: AddressSearchGroupedResult) {
+    addressSelected(result: IAddressSearchGroupedResult) {
         this.selected_address = result;
     }
 

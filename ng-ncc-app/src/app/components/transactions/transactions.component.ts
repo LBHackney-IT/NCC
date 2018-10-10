@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
-import { Transaction } from '../../interfaces/transaction.interface';
+import { ITransaction } from '../../interfaces/transaction';
 
 @Component({
     selector: 'app-transactions',
@@ -21,8 +21,8 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
     private _destroyed$ = new Subject();
 
     _loading: boolean;
-    _rows: Transaction[];
-    _filtered: Transaction[];
+    _rows: ITransaction[];
+    _filtered: ITransaction[];
     _period = 'six-months';
     _period_options = [
         { key: 'six-months', label: 'Last 6 months' },
@@ -64,7 +64,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
     /**
      *
      */
-    trackByMethod(index: number, item: Transaction): string {
+    trackByMethod(index: number, item: ITransaction): string {
         return item.transactionID;
     }
 
