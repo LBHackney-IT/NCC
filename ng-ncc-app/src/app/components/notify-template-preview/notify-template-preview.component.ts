@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
-import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
+import { ITemplatePreviewSettings } from '../../interfaces/template-preview-settings';
 
 @Component({
     selector: 'app-notify-template-preview',
@@ -11,8 +11,8 @@ import { TemplatePreviewSettings } from '../../interfaces/template-preview-setti
     styleUrls: ['./notify-template-preview.component.scss']
 })
 export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() settings: TemplatePreviewSettings;
-    @Output() settingsChange = new EventEmitter<TemplatePreviewSettings>();
+    @Input() settings: ITemplatePreviewSettings;
+    @Output() settingsChange = new EventEmitter<ITemplatePreviewSettings>();
 
     private _destroyed$ = new Subject();
 

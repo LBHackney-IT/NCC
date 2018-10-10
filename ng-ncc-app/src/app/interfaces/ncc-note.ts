@@ -1,4 +1,4 @@
-export interface NCCNote {
+export interface INCCNote {
     interactionId: string;
     serviceRequestId: string;
     ticketNumber: string;

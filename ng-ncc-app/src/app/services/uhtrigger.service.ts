@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { CONTACT } from '../constants/contact.constant';
 import { CallService } from './call.service';
-import { Caller } from '../interfaces/caller.interface';
+import { ICaller } from '../interfaces/caller';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ export class UHTriggerService {
 
     constructor(private Call: CallService) { }
 
-    _getCaller(): Caller {
+    _getCaller(): ICaller {
         return this.Call.getCaller();
     }
 

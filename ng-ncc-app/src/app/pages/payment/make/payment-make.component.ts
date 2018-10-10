@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AccountDetails } from '../../../interfaces/account-details.interface';
+import { IAccountDetails } from '../../../interfaces/account-details';
 import { UHTriggerService } from '../../../services/uhtrigger.service';
 import { CallService } from '../../../services/call.service';
 
@@ -16,7 +16,7 @@ export class PagePaymentMakeComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    account_details: AccountDetails;
+    account_details: IAccountDetails;
     show_confirm: boolean;
     form = {
         to_pay: null

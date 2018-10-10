@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
-import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
+import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 
 @Component({
@@ -9,7 +9,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
     styleUrls: ['./address-tenants-results.component.scss']
 })
 export class AddressTenantsResultsComponent implements OnChanges {
-    @Input() address: AddressSearchGroupedResult;
+    @Input() address: IAddressSearchGroupedResult;
     @Input() showBackButton: boolean;
 
     // When a tenant is selected and the Continue button is hit.

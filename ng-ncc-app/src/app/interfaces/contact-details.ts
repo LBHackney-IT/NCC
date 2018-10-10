@@ -1,4 +1,4 @@
-export interface ContactDetails {
+export interface IContactDetails {
     contactId: string;
     emailAddress: string;
     uprn: string;

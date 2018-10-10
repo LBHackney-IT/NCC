@@ -1,15 +1,15 @@
-import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
+import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 
 export class PageLogCallNature {
 
-    selected: LogCallSelection;
+    selected: ILogCallSelection;
 
     /**
      *
      */
-    selectedCallNature(selection: LogCallSelection) {
+    selectedCallNature(selection: ILogCallSelection) {
         this.selected = selection;
     }
 
@@ -17,7 +17,7 @@ export class PageLogCallNature {
      *
      */
     selectionExists(): boolean {
-        return this.selected instanceof LogCallSelection;
+        return this.selected instanceof ILogCallSelection;
     }
 
     /**
