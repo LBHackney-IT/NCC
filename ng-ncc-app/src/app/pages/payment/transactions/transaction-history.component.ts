@@ -49,7 +49,7 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
                 takeUntil(this._destroyed$)
             )
             .subscribe((data) => {
-                // this.account_details = data.accountDetails;
+                // this.account_details = data.IAccountDetails;
                 this.filterByDate();
                 this.filterTransactions();
             });

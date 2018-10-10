@@ -1,6 +1,7 @@
 import { ICaller } from '../interfaces/caller';
 import { ICitizenIndexSearchResult } from '../interfaces/citizen-index-search-result';
 import { ContactAddress } from '../classes/contact-address.class';
+import * as moment from 'moment';
 
 /**
  * This class represents an identified caller, as selected from the Identify page.
@@ -59,6 +60,14 @@ export class IdentifiedCaller implements ICaller {
      */
     getEmailAddresses(): string[] {
         return [this._details.emailAddress].filter((n) => null !== n);
+    }
+
+    getDateOfBirth(): string | null {
+        if (this._details.dateOfBirth) {
+            const date = moment(this._details.dateOfBirth, 'YYYY-MM-DD');
+            return date.format('DD/MM/YYYY');
+        }
+        return null;
     }
 
     /**

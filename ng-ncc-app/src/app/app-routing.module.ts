@@ -19,7 +19,7 @@ import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
-import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
+import { IAccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
     // {

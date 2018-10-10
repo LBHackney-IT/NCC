@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { DPAService } from '../../services/dpa.service';
 
 @Component({
     selector: 'app-address-tenants-results',
@@ -27,6 +28,12 @@ export class AddressTenantsResultsComponent implements OnChanges {
     // A list of tenants under the address passed to this component.
     tenants: IdentifiedCaller[];
 
+    crm_contact_id: string;
+
+    private _destroyed$ = new Subject();
+
+    constructor(private DPA: DPAService) { }
+
     ngOnChanges() {
         this._selected = null;
         if (this.address) {
@@ -39,9 +46,48 @@ export class AddressTenantsResultsComponent implements OnChanges {
             if (1 === this.tenants.length) {
                 this._selected = this.tenants[0];
             }
+
+            this.getDPAAnswers();
         }
     }
 
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    getDPAAnswers() {
+        this.crm_contact_id = this.tenants[0].getContactID();
+    }
+
+    /**
+     *
+     */
+    getTenancyDPAReference(): string {
+        return this.DPA.getTenancyReference();
+    }
+
+    /**
+     *
+     */
+    getTenancyDPABalance(): string {
+        const result = this.DPA.getTenancyRentBalance();
+        return result ? result.toString() : null;
+    }
+
+    /**
+     *
+     */
+    getTenancyDPARent(): string {
+        const result = this.DPA.getTenancyRentAmount();
+        return result ? result.toString() : null;
+    }
+
+    /**
+     *
+     */
     trackByMethod(index: number, item: IdentifiedCaller): number {
         return index;
     }

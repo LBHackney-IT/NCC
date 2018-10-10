@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommsOption } from '../../../classes/comms-option.class';
 import { CommunicationsPageComponent } from '../../../components/communications-page/communications-page.component';
+import { DPAService } from '../../../services/dpa.service';
 
 @Component({
     selector: 'app-communications',

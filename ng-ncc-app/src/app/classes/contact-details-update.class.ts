@@ -15,7 +15,7 @@ export class ContactDetailsUpdate {
         telephone: string;
     };
 
-    // TODO construct from a ICaller?
+    // TODO construct from an ICaller?
     constructor() {
         this.default = {
             email: null,

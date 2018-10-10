@@ -73,7 +73,7 @@ export class UHTriggerService {
         call_reason = call_reason.toLowerCase();
         template = template.toLowerCase();
 
-        let observable: Observable<void>;
+        let observable: Observable<any>;
 
         switch (template) {
             case 'dpa: rent statement (with balance)':

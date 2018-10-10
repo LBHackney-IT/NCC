@@ -36,7 +36,7 @@ export class PagePaymentMakeComponent implements OnInit, OnDestroy {
                 takeUntil(this._destroyed$)
             )
             .subscribe((data) => {
-                // this.account_details = data.accountDetails;
+                // this.account_details = data.IAccountDetails;
             });
     }
 
