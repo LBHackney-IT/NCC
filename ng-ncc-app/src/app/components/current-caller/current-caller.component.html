@@ -1,0 +1,4 @@
+<div class="caller govuk-body" *ngIf="Call.hasCaller()"
+    [class.caller--is-anonymous]="!Call.isCallerIdentified()">
+    <b>Caller:</b> {{ getCallerName() }}
+</div>
