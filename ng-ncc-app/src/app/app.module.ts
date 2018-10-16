@@ -59,6 +59,7 @@ import { CallNatureComponent } from './components/call-nature/call-nature.compon
 import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 import { LastCallsComponent } from './components/last-calls/last-calls.component';
+import { EditorialComponent } from './components/editorial/editorial.component';
 
 @NgModule({
     declarations: [
@@ -107,6 +108,7 @@ import { LastCallsComponent } from './components/last-calls/last-calls.component
         ValueListLabelComponent,
         ValueListValueComponent,
         LastCallsComponent,
+        EditorialComponent,
     ],
     imports: [
         BrowserModule,

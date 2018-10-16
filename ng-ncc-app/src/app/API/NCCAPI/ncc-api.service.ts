@@ -207,6 +207,29 @@ export class NCCAPIService {
     }
 
     /**
+     * Fetches editorial text.
+     */
+    getEditorial(): Observable<string> {
+        return this.http
+            .get(`${this._url}CRM/GetEditorialDetails`, {})
+            .pipe(map((data: IJSONResponse) => {
+                return data.response.contents;
+            }));
+    }
+
+    /**
+     * Updates editorial text.
+     */
+    setEditorial(new_content: string) {
+        const parameters = {
+            content: new_content
+        };
+
+        return this.http
+            .post(`${this._url}CRM/SetEditorialDetails?${this._buildQueryString(parameters)}`, {});
+    }
+
+    /**
      * TODO create a generic API service class with this method.
      */
     _buildQueryString(parameters: { [propKey: string]: any }): string {
