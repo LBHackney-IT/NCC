@@ -20,5 +20,7 @@ $page-footer-z-index: 10 !default;
 
     a {
         color: $page-footer-link-colour;
+        display: inline-block;
+        margin: .2rem .5rem;
     }
 }
