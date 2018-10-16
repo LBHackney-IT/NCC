@@ -5,7 +5,9 @@
     <select class="govuk-select govuk-!-width-one-half" id="form" name="form"
         [(ngModel)]="_selected" (ngModelChange)="selectedTemplate()" [disabled]="_loading">
         <option [ngValue]="null">- select</option>
-        <option *ngFor="let option of _options; trackBy: trackByMethod" [ngValue]="option">{{ option.displayName }}</option>
+        <option *ngFor="let option of _options; trackBy: trackByMethod" [ngValue]="option" [disabled]="matchesExcluded(option)">
+            {{ option.displayName }}
+        </option>
     </select>
 
     <app-helper class="govuk-!-margin-left-3" title="">
