@@ -40,12 +40,20 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
         color: $navigation-menu-item-link-colour;
         background: inherit;
         text-decoration: none;
+
+        &[disabled] {
+            pointer-events: none;
+            cursor: default;
+        }
     }
     // Item hover state.
     a:hover,
     label:hover {
-        border-left-color: #2b8cc4;
+        &:not([disabled]) {
+            border-left-color: #2b8cc4;
+        }
     }
+
     // Active item state.
     &--active > {
         a,

@@ -68,4 +68,18 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
         this.selected.emit(this._selected);
     }
 
+    /**
+     * A crude method of disabling certain comms methods.
+     */
+    matchesExcluded(option: CommsOption): boolean {
+        switch (option.displayName.toLowerCase()) {
+            case 'right to buy':
+            case 'standing order (major works)':
+            case 'standing order (service charge)':
+                return true;
+        }
+
+        return false;
+    }
+
 }
