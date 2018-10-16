@@ -40,4 +40,11 @@ export class LastCallsComponent implements OnInit, OnDestroy {
         this._destroyed$.next();
     }
 
+    /**
+     *
+     */
+    trackByIndex(index: number, item: {}): number {
+        return index;
+    }
+
 }
