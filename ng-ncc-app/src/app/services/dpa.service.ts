@@ -32,12 +32,14 @@ export class DPAService {
         return this.ManageATenancyAPI.getAccountDetails(crm_contact_id)
             .pipe(
                 map((data: IAccountDetails) => {
-                    this._tenancy = {
-                        rent_balance: -data.currentBalance,
-                        rent_amount: data.rent,
-                        tenancy_reference: data.tagReferenceNumber
-                    };
-                    this._crm_contact_id = crm_contact_id;
+                    if (data) {
+                        this._tenancy = {
+                            rent_balance: -parseFloat(data.currentBalance, 10),
+                            rent_amount: data.rent,
+                            tenancy_reference: data.tagReferenceNumber
+                        };
+                        this._crm_contact_id = crm_contact_id;
+                    }
                 })
             );
     }

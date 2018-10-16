@@ -34,9 +34,7 @@ export class ManageATenancyAPIService {
                 map((data: IJSONResponse) => {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
-                    const details: IAccountDetails = Array.from(data.results)[0];
-
-                    return details;
+                    return <IAccountDetails>data.results;
                 },
                     (error) => {
                         console.log('Error fetching account details:', error);
