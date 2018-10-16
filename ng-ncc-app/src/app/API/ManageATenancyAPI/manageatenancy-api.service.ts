@@ -31,10 +31,10 @@ export class ManageATenancyAPIService {
         return this.http
             .get(`${this._url}/Accounts/AccountDetailsByContactId?contactid=${crm_contact_id}`)
             .pipe(
-                map((data: IJSONResponse) => {
+                map((data: any) => {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
-                    return <IAccountDetails>data.results;
+                    return data.results as IAccountDetails;
                 },
                     (error) => {
                         console.log('Error fetching account details:', error);
