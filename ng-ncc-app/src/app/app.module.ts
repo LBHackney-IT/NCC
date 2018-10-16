@@ -58,6 +58,7 @@ import { ValueListValueComponent } from './components/value-list/value-list-valu
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
+import { LastCallsComponent } from './components/last-calls/last-calls.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
 
 @NgModule({
@@ -106,6 +107,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         ValueListComponent,
         ValueListLabelComponent,
         ValueListValueComponent,
+        LastCallsComponent,
         EditorialComponent,
     ],
     imports: [
