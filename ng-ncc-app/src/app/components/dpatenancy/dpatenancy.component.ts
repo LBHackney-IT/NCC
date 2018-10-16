@@ -20,7 +20,7 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
      *
      */
     ngOnInit() {
-        this.DPA.build(this.crmContactID)
+        this.DPA.buildAnswers(this.crmContactID)
             .pipe(
                 takeUntil(this._destroyed$)
             )

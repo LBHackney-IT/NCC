@@ -89,10 +89,11 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
+    * Called when a comms form (GOV.UK Notify template) is selected.
      */
     selectedOption(option: CommsOption) {
         this.selected_option = option;
+        this.updatePreview();
     }
 
     /**

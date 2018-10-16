@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
+import { Observable, forkJoin, of, from } from 'rxjs';
 
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 
@@ -17,7 +17,7 @@ export class DPAService {
 
     constructor(private ManageATenancyAPI: ManageATenancyAPIService) { }
 
-    build(crm_contact_id: string) {
+    buildAnswers(crm_contact_id: string) {
         // Tenancy information to obtain:
         // - current balance (multiply by -1);
         // - rent amount;
@@ -26,7 +26,7 @@ export class DPAService {
 
         if (this._crm_contact_id === crm_contact_id) {
             // We are fetching, or already have, DPA information for this CRM contact ID.
-            return of(); // Observable.of()
+            return of(null); // Observable.of()
         }
 
         return this.ManageATenancyAPI.getAccountDetails(crm_contact_id)
