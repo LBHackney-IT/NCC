@@ -12,10 +12,10 @@
         <label class="govuk-label" for="editorial">
             Editorial text
         </label>
-        <textarea class="govuk-textarea" id="editorial" name="editorial" rows="5" [(ngModel)]="new_content"></textarea>
+        <textarea class="govuk-textarea" id="editorial" name="editorial" rows="5" [(ngModel)]="new_content" [disabled]="saving"></textarea>
     </div>
 
-    <button class="govuk-button govuk-!-margin-right-2" type="button" name="button" (click)="saveText()">Update</button>
+    <button class="govuk-button govuk-!-margin-right-2" type="button" name="button" (click)="saveText()" [disabled]="saving">Update</button>
     <button class="govuk-button" type="button" name="button" (click)="resetText()">Cancel</button>
 
 </form>
