@@ -5,6 +5,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
+import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
 import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
@@ -31,6 +32,11 @@ export const AppRoutes: Routes = [
         // Playground page (for testing things).
         path: 'playground',
         component: PagePlaygroundComponent
+    },
+    {
+        // last x Calls page.
+        path: 'last-calls',
+        component: PageLastCallsComponent
     },
     {
         // Log Call page.
@@ -123,13 +129,13 @@ export const AppRoutes: Routes = [
     {
         // Empty path (which should go to the home page).
         path: '',
-        redirectTo: '/log-call',
+        redirectTo: '/last-calls',
         pathMatch: 'full'
     },
     {
         // Catch-all (which should go to the home page).
         path: '**',
-        redirectTo: '/log-call'
+        redirectTo: '/last-calls'
     }
 ];
 
