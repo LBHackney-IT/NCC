@@ -192,6 +192,21 @@ export class NCCAPIService {
     }
 
     /**
+     *
+     */
+    getLastCalls(count: number) {
+        const parameters = {
+            XCalls: count
+        };
+
+        return this.http
+            .get(`${this._url}CRM/GetLastXCalls?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: IJSONResponse) => {
+                return data[0];
+            }));
+    }
+
+    /**
      * Fetches editorial text.
      */
     getEditorial(): Observable<string> {
