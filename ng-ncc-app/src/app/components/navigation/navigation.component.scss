@@ -8,15 +8,18 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
 $navigation-menu-separator-colour: #CCC !default;
 
 ////////////////////
+
 @import "~govuk-frontend/settings/media-queries";
+
 // The "navigation" sidebar is set to be hidden if the screen is narrower than a typical tablet device.
+
 :host {
     // This selector targets the host (i.e. <app-navigation/>).
     border-right: $navigation-border-width solid $navigation-border-colour;
     display: none;
     flex-basis: 25%;
     max-width: $navigation-max-width;
-    overflow: hidden;
+    overflow: auto;
     padding: $navigation-padding;
     @media screen and (min-width: map-get($govuk-breakpoints, 'desktop')) {
         display: initial;
