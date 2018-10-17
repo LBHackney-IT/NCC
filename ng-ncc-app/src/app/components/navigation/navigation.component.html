@@ -5,7 +5,8 @@
         </li>
         <li class="navigation__separator"></li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/log-call">Start New Call</a>
+            <a routerLink="/log-call" *ngIf="isCallActive()" disabled>Start New Call</a>
+            <a routerLink="/log-call" *ngIf="!isCallActive()">Start New Call</a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a routerLink="/caller-details">Caller Identification</a>
