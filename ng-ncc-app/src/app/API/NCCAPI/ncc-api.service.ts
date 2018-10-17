@@ -138,10 +138,10 @@ export class NCCAPIService {
                     let date;
                     if (NOTES.TYPE_ACTION_DIARY === row.notesType) {
                         // Action Diary entries have a preformatted date, but moment.js can't interpret it without help.
-                        date = moment(row.createdOn, 'DD/MM/YYYY hh:mm');
+                        date = moment(row.createdOn, 'DD/MM/YYYY HH:mm');
                     } else {
                         date = moment(row.createdOn);
-                        row.createdOn = date.format('DD/MM/YYYY hh:mm');
+                        row.createdOn = date.format('DD/MM/YYYY HH:mm');
                     }
 
                     // We also want the date formatted differently for sorting purposes.
