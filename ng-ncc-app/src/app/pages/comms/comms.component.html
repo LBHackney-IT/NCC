@@ -34,7 +34,7 @@
 
             <!-- Send the message to the caller. -->
             <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
-                Send
+                {{ getSendButtonText() }}
             </button>
 
             <!-- Confirmation modal. -->
