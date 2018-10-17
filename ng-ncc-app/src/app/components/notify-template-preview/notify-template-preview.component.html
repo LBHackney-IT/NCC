@@ -14,7 +14,7 @@
         <!-- Fields for any customisable text. -->
         <div class="govuk-form-group" *ngFor="let label of getPlaceholders(); trackBy: trackByMethod">
             <label class="govuk-label" for="preview-ph-{{ label }}">
-                {{ label }}
+                {{ sanitiseLabel(label) }}
             </label>
             <input class="govuk-input" id="preview-ph-{{ label }}" [name]="label" type="text" [(ngModel)]="settings.parameters[label]">
         </div>
