@@ -30,6 +30,8 @@ export class NCCAPIService {
     NOTE_TYPE_MANUAL = 2;
 
     _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/';
+    // _url = 'https://api.hackney.gov.uk/lbhnccapi/api/';
+    // TODO configure the host based on the build settings.
 
     constructor(private http: HttpClient) { }
 

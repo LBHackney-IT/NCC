@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { ITemplatePreviewSettings } from '../../interfaces/template-preview-settings';
+import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
 
 @Component({
     selector: 'app-notify-template-preview',
@@ -17,13 +18,12 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
     private _destroyed$ = new Subject();
 
     _loading: boolean;
-    preview: string;
+    preview: INotifyAPITemplate;
 
     constructor(private NotifyAPI: NotifyAPIService) { }
 
     ngOnInit() {
         this._loading = false;
-        this.preview = 'testing';
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -90,14 +90,27 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
      * Returns a list of labels representing placeholders.
      */
     getPlaceholders(): string[] {
+        // Make sure we have a preview before continuing!
+        if (!this.preview) {
+            return;
+        }
+
         // const regex = new RegExp('\(\(([A-za-z0-9 ]+)\)\)', 'gm');
         const regex = /\(\(([A-za-z0-9 ]+)\)\)/gm;
-        const matches = regex.exec(this.preview);
-        let placeholders: string[];
-        placeholders = [];
-        if (matches) {
-            placeholders.push(matches[1]);
+        const placeholders: string[] = [];
+
+        // Placeholders in the subject.
+        const subject_matches = regex.exec(this.preview.subject);
+        if (subject_matches) {
+            placeholders.push(subject_matches[1]);
         }
+
+        // Placeholders in the body.
+        const body_matches = regex.exec(this.preview.body);
+        if (body_matches) {
+            placeholders.push(body_matches[1]);
+        }
+
         return placeholders;
     }
 
@@ -105,7 +118,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
      *
      */
     getCustomisedPreview(): string {
-        let preview = this.preview;
+        let preview = this.preview.body;
         if (this.settings && this.settings.parameters) {
             // Replace any placeholders in the template with our custom values.
             const values: { placeholder: string, value: string }[] = Object.keys(this.settings.parameters)
