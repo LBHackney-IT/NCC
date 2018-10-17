@@ -16,6 +16,8 @@ import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search
 export class HackneyAPIService {
 
     _url = 'https://sandboxapi.hackney.gov.uk/hackneyapi';
+    // _url = 'https://api.hackney.gov.uk';
+    // TODO configure the host based on the build settings.
 
     constructor(private http: HttpClient) { }
 
