@@ -21,6 +21,8 @@ export class ManageATenancyAPIService {
     // TODO these API services can extend a general class.
 
     _url = 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1';
+    // _url = 'https://api.hackney.gov.uk/manageatenancy/v1';
+    // TODO configure the host based on the build settings.
 
     constructor(private http: HttpClient) { }
 
