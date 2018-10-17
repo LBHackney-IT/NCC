@@ -6,11 +6,11 @@ import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { ILastCall } from '../../interfaces/last-call';
 
 @Component({
-    selector: 'app-last-calls',
+    selector: 'app-last-calls-list',
     templateUrl: './last-calls.component.html',
     styleUrls: ['./last-calls.component.scss']
 })
-export class LastCallsComponent implements OnInit, OnDestroy {
+export class LastCallsListComponent implements OnInit, OnDestroy {
     @Input() count: number;
 
     calls: ILastCall[];
@@ -38,6 +38,13 @@ export class LastCallsComponent implements OnInit, OnDestroy {
      */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByIndex(index: number, item: {}): number {
+        return index;
     }
 
 }

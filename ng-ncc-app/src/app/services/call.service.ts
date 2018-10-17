@@ -99,7 +99,7 @@ export class CallService {
             )
                 .pipe(
                     map(data => {
-                        return { call: <ICRMServiceRequest>data[0], account: <IAccountDetails>data[1] };
+                        return { call: <ICRMServiceRequest>data[0], account: data[1] };
                     })
                 )
                 .subscribe(
