@@ -1,7 +1,8 @@
 .link-button {
     @extend .govuk-button;
 
-    box-shadow: 0 $govuk-border-width-form-element 0 $govuk-border-colour;
+    // box-shadow: 0 $govuk-border-width-form-element 0 $govuk-border-colour;
+    box-shadow: 0 $govuk-border-width-form-element 0 transparent;
     color: $govuk-text-colour;
     background-color: govuk-colour('white');
     border: 2px solid $govuk-border-colour;

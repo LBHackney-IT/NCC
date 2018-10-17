@@ -69,11 +69,11 @@ export class NotifyAPIService {
     /**
      * Returns a preview of a specified GOV.UK Notify template.
      */
-    getTemplatePreview(template_id: string, version: number = 1) {
+    getTemplatePreview(template_id: string, version: number = 1): Observable<INotifyAPITemplate> {
         return this.http
             .get(`${this._url}/GetTemplateByIdAndVersion?TemplateId=${template_id}&Version=${version}`)
             .pipe(
-                map((data: INotifyAPIJSONResult) => data.response.body)
+                map((data: INotifyAPIJSONResult) => data.response)
             );
     }
 

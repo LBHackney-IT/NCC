@@ -5,16 +5,21 @@ $navigation-padding: 1rem !default;
 $navigation-menu-item-link-colour: #005EA5 !default;
 $navigation-menu-item-active-bg-colour: #F8F8F8 !default;
 $navigation-menu-item-active-line-colour: #005EA5 !default;
+$navigation-menu-separator-colour: #CCC !default;
+
 ////////////////////
+
 @import "~govuk-frontend/settings/media-queries";
+
 // The "navigation" sidebar is set to be hidden if the screen is narrower than a typical tablet device.
+
 :host {
     // This selector targets the host (i.e. <app-navigation/>).
     border-right: $navigation-border-width solid $navigation-border-colour;
     display: none;
     flex-basis: 25%;
     max-width: $navigation-max-width;
-    overflow: hidden;
+    overflow: auto;
     padding: $navigation-padding;
     @media screen and (min-width: map-get($govuk-breakpoints, 'desktop')) {
         display: initial;
@@ -98,4 +103,15 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
         display: none;
     }
     // -------------------------------------------------------------------------
+}
+
+.navigation__separator {
+    margin: 1rem 0;
+    &:before {
+        content: "";
+        display: block;
+        height: 2px;
+        width: 50%;
+        background-color: $navigation-menu-separator-colour;
+    }
 }
