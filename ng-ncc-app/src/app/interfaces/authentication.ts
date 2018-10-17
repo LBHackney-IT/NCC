@@ -5,4 +5,5 @@ export interface IAuthentication {
     useremail: string | null;
     success: boolean;
     message: string | null;
+    roles: string[] | null;
 }
