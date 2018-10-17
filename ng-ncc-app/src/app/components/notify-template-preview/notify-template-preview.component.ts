@@ -57,6 +57,18 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
     }
 
     /**
+     * Sanitise the label used for customisation fields.
+     * This was added for the benefit of fields such as "2Free Type" as defined on GOV.UK Notify.
+     */
+    sanitiseLabel(label: string): string {
+        const result = label.match(/^[0-9]*(.*)/); // Does the label begin with a number?
+        if (result.length) {
+            return result[1];
+        }
+        return label;
+    }
+
+    /**
      *
      */
     updatePreview() {
