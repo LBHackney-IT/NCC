@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
@@ -29,9 +31,7 @@ export class NCCAPIService {
     NOTE_TYPE_AUTOMATIC = 1;
     NOTE_TYPE_MANUAL = 2;
 
-    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/';
-    // _url = 'https://api.hackney.gov.uk/lbhnccapi/api/';
-    // TODO configure the host based on the build settings.
+    _url = environment.api.ncc;
 
     constructor(private http: HttpClient) { }
 

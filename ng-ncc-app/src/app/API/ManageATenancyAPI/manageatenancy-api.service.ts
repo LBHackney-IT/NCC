@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -20,9 +22,7 @@ export class ManageATenancyAPIService {
 
     // TODO these API services can extend a general class.
 
-    _url = 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1';
-    // _url = 'https://api.hackney.gov.uk/manageatenancy/v1';
-    // TODO configure the host based on the build settings.
+    _url = environment.api.manageATenancy;
 
     constructor(private http: HttpClient) { }
 

@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -15,9 +17,7 @@ import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search
 
 export class HackneyAPIService {
 
-    _url = 'https://sandboxapi.hackney.gov.uk/hackneyapi';
-    // _url = 'https://api.hackney.gov.uk';
-    // TODO configure the host based on the build settings.
+    _url = environment.api.hackney;
 
     constructor(private http: HttpClient) { }
 
