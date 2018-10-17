@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
@@ -19,7 +21,7 @@ import { CONTACT } from '../../constants/contact.constant';
  */
 export class NotifyAPIService {
 
-    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier';
+    _url = environment.api.notify;
 
     constructor(private http: HttpClient) { }
 
