@@ -5,6 +5,7 @@ $navigation-padding: 1rem !default;
 $navigation-menu-item-link-colour: #005EA5 !default;
 $navigation-menu-item-active-bg-colour: #F8F8F8 !default;
 $navigation-menu-item-active-line-colour: #005EA5 !default;
+$navigation-menu-separator-colour: #CCC !default;
 
 ////////////////////
 
@@ -102,4 +103,15 @@ $navigation-menu-item-active-line-colour: #005EA5 !default;
         display: none;
     }
     // -------------------------------------------------------------------------
+}
+
+.navigation__separator {
+    margin: 1rem 0;
+    &:before {
+        content: "";
+        display: block;
+        height: 2px;
+        width: 50%;
+        background-color: $navigation-menu-separator-colour;
+    }
 }
