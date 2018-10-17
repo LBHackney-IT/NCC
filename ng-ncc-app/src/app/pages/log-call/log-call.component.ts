@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
+import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 import { CallService } from '../../services/call.service';
@@ -13,13 +13,18 @@ import { PageLogCallNature } from '../abstract/log-call-nature';
     styleUrls: ['./log-call.component.css']
 })
 
-export class PageLogCallComponent extends PageLogCallNature {
+export class PageLogCallComponent extends PageLogCallNature implements OnInit {
 
     previous_calls: { [propKey: string]: any }[];
 
     constructor(private router: Router, private Call: CallService) {
         super();
     }
+
+    ngOnInit() {
+        this._makePreviousCalls();
+    }
+
     /**
     * This is called when the call type is set/changed, and resets the selected call reason.
     */
@@ -56,5 +61,11 @@ export class PageLogCallComponent extends PageLogCallNature {
         return this.previous_calls;
     }
 
+    /**
+     *
+     */
+    trackByIndex(index: number, item: {}): number {
+        return index;
+    }
 
 }

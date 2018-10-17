@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { CONTACT } from '../constants/contact.constant';
 import { CallService } from './call.service';
-import { Caller } from '../interfaces/caller.interface';
+import { ICaller } from '../interfaces/caller';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ export class UHTriggerService {
 
     constructor(private Call: CallService) { }
 
-    _getCaller(): Caller {
+    _getCaller(): ICaller {
         return this.Call.getCaller();
     }
 
@@ -51,7 +52,18 @@ export class UHTriggerService {
         }
 
         // TODO we would get the information from a successful payment.
-        this.Call.recordActionDiaryNote(`Rent payment taken: £${amount} ref: ${payment_reference}`);
+        const subscription = this.Call.recordNote(`Rent payment taken: £${amount} ref: ${payment_reference}`, true)
+            .subscribe(
+                () => {
+                    console.log('Added an automatic note.');
+                },
+                (error) => {
+                    console.log(error);
+                },
+                () => {
+                    subscription.unsubscribe();
+                }
+            );
     }
 
     /**
@@ -61,50 +73,52 @@ export class UHTriggerService {
         call_reason = call_reason.toLowerCase();
         template = template.toLowerCase();
 
-        switch (call_reason) {
-            // switch (template) {
-            case 'statement':
-                switch (template) {
-                    case 'dpa: rent statement (with balance)':
-                        console.log('A Statement was sent: record Action Diary note.');
-                        this.Call.recordActionDiaryNote('Copy of statement sent');
-                        break;
-                }
+        let observable: Observable<any>;
+
+        switch (template) {
+            case 'dpa: rent statement (with balance)':
+                console.log('A Statement was sent: record Action Diary note.');
+                observable = this.Call.recordNote('Copy of statement sent', true);
                 break;
 
-            case 'refund':
-                switch (template) {
-                    case 'rent refund form':
-                        // A link to a refund form was sent.
-                        console.log('A Refund form link was sent: record Action Diary note.');
-                        this.Call.recordActionDiaryNote('Refund link sent');
-                        break;
-                }
+            case 'rent refund form':
+                // A link to a refund form was sent.
+                console.log('A Refund form link was sent: record Action Diary note.');
+                observable = this.Call.recordNote('Refund link sent', true);
                 break;
 
             case 'payment methods':
-                // A link to payment methods was sent.
-                switch (template) {
-                    case 'payment methods':
-                        console.log('A Payment methods link was sent: record Action Diary note.');
-                        this.Call.recordActionDiaryNote('Copy of statement sent');
-                        break;
+                console.log('A payment methods link was sent: record Action Diary note.');
+                observable = this.Call.recordNote('Payment methods sent', true);
+                break;
 
-                    case 'direct debit':
-                        console.log('A direct debit form link was sent: record Action Diary note.');
-                        this.Call.recordActionDiaryNote('Direct debit form link sent');
-                        break;
+            case 'direct debit':
+                console.log('A direct debit form link was sent: record Action Diary note.');
+                observable = this.Call.recordNote('Direct debit form link sent', true);
+                break;
 
-                    case 'standing order (major works)':
-                    case 'standing order (rent)':
-                    case 'standing order (service charge)':
-                        console.log('Standing order information was sent: record Action Diary note.');
-                        this.Call.recordActionDiaryNote('Standing order information sent');
-                        break;
-
-                }
+            case 'standing order (major works)':
+            case 'standing order (rent)':
+            case 'standing order (service charge)':
+                console.log('Standing order information was sent: record Action Diary note.');
+                observable = this.Call.recordNote('Standing order information sent', true);
                 break;
         }
+
+        if (observable) {
+            const subscription = observable.subscribe(
+                () => {
+                    console.log('Added an automatic note.');
+                },
+                (error) => {
+                    console.log(error);
+                },
+                () => {
+                    subscription.unsubscribe();
+                }
+            );
+        }
+
     }
 
 }

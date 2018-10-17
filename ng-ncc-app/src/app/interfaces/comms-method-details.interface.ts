@@ -1,4 +1,4 @@
-import { ContactDetails } from '../classes/contact-details.class';
+import { IContactDetails } from '../classes/contact-details.class';
 
 export interface CommsMethodDetails {
     method: string;

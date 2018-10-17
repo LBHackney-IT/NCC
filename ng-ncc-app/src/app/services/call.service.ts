@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Caller } from '../interfaces/caller.interface';
-import { LogCallSelection } from '../interfaces/log-call-selection.interface';
+import { map, take } from 'rxjs/operators';
+import { Observable, forkJoin, of, from } from 'rxjs';
+
+import { ICaller } from '../interfaces/caller';
+import { ILogCallSelection } from '../interfaces/log-call-selection';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
-import { CRMServiceRequest } from '../interfaces/crmservicerequest.interface';
-import { AddressSearchGroupedResult } from '../interfaces/address-search-grouped-result.interface';
-import { AccountDetails } from '../interfaces/account-details.interface';
+import { ICRMServiceRequest } from '../interfaces/crmservicerequest';
+import { IAddressSearchGroupedResult } from '../interfaces/address-search-grouped-result';
+import { IAccountDetails } from '../interfaces/account-details';
 
 @Injectable({
     providedIn: 'root'
@@ -22,11 +25,11 @@ export class CallService {
     // - account details associated with the caller;
     // - notes relating to the call.
 
-    private account: AccountDetails;
-    private caller: Caller;
-    private call_nature: LogCallSelection;
+    private account: IAccountDetails;
+    private caller: ICaller;
+    private call_nature: ILogCallSelection;
     private call_id: string;
-    private tenancy: AddressSearchGroupedResult;
+    private tenancy: IAddressSearchGroupedResult;
     private tenants: { [propKey: string]: string }[];
     private ticket_number: string;
 
@@ -62,42 +65,60 @@ export class CallService {
     /**
      * Returns the caller associated with the call.
      */
-    getCaller(): Caller {
+    getCaller(): ICaller {
         return this.caller;
     }
 
     /**
      * Returns the call type and reason (as their respective IDs).
      */
-    getCallNature(): LogCallSelection {
+    getCallNature(): ILogCallSelection {
         return this.call_nature;
     }
 
     /**
      * Sets the caller for this call.
      */
-    setCaller(caller: Caller) {
+    setCaller(caller: ICaller) {
         this.caller = caller;
-        console.log('Caller has been set to:', this.caller.getName());
+        console.log('ICaller has been set to:', this.caller.getName());
         console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
 
         const contact_id = caller.getContactID();
         if (contact_id) {
-            // Create a call to record notes against.
-            this.NCCAPI.createCall(contact_id)
-                .subscribe((data: CRMServiceRequest) => {
-                    this.call_id = data.id;
-                    this.ticket_number = data.ticketNumber;
-                    console.log(`Call ${data.id} was created.`);
-                });
 
-            // We can also obtain the associated tenancy reference via the Manage A Tenancy API.
-            // The tenancy reference is required to record Action Diary entries.
-            this.ManageATenancyAPI.getAccountDetails(contact_id)
-                .subscribe((data: AccountDetails) => {
-                    this.account = data;
-                    console.log(`Account details were obtained.`);
-                });
+            // We're subscribing to two API endpoints, so we can use forkJoin here to ensure that both are successful.
+            // If either one fails we will get an error.
+            const subscription = forkJoin(
+                // Create a call to record notes against.
+                this.NCCAPI.createCall(contact_id),
+
+                // We can also obtain the associated tenancy reference via the Manage A Tenancy API.
+                // The tenancy reference is required to record Action Diary entries.
+                this.ManageATenancyAPI.getAccountDetails(contact_id)
+            )
+                .pipe(
+                    map(data => {
+                        return { call: <ICRMServiceRequest>data[0], account: <IAccountDetails>data[1] };
+                    })
+                )
+                .subscribe(
+                    (response) => {
+                        // Deal with the created call.
+                        this.call_id = response.call.id;
+                        this.ticket_number = response.call.ticketNumber;
+                        console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
+
+                        // Handle the tenant's account data.
+                        this.account = response.account;
+                        console.log(`Account details were obtained.`);
+                    },
+                    (error) => {
+                        console.error(error);
+                    },
+                    () => {
+                        subscription.unsubscribe();
+                    });
         }
     }
 
@@ -111,30 +132,37 @@ export class CallService {
     /**
      * Returns the account details associated with the caller.
      */
-    getAccount(): AccountDetails {
+    getAccount(): IAccountDetails {
         return this.account;
     }
 
     /**
      * Sets the nature (type and reason) of the call.
      */
-    setCallNature(selection: LogCallSelection) {
+    setCallNature(selection: ILogCallSelection) {
         this.call_nature = selection;
     }
 
     /**
      *
      */
-    getTenancy(): AddressSearchGroupedResult {
+    getTenancy(): IAddressSearchGroupedResult {
         return this.tenancy;
     }
 
     /**
      *
      */
-    setTenancy(tenancy: AddressSearchGroupedResult) {
+    setTenancy(tenancy: IAddressSearchGroupedResult) {
         this.tenancy = tenancy;
         this._buildTenantsList();
+    }
+
+    /**
+     *
+     */
+    hasTenancy(): boolean {
+        return null !== this.tenancy;
     }
 
     _buildTenantsList() {
@@ -165,15 +193,28 @@ export class CallService {
     /**
      * Record a note against the call.
      */
-    recordNote(note_content: string, automatic: boolean = false) {
-        return this.NCCAPI.createNote(
-            this.call_id,
-            this.ticket_number,
-            this.call_nature.call_reason.id,
-            this.caller.getContactID(),
-            note_content,
-            automatic
-        );
+    recordNote(note_content: string, automatic: boolean = false): Observable<any> {
+        if (automatic) {
+            return forkJoin(
+                this.NCCAPI.createAutomaticNote(
+                    this.call_id,
+                    this.ticket_number,
+                    this.getTenancyReference(),
+                    this.call_nature.call_reason.id,
+                    this.caller.getContactID(),
+                    note_content
+                ),
+                this.recordActionDiaryNote(note_content)
+            );
+        } else {
+            return this.NCCAPI.createManualNote(
+                this.call_id,
+                this.ticket_number,
+                this.call_nature.call_reason.id,
+                this.caller.getContactID(),
+                note_content
+            );
+        }
     }
 
     /**
@@ -182,7 +223,9 @@ export class CallService {
     recordActionDiaryNote(note_content: string) {
         const tenancy_reference = this.getTenancyReference();
         if (tenancy_reference) {
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note_content).subscribe();
+            // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
+            const note = `${this.caller.getName()}: ${note_content}`;
+            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
         }
     }
 

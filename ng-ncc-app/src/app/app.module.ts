@@ -58,24 +58,31 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
+import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
+import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
+import { LastCallsComponent } from './components/last-calls/last-calls.component';
+import { EditorialComponent } from './components/editorial/editorial.component';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        NavigationComponent,
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
+        AppComponent,
         BackLinkComponent,
         BackLinkConfirmComponent,
+        CallNatureComponent,
         CommsMethodSelectComponent,
         CommsTemplatesComponent,
         CommunicationsPageComponent,
         ConfirmDialogueComponent,
         ContentAreaComponent,
+        CurrentCallerComponent,
+        DPADialogueComponent,
+        DPATenancyComponent,
         DialogueComponent,
         DialogueTitleComponent,
-        DPADialogueComponent,
         HelperComponent,
+        NavigationComponent,
         NoResultsComponent,
         NoteFormComponent,
         NotifyTemplatePreviewComponent,
@@ -104,7 +111,8 @@ import { CallNatureComponent } from './components/call-nature/call-nature.compon
         ValueListComponent,
         ValueListLabelComponent,
         ValueListValueComponent,
-        CallNatureComponent,
+        LastCallsComponent,
+        EditorialComponent,
     ],
     imports: [
         BrowserModule,

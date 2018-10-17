@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
-import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
-import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
+import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
-import { Caller } from '../../interfaces/caller.interface';
+import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
 import { Router } from '@angular/router';
 
@@ -13,17 +16,30 @@ import { Router } from '@angular/router';
     templateUrl: './identify.component.html',
     styleUrls: ['./identify.component.css']
 })
-export class PageIdentifyComponent implements OnInit {
+export class PageIdentifyComponent implements OnInit, OnDestroy {
 
-    _searching: boolean;
+    private _destroyed$ = new Subject();
+
+    existing_call: boolean;
+    searching: boolean;
     postcode: string;
-    results: CitizenIndexSearchResult[];
-    selected_address: AddressSearchGroupedResult;
+    results: ICitizenIndexSearchResult[];
+    selected_address: IAddressSearchGroupedResult;
 
     constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService) { }
 
     ngOnInit() {
-        this._searching = false;
+        this.searching = false;
+        this.existing_call = false;
+
+        if (this.Call.hasTenancy()) {
+            this.existing_call = true;
+            this.addressSelected(this.Call.getTenancy());
+        }
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
@@ -31,14 +47,17 @@ export class PageIdentifyComponent implements OnInit {
      */
     performSearch() {
         // For the time being, we are only searching for people by postcode.
-        if (this._searching) {
+        if (this.searching) {
             return;
         }
         this.results = null;
         this.selected_address = null;
-        this._searching = true;
+        this.searching = true;
 
         const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 (rows) => {
                     this.results = rows;
@@ -47,7 +66,7 @@ export class PageIdentifyComponent implements OnInit {
                     console.error(error);
                 },
                 () => {
-                    this._searching = false;
+                    this.searching = false;
                     subscription.unsubscribe();
                 }
             );
@@ -57,13 +76,13 @@ export class PageIdentifyComponent implements OnInit {
      * Returns TRUE if the user can peform a search for details.
      */
     canPerformSearch() {
-        return !this._searching && !!(this.postcode);
+        return !this.searching && !!(this.postcode);
     }
 
     /**
      * Called when an address is selected from search results.
      */
-    addressSelected(result: AddressSearchGroupedResult) {
+    addressSelected(result: IAddressSearchGroupedResult) {
         this.selected_address = result;
     }
 
@@ -124,6 +143,9 @@ export class PageIdentifyComponent implements OnInit {
         this.selected_address = null;
     }
 
+    /**
+     * Navigats to the next step, having selected a tenant (or an anonymous caller).
+     */
     nextStep() {
         if (this.Call.hasCaller()) {
             this.router.navigateByUrl('comms');

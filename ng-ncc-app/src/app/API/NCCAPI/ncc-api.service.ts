@@ -5,10 +5,10 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 
 import * as moment from 'moment';
 
-import { CRMServiceRequest } from '../../interfaces/crmservicerequest.interface';
-import { JSONResponse } from '../../interfaces/json-response.interface';
-import { NCCNote } from '../../interfaces/ncc-note.interface';
-import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
+import { ICRMServiceRequest } from '../../interfaces/crmservicerequest';
+import { IJSONResponse } from '../../interfaces/json-response';
+import { INCCNote } from '../../interfaces/ncc-note';
+import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
 import { IAuthentication } from '../../interfaces/authentication';
@@ -48,16 +48,29 @@ export class NCCAPIService {
         return this.http
             .post(`${this._url}CRM/CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
             .pipe(
-                map((data: JSONResponse) => {
-                    return data.response.servicerequest as CRMServiceRequest;
+                map((data: IJSONResponse) => {
+                    return data.response.servicerequest as ICRMServiceRequest;
                 })
             );
     }
 
     /**
-     * Create a note against a call.
+     * Create a manual note against a call.
      */
-    createNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string,
+    createManualNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string) {
+        return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, false);
+    }
+
+    /**
+     * Create an automatic note against a call.
+     * Automatic notes are also added to the Action Diary.
+     */
+    createAutomaticNote(call_id: string, ticket_number: string, tenancy_reference: string, call_reason_id: string, crm_contact_id: string,
+        content: string) {
+        return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, true);
+    }
+
+    _createNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string,
         automatic: boolean = false) {
         const parameters = {
             callReasonId: call_reason_id,
@@ -95,8 +108,8 @@ export class NCCAPIService {
 
         return this.http
             .get(`${this._url}CRM/GetAllNCCInteractions?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: JSONResponse) => {
-                return data ? data.results as NCCNote[] : [];
+            .pipe(map((data: IJSONResponse) => {
+                return data ? data.results as INCCNote[] : [];
             }));
     }
 
@@ -104,21 +117,21 @@ export class NCCAPIService {
      * Fetches a list of Action Diary entries and notes associated with the specified CRM contact ID.
      * This also requires a housing reference, which isn't currently provided.
      */
-    getDiaryAndNotes(crm_contact_id: string) {
+    getDiaryAndNotes(tenancyReference: string) {
         const parameters = {
-            contactId: crm_contact_id
+            housingRef: tenancyReference
         };
 
         return this.http
             .get(`${this._url}UH/GetAllActionDiaryAndNotes?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: JSONResponse) => {
+            .pipe(map((data: IJSONResponse) => {
                 // data should be an array with a single item, representing all the notes associated with the CRM contact ID.
                 const rows = data[0];
                 if (!rows) {
                     return [];
                 }
 
-                const notes: NCCUHNote[] = rows.map((row) => {
+                const notes: INCCUHNote[] = rows.map((row) => {
                     // Format the created on date ahead of time.
                     // We're using moment.js fo this, because Angular's DatePipe behaves inconsistently - often giving an error.
                     let date;
@@ -137,7 +150,7 @@ export class NCCAPIService {
                 });
 
                 // Sort the notes by their creation date (descending order).
-                notes.sort((a: NCCUHNote, b: NCCUHNote) => {
+                notes.sort((a: INCCUHNote, b: INCCUHNote) => {
                     if (a.createdOnSort > b.createdOnSort) {
                         return -1;
                     }
@@ -174,7 +187,7 @@ export class NCCAPIService {
 
         return this.http
             .get(`${this._url}CRM/GetCitizenCommunication?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: JSONResponse) => {
+            .pipe(map((data: IJSONResponse) => {
                 return JSON.parse(data.response.communicationdetails) as ContactDetailsUpdate;
             }));
     }
@@ -192,6 +205,41 @@ export class NCCAPIService {
             .pipe(map((json: JSONResponse) => {
                 return <IAuthentication>json.response.UserData;
             }));
+    }
+
+    getLastCalls(count: number) {
+        const parameters = {
+            XCalls: count
+        };
+
+        return this.http
+            .get(`${this._url}CRM/GetLastXCalls?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: IJSONResponse) => {
+                return data[0];
+            }));
+    }
+
+    /**
+     * Fetches editorial text.
+     */
+    getEditorial(): Observable<string> {
+        return this.http
+            .get(`${this._url}CRM/GetEditorialDetails`, {})
+            .pipe(map((data: IJSONResponse) => {
+                return data.response.contents;
+            }));
+    }
+
+    /**
+     * Updates editorial text.
+     */
+    setEditorial(new_content: string) {
+        const parameters = {
+            content: new_content
+        };
+
+        return this.http
+            .post(`${this._url}CRM/SetEditorialDetails?${this._buildQueryString(parameters)}`, {});
     }
 
     /**

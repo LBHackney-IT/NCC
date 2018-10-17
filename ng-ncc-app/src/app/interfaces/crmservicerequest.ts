@@ -1,4 +1,4 @@
-export interface CRMServiceRequest {
+export interface ICRMServiceRequest {
     id: string;
     title: string;
     description: string;

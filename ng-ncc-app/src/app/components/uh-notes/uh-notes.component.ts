@@ -1,6 +1,9 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { NCCUHNote } from '../../interfaces/ncc-uh-note.interface';
+import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { NOTES } from '../../constants/notes.constant';
 
 // TODO along with transactions, extend a component providing basic functionality.
@@ -10,16 +13,18 @@ import { NOTES } from '../../constants/notes.constant';
     templateUrl: './notes.component.html',
     styleUrls: ['./notes.component.scss']
 })
-export class UHNotesComponent implements OnInit, OnChanges {
-    @Input() crmContactID: string;
+export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
+    @Input() tenancyReference: string;
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
 
+    private _destroyed$ = new Subject();
+
     _loading: boolean;
-    _rows: NCCUHNote[];
-    _filtered: NCCUHNote[];
+    _rows: INCCUHNote[];
+    _filtered: INCCUHNote[];
 
     constructor(private NCCAPI: NCCAPIService) { }
 
@@ -35,8 +40,8 @@ export class UHNotesComponent implements OnInit, OnChanges {
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         console.log('notes component', changes);
-        if (changes.crmContactID) {
-            // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
+        if (changes.tenancyReference) {
+            // The tenancy reference has changed, so load the notes associated with the tenancy reference.
             this._loadNotes();
         } else {
             // The filter or date settings have changed, so update what is displayed.
@@ -48,9 +53,30 @@ export class UHNotesComponent implements OnInit, OnChanges {
     /**
      *
      */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: INCCUHNote): number {
+        return index;
+    }
+
+    /**
+     *
+     */
     _loadNotes() {
+        if (this._loading || null === this.tenancyReference) {
+            return;
+        }
+
         this._loading = true;
-        const subscription = this.NCCAPI.getDiaryAndNotes(this.crmContactID)
+        this.NCCAPI.getDiaryAndNotes(this.tenancyReference)
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 (rows) => {
                     this._rows = rows;
@@ -60,7 +86,6 @@ export class UHNotesComponent implements OnInit, OnChanges {
                     console.error(error);
                 },
                 () => {
-                    subscription.unsubscribe();
                     this._loading = false;
                 }
             );
@@ -90,7 +115,7 @@ export class UHNotesComponent implements OnInit, OnChanges {
                     Object.keys(this.filter).forEach(
                         key => {
                             const term = this.filter[key];
-                            if (term) {
+                            if (term && 'null' !== term) {
                                 outcome = outcome && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase()));
                             }
                         });
@@ -102,7 +127,7 @@ export class UHNotesComponent implements OnInit, OnChanges {
     /**
      *
      */
-    getNoteTypeBadgeClass(note: NCCUHNote) {
+    getNoteTypeBadgeClass(note: INCCUHNote) {
         return {
             'call-type--automatic': NOTES.TYPE_AUTOMATIC === note.notesType,
             'call-type--manual': NOTES.TYPE_MANUAL === note.notesType,
@@ -113,13 +138,8 @@ export class UHNotesComponent implements OnInit, OnChanges {
     /**
      * Returns the name of a tenant matching the specified CRM contact ID.
      */
-    getTenantName(crm_contact_id: string): string {
-        if (this.tenants) {
-            const tenant = this.tenants.filter((row) => row.contact_id === crm_contact_id);
-            return tenant.length ? tenant.shift().full_name : 'n/a';
-        }
-
-        return 'anonymous';
+    getTenantName(note: INCCUHNote): string {
+        return note.clientName ? note.clientName : 'anonymous';
     }
 
 }

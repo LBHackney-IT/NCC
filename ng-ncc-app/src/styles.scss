@@ -3,9 +3,9 @@
 @import "~govuk-frontend/all";
 @import "assets/scss/unorganised.scss";
 // TODO only import the GOV.UK Frontend components we are using.
-// TODO divide unorganised CSS into separate SCSS files.
 
 @import "assets/scss/components/checkbox";
+@import "assets/scss/components/disabled";
 @import "assets/scss/components/flex-columns";
 @import "assets/scss/components/hidden";
 @import "assets/scss/components/link-button";

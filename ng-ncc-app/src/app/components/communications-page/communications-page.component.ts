@@ -1,36 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { AccountDetails } from '../../interfaces/account-details.interface';
+import { IAccountDetails } from '../../interfaces/account-details';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CallService } from '../../services/call.service';
 import { CommsOption } from '../../classes/comms-option.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { ContactDetails } from '../../classes/contact-details.class';
+import { IContactDetails } from '../../classes/contact-details.class';
 import { CommsSelection } from '../../classes/comms-selection.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
-import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
-import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
+import { ITemplatePreviewSettings } from '../../interfaces/template-preview-settings';
+import { INotifyAPIJSONResult } from '../../interfaces/notify-api-json-result';
 import { CONTACT } from '../../constants/contact.constant';
-import { CommsMethodDetails } from '../../interfaces/comms-method-details.interface';
+import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { UHTriggerService } from '../../services/uhtrigger.service';
 
 @Component({
     selector: 'app-communications-page',
     templateUrl: './communications-page.component.html',
-    styleUrls: ['./communications-page.component.scss']
 })
-export class CommunicationsPageComponent implements OnInit {
+export class CommunicationsPageComponent implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
+
     CONTACT_METHOD = CONTACT;
     _sending: boolean;
-    account_details: AccountDetails;
+    account_details: IAccountDetails;
     caller: IdentifiedCaller;
     comms_options: CommsOption[];
     selected_option: CommsOption;
     selected_details: CommsSelection;
-    preview: TemplatePreviewSettings;
+    preview: ITemplatePreviewSettings;
     modal: { [propKey: string]: boolean };
 
     constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private UHTrigger: UHTriggerService,
@@ -47,10 +50,17 @@ export class CommunicationsPageComponent implements OnInit {
         };
 
         this.route.data
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe((data) => {
-                this.account_details = data.accountDetails;
+                this.account_details = data.IAccountDetails;
                 this.caller = data.caller;
             });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
@@ -79,10 +89,11 @@ export class CommunicationsPageComponent implements OnInit {
     }
 
     /**
-     *
+    * Called when a comms form (GOV.UK Notify template) is selected.
      */
     selectedOption(option: CommsOption) {
         this.selected_option = option;
+        this.updatePreview();
     }
 
     /**
@@ -190,6 +201,13 @@ export class CommunicationsPageComponent implements OnInit {
                     this._sending = false;
                 });
         }
+    }
+
+    /**
+     *
+     */
+    trackByIndex(index: number, item: {}): number {
+        return index;
     }
 
 }

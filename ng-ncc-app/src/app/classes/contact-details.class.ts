@@ -1,6 +1,6 @@
 import { ContactAddress } from './contact-address.class';
 
-export class ContactDetails {
+export class IContactDetails {
     email: string;
     letter: ContactAddress;
     sms: string;

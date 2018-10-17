@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Observable, forkJoin, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
-import { LogCallSelection } from '../../interfaces/log-call-selection.interface';
+import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 
@@ -11,17 +12,19 @@ import { LogCallType } from '../../classes/log-call-type.class';
     templateUrl: './call-nature.component.html',
     styleUrls: ['./call-nature.component.scss']
 })
-export class CallNatureComponent implements OnInit {
-    @Output() changed = new EventEmitter<LogCallSelection>();
+export class CallNatureComponent implements OnInit, OnDestroy {
+    @Output() changed = new EventEmitter<ILogCallSelection>();
+
+    private _destroyed$ = new Subject();
 
     call_types: LogCallType[];
     call_reasons: Array<any>;
-    selected: LogCallSelection; // the selected call type and reason.
+    selected: ILogCallSelection; // the selected call type and reason.
 
     constructor(private HackneyAPI: HackneyAPIService) { }
 
     ngOnInit() {
-        this.selected = new LogCallSelection;
+        this.selected = new ILogCallSelection;
         this.selected.call_type = null;
         this.selected.call_reason = null;
 
@@ -30,6 +33,9 @@ export class CallNatureComponent implements OnInit {
             this.HackneyAPI.getCallTypes(),
             this.HackneyAPI.getCallReasons()
         )
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe(
                 data => {
                     this.call_types = data[0];
@@ -45,6 +51,27 @@ export class CallNatureComponent implements OnInit {
                     console.log('Error fetching call types and reasons:', error);
                 }
             );
+    }
+
+    /**
+     *
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByCallType(index: number, item: string): number {
+        return index;
+    }
+
+    /**
+     *
+     */
+    trackByCallReason(index: number, item: LogCallReason): string {
+        return item.id;
     }
 
     /**

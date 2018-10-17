@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { AccountDetails } from '../../../interfaces/account-details.interface';
+import { IAccountDetails } from '../../../interfaces/account-details';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { PageHistory } from '../../abstract/history';
 import { CallService } from '../../../services/call.service';
@@ -11,9 +13,11 @@ import { CallService } from '../../../services/call.service';
     templateUrl: './transaction-history.component.html',
     styleUrls: ['./transaction-history.component.scss']
 })
-export class PageTransactionHistoryComponent extends PageHistory implements OnInit {
+export class PageTransactionHistoryComponent extends PageHistory implements OnInit, OnDestroy {
 
-    account_details: AccountDetails;
+    private _destroyed$ = new Subject();
+
+    account_details: IAccountDetails;
 
     filter_settings: {
         min_date: Date,
@@ -41,11 +45,18 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
         this.account_details = this.Call.getAccount();
 
         this.route.data
+            .pipe(
+                takeUntil(this._destroyed$)
+            )
             .subscribe((data) => {
-                // this.account_details = data.accountDetails;
+                // this.account_details = data.IAccountDetails;
                 this.filterByDate();
                 this.filterTransactions();
             });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**

@@ -1,15 +1,20 @@
-import { Component, EventEmitter, Input, Output, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
-import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
+import { ITemplatePreviewSettings } from '../../interfaces/template-preview-settings';
 
 @Component({
     selector: 'app-notify-template-preview',
     templateUrl: './notify-template-preview.component.html',
     styleUrls: ['./notify-template-preview.component.scss']
 })
-export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
-    @Input() settings: TemplatePreviewSettings;
-    @Output() settingsChange = new EventEmitter<TemplatePreviewSettings>();
+export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDestroy {
+    @Input() settings: ITemplatePreviewSettings;
+    @Output() settingsChange = new EventEmitter<ITemplatePreviewSettings>();
+
+    private _destroyed$ = new Subject();
 
     _loading: boolean;
     preview: string;
@@ -40,10 +45,27 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
     /**
      *
      */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: string): number {
+        return index;
+    }
+
+    /**
+     *
+     */
     updatePreview() {
         if (!this._loading) {
             this._loading = true;
             this.NotifyAPI.getTemplatePreview(this.settings.template_id, this.settings.version)
+                .pipe(
+                    takeUntil(this._destroyed$)
+                )
                 .subscribe(preview => {
                     this.preview = preview;
                     this.settings.parameters = {};

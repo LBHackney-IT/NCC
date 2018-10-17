@@ -18,28 +18,6 @@
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-heading-m">Last ten calls</caption>
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Tenancy ref.</th>
-                <th class="govuk-table__header" scope="col">Name</th>
-                <th class="govuk-table__header" scope="col">Date</th>
-                <th class="govuk-table__header" scope="col">Time</th>
-                <th class="govuk-table__header" scope="col">Reason for call</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let row of getLastCalls()">
-                <th class="govuk-table__header" scope="row">
-                    <a href="">{{ row.reference }}</a>
-                </th>
-                <td class="govuk-table__cell">{{ row.name }}</td>
-                <td class="govuk-table__cell">{{ row.date }}</td>
-                <td class="govuk-table__cell">{{ row.time }}</td>
-                <td class="govuk-table__cell">{{ row.call_reason }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <app-last-calls count="10"></app-last-calls>
 
 </div>
