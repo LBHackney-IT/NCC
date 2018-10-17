@@ -196,14 +196,19 @@ export class NCCAPIService {
      *
      */
     authenticate(code: string): Observable<IAuthentication> {
-        const parameters = {
-            userdata: `${code}=` // the equal sign is important!
-        };
+        console.log('authenticate attempt with code:', code);
 
         return this.http
-            .get(`${this._url}SSO/Authenticate?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((json: JSONResponse) => {
-                return <IAuthentication>json.response.UserData;
+            .get(`${this._url}SSO/Authenticate?userdata=${encodeURIComponent(code)}`, {})
+            .pipe(map((json: IJSONResponse) => {
+                if (json.response) {
+                    return <IAuthentication>json.response.UserData;
+                } else if (500 === json.statusCode) {
+                    return <IAuthentication>{
+                        success: false,
+                        message: json.value.error.message
+                    };
+                }
             }));
     }
 
