@@ -206,7 +206,7 @@ export class CallService {
     /**
      * Record an automatic note against the call.
      */
-    recordAutomaticNote(note_content: string): Observable<any> {
+    recordAutomaticNote(note_content: string) {
         return forkJoin(
 
             // Automatic note...
@@ -234,6 +234,8 @@ export class CallService {
             const note = `${this.caller.getName()}: ${note_content}`;
             return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
         }
+
+        return of(true);
     }
 
 }

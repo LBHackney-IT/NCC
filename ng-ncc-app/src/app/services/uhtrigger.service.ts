@@ -26,9 +26,9 @@ export class UHTriggerService {
         console.log(template, method, data);
 
         // Only continue if there is an identified caller.
-        if (!this.Call.isCallerIdentified()) {
-            return;
-        }
+        // if (!this.Call.isCallerIdentified()) {
+        //     return;
+        // }
 
         const call_type = this.Call.getCallNature().call_type.label;
         const call_reason = this.Call.getCallNature().call_reason.label;

@@ -85,6 +85,8 @@ export class NCCAPIService {
             notes: content
         };
 
+        console.log(automatic ? 'Automatic note' : 'Manual note', parameters);
+
         return this.http
             .post(`${this._url}CRM/CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
     }
