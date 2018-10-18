@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommsOption } from '../../../classes/comms-option.class';
-import { CommunicationsPageComponent } from '../../../components/communications-page/communications-page.component';
+import { PageCommunications } from '../../abstract/communications';
 import { DPAService } from '../../../services/dpa.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { DPAService } from '../../../services/dpa.service';
     templateUrl: './communications.component.html',
     styleUrls: ['./communications.component.css']
 })
-export class PageRentCommunicationsComponent extends CommunicationsPageComponent {
+export class PageRentCommunicationsComponent extends PageCommunications {
 
     selectedOption(option: CommsOption) {
         super.selectedOption(option);

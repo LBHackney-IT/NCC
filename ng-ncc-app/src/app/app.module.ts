@@ -36,7 +36,6 @@ import { BackLinkComponent } from './components/back-link/back-link.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
-import { CommunicationsPageComponent } from './components/communications-page/communications-page.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
@@ -72,7 +71,6 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         CallNatureComponent,
         CommsMethodSelectComponent,
         CommsTemplatesComponent,
-        CommunicationsPageComponent,
         ConfirmDialogueComponent,
         ContentAreaComponent,
         CurrentCallerComponent,
