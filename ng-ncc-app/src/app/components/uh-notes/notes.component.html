@@ -13,6 +13,8 @@
                 <th class="govuk-table__header" scope="col">Caller</th>
                 <th class="govuk-table__header" scope="col">Type</th>
                 <th class="govuk-table__header" scope="col">Reason</th>
+                <th class="govuk-table__header" scope="col">Comms</th>
+                <th class="govuk-table__header" scope="col">Method</th>
                 <th class="govuk-table__header" scope="col">Note</th>
             </tr>
         </thead>
@@ -27,6 +29,8 @@
                 <td class="govuk-table__cell">{{ getTenantName(row) }}</td>
                 <td class="govuk-table__cell">{{ row.callType }}</td>
                 <td class="govuk-table__cell">{{ row.callReasonType }}</td>
+                <td class="govuk-table__cell">...</td>
+                <td class="govuk-table__cell">...</td>
                 <td class="govuk-table__cell">{{ row.notes }}</td>
             </tr>
         </tbody>
