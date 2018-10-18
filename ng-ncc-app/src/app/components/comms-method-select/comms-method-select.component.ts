@@ -148,4 +148,26 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
         console.log(this.selection);
         this.selected.emit(this.selection);
     }
+
+    /**
+     *
+     */
+    isEmailSelected(): boolean {
+        return CONTACT.METHOD_EMAIL === this.selection.method;
+    }
+
+    /**
+     *
+     */
+    isMobileSelected(): boolean {
+        return CONTACT.METHOD_SMS === this.selection.method;
+    }
+
+    /**
+     *
+     */
+    isPostSelected(): boolean {
+        return CONTACT.METHOD_POST === this.selection.method;
+    }
+
 }
