@@ -6,6 +6,7 @@ import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
+import { CALL_REASON } from '../../constants/call-reason.constant';
 
 @Component({
     selector: 'app-call-nature',
@@ -42,7 +43,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
                     this.call_reasons = data[1];
 
                     // Add "other" as an option for each call type.
-                    const other_option = new LogCallReason('0', 'Other');
+                    const other_option = new LogCallReason(CALL_REASON.OTHER, 'Other');
                     Object.keys(this.call_reasons).forEach(key => {
                         this.call_reasons[key].push(other_option);
                     });
@@ -72,6 +73,13 @@ export class CallNatureComponent implements OnInit, OnDestroy {
      */
     trackByCallReason(index: number, item: LogCallReason): string {
         return item.id;
+    }
+
+    /**
+     * Returns TRUE if "other" is selected as the call reason.
+     */
+    isOtherReasonSelected(): boolean {
+        return this.selected.call_reason && CALL_REASON.OTHER === this.selected.call_reason.id;
     }
 
     /**
