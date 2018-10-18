@@ -71,6 +71,9 @@ export class NCCAPIService {
         return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, true);
     }
 
+    /**
+     *
+     */
     _createNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string,
         automatic: boolean = false) {
         const parameters = {

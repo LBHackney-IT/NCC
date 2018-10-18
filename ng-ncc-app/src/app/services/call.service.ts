@@ -191,30 +191,37 @@ export class CallService {
     }
 
     /**
-     * Record a note against the call.
+     * Record a manual note against the call.
      */
-    recordNote(note_content: string, automatic: boolean = false): Observable<any> {
-        if (automatic) {
-            return forkJoin(
-                this.NCCAPI.createAutomaticNote(
-                    this.call_id,
-                    this.ticket_number,
-                    this.getTenancyReference(),
-                    this.call_nature.call_reason.id,
-                    this.caller.getContactID(),
-                    note_content
-                ),
-                this.recordActionDiaryNote(note_content)
-            );
-        } else {
-            return this.NCCAPI.createManualNote(
+    recordManualNote(note_content: string): Observable<any> {
+        return this.NCCAPI.createManualNote(
+            this.call_id,
+            this.ticket_number,
+            this.call_nature.call_reason.id,
+            this.caller.getContactID(),
+            note_content
+        );
+    }
+
+    /**
+     * Record an automatic note against the call.
+     */
+    recordAutomaticNote(note_content: string): Observable<any> {
+        return forkJoin(
+
+            // Automatic note...
+            this.NCCAPI.createAutomaticNote(
                 this.call_id,
                 this.ticket_number,
+                this.getTenancyReference(),
                 this.call_nature.call_reason.id,
                 this.caller.getContactID(),
                 note_content
-            );
-        }
+            ),
+
+            // Action Diary note...
+            this.recordActionDiaryNote(note_content)
+        );
     }
 
     /**
