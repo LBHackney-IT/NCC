@@ -33,9 +33,9 @@ export class AuthGuard implements CanActivate {
                     map((outcome: boolean) => {
                         console.log('authenticated?', outcome, this.Auth.getMessage());
 
-                        // If the authentication was successful, redirect to the "log call" page/
+                        // If the authentication was successful, redirect to the "last x calls" page.
                         // If unsuccessful, redirect to the "try again" page.
-                        this.router.navigate([outcome ? '/log-call' : '/try-again']);
+                        this.router.navigate([outcome ? '/last-calls' : '/try-again']);
 
                         return outcome;
                     }));
