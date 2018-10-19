@@ -33,6 +33,12 @@ export class AuthGuard implements CanActivate {
                     map((outcome: boolean) => {
                         console.log('authenticated?', outcome, this.Auth.getMessage());
 
+                        if (outcome) {
+                            console.log('has access:', this.Auth.hasAccess());
+                            console.log('is a representative:', this.Auth.isAgent());
+                            console.log('is a team leader:', this.Auth.isTeamLeader());
+                        }
+
                         // If the authentication was successful, redirect to the "last x calls" page.
                         // If unsuccessful, redirect to the "try again" page.
                         this.router.navigate([outcome ? '/last-calls' : '/try-again']);
@@ -43,6 +49,7 @@ export class AuthGuard implements CanActivate {
 
         // No code or logged in user.
         console.log('No code provided.');
+        this.router.navigate(['/try-again']);
         return false;
     }
 }
