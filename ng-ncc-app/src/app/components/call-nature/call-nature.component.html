@@ -12,7 +12,7 @@
                 <option *ngFor="let item of call_types; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
             </select>
             <app-helper class="govuk-!-margin-left-3" title="">
-                New call types or reason may be added by Team Leaders via the Support Service.
+                New call types or reasons may be added by Team Leaders via the Support Service.
             </app-helper>
         </div>
 
@@ -34,6 +34,16 @@
                         [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="reason">
                     <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                 </div>
+            </div>
+
+            <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->
+            <div class="govuk-form-group govuk-!-margin-left-8 govuk-!-margin-top-1" *ngIf="isOtherReasonSelected()">
+                <label class="govuk-label govuk-!-font-weight-bold hidden" for="call_reason_other">
+                    Specify the call reason:
+                </label>
+                <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
+                    placeholder="Specify the call reason"
+                    [(ngModel)]="selected.other_reason" (ngModelChange)="updateSelection()">
             </div>
         </fieldset>
 

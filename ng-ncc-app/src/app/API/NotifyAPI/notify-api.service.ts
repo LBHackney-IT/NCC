@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
@@ -19,7 +21,7 @@ import { CONTACT } from '../../constants/contact.constant';
  */
 export class NotifyAPIService {
 
-    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier';
+    _url = environment.api.notify;
 
     constructor(private http: HttpClient) { }
 
@@ -67,11 +69,11 @@ export class NotifyAPIService {
     /**
      * Returns a preview of a specified GOV.UK Notify template.
      */
-    getTemplatePreview(template_id: string, version: number = 1) {
+    getTemplatePreview(template_id: string, version: number = 1): Observable<INotifyAPITemplate> {
         return this.http
             .get(`${this._url}/GetTemplateByIdAndVersion?TemplateId=${template_id}&Version=${version}`)
             .pipe(
-                map((data: INotifyAPIJSONResult) => data.response.body)
+                map((data: INotifyAPIJSONResult) => data.response)
             );
     }
 

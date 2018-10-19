@@ -1,22 +1,27 @@
 <nav class="page__menu">
     <ul class="navigation__list">
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/log-call">Log call</a>
+            <a routerLink="/last-calls" disabled>Previous 10 Calls</a>
+        </li>
+        <li class="navigation__separator"></li>
+        <li class="navigation__item" routerLinkActive="navigation__item--active">
+            <a routerLink="/log-call" *ngIf="isCallActive()" disabled>Start New Call</a>
+            <a routerLink="/log-call" *ngIf="!isCallActive()">Start New Call</a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/caller-details">Caller Details</a>
+            <a routerLink="/caller-details">Caller Identification</a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/comms">Comms</a>
+            <a routerLink="/log-additional" disabled>Additional Call Reason</a>
+        </li>
+        <li class="navigation__item" routerLinkActive="navigation__item--active">
+            <a routerLink="/notes" disabled>Caller Notes</a>
+        </li>
+        <li class="navigation__item" routerLinkActive="navigation__item--active">
+            <a routerLink="/comms">General Communications</a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a routerLink="/payment" disabled>Rent</a>
-        </li>
-        <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/log-additional" disabled>Log Additional Request</a>
-        </li>
-        <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/notes" disabled>View notes</a>
         </li>
         <li class="navigation__item" *ngIf="isCallActive()">
             <a (click)="endCall()">End call</a>

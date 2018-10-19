@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CommunicationsPageComponent } from '../../components/communications-page/communications-page.component';
+import { PageCommunications } from '../abstract/communications';
 
 @Component({
     selector: 'app-page-comms',
     templateUrl: './comms.component.html',
     styleUrls: ['./comms.component.css']
 })
-export class PageCommsComponent extends CommunicationsPageComponent { }
+export class PageCommsComponent extends PageCommunications {
+}

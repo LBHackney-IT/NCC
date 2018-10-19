@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
@@ -30,7 +32,7 @@ export class NCCAPIService {
     NOTE_TYPE_AUTOMATIC = 1;
     NOTE_TYPE_MANUAL = 2;
 
-    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/';
+    _url = environment.api.ncc;
 
     constructor(private http: HttpClient) { }
 
@@ -137,10 +139,10 @@ export class NCCAPIService {
                     let date;
                     if (NOTES.TYPE_ACTION_DIARY === row.notesType) {
                         // Action Diary entries have a preformatted date, but moment.js can't interpret it without help.
-                        date = moment(row.createdOn, 'DD/MM/YYYY hh:mm');
+                        date = moment(row.createdOn, 'DD/MM/YYYY HH:mm');
                     } else {
                         date = moment(row.createdOn);
-                        row.createdOn = date.format('DD/MM/YYYY hh:mm');
+                        row.createdOn = date.format('DD/MM/YYYY HH:mm');
                     }
 
                     // We also want the date formatted differently for sorting purposes.

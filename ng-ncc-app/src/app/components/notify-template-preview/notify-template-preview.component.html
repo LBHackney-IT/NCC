@@ -2,7 +2,7 @@
     <div class="govuk-grid-column-one-half">
 
         <!-- Preview of the template. -->
-        <app-panel class="govuk-form-group govuk-body">
+        <app-panel class="govuk-form-group govuk-body" *ngIf="preview">
             <span *ngIf="_loading">loading...</span>
             <span *ngIf="!_loading" [innerHTML]="getCustomisedPreview()"></span>
         </app-panel>
@@ -14,7 +14,7 @@
         <!-- Fields for any customisable text. -->
         <div class="govuk-form-group" *ngFor="let label of getPlaceholders(); trackBy: trackByMethod">
             <label class="govuk-label" for="preview-ph-{{ label }}">
-                {{ label }}
+                {{ sanitiseLabel(label) }}
             </label>
             <input class="govuk-input" id="preview-ph-{{ label }}" [name]="label" type="text" [(ngModel)]="settings.parameters[label]">
         </div>

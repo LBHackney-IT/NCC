@@ -8,6 +8,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
+import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
 import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
@@ -36,8 +37,19 @@ export const AppRoutes: Routes = [
         component: PageTryAgainComponent
     },
     {
+        // A page for testing and diagnosing components.
         path: 'playground',
         component: PagePlaygroundComponent
+    },
+    {
+        // last x Calls page.
+        path: 'last-calls',
+        component: PageLastCallsComponent
+    },
+    {
+        // Log Call page.
+        path: 'log-call',
+        component: PageLogCallComponent
     },
     {
         path: 'auth/:code',
@@ -141,9 +153,60 @@ export const AppRoutes: Routes = [
     //     pathMatch: 'full'
     // },
     {
-        // Catch-all route.
+        // Identify page.
+        path: 'caller-details',
+        component: PageIdentifyComponent,
+        resolve: {
+            call_nature: CallNatureResolver
+        }
+    },
+    {
+        // [Edit] Contact Details page.
+        path: 'contact-details',
+        component: PageContactDetailsComponent,
+        resolve: {
+            caller: IdentifiedCallerResolver,
+            details: ContactDetailsResolver
+        }
+    },
+    {
+        // Comms page.
+        path: 'comms',
+        component: PageCommsComponent,
+        resolve: {
+            caller: CallerResolver,
+            call_nature: CallNatureResolver
+        }
+    },
+    {
+        // View Notes page.
+        path: 'notes',
+        component: PageViewNotesComponent,
+        resolve: {
+            caller: CallerResolver
+            // caller: IdentifiedCallerResolver
+        }
+    },
+    {
+        // Log Additional Request page.
+        path: 'log-additional',
+        component: PageLogAdditionalComponent,
+        resolve: {
+            caller: CallerResolver
+        }
+    },
+    {
+        // Empty path (which should go to the home page).
+        path: '',
+        redirectTo: '/log-call',
+        // redirectTo: '/last-calls',
+        pathMatch: 'full'
+    },
+    {
+        // Catch-all (which should go to the home page).
         path: '**',
-        redirectTo: '/try-again'
+        redirectTo: '/log-call'
+        // redirectTo: '/last-calls'
     }
 ];
 

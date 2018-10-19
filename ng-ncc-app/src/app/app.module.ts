@@ -18,6 +18,7 @@ import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
+import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
 import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PagePaymentComponent } from './pages/payment/payment.component';
@@ -29,7 +30,7 @@ import { PageTransactionHistoryComponent } from './pages/payment/transactions/tr
 import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
@@ -37,7 +38,6 @@ import { BackLinkComponent } from './components/back-link/back-link.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
-import { CommunicationsPageComponent } from './components/communications-page/communications-page.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
@@ -60,7 +60,7 @@ import { ValueListValueComponent } from './components/value-list/value-list-valu
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
-import { LastCallsComponent } from './components/last-calls/last-calls.component';
+import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
 
 @NgModule({
@@ -73,7 +73,6 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         CallNatureComponent,
         CommsMethodSelectComponent,
         CommsTemplatesComponent,
-        CommunicationsPageComponent,
         ConfirmDialogueComponent,
         ContentAreaComponent,
         CurrentCallerComponent,
@@ -92,6 +91,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         PageContactDetailsComponent,
         PageHomeComponent,
         PageIdentifyComponent,
+        PageLastCallsComponent,
         PageLogAdditionalComponent,
         PageLogCallComponent,
         PagePaymentComponent,
@@ -111,7 +111,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         ValueListComponent,
         ValueListLabelComponent,
         ValueListValueComponent,
-        LastCallsComponent,
+        LastCallsListComponent,
         EditorialComponent,
     ],
     imports: [

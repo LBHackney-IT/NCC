@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ILogCallSelection } from '../../interfaces/log-call-selection';
@@ -13,16 +13,12 @@ import { PageLogCallNature } from '../abstract/log-call-nature';
     styleUrls: ['./log-call.component.css']
 })
 
-export class PageLogCallComponent extends PageLogCallNature implements OnInit {
+export class PageLogCallComponent extends PageLogCallNature {
 
     previous_calls: { [propKey: string]: any }[];
 
     constructor(private router: Router, private Call: CallService) {
         super();
-    }
-
-    ngOnInit() {
-        this._makePreviousCalls();
     }
 
     /**
@@ -36,29 +32,6 @@ export class PageLogCallComponent extends PageLogCallNature implements OnInit {
 
         // Go to the Caller Details page.
         this.router.navigateByUrl('caller-details');
-    }
-
-    /**
-     *
-     */
-    _makePreviousCalls() {
-        this.previous_calls = new Array<any>();
-        for (let i = 1; i <= 10; i++) {
-            this.previous_calls.push({
-                reference: `07891/${i}`,
-                name: 'Mr ' + (String.fromCharCode(65 + i - 1)) + ' Bell',
-                date: new Date().toLocaleDateString('en-GB'),
-                time: new Date().toLocaleTimeString('en-GB'),
-                call_reason: ['Pay rent', 'General', 'ASB', 'Repairs', 'Other'][(Math.random() * 4).toFixed(0)]
-            });
-        }
-    }
-
-    /**
-     *
-     */
-    getLastCalls() {
-        return this.previous_calls;
     }
 
     /**

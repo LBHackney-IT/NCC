@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -18,11 +18,8 @@ import { CONTACT } from '../../constants/contact.constant';
 import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { UHTriggerService } from '../../services/uhtrigger.service';
 
-@Component({
-    selector: 'app-communications-page',
-    templateUrl: './communications-page.component.html',
-})
-export class CommunicationsPageComponent implements OnInit, OnDestroy {
+@Injectable()
+export class PageCommunications implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
@@ -78,7 +75,7 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
      * Returns TRUE if the messgae preview should be shown.
      */
     shouldShowPreview(): boolean {
-        return null !== this.selected_option && null !== this.selected_details;
+        return null !== this.selected_option && null !== this.selected_details && CONTACT.METHOD_POST !== this.selected_details.method;
     }
 
     /**
@@ -112,6 +109,20 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Returns the text to use for the "save" button.
+     * In the case of post, we're not sending anything via GOV.UK Notify but recording that something was sent.
+     */
+    getSendButtonText(): string {
+        switch (this.selected_details.method) {
+            case CONTACT.METHOD_POST:
+                return 'Send';
+            // return 'Save';
+            default:
+                return 'Send';
+        }
+    }
+
+    /**
      * Updates the template displayed in the preview area.
      */
     updatePreview() {
@@ -140,6 +151,13 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
             return;
         }
 
+        if (CONTACT.METHOD_POST === this.selected_details.method) {
+            console.log('Sending something by post, nothing more to do.');
+            // TODO Record that something is going to be sent by post.
+            this.modal.confirmed = true;
+            return;
+        }
+
         const template_id: string = this.selected_option.templates[this.selected_details.method].id;
         const template_name: string = this.selected_option.name;
         const method: string = this.selected_details.method;
@@ -152,12 +170,14 @@ export class CommunicationsPageComponent implements OnInit, OnDestroy {
         switch (method) {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
+                // TODO Record that something was sent via email.
                 console.log('send email', address, template_id);
                 observe = this.NotifyAPI.sendEmail(address, template_id, parameters);
                 break;
 
             case CONTACT.METHOD_SMS:
                 // Send a text message.
+                // TODO Record that something was sent via SMS.
                 console.log('send sms', address, template_id);
                 observe = this.NotifyAPI.sendSMS(address, template_id, parameters);
                 break;

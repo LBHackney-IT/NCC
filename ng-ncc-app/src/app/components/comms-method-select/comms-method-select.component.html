@@ -7,12 +7,14 @@
 
             <!-- By email. -->
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="method-email" name="method" type="radio" [(ngModel)]="selection.method" (ngModelChange)="checkDetails()" [disabled]="disableEmail" [value]="methods.METHOD_EMAIL" data-aria-controls="method-by-email">
+                <input class="govuk-radios__input" id="method-email" name="method" type="radio"
+                    [(ngModel)]="selection.method" (ngModelChange)="checkDetails()"
+                    [disabled]="disableEmail" [value]="methods.METHOD_EMAIL" data-aria-controls="method-by-email">
                 <label class="govuk-label govuk-radios__label" for="method-email">
                     Email
                 </label>
             </div>
-            <div class="govuk-radios__conditional" id="method-by-email" *ngIf="methods.METHOD_EMAIL === selection.method">
+            <div class="govuk-radios__conditional" id="method-by-email" *ngIf="isEmailSelected()">
 
                 <!-- Which email address? -->
                 <div class="govuk-form-group">
@@ -42,12 +44,14 @@
 
             <!-- By SMS. -->
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="method-sms" name="method" type="radio" [(ngModel)]="selection.method" (ngModelChange)="checkDetails()" [disabled]="disableSMS" [value]="methods.METHOD_SMS" data-aria-controls="method-by-sms">
+                <input class="govuk-radios__input" id="method-sms" name="method" type="radio"
+                    [(ngModel)]="selection.method" (ngModelChange)="checkDetails()"
+                    [disabled]="disableSMS" [value]="methods.METHOD_SMS" data-aria-controls="method-by-sms">
                 <label class="govuk-label govuk-radios__label" for="method-sms">
                     SMS
                 </label>
             </div>
-            <div class="govuk-radios__conditional" id="method-by-sms" *ngIf="methods.METHOD_SMS === selection.method">
+            <div class="govuk-radios__conditional" id="method-by-sms" *ngIf="isMobileSelected()">
                 <div class="govuk-form-group">
 
                     <!-- Existing telephone numbers (from the caller). -->
@@ -75,60 +79,19 @@
 
             <!-- By post. -->
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="method-post" name="method" type="radio" [(ngModel)]="selection.method" (ngModelChange)="checkDetails()" [disabled]="disablePost" [value]="methods.METHOD_POST" data-aria-controls="method-by-post">
+                <input class="govuk-radios__input" id="method-post" name="method" type="radio"
+                    [(ngModel)]="selection.method" (ngModelChange)="checkDetails()"
+                    [disabled]="disablePost" [value]="methods.METHOD_POST" data-aria-controls="method-by-post">
                 <label class="govuk-label govuk-radios__label" for="method-post">
                     Post
                 </label>
             </div>
-            <div class="govuk-radios__conditional" id="method-by-post" *ngIf="methods.METHOD_POST === selection.method">
-                <!-- TODO we've been informed we won't enter a mailing address here, the agent will manually make a note of it. -->
+            <div class="govuk-radios__conditional" id="method-by-post" *ngIf="isPostSelected()">
 
-                <!-- If the caller is identified, we display their address. -->
-                <div *ngIf="caller && !caller.isAnonymous()">
-                    {{ caller.getPostalAddress() }}
-                </div>
-
-                <!-- If the caller is anonymous, we display a form for entering an address. -->
-                <div *ngIf="caller && caller.isAnonymous()">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="address-line-1">
-                            First line of address
-                        </label>
-                        <input class="govuk-input" id="address-line-1" name="address-line-1" [(ngModel)]="selection.existing[methods.METHOD_POST].line_1" type="text" (ngModelChange)="checkDetails()">
-                    </div>
-
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="address-line-2">
-                            Second line of address
-                        </label>
-                        <input class="govuk-input" id="address-line-2" name="address-line-2" [(ngModel)]="selection.existing[methods.METHOD_POST].line_2" type="text" (ngModelChange)="checkDetails()">
-                    </div>
-
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="address-town">
-                            Town or city
-                        </label>
-                        <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" [(ngModel)]="selection.existing[methods.METHOD_POST].town" type="text" (ngModelChange)="checkDetails()">
-                    </div>
-
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="address-county">
-                            County
-                        </label>
-                        <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" [(ngModel)]="selection.existing[methods.METHOD_POST].county" type="text" (ngModelChange)="checkDetails()">
-                    </div>
-
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="address-postcode">
-                            Postcode
-                        </label>
-                        <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" [(ngModel)]="selection.existing[methods.METHOD_POST].postcode" type="text" (ngModelChange)="checkDetails()">
-                    </div>
-                </div>
-
-                <div class="govuk-form-group">
-                    <p class="govuk-body-s">Post will automatically be sent by GOV.UK Notify.</p>
-                </div>
+                <p class="govuk-body">
+                    This letter won’t be sent out automatically. You will need to write down the address and send this yourself.<br>
+                    Click ‘Send’ to capture that you are sending a letter yourself.
+                </p>
 
             </div>
         </div>
