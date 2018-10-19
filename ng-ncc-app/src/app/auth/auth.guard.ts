@@ -10,6 +10,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthGuard implements CanActivate {
 
+    // This guard checks whether a user has logged in or not, and if a code is provided in the route parameters, attempts authentication.
+    // It should prevent access to the respective route if there's no authenticated or logged in user.
+
     constructor(private Auth: AuthService, private router: Router) { }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -17,9 +20,9 @@ export class AuthGuard implements CanActivate {
         console.log('AuthGuard#canActivate called with code:', code);
 
         if (this.Auth.isLoggedIn()) {
-            // There's already a logged in user, so we're good.
-            console.log('User is logged in.');
-            return true;
+            // There's already a logged in user.
+            console.log('User is already logged in.', this.Auth.hasAccess());
+            return this.Auth.hasAccess();
         }
 
         if (code) {

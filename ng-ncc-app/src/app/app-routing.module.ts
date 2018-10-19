@@ -27,12 +27,12 @@ import { ContactDetailsResolver } from './resolvers/contact-details-resolver.ser
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
-    // {
-    //     // Home page.
-    //     path: 'home',
-    //     component: PageHomeComponent
-    // },
+    // TODO use constants for the route paths.
+    // -------------------------------------------------------------------------------------------------------------------------------------
+    // PAGES NOT REQUIRING AUTHENTICATION
+    // -------------------------------------------------------------------------------------------------------------------------------------
     {
+        // A page for unidentified users, or those with no access.
         path: 'try-again',
         component: PageTryAgainComponent
     },
@@ -41,121 +41,82 @@ export const AppRoutes: Routes = [
         path: 'playground',
         component: PagePlaygroundComponent
     },
+
     {
-        // last x Calls page.
+        // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
+        // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
+        // Normally we would add child pages to this route, but we want to keep the existing route paths.
+        path: 'auth/:code',
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+        children: []
+    },
+
+    // -------------------------------------------------------------------------------------------------------------------------------------
+    // PAGES REQUIRING AUTHENTICATION
+    // -------------------------------------------------------------------------------------------------------------------------------------
+    {
+        // Previous x Calls page.
         path: 'last-calls',
-        component: PageLastCallsComponent
+        component: PageLastCallsComponent,
+        canActivate: [AuthGuard]
     },
     {
         // Log Call page.
         path: 'log-call',
-        component: PageLogCallComponent
+        component: PageLogCallComponent,
+        canActivate: [AuthGuard]
     },
     {
-        path: 'auth/:code',
-        pathMatch: 'full',
+        // Payment page.
+        path: 'payment',
+        component: PagePaymentComponent,
         canActivate: [AuthGuard],
         children: [
             {
-                // Log Call page.
-                path: 'log-call',
-                component: PageLogCallComponent
-            },
-            {
-                // Payment page.
-                path: 'payment',
-                component: PagePaymentComponent,
-                children: [
-                    {
-                        path: 'summary',
-                        component: PagePaymentSummaryComponent,
-                        resolve: {
-                            caller: IdentifiedCallerResolver
-                        }
-                    },
-                    {
-                        path: 'transactions',
-                        component: PageTransactionHistoryComponent,
-                        resolve: {
-                            caller: IdentifiedCallerResolver
-                        }
-                    },
-                    {
-                        path: 'make',
-                        component: PagePaymentMakeComponent,
-                        resolve: {
-                            caller: IdentifiedCallerResolver
-                        }
-                    },
-                    {
-                        path: 'communications',
-                        component: PageRentCommunicationsComponent,
-                        resolve: {
-                            caller: IdentifiedCallerResolver
-                        }
-                    },
-                    {
-                        // Catch-all (which should go to the summary child page).
-                        path: '**',
-                        redirectTo: 'summary'
-                    }
-                ]
-            },
-            {
-                // Identify page.
-                path: 'caller-details',
-                component: PageIdentifyComponent,
+                // Rent > Summary.
+                path: 'summary',
+                component: PagePaymentSummaryComponent,
                 resolve: {
-                    call_nature: CallNatureResolver
+                    caller: IdentifiedCallerResolver
                 }
             },
             {
-                // [Edit] Contact Details page.
-                path: 'contact-details',
-                component: PageContactDetailsComponent,
+                // Rent > Transactions.
+                path: 'transactions',
+                component: PageTransactionHistoryComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver,
-                    details: ContactDetailsResolver
+                    caller: IdentifiedCallerResolver
                 }
             },
             {
-                // Comms page.
-                path: 'comms',
-                component: PageCommsComponent,
+                // Rent > Make (Payment).
+                path: 'make',
+                component: PagePaymentMakeComponent,
                 resolve: {
-                    caller: CallerResolver,
-                    call_nature: CallNatureResolver
+                    caller: IdentifiedCallerResolver
                 }
             },
             {
-                // View Notes page.
-                path: 'notes',
-                component: PageViewNotesComponent,
+                // Rent > Communications.
+                path: 'communications',
+                component: PageRentCommunicationsComponent,
                 resolve: {
-                    caller: CallerResolver
-                    // caller: IdentifiedCallerResolver
+                    caller: IdentifiedCallerResolver
                 }
             },
             {
-                // Log Additional Request page.
-                path: 'log-additional',
-                component: PageLogAdditionalComponent,
-                resolve: {
-                    caller: CallerResolver
-                }
+                // Catch-all (which should go to the summary child page).
+                path: '**',
+                redirectTo: 'summary'
             }
         ]
     },
-    // {
-    //     // Empty path (which should go to the home page).
-    //     path: '',
-    //     redirectTo: '/try-again',
-    //     pathMatch: 'full'
-    // },
     {
         // Identify page.
         path: 'caller-details',
         component: PageIdentifyComponent,
+        canActivate: [AuthGuard],
         resolve: {
             call_nature: CallNatureResolver
         }
@@ -164,6 +125,7 @@ export const AppRoutes: Routes = [
         // [Edit] Contact Details page.
         path: 'contact-details',
         component: PageContactDetailsComponent,
+        canActivate: [AuthGuard],
         resolve: {
             caller: IdentifiedCallerResolver,
             details: ContactDetailsResolver
@@ -173,6 +135,7 @@ export const AppRoutes: Routes = [
         // Comms page.
         path: 'comms',
         component: PageCommsComponent,
+        canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver,
             call_nature: CallNatureResolver
@@ -182,6 +145,7 @@ export const AppRoutes: Routes = [
         // View Notes page.
         path: 'notes',
         component: PageViewNotesComponent,
+        canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver
             // caller: IdentifiedCallerResolver
@@ -190,23 +154,26 @@ export const AppRoutes: Routes = [
     {
         // Log Additional Request page.
         path: 'log-additional',
+        canActivate: [AuthGuard],
         component: PageLogAdditionalComponent,
         resolve: {
             caller: CallerResolver
         }
     },
+
+    // -------------------------------------------------------------------------------------------------------------------------------------
+    // CATCH-ALL ROUTES
+    // -------------------------------------------------------------------------------------------------------------------------------------
     {
         // Empty path (which should go to the home page).
         path: '',
-        redirectTo: '/log-call',
-        // redirectTo: '/last-calls',
+        redirectTo: '/last-calls',
         pathMatch: 'full'
     },
     {
-        // Catch-all (which should go to the home page).
+        // Catch-all route (which should go to the home page).
         path: '**',
-        redirectTo: '/log-call'
-        // redirectTo: '/last-calls'
+        redirectTo: '/last-calls'
     }
 ];
 
