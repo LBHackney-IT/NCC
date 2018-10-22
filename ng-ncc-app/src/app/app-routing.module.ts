@@ -13,6 +13,7 @@ import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.comp
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
+import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
@@ -76,17 +77,17 @@ export const AppRoutes: Routes = [
                 }
             },
             {
-                // Handling information returned from Paris.
-                path: ':data',
-                component: PagePaymentComponent
-            },
-            {
                 // Catch-all (which should go to the summary child page).
                 path: '',
                 pathMatch: 'full',
                 redirectTo: 'summary'
             }
         ]
+    },
+    {
+        // Handling information returned from Paris.
+        path: 'transaction/:data',
+        component: PageTransactionComponent
     },
     {
         // Identify page.

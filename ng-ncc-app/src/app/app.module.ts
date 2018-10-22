@@ -25,6 +25,7 @@ import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.comp
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
+import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
@@ -96,6 +97,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         PagePaymentSummaryComponent,
         PagePlaygroundComponent,
         PageRentCommunicationsComponent,
+        PageTransactionComponent,
         PageTransactionHistoryComponent,
         PageViewNotesComponent,
         PanelComponent,
