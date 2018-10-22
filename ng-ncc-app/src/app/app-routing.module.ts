@@ -46,7 +46,6 @@ export const AppRoutes: Routes = [
     {
         // Payment page.
         path: 'payment',
-        component: PagePaymentComponent,
         children: [
             {
                 path: 'summary',
@@ -77,8 +76,14 @@ export const AppRoutes: Routes = [
                 }
             },
             {
+                // Handling information returned from Paris.
+                path: ':data',
+                component: PagePaymentComponent
+            },
+            {
                 // Catch-all (which should go to the summary child page).
-                path: '**',
+                path: '',
+                pathMatch: 'full',
                 redirectTo: 'summary'
             }
         ]

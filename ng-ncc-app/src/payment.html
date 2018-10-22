@@ -1,0 +1,18 @@
+<!doctype>
+<html>
+<head>
+<title>Testing...</title>
+<script>
+	var data = window.location.search.substring(1); // exclude the ? prefix.
+	var rows = data.split('&');
+	var pairs = rows.map(function(row) { return row.split('=').join(':'); });
+	
+	var query = pairs.join('$');
+	console.log(query);	
+	window.location.href = 'http://localhost:4200/payment/' + query;
+</script>
+</head>
+<body>
+<p>O HAI</p>
+</body>
+</html>
