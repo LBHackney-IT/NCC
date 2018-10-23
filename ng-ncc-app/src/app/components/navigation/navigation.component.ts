@@ -16,6 +16,7 @@ export class NavigationComponent {
 
     constructor(private Call: CallService, private router: Router) { }
 
+    previous_call_count: number = environment.previousCallCount;
     disable_previous_calls: boolean = environment.disable.previousCalls;
     disable_additional_reasons: boolean = environment.disable.additionalCallReason;
 

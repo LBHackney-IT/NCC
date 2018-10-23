@@ -2,7 +2,7 @@
     <ul class="navigation__list">
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a routerLink="/last-calls" [class.disabled]="disable_previous_calls">
-                Previous 10 Calls
+                Previous {{ previous_call_count }} Calls
             </a>
         </li>
         <li class="navigation__separator"></li>
