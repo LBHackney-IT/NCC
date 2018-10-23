@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, take } from 'rxjs/operators';
 import { Observable, forkJoin, of, from } from 'rxjs';
 
+import { CALL_REASON } from '../constants/call-reason.constant';
 import { ICaller } from '../interfaces/caller';
 import { ILogCallSelection } from '../interfaces/log-call-selection';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
@@ -194,6 +195,11 @@ export class CallService {
      * Record a manual note against the call.
      */
     recordManualNote(note_content: string): Observable<any> {
+        // If the call reason is "Other", prepend the note with the specfied reason text.
+        if (CALL_REASON.OTHER === this.call_nature.call_reason.id) {
+            note_content = `${this.call_nature.other_reason}: ${note_content}`;
+        }
+
         return this.NCCAPI.createManualNote(
             this.call_id,
             this.ticket_number,
