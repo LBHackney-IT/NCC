@@ -1,7 +1,9 @@
 <nav class="page__menu">
     <ul class="navigation__list">
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/last-calls" disabled>Previous 10 Calls</a>
+            <a routerLink="/last-calls" [class.disabled]="disable_previous_calls">
+                Previous 10 Calls
+            </a>
         </li>
         <li class="navigation__separator"></li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
@@ -9,26 +11,40 @@
             <a routerLink="/log-call" *ngIf="!isCallActive()">Start New Call</a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/caller-details">Caller Identification</a>
+            <a routerLink="/caller-details" [class.disabled]="!isCallNatureSelected()">
+                Caller Identification
+            </a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/log-additional" disabled>Additional Call Reason</a>
+            <a routerLink="/log-additional" [class.disabled]="disable_additional_reasons">
+                Additional Call Reason
+            </a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/notes" disabled>Caller Notes</a>
+            <a routerLink="/notes" [class.disabled]="!isCallerIdentified()">
+                Caller Notes
+            </a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/comms">General Communications</a>
+            <a routerLink="/comms" [class.disabled]="!isCallActive()">
+                General Communications
+            </a>
         </li>
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a routerLink="/payment" disabled>Rent</a>
+            <a routerLink="/payment" [class.disabled]="!isCallerIdentified()">
+                Rent
+            </a>
         </li>
         <li class="navigation__item" *ngIf="isCallActive()">
-            <a (click)="endCall()">End call</a>
+            <a (click)="endCall()">
+                End call
+            </a>
         </li>
     </ul>
 
-    <a class="govuk-button" href="https://goo.gl/forms/Jd0QbfcqpmyDu6lh1" target="_blank">Report a problem / provide feedback</a>
+    <a class="govuk-button" href="https://goo.gl/forms/Jd0QbfcqpmyDu6lh1" target="_blank">
+        Report a problem / provide feedback
+    </a>
 
     <!-- Message to go here. -->
     <app-editorial></app-editorial>
