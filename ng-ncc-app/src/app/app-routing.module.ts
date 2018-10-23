@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { environment } from '../environments/environment';
 
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
@@ -23,11 +24,6 @@ import { ContactDetailsResolver } from './resolvers/contact-details-resolver.ser
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
-    // {
-    //     // Home page.
-    //     path: 'home',
-    //     component: PageHomeComponent
-    // },
     {
         // Playground page (for testing things).
         path: 'playground',
@@ -128,16 +124,16 @@ export const AppRoutes: Routes = [
     },
     {
         // Empty path (which should go to the home page).
+        // If the "Previous x Calls" page has been disabled, the we go to the "Start New Call" page.
         path: '',
-        redirectTo: '/log-call',
-        // redirectTo: '/last-calls',
+        redirectTo: environment.disable.previousCalls ? '/log-call' : '/last-calls',
         pathMatch: 'full'
     },
     {
         // Catch-all (which should go to the home page).
+        // If the "Previous x Calls" page has been disabled, the we go to the "Start New Call" page.
         path: '**',
-        redirectTo: '/log-call'
-        // redirectTo: '/last-calls'
+        redirectTo: environment.disable.previousCalls ? '/log-call' : '/last-calls'
     }
 ];
 
