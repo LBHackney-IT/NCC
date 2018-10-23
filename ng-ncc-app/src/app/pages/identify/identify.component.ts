@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +20,8 @@ import { Router } from '@angular/router';
 export class PageIdentifyComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
+
+    disable_identify_caller: boolean = environment.disable.identifyCaller;
 
     existing_call: boolean;
     searching: boolean;
@@ -47,9 +50,10 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      */
     performSearch() {
         // For the time being, we are only searching for people by postcode.
-        if (this.searching) {
+        if (this.disable_identify_caller || this.searching) {
             return;
         }
+
         this.results = null;
         this.selected_address = null;
         this.searching = true;
@@ -73,10 +77,17 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Returns TRUE if the user can enter a search term.
+     */
+    canUseSearch() {
+        return !(this.disable_identify_caller || this.searching);
+    }
+
+    /**
      * Returns TRUE if the user can peform a search for details.
      */
     canPerformSearch() {
-        return !this.searching && !!(this.postcode);
+        return this.canUseSearch() && !!(this.postcode);
     }
 
     /**
