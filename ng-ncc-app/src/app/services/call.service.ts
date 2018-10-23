@@ -231,6 +231,31 @@ export class CallService {
     }
 
     /**
+     * Record an automatic comms note against the call.
+     */
+    recordCommsNote(notify_template_name: string, notify_method: string) {
+        const note_content = `${notify_template_name} comms sent by ${notify_method}.`;
+
+        return forkJoin(
+
+            // Automatic note...
+            this.NCCAPI.createAutomaticNote(
+                this.call_id,
+                this.ticket_number,
+                this.getTenancyReference(),
+                this.call_nature.call_reason.id,
+                this.caller.getContactID(),
+                note_content,
+                notify_template_name,
+                notify_method
+            ),
+
+            // Action Diary note...
+            this.recordActionDiaryNote(note_content)
+        );
+    }
+
+    /**
      * Record an Action Diary entry against the tenancy associated with the call (if present).
      */
     recordActionDiaryNote(note_content: string) {

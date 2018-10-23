@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CONTACT } from '../constants/contact.constant';
+import { COMMS } from '../constants/comms.constant';
 import { CallService } from './call.service';
 import { ICaller } from '../interfaces/caller';
 
@@ -32,10 +33,23 @@ export class UHTriggerService {
 
         const call_type = this.Call.getCallNature().call_type.label;
         const call_reason = this.Call.getCallNature().call_reason.label;
+        let notify_method: string;
+
+        switch (method) {
+            case CONTACT.METHOD_EMAIL:
+                notify_method = COMMS.NOTIFY_METHOD_EMAIL;
+                break;
+            case CONTACT.METHOD_SMS:
+                notify_method = COMMS.NOTIFY_METHOD_SMS;
+                break;
+            case CONTACT.METHOD_POST:
+                notify_method = COMMS.NOTIFY_METHOD_POST;
+                break;
+        }
 
         switch (call_type) {
             case 'Rent':
-                this._sentRentComms(call_reason, template, method, data);
+                this._sentRentComms(template, notify_method, data);
                 break;
         }
     }
@@ -69,55 +83,19 @@ export class UHTriggerService {
     /**
      * Handle a comms template sent as a result of the Rent call type.
      */
-    _sentRentComms(call_reason: string, template: string, method: string, data: { [propKey: string]: string }) {
-        call_reason = call_reason.toLowerCase();
-        template = template.toLowerCase();
+    _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {
 
-        let observable: Observable<any>;
-
-        switch (template) {
-            case 'dpa: rent statement (with balance)':
-                console.log('A Statement was sent: record Action Diary note.');
-                observable = this.Call.recordAutomaticNote('Copy of statement sent');
-                break;
-
-            case 'rent refund form':
-                // A link to a refund form was sent.
-                console.log('A Refund form link was sent: record Action Diary note.');
-                observable = this.Call.recordAutomaticNote('Refund link sent');
-                break;
-
-            case 'payment methods':
-                console.log('A payment methods link was sent: record Action Diary note.');
-                observable = this.Call.recordAutomaticNote('Payment methods sent');
-                break;
-
-            case 'direct debit':
-                console.log('A direct debit form link was sent: record Action Diary note.');
-                observable = this.Call.recordAutomaticNote('Direct debit form link sent');
-                break;
-
-            case 'standing order (major works)':
-            case 'standing order (rent)':
-            case 'standing order (service charge)':
-                console.log('Standing order information was sent: record Action Diary note.');
-                observable = this.Call.recordAutomaticNote('Standing order information sent');
-                break;
-        }
-
-        if (observable) {
-            const subscription = observable.subscribe(
-                () => {
-                    console.log('Added an automatic note.');
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    subscription.unsubscribe();
-                }
-            );
-        }
+        const subscription = this.Call.recordCommsNote(template, method).subscribe(
+            () => {
+                console.log('Added an automatic comms note (UHTrigger).');
+            },
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                subscription.unsubscribe();
+            }
+        );
 
     }
 
