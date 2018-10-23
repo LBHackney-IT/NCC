@@ -196,9 +196,7 @@ export class CallService {
      */
     recordManualNote(note_content: string): Observable<any> {
         // If the call reason is "Other", prepend the note with the specfied reason text.
-        if (CALL_REASON.OTHER === this.call_nature.call_reason.id) {
-            note_content = `${this.call_nature.other_reason}: ${note_content}`;
-        }
+        note_content = this._formatNoteContent(note_content);
 
         return this.NCCAPI.createManualNote(
             this.call_id,
@@ -213,6 +211,8 @@ export class CallService {
      * Record an automatic note against the call.
      */
     recordAutomaticNote(note_content: string) {
+        note_content = this._formatNoteContent(note_content);
+
         return forkJoin(
 
             // Automatic note...
@@ -242,6 +242,17 @@ export class CallService {
         }
 
         return of(true);
+    }
+
+    /**
+     *
+     */
+    private _formatNoteContent(note_content: string): string {
+        if (CALL_REASON.OTHER === this.call_nature.call_reason.id) {
+            note_content = `${this.call_nature.other_reason}: ${note_content}`;
+        }
+
+        return note_content;
     }
 
 }
