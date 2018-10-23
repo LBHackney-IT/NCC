@@ -23,7 +23,7 @@
     <app-route-loading *ngIf="loading"></app-route-loading>
 
     <!-- Navigation menu. -->
-    <app-navigation></app-navigation>
+    <app-navigation *ngIf="loggedIn()"></app-navigation>
 
     <!-- MAIN CONTENT AREA. -->
     <app-content-area>
