@@ -158,6 +158,9 @@ export class CallService {
      */
     setCallNature(selection: ILogCallSelection) {
         this.call_nature = selection;
+        if (this.call_id) {
+            this.recordAutomaticNote(`Additional call reason.`);
+        }
     }
 
     /**
