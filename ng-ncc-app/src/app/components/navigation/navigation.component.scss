@@ -46,7 +46,7 @@ $navigation-menu-separator-colour: #CCC !default;
         background: inherit;
         text-decoration: none;
 
-        &[disabled] {
+        &.disabled {
             pointer-events: none;
             cursor: default;
         }
@@ -54,7 +54,7 @@ $navigation-menu-separator-colour: #CCC !default;
     // Item hover state.
     a:hover,
     label:hover {
-        &:not([disabled]) {
+        &:not(.disabled) {
             border-left-color: #2b8cc4;
         }
     }
@@ -70,39 +70,6 @@ $navigation-menu-separator-colour: #CCC !default;
             font-weight: bold;
         }
     }
-    // -------------------------------------------------------------------------
-    // TODO remove these selectors (using checkboxes to show and hide sections).
-    input {
-        display: none;
-
-        &:checked {
-            ~ label:after {
-                content: '-';
-            }
-
-            ~ ul {
-                display: list-item;
-            }
-        }
-    }
-
-    label {
-        position: relative;
-
-        &:after {
-            content: '+';
-            font-weight: bold;
-            position: absolute;
-            right: 10px;
-            top: 10px;
-        }
-    }
-
-    > ul {
-        margin-left: 2.5rem;
-        display: none;
-    }
-    // -------------------------------------------------------------------------
 }
 
 .navigation__separator {
