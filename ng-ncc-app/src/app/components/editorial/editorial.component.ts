@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-editorial',
@@ -18,8 +19,11 @@ export class EditorialComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    constructor(private NCCAPI: NCCAPIService) { }
+    constructor(private NCCAPI: NCCAPIService, private Auth: AuthService) { }
 
+    /**
+     *
+     */
     ngOnInit() {
         this.NCCAPI.getEditorial()
             .pipe(
@@ -30,17 +34,35 @@ export class EditorialComponent implements OnInit, OnDestroy {
             });
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
     }
 
-    beginEdit() {
-        this.new_content = this.content;
-        this.editing = true;
+    /**
+     *
+     */
+    canEdit(): boolean {
+        return this.Auth.isTeamLeader();
     }
 
+    /**
+     *
+     */
+    beginEdit() {
+        if (this.canEdit()) {
+            this.new_content = this.content;
+            this.editing = true;
+        }
+    }
+
+    /**
+     *
+     */
     saveText() {
-        if (this.saving) {
+        if (this.saving || !this.canEdit()) {
             return;
         }
 
@@ -61,6 +83,9 @@ export class EditorialComponent implements OnInit, OnDestroy {
             );
     }
 
+    /**
+     *
+     */
     resetText() {
         this.new_content = null;
         this.editing = false;
