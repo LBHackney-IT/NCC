@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { initAll } from 'govuk-frontend';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private Auth: AuthService) {
         this.router.events
             .pipe(
                 takeUntil(this._destroyed$)
@@ -65,6 +66,13 @@ export class AppComponent implements OnInit, OnDestroy {
      */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    loggedIn(): boolean {
+        return this.Auth.isLoggedIn();
     }
 
 }

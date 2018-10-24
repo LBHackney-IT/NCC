@@ -7,6 +7,7 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 
 import * as moment from 'moment';
 
+import { IAuthentication } from '../../interfaces/authentication';
 import { ICRMServiceRequest } from '../../interfaces/crmservicerequest';
 import { IJSONResponse } from '../../interfaces/json-response';
 import { INCCNote } from '../../interfaces/ncc-note';
@@ -199,6 +200,23 @@ export class NCCAPIService {
     /**
      *
      */
+    authenticate(code: string): Observable<IAuthentication> {
+        console.log('authenticate attempt with code:', code);
+
+        return this.http
+            .get(`${this._url}SSO/Authenticate?userdata=${encodeURIComponent(code)}`, {})
+            .pipe(map((json: IJSONResponse) => {
+                if (json.response) {
+                    return <IAuthentication>json.response.UserData;
+                } else if (500 === json.statusCode) {
+                    return <IAuthentication>{
+                        success: false,
+                        message: json.value.error.message
+                    };
+                }
+            }));
+    }
+
     getLastCalls(count: number) {
         const parameters = {
             XCalls: count
