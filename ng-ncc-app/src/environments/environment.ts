@@ -12,9 +12,9 @@ export const environment = {
     },
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
     disable: {
-        previousCalls: true,
+        previousCalls: false,
         identifyCaller: false,
-        additionalCallReason: true
+        additionalCallReason: false
     },
     previousCallCount: 10
 };
