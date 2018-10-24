@@ -113,6 +113,9 @@ export class CallService {
                         this.ticket_number = response.call.ticketNumber;
                         console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
 
+                        // Create an automatic note mentioning the selected caller.
+                        this.createCallerNote();
+
                         // Handle the tenant's account data.
                         this.account = response.account;
                         console.log(`Account details were obtained.`);
@@ -123,6 +126,16 @@ export class CallService {
                     () => {
                         subscription.unsubscribe();
                     });
+        }
+    }
+
+    /**
+     * Creates an automatic note about the caller being identified.
+     */
+    createCallerNote() {
+        if (this.call_id) {
+            const name = this.caller.isAnonymous() ? 'anonymous' : this.caller.getName();
+            this.recordAutomaticNote(`Caller identified as ${name}.`);
         }
     }
 
@@ -207,7 +220,7 @@ export class CallService {
             this.call_nature.call_reason.id,
             this.caller.getContactID(),
             note_content
-        );
+        ).pipe(take(1));
     }
 
     /**
@@ -230,7 +243,9 @@ export class CallService {
 
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
-        );
+
+        ).pipe(take(1)).subscribe();
+        // This allows us to retrieve the Observables results just once.
     }
 
     /**
@@ -255,7 +270,8 @@ export class CallService {
 
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
-        );
+        ).pipe(take(1)).subscribe();
+        // This allows us to retrieve the Observables results just once.
     }
 
     /**
