@@ -29,11 +29,18 @@
             </legend>
 
             <div class="govuk-radios" data-module="radios">
-                <div class="govuk-radios__item" *ngFor="let reason of getCallTypeReasons(); trackBy: trackByCallReason">
-                    <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
-                        [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="reason">
-                    <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
-                </div>
+                <ng-template ngFor let-reason [ngForOf]="getCallTypeReasons()" [ngForTrackBy]="trackByCallReason">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
+                            [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="reason">
+                        <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
+                    </div>
+                    <div class="govuk-radios__conditional" id="conditional-how-contacted-conditional-3"
+                        [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
+                        *ngIf="'Rent card' === reason.label">
+                        <p class="govuk-body">You will need to submit a request for a Rent Card in UHT.</p>
+                    </div>
+                </ng-template>
             </div>
 
             <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->

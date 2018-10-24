@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { environment } from '../environments/environment';
 
 import { AuthGuard } from './auth/auth.guard';
 
@@ -166,14 +167,16 @@ export const AppRoutes: Routes = [
     // -------------------------------------------------------------------------------------------------------------------------------------
     {
         // Empty path (which should go to the home page).
+        // If the "Previous x Calls" page has been disabled, the we go to the "Start New Call" page.
         path: '',
-        redirectTo: '/last-calls',
+        redirectTo: environment.disable.previousCalls ? '/log-call' : '/last-calls',
         pathMatch: 'full'
     },
     {
-        // Catch-all route (which should go to the home page).
+        // Catch-all (which should go to the home page).
+        // If the "Previous x Calls" page has been disabled, the we go to the "Start New Call" page.
         path: '**',
-        redirectTo: '/last-calls'
+        redirectTo: environment.disable.previousCalls ? '/log-call' : '/last-calls'
     }
 ];
 

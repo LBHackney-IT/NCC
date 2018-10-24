@@ -139,7 +139,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     saveNote() {
         if (this.canSaveNote()) {
             this.saving = true;
-            const subscription = this.Call.recordNote(this.comment, false)
+            const subscription = this.Call.recordManualNote(this.comment)
                 .subscribe(
                     () => {
                         console.log('Added a note.');
