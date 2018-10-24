@@ -13,6 +13,7 @@ import { INCCNote } from '../../interfaces/ncc-note';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
+import { COMMS } from '../../constants/comms.constant';
 
 @Injectable({
     providedIn: 'root'
@@ -67,19 +68,21 @@ export class NCCAPIService {
      * Automatic notes are also added to the Action Diary.
      */
     createAutomaticNote(call_id: string, ticket_number: string, tenancy_reference: string, call_reason_id: string, crm_contact_id: string,
-        content: string) {
-        return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, true);
+        content: string, notify_template: string = null, notify_method: string = COMMS.NOTIFY_METHOD_NONE) {
+        return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, true, notify_template, notify_method);
     }
 
     _createNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string,
-        automatic: boolean = false) {
+        automatic: boolean = false, notify_template: string = null, notify_method: string = COMMS.NOTIFY_METHOD_NONE) {
         const parameters = {
             callReasonId: call_reason_id,
             'ServiceRequest.Id': call_id,
             'ServiceRequest.TicketNumber': ticket_number,
             'ServiceRequest.ContactId': crm_contact_id,
             notestype: automatic ? this.NOTE_TYPE_AUTOMATIC : this.NOTE_TYPE_MANUAL,
-            notes: content
+            notes: content,
+            GovNotifyTemplateType: notify_template,
+            GovNotifyChannelType: notify_method
         };
 
         return this.http
