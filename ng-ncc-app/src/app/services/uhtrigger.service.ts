@@ -66,37 +66,14 @@ export class UHTriggerService {
         }
 
         // TODO we would get the information from a successful payment.
-        const subscription = this.Call.recordAutomaticNote(`Rent payment taken: £${amount} ref: ${payment_reference}`)
-            .subscribe(
-                () => {
-                    console.log('Added an automatic note.');
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    subscription.unsubscribe();
-                }
-            );
+        this.Call.recordAutomaticNote(`Rent payment taken: £${amount} ref: ${payment_reference}`);
     }
 
     /**
      * Handle a comms template sent as a result of the Rent call type.
      */
     _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {
-
-        const subscription = this.Call.recordCommsNote(template, method).subscribe(
-            () => {
-                console.log('Added an automatic comms note (UHTrigger).');
-            },
-            (error) => {
-                console.log(error);
-            },
-            () => {
-                subscription.unsubscribe();
-            }
-        );
-
+        this.Call.recordCommsNote(template, method);
     }
 
 }
