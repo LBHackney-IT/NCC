@@ -32,7 +32,7 @@ export class PagePlaygroundComponent implements OnInit {
             '3cb039e7-f421-e811-a4ef-005056986-64',
             '10.00'
         ];
-        const return_url = `http://lbhwebintd01:3030/payment.html?${return_data.join('$')}`;
+        const return_url = `${window.location.origin}/payment.html?${return_data.join('$')}`;
 
         const parameters = {
             returnurl: return_url,
