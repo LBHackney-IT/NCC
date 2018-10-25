@@ -1,5 +1,5 @@
 import { environment } from '../../../environments/environment';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-env-name',
