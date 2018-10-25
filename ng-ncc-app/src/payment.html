@@ -5,7 +5,14 @@
 <script>
 	var data = window.location.search.substring(1); // exclude the ? prefix.
 	var rows = data.split('&');
-	var pairs = rows.map(function(row) { return row.split('=').join(':'); });
+	var pairs = rows.map(function(row) {
+		var parts = row.split('=');
+		// Don't include the hash value: for failed transactions, including it results in a 400 HTTP error
+		// (for an unknown reason). We don't need it anyway.
+		if ( 'hash' !== parts[0] ) {
+			return row.split('=').join(':');
+		}
+	});
 	var query = pairs.join('$');
 
     // Redirect back to the app.

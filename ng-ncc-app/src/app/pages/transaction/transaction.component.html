@@ -30,9 +30,6 @@
     <app-value-list-value>{{ data.administrationcharge | currency:'GBP' }}</app-value-list-value>
 
     <app-value-list-label>Processed?</app-value-list-label>
-    <app-value-list-value>{{ data.serviceprocessed ? 'Yes' : 'No' }}</app-value-list-value>
-
-    <app-value-list-label>Hash</app-value-list-label>
-    <app-value-list-value>{{ data.hash }}</app-value-list-value>
+    <app-value-list-value>{{ wasSuccessful() ? 'Yes' : 'No' }}</app-value-list-value>
 
 </app-value-list>

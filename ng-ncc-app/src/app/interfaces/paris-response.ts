@@ -4,10 +4,9 @@ export interface IParisResponse {
     transactiontype: string;
     merchantnumber: string;
     data: string;
-    serviceprocessed: boolean;
+    serviceprocessed: string;
     merchanttid: string;
     amount: number;
     date: string;
     administrationcharge: number;
-    hash: string;
 }

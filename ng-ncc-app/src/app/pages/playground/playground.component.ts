@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class PagePlaygroundComponent implements OnInit {
 
     show: boolean;
+    amount: number = 10;
+
     constructor() { }
 
     ngOnInit() {
@@ -30,7 +32,7 @@ export class PagePlaygroundComponent implements OnInit {
         const return_data = [
             'CAS-775515-M9F2QZ',
             '3cb039e7-f421-e811-a4ef-005056986-64',
-            '10.00'
+            this.amount
         ];
         const return_url = `${window.location.origin}/payment.html?${return_data.join('$')}`;
 
@@ -40,7 +42,7 @@ export class PagePlaygroundComponent implements OnInit {
             returntext: encodeURIComponent('Back to Something'),
             ignoreconfirmation: true,
             data: encodeURIComponent('Keep this and return it at the end'),
-            recordxml: '<records><record><reference>006884</reference><fund>02</fund><amount>10.00</amount><text></text></record></records>'
+            recordxml: `<records><record><reference>006884</reference><fund>02</fund><amount>${this.amount}</amount><text></text></record></records>`
         };
 
         const url = `https://hackney.paris-epayments.co.uk/paymentstest/sales/launchinternet.aspx?${this._buildQueryString(parameters)}`;

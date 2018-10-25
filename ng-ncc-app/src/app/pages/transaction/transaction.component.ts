@@ -54,4 +54,11 @@ export class PageTransactionComponent implements OnInit {
         return fromPairs(data);
     }
 
+    /**
+     *
+     */
+    wasSuccessful(): boolean {
+        return 'true' === this.data.serviceprocessed;
+    }
+
 }

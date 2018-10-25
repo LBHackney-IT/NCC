@@ -70,6 +70,11 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        // Handling information returned from Paris.
+        path: 'transaction/:data',
+        component: PageTransactionComponent
+    },
+    {
         // Payment page.
         path: 'payment',
         component: PagePaymentComponent,
@@ -114,11 +119,6 @@ export const AppRoutes: Routes = [
                 redirectTo: 'summary'
             }
         ]
-    },
-    {
-        // Handling information returned from Paris.
-        path: 'transaction/:data',
-        component: PageTransactionComponent
     },
     {
         // Identify page.
