@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    name: 'Live',
     api: {
         hackney: 'https://api.hackney.gov.uk',
         manageATenancy: 'https://api.hackney.gov.uk/manageatenancy/v1',
