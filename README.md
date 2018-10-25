@@ -17,5 +17,16 @@ npm install (or yarn install)
 ng serve
 ```
 
-## Test site
-http://lbhwebintd01:3030
+## *DEVELOPMENT* test site
+Single Sign On (SSO): http://lbhwebintd01:1010
+Front end: http://lbhwebintd01:2020
+```
+npm build -c dev-site
+```
+
+## *LIVE* test site
+Single Sign On (SSO): http://lbhwebintd01:3030
+Front end: http://lbhwebintd01:4040
+```
+npm build -c live-site
+```

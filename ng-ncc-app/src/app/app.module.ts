@@ -13,6 +13,7 @@ import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 
+import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
@@ -26,6 +27,7 @@ import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-sum
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
+import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,7 +38,6 @@ import { BackLinkComponent } from './components/back-link/back-link.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
-import { CommunicationsPageComponent } from './components/communications-page/communications-page.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
@@ -72,7 +73,6 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         CallNatureComponent,
         CommsMethodSelectComponent,
         CommsTemplatesComponent,
-        CommunicationsPageComponent,
         ConfirmDialogueComponent,
         ContentAreaComponent,
         CurrentCallerComponent,
@@ -86,6 +86,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         NoteFormComponent,
         NotifyTemplatePreviewComponent,
         OrComponent,
+        PageAuthComponent,
         PageCommsComponent,
         PageContactDetailsComponent,
         PageHomeComponent,
@@ -99,6 +100,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         PagePlaygroundComponent,
         PageRentCommunicationsComponent,
         PageTransactionHistoryComponent,
+        PageTryAgainComponent,
         PageViewNotesComponent,
         PanelComponent,
         RouteLoadingComponent,

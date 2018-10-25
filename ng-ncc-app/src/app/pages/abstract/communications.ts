@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -18,11 +18,8 @@ import { CONTACT } from '../../constants/contact.constant';
 import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { UHTriggerService } from '../../services/uhtrigger.service';
 
-@Component({
-    selector: 'app-communications-page',
-    templateUrl: './communications-page.component.html',
-})
-export class CommunicationsPageComponent implements OnInit, OnDestroy {
+@Injectable()
+export class PageCommunications implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 

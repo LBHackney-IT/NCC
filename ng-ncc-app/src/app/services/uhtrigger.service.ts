@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CONTACT } from '../constants/contact.constant';
+import { COMMS } from '../constants/comms.constant';
 import { CallService } from './call.service';
 import { ICaller } from '../interfaces/caller';
 
@@ -26,16 +27,29 @@ export class UHTriggerService {
         console.log(template, method, data);
 
         // Only continue if there is an identified caller.
-        if (!this.Call.isCallerIdentified()) {
-            return;
-        }
+        // if (!this.Call.isCallerIdentified()) {
+        //     return;
+        // }
 
         const call_type = this.Call.getCallNature().call_type.label;
         const call_reason = this.Call.getCallNature().call_reason.label;
+        let notify_method: string;
+
+        switch (method) {
+            case CONTACT.METHOD_EMAIL:
+                notify_method = COMMS.NOTIFY_METHOD_EMAIL;
+                break;
+            case CONTACT.METHOD_SMS:
+                notify_method = COMMS.NOTIFY_METHOD_SMS;
+                break;
+            case CONTACT.METHOD_POST:
+                notify_method = COMMS.NOTIFY_METHOD_POST;
+                break;
+        }
 
         switch (call_type) {
             case 'Rent':
-                this._sentRentComms(call_reason, template, method, data);
+                this._sentRentComms(template, notify_method, data);
                 break;
         }
     }
@@ -52,73 +66,14 @@ export class UHTriggerService {
         }
 
         // TODO we would get the information from a successful payment.
-        const subscription = this.Call.recordNote(`Rent payment taken: £${amount} ref: ${payment_reference}`, true)
-            .subscribe(
-                () => {
-                    console.log('Added an automatic note.');
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    subscription.unsubscribe();
-                }
-            );
+        this.Call.recordAutomaticNote(`Rent payment taken: £${amount} ref: ${payment_reference}`);
     }
 
     /**
      * Handle a comms template sent as a result of the Rent call type.
      */
-    _sentRentComms(call_reason: string, template: string, method: string, data: { [propKey: string]: string }) {
-        call_reason = call_reason.toLowerCase();
-        template = template.toLowerCase();
-
-        let observable: Observable<any>;
-
-        switch (template) {
-            case 'dpa: rent statement (with balance)':
-                console.log('A Statement was sent: record Action Diary note.');
-                observable = this.Call.recordNote('Copy of statement sent', true);
-                break;
-
-            case 'rent refund form':
-                // A link to a refund form was sent.
-                console.log('A Refund form link was sent: record Action Diary note.');
-                observable = this.Call.recordNote('Refund link sent', true);
-                break;
-
-            case 'payment methods':
-                console.log('A payment methods link was sent: record Action Diary note.');
-                observable = this.Call.recordNote('Payment methods sent', true);
-                break;
-
-            case 'direct debit':
-                console.log('A direct debit form link was sent: record Action Diary note.');
-                observable = this.Call.recordNote('Direct debit form link sent', true);
-                break;
-
-            case 'standing order (major works)':
-            case 'standing order (rent)':
-            case 'standing order (service charge)':
-                console.log('Standing order information was sent: record Action Diary note.');
-                observable = this.Call.recordNote('Standing order information sent', true);
-                break;
-        }
-
-        if (observable) {
-            const subscription = observable.subscribe(
-                () => {
-                    console.log('Added an automatic note.');
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    subscription.unsubscribe();
-                }
-            );
-        }
-
+    _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {
+        this.Call.recordCommsNote(template, method);
     }
 
 }
