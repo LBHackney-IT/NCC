@@ -1,0 +1,10 @@
+@import "../../../assets/scss/vars.scss";
+@import "~govuk-frontend/all";
+
+$try-again-message-border: 4px solid $govuk-error-colour !default;
+
+////////////////////
+
+.message {
+    border: $try-again-message-border;
+}

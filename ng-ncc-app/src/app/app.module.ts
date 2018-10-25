@@ -13,6 +13,7 @@ import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 
+import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageHomeComponent } from './pages/home/home.component';
@@ -27,6 +28,7 @@ import { PagePlaygroundComponent } from './pages/playground/playground.component
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
+import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -85,6 +87,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         NoteFormComponent,
         NotifyTemplatePreviewComponent,
         OrComponent,
+        PageAuthComponent,
         PageCommsComponent,
         PageContactDetailsComponent,
         PageHomeComponent,
@@ -99,6 +102,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         PageRentCommunicationsComponent,
         PageTransactionComponent,
         PageTransactionHistoryComponent,
+        PageTryAgainComponent,
         PageViewNotesComponent,
         PanelComponent,
         RouteLoadingComponent,
