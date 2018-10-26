@@ -29,12 +29,9 @@
     </app-dialogue>
 
     <app-dialogue [(show)]="modal.error">
-        <div class="govuk-warning-text">
-            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-            <span class="govuk-warning-text__text govuk-!-font-size-24 govuk-!-font-weight-bold">
-                There was a problem with sending the message.
-            </span>
-        </div>
+        <app-warning>
+            There was a problem with sending the message.
+        </app-warning>
     </app-dialogue>
 
     <!-- Data protection Act (DPA) questions prompt. -->
