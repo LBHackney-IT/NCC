@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 
 import { AUTH } from '../../constants/auth.constant';
@@ -64,8 +65,7 @@ export class PageTryAgainComponent implements OnInit {
      */
     retry() {
         const location = window.location;
-        const url = `${location.protocol}//${location.hostname}:4040`;
-        window.open(url, '_self');
+        window.open(environment.authenticationLink, '_self');
     }
 
 }
