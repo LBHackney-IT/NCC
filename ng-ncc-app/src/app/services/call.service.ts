@@ -81,6 +81,13 @@ export class CallService {
     }
 
     /**
+     * Returns the call type and reason (as their respective IDs).
+     */
+    getTicketNumber(): string {
+        return this.ticket_number;
+    }
+
+    /**
      * Sets the caller for this call.
      */
     setCaller(caller: ICaller) {
@@ -267,8 +274,7 @@ export class CallService {
                 this.call_nature.call_reason.id,
                 this.caller.getContactID(),
                 note_content,
-                notify_template_name,
-                notify_method
+                { GovNotifyTemplateType: notify_template_name, GovNotifyChannelType: notify_method }
             ),
 
             // Action Diary note...

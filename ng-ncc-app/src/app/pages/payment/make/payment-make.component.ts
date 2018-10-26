@@ -58,12 +58,15 @@ export class PagePaymentMakeComponent implements OnInit, OnDestroy {
      */
     answeredYes() {
         console.log(`Confirmed payment of £${this.form.to_pay}.`);
+
         this.NCCAPI.beginPayment(
             this.Call.getCallID(),
-            this.Call.getTenancyReference(),
             this.Call.getCaller().getContactID(),
+            this.Call.getTenancyReference(),
+            this.Call.getCallNature().call_reason.id,
+            this.Call.getTicketNumber(),
             this.form.to_pay
-        )
+        );
         // this.UHTrigger.madePayment(this.Call.getTenancyReference(), this.form.to_pay);
     }
 
