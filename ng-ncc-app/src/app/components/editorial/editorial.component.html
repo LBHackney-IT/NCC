@@ -2,7 +2,7 @@
     <p class="message">
         {{ content }}
     </p>
-    <button class="govuk-button" type="button" name="button" (click)="beginEdit()">Edit</button>
+    <button class="govuk-button" type="button" name="button" *ngIf="canEdit()" (click)="beginEdit()">Edit</button>
 </div>
 
 <!-- a form with a textarea field to edit text (if we are a team leader). -->
