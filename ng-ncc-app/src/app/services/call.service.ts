@@ -271,6 +271,12 @@ export class CallService {
                 notify_method
             ),
 
+            this.NCCAPI.createCommsNote(
+                this.caller.getContactID(),
+                notify_template_name,
+                notify_method
+            ),
+
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
         ).pipe(take(1)).subscribe();

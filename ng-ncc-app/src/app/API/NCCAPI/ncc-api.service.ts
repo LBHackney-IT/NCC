@@ -73,6 +73,9 @@ export class NCCAPIService {
         return this._createNote(call_id, ticket_number, call_reason_id, crm_contact_id, content, true, notify_template, notify_method);
     }
 
+    /**
+     *
+     */
     _createNote(call_id: string, ticket_number: string, call_reason_id: string, crm_contact_id: string, content: string,
         automatic: boolean = false, notify_template: string = null, notify_method: string = COMMS.NOTIFY_METHOD_NONE) {
         const parameters = {
@@ -88,6 +91,20 @@ export class NCCAPIService {
 
         return this.http
             .post(`${this._url}CRM/CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
+    }
+
+    /**
+     * Create an note about a comms form being sent.
+     */
+    createCommsNote(crm_contact_id: string, notify_template: string, notify_method: string) {
+        const parameters = {
+            ContactId: crm_contact_id,
+            ChannelType: notify_method,
+            TemplateType: notify_template
+        };
+
+        return this.http
+            .post(`${this._url}CRM/RecordGovNotifierMessage?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
