@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Route, Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -16,6 +17,7 @@ export class AuthGuard implements CanActivate {
     constructor(private Auth: AuthService, private router: Router) { }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+
         const code = next.params.code;
         console.log('AuthGuard#canActivate called with code:', code);
 
@@ -45,6 +47,9 @@ export class AuthGuard implements CanActivate {
 
                         return outcome;
                     }));
+        } else if (environment.disable.authentication) {
+            console.log('Attempt to bypass authentication.');
+            return this.Auth.bypass();
         }
 
         // No code or logged in user.

@@ -4,6 +4,7 @@
 
 export const environment = {
     production: false,
+    name: 'Local',
     api: {
         hackney: 'https://sandboxapi.hackney.gov.uk/hackneyapi',
         manageATenancy: 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1',
@@ -13,6 +14,7 @@ export const environment = {
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
     authenticationLink: 'http://localhost:4200',
     disable: {
+        authentication: true,
         previousCalls: false,
         identifyCaller: false,
         additionalCallReason: false

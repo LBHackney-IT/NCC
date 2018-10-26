@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    name: 'Live',
     api: {
         hackney: 'https://api.hackney.gov.uk',
         manageATenancy: 'https://api.hackney.gov.uk/manageatenancy/v1',
@@ -9,6 +10,7 @@ export const environment = {
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
     authenticationLink: 'http://lbhwsappp01:4040',
     disable: {
+        authentication: false,
         previousCalls: true,
         identifyCaller: true,
         additionalCallReason: true

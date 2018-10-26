@@ -75,9 +75,11 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
     }
 
     _setDefaults() {
-        console.log('Setting defaults...');
-        this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email || [].concat(this.details.email).pop();
-        this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile || [].concat(this.details.mobile).pop();
+        if (this.details) {
+            console.log('Setting defaults...');
+            this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email || [].concat(this.details.email).pop();
+            this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile || [].concat(this.details.mobile).pop();
+        }
     }
 
     /**

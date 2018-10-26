@@ -62,6 +62,8 @@ import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.componen
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
+import { WarningComponent } from './components/warning/warning.component';
+import { EnvNameComponent } from './components/env-name/env-name.component';
 
 @NgModule({
     declarations: [
@@ -113,6 +115,8 @@ import { EditorialComponent } from './components/editorial/editorial.component';
         ValueListValueComponent,
         LastCallsListComponent,
         EditorialComponent,
+        WarningComponent,
+        EnvNameComponent,
     ],
     imports: [
         BrowserModule,
