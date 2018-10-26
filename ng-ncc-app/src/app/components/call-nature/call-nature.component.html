@@ -45,7 +45,7 @@
 
             <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->
             <div class="govuk-form-group govuk-!-margin-left-8 govuk-!-margin-top-1" *ngIf="isOtherReasonSelected()">
-                <label class="govuk-label govuk-!-font-weight-bold hidden" for="call_reason_other">
+                <label class="govuk-label govuk-!-font-weight-bold govuk-visually-hidden" for="call_reason_other">
                     Specify the call reason:
                 </label>
                 <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
