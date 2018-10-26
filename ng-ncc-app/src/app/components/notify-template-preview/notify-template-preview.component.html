@@ -12,14 +12,10 @@
     <div class="govuk-grid-column-one-half">
 
         <!-- A warning for agents not to enter any sensitive data. -->
-        <div class="govuk-warning-text" *ngIf="hasPlaceholders()">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
+        <app-warning>
             Don't put sensitive or personal information here without passing DPA questions,
             or you may breach GDPR.
-          </strong>
-        </div>
+        </app-warning>
 
         <!-- Fields for any customisable text. -->
         <div class="govuk-form-group" *ngFor="let label of placeholders; trackBy: trackByMethod">
