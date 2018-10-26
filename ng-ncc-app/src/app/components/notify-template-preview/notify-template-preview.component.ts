@@ -17,13 +17,14 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
 
     private _destroyed$ = new Subject();
 
-    _loading: boolean;
+    loading: boolean;
+    placeholders: string[];
     preview: INotifyAPITemplate;
 
     constructor(private NotifyAPI: NotifyAPIService) { }
 
     ngOnInit() {
-        this._loading = false;
+        this.loading = false;
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -72,8 +73,8 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
      *
      */
     updatePreview() {
-        if (!this._loading) {
-            this._loading = true;
+        if (!this.loading) {
+            this.loading = true;
             this.NotifyAPI.getTemplatePreview(this.settings.template_id, this.settings.version)
                 .pipe(
                     takeUntil(this._destroyed$)
@@ -81,7 +82,8 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
                 .subscribe(preview => {
                     this.preview = preview;
                     this.settings.parameters = {};
-                    this._loading = false;
+                    this.loading = false;
+                    this.getPlaceholders();
                 });
         }
     }
@@ -111,7 +113,14 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
             placeholders.push(body_matches[1]);
         }
 
-        return placeholders;
+        this.placeholders = placeholders;
+    }
+
+    /**
+     *
+     */
+    hasPlaceholders(): boolean {
+        return this.placeholders && (0 < this.placeholders.length);
     }
 
     /**
