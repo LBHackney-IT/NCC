@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -31,6 +32,30 @@ export class AuthService {
                     return this._user.success;
                 })
             );
+    }
+
+    /**
+     * Attempt to bypass authenticatication, useful for testing.
+     */
+    bypass() {
+        if (environment.disable.authentication) {
+            // Create a dummy agent.
+            this._user = {
+                fullname: 'Unknown NCC Agent',
+                userid: '123456',
+                username: 'unknown.nccagent',
+                useremail: 'unknown@localhost',
+                success: true,
+                message: null,
+                roles: [
+                    AUTH.ROLE_ACCESS,
+                    AUTH.ROLE_AGENT
+                ]
+            } as IAuthentication;
+            return true;
+        }
+
+        throw new Error('Bypassing authentication is not allowed.');
     }
 
     /**

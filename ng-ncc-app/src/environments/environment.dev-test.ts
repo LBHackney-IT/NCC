@@ -8,8 +8,11 @@ export const environment = {
         ncc: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/',
         notify: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier'
     },
+    name: 'TEST Dev',
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
+    authenticationLink: 'http://lbhwebintd01:1010',
     disable: {
+        authentication: false,
         previousCalls: false,
         identifyCaller: false,
         additionalCallReason: false
