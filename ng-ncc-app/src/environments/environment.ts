@@ -4,6 +4,7 @@
 
 export const environment = {
     production: false,
+    name: 'Local',
     api: {
         hackney: 'https://sandboxapi.hackney.gov.uk/hackneyapi',
         manageATenancy: 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1',

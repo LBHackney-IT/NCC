@@ -63,6 +63,7 @@ import { CurrentCallerComponent } from './components/current-caller/current-call
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
 import { WarningComponent } from './components/warning/warning.component';
+import { EnvNameComponent } from './components/env-name/env-name.component';
 
 @NgModule({
     declarations: [
@@ -115,6 +116,7 @@ import { WarningComponent } from './components/warning/warning.component';
         LastCallsListComponent,
         EditorialComponent,
         WarningComponent,
+        EnvNameComponent,
     ],
     imports: [
         BrowserModule,
