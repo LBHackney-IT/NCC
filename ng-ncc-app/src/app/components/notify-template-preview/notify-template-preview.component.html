@@ -3,16 +3,22 @@
 
         <!-- Preview of the template. -->
         <app-panel class="govuk-form-group govuk-body" *ngIf="preview">
-            <span *ngIf="_loading">loading...</span>
-            <span *ngIf="!_loading" [innerHTML]="getCustomisedPreview()"></span>
+            <span *ngIf="loading">loading...</span>
+            <span *ngIf="!loading" [innerHTML]="getCustomisedPreview()"></span>
         </app-panel>
 
     </div>
 
     <div class="govuk-grid-column-one-half">
 
+        <!-- A warning for agents not to enter any sensitive data. -->
+        <app-warning>
+            Don't put sensitive or personal information here without passing DPA questions,
+            or you may breach GDPR.
+        </app-warning>
+
         <!-- Fields for any customisable text. -->
-        <div class="govuk-form-group" *ngFor="let label of getPlaceholders(); trackBy: trackByMethod">
+        <div class="govuk-form-group" *ngFor="let label of placeholders; trackBy: trackByMethod">
             <label class="govuk-label" for="preview-ph-{{ label }}">
                 {{ sanitiseLabel(label) }}
             </label>
