@@ -70,7 +70,7 @@
 
                         <!-- text field... -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
-                            <label class="govuk-label hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
+                            <label class="govuk-label govuk-visually-hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
                             <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}" required
                             [(ngModel)]="new_telephone[i]"
                             (focus)="details.update.default.telephone = row;"
@@ -116,7 +116,7 @@
 
                         <!-- text field... -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
-                            <label class="govuk-label hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
+                            <label class="govuk-label govuk-visually-hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
                             <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}" required
                                 [(ngModel)]="new_mobile[i]" (focus)="details.update.default.mobile = row;"
                                 (blur)="details.update.default.mobile = row;"
@@ -163,7 +163,7 @@
                         <!-- text field... -->
                         <!-- This uses Angular's email validator. -->
                         <div class="govuk-form-group govuk-!-margin-left-3">
-                            <label class="govuk-label hidden" for="new-email-{{ i }}-value">New email {{ i + 1 }}</label>
+                            <label class="govuk-label govuk-visually-hidden" for="new-email-{{ i }}-value">New email {{ i + 1 }}</label>
                             <input class="govuk-input" type="email" id="new-email-{{ i }}-value" name="new_email_{{ i }}" email required
                                 [(ngModel)]="new_email[i]" (focus)="details.update.default.email = row;"
                                 (blur)="details.update.default.email = row;"
