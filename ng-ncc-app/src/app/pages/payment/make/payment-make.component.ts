@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { UHTriggerService } from '../../../services/uhtrigger.service';
 import { CallService } from '../../../services/call.service';
+import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
 
 @Component({
     selector: 'app-payment-make',
@@ -24,7 +25,8 @@ export class PagePaymentMakeComponent implements OnInit, OnDestroy {
     selected_template: string;
     selected_method: string;
 
-    constructor(private Call: CallService, private UHTrigger: UHTriggerService, private route: ActivatedRoute) { }
+    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private UHTrigger: UHTriggerService,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.selected_template = null;
@@ -56,7 +58,13 @@ export class PagePaymentMakeComponent implements OnInit, OnDestroy {
      */
     answeredYes() {
         console.log(`Confirmed payment of £${this.form.to_pay}.`);
-        this.UHTrigger.madePayment(this.Call.getTenancyReference(), this.form.to_pay);
+        this.NCCAPI.beginPayment(
+            this.Call.getCallID(),
+            this.Call.getTenancyReference(),
+            this.Call.getCaller().getContactID(),
+            this.form.to_pay
+        )
+        // this.UHTrigger.madePayment(this.Call.getTenancyReference(), this.form.to_pay);
     }
 
     /**

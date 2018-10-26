@@ -261,4 +261,31 @@ export class NCCAPIService {
         return output.join('&');
     }
 
+    /**
+     * Begins processing a payment through Paris.
+     */
+    beginPayment(call_id: string, tenancy_id: string, crm_contact_id: string, amount: number) {
+        const return_data = [
+            // 'CAS-775515-M9F2QZ',
+            // '3cb039e7-f421-e811-a4ef-005056986-64',
+            call_id,
+            tenancy_id,
+            crm_contact_id
+            amount
+        ];
+        const return_url = `${window.location.origin}/payment.html?${return_data.join('$')}`;
+
+        const parameters = {
+            returnurl: return_url,
+            payforbasketmode: true,
+            returntext: encodeURIComponent('Back to NCC'),
+            ignoreconfirmation: true,
+            data: encodeURIComponent('Keep this and return it at the end'),
+            recordxml: `<records><record><reference>006884</reference><fund>02</fund><amount>${amount}</amount><text></text></record></records>`
+        };
+
+        const url = `https://hackney.paris-epayments.co.uk/paymentstest/sales/launchinternet.aspx?${this._buildQueryString(parameters)}`;
+        window.location.href = url;
+    }
+
 }
