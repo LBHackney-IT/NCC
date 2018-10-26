@@ -40,7 +40,6 @@ export class PageLogCallNature {
      */
     isCallReasonSelected(): boolean {
         if (this.selectionExists() && this.selected.call_reason instanceof LogCallReason) {
-            console.log('call reason:', this.selected.call_reason.label, this.selected.other_reason);
             if (CALL_REASON.OTHER === this.selected.call_reason.id) {
                 return (undefined !== this.selected.other_reason) && (this.selected.other_reason.trim().length > 0);
             }
