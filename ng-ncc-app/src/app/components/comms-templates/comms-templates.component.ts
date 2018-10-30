@@ -15,6 +15,7 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
     @Input() includeSensitive?: boolean;
 
     @Output() selected = new EventEmitter<CommsOption>();
+    @Output() error = new EventEmitter<void>();
 
     private _destroyed$ = new Subject();
 
@@ -36,6 +37,9 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
                 (data) => {
                     this._options = this._filterTemplates(data);
                     this._loading = false;
+                },
+                (error) => {
+                    this.error.emit();
                 }
             );
     }

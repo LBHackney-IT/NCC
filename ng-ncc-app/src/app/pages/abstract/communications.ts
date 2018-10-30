@@ -32,6 +32,7 @@ export class PageCommunications implements OnInit, OnDestroy {
     selected_details: CommsSelection;
     preview: ITemplatePreviewSettings;
     modal: { [propKey: string]: boolean };
+    _error: false;
 
     constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private UHTrigger: UHTriggerService,
         private route: ActivatedRoute) { }
@@ -228,6 +229,10 @@ export class PageCommunications implements OnInit, OnDestroy {
      */
     trackByIndex(index: number, item: {}): number {
         return index;
+    }
+
+    commsError() {
+        this._error = true;
     }
 
 }
