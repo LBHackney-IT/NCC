@@ -314,7 +314,8 @@ export class NCCAPIService {
             returntext: encodeURIComponent('Back to NCC'),
             ignoreconfirmation: true,
             data: encodeURIComponent('Keep this and return it at the end'),
-            recordxml: `<records><record><reference>006884</reference><fund>02</fund><amount>${amount}</amount><text></text></record></records>`
+            recordxml: '<records><record><reference>006884</reference><fund>02</fund><amount>' + amount +
+                '</amount><text></text></record></records>'
         };
 
         const url = `https://hackney.paris-epayments.co.uk/paymentstest/sales/launchinternet.aspx?${this._buildQueryString(parameters)}`;

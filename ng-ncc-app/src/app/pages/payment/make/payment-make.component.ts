@@ -15,12 +15,16 @@ export class PagePaymentMakeComponent implements OnInit {
 
     private _w: Window;
 
+    account_details: IAccountDetails;
+    show_confirm: boolean;
+    amount: string;
+
     // Listen to the window's storage event.
     // This is fired whenever a localStorage property (it has access to?) is *changed*.
     @HostListener('window:storage', ['$event'])
     onLocalstorageUpdate(e) {
         if ('ncc-payment' === e.key) {
-            var response = e.newValue;
+            const response = e.newValue;
 
             // Remove the item.
             localStorage.removeItem('ncc-payment');
@@ -37,16 +41,11 @@ export class PagePaymentMakeComponent implements OnInit {
         }
     }
 
-    account_details: IAccountDetails;
-    show_confirm: boolean;
-    form = {
-        to_pay: null
-    };
-
     constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router) { }
 
     ngOnInit() {
         this.account_details = this.Call.getAccount();
+        this.amount = null;
     }
 
     /**
@@ -60,14 +59,14 @@ export class PagePaymentMakeComponent implements OnInit {
      *
      */
     canConfirmPayment(): boolean {
-        return parseFloat(this.form.to_pay) > 0;
+        return this.getNumericAmount() > 0;
     }
 
     /**
      * A callback for if the user confirms making a payment.
      */
     answeredYes() {
-        // console.log(`Confirmed payment of £${this.form.to_pay}.`);
+        // console.log(`Confirmed payment of £${this.amount}.`);
 
         this.NCCAPI.beginPayment(
             this.Call.getCallID(),
@@ -75,7 +74,7 @@ export class PagePaymentMakeComponent implements OnInit {
             this.Call.getTenancyReference(),
             this.Call.getCallNature().call_reason.id,
             this.Call.getTicketNumber(),
-            this.form.to_pay
+            this.getNumericAmount()
         )
             .pipe(take(1))
             .subscribe((url: string) => {
@@ -97,7 +96,14 @@ export class PagePaymentMakeComponent implements OnInit {
      * Returns the remaining balance calculated from an entered amount to pay.
      */
     getCalculatedBalance(): number {
-        return this.account_details.currentBalance - this.form.to_pay;
+        return this.account_details.currentBalance - this.getNumericAmount();
+    }
+
+    /**
+     * Returns the entered amount to pay as a number (because it is stored as a string).
+     */
+    getNumericAmount(): number {
+        return parseFloat(this.amount);
     }
 
 }

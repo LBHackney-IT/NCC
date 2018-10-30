@@ -8,12 +8,17 @@ import { Router } from '@angular/router';
 })
 export class PagePlaygroundComponent implements OnInit {
 
+    private _w: Window;
+
+    show: boolean;
+    amount = 10;
+
     // Listen to the window's storage event.
     // This is fired whenever a localStorage property (it has access to?) is *changed*.
     @HostListener('window:storage', ['$event'])
     onLocalstorageUpdate(e) {
         if ('ncc-payment' === e.key) {
-            var response = e.newValue;
+            const response = e.newValue;
             // console.log('Paris response query:', response);
 
             // Remove the item.
@@ -26,11 +31,6 @@ export class PagePlaygroundComponent implements OnInit {
             this.router.navigateByUrl(`/transaction/${response}`);
         }
     }
-
-    private _w: Window;
-
-    show: boolean;
-    amount: number = 10;
 
     constructor(private router: Router) { }
 
@@ -80,7 +80,8 @@ export class PagePlaygroundComponent implements OnInit {
             returntext: encodeURIComponent('Back to Something'),
             ignoreconfirmation: true,
             data: encodeURIComponent('Keep this and return it at the end'),
-            recordxml: `<records><record><reference>006884</reference><fund>02</fund><amount>${this.amount}</amount><text></text></record></records>`
+            recordxml: '<records><record><reference>006884</reference><fund>02</fund><amount>' + this.amount +
+                '</amount><text></text></record></records>'
         };
 
         const url = `https://hackney.paris-epayments.co.uk/paymentstest/sales/launchinternet.aspx?${this._buildQueryString(parameters)}`;
