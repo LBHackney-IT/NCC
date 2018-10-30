@@ -35,7 +35,6 @@ export class PageTransactionComponent implements OnInit {
                 // receives the query string from Paris.
                 // We had to do this because Angular routes don't like ampersands (&) or the equals sign in route parameters.
                 this.data = this._processData(params.get('data'));
-                console.log(this.data);
                 this.getPaymentInteraction();
             });
     }
@@ -56,13 +55,11 @@ export class PageTransactionComponent implements OnInit {
                 // data.InteractionData contains some information about the caller.
                 // data.PaymentRecorded contains the outcome of recording the payment.
                 // data.UserData contains the agent that dealt with the transaction.
-
-                console.log(data);
             });
     }
 
     /**
-     *
+     * Interpret the data passed to this page from Paris.
      */
     private _processData(query: string): IParisResponse {
         // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_frompairs
