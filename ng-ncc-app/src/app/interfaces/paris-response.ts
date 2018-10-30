@@ -9,4 +9,9 @@ export interface IParisResponse {
     amount: number;
     date: string;
     administrationcharge: number;
+
+    // we create these via payment.html.
+    interactionId: string;
+    username: string;
+    original_amount: number;
 }

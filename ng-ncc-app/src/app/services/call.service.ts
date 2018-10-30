@@ -6,11 +6,16 @@ import { CALL_REASON } from '../constants/call-reason.constant';
 import { ICaller } from '../interfaces/caller';
 import { ILogCallSelection } from '../interfaces/log-call-selection';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
+import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { ICRMServiceRequest } from '../interfaces/crmservicerequest';
 import { IAddressSearchGroupedResult } from '../interfaces/address-search-grouped-result';
 import { IAccountDetails } from '../interfaces/account-details';
+import { IPaymentInteraction } from '../interfaces/payment-interaction';
+import { AuthService } from '../services/auth.service';
+import { LogCallType } from '../classes/log-call-type.class';
+import { LogCallReason } from '../classes/log-call-reason.class';
 
 @Injectable({
     providedIn: 'root'
@@ -23,8 +28,7 @@ export class CallService {
     // - a call type;
     // - a call reason;
     // - a list of tenants at the property;
-    // - account details associated with the caller;
-    // - notes relating to the call.
+    // - account details associated with the caller.
 
     private account: IAccountDetails;
     private caller: ICaller;
@@ -34,7 +38,8 @@ export class CallService {
     private tenants: { [propKey: string]: string }[];
     private ticket_number: string;
 
-    constructor(private ManageATenancyAPI: ManageATenancyAPIService, private NCCAPI: NCCAPIService) {
+    constructor(private Auth: AuthService, private HackneyAPI: HackneyAPIService, private ManageATenancyAPI: ManageATenancyAPIService,
+        private NCCAPI: NCCAPIService) {
         this.reset();
     }
 
@@ -60,7 +65,7 @@ export class CallService {
     }
 
     /**
-     *
+     * Returns this call's ID.
      */
     getCallID(): string {
         return this.call_id;
@@ -81,7 +86,7 @@ export class CallService {
     }
 
     /**
-     * Returns the call type and reason (as their respective IDs).
+     * Returns the ticket number associated with the call.
      */
     getTicketNumber(): string {
         return this.ticket_number;
@@ -92,7 +97,7 @@ export class CallService {
      */
     setCaller(caller: ICaller) {
         this.caller = caller;
-        console.log('ICaller has been set to:', this.caller.getName());
+        console.log('Caller has been set to:', this.caller.getName());
         console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
 
         const contact_id = caller.getContactID();
