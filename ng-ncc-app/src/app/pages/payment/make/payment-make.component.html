@@ -39,7 +39,7 @@
         Payment will be made in Paris.
     </p>
 
-    <button type="submit" class="govuk-button" (click)="confirmPayment()">
+    <button type="submit" class="govuk-button" (click)="confirmPayment()" [disabled]="!canConfirmPayment()">
         Make payment
     </button>
 </form>

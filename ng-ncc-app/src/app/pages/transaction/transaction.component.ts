@@ -36,6 +36,8 @@ export class PageTransactionComponent implements OnInit {
                 // We had to do this because Angular routes don't like ampersands (&) or the equals sign in route parameters.
                 this.data = this._processData(params.get('data'));
                 this.getPaymentInteraction();
+
+                // this.UHTrigger.madePayment(this.Call.getTenancyReference(), this.form.to_pay);
             });
     }
 

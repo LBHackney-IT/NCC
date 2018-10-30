@@ -290,11 +290,10 @@ export class NCCAPIService {
             { PaymentStatus: PAYMENT_STATUS.INITIATED }
         )
             .pipe(
-                map((data: IJSONResponse) => data.response)
-            )
-            .subscribe((response: INCCInteraction) => {
-                this._redirectToParis(response.interactionId, amount);
-            });
+                map((data: IJSONResponse) => {
+                    return this._redirectToParis(data.response.NCCInteraction.interactionId, amount);
+                })
+            );
     }
 
     /**
@@ -319,7 +318,7 @@ export class NCCAPIService {
         };
 
         const url = `https://hackney.paris-epayments.co.uk/paymentstest/sales/launchinternet.aspx?${this._buildQueryString(parameters)}`;
-        window.location.href = url;
+        return url;
     }
 
     /**

@@ -1,10 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 import { IAccountDetails } from '../../../interfaces/account-details';
-import { UHTriggerService } from '../../../services/uhtrigger.service';
 import { CallService } from '../../../services/call.service';
 import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
 
@@ -13,37 +11,42 @@ import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
     templateUrl: './payment-make.component.html',
     styleUrls: ['./payment-make.component.scss']
 })
-export class PagePaymentMakeComponent implements OnInit, OnDestroy {
+export class PagePaymentMakeComponent implements OnInit {
 
-    private _destroyed$ = new Subject();
+    private _w: Window;
+
+    // Listen to the window's storage event.
+    // This is fired whenever a localStorage property (it has access to?) is *changed*.
+    @HostListener('window:storage', ['$event'])
+    onLocalstorageUpdate(e) {
+        if ('ncc-payment' === e.key) {
+            var response = e.newValue;
+
+            // Remove the item.
+            localStorage.removeItem('ncc-payment');
+
+            // Go to the transaction (completed) page, passing the returned information.
+            this.router.navigateByUrl(`/transaction/${response}`);
+
+            // Close the window we opened below.
+            // NOTE: there might not be a window reference: this might happen if the window was opened as a result of enabling popup windows
+            // in the browser (i.e. the window wouldn't be created by the app).
+            if (this._w) {
+                this._w.close();
+            }
+        }
+    }
 
     account_details: IAccountDetails;
     show_confirm: boolean;
     form = {
         to_pay: null
     };
-    selected_template: string;
-    selected_method: string;
 
-    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private UHTrigger: UHTriggerService,
-        private route: ActivatedRoute) { }
+    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router) { }
 
     ngOnInit() {
-        this.selected_template = null;
-        this.selected_method = null;
         this.account_details = this.Call.getAccount();
-
-        this.route.data
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
-            .subscribe((data) => {
-                // this.account_details = data.IAccountDetails;
-            });
-    }
-
-    ngOnDestroy() {
-        this._destroyed$.next();
     }
 
     /**
@@ -54,10 +57,17 @@ export class PagePaymentMakeComponent implements OnInit, OnDestroy {
     }
 
     /**
+     *
+     */
+    canConfirmPayment(): boolean {
+        return parseFloat(this.form.to_pay) > 0;
+    }
+
+    /**
      * A callback for if the user confirms making a payment.
      */
     answeredYes() {
-        console.log(`Confirmed payment of £${this.form.to_pay}.`);
+        // console.log(`Confirmed payment of £${this.form.to_pay}.`);
 
         this.NCCAPI.beginPayment(
             this.Call.getCallID(),
@@ -66,8 +76,14 @@ export class PagePaymentMakeComponent implements OnInit, OnDestroy {
             this.Call.getCallNature().call_reason.id,
             this.Call.getTicketNumber(),
             this.form.to_pay
-        );
-        // this.UHTrigger.madePayment(this.Call.getTenancyReference(), this.form.to_pay);
+        )
+            .pipe(take(1))
+            .subscribe((url: string) => {
+                // For some reason the URL is returned as an encoded string (which makes a BIG difference).
+                // console.log('Paris payment', url, decodeURIComponent(url));
+                url = decodeURIComponent(url);
+                this._w = window.open(url, 'NCCPayment');
+            });
     }
 
     /**
