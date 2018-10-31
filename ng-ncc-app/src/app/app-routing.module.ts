@@ -17,6 +17,7 @@ import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.comp
 import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
+import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
@@ -69,6 +70,11 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        // Handling information returned from Paris.
+        path: 'transaction/:data',
+        component: PageTransactionComponent
+    },
+    {
         // Payment page.
         path: 'payment',
         component: PagePaymentComponent,
@@ -108,7 +114,8 @@ export const AppRoutes: Routes = [
             },
             {
                 // Catch-all (which should go to the summary child page).
-                path: '**',
+                path: '',
+                pathMatch: 'full',
                 redirectTo: 'summary'
             }
         ]

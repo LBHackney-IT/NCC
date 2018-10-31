@@ -21,7 +21,7 @@
                 <span class="govuk-!-margin-right-2">Pay now</span>
                 <label>
                     &pound; <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="number" placeholder="0.00"
-                        [(ngModel)]="form.to_pay">
+                        [(ngModel)]="amount">
                 </label>
             </div>
 
@@ -35,130 +35,11 @@
         </div>
     </app-panel>
 
-    <div class="govuk-grid-row">
+    <p class="govuk-body">
+        Payment will be made in Paris.
+    </p>
 
-        <!-- Card details. -->
-        <div class="govuk-grid-column-one-half">
-            <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                    <h3 class="govuk-fieldset__heading">
-                        Credit card details
-                    </h3>
-                </legend>
-
-                <!-- Full name. -->
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="fullname">
-                        Full name
-                    </label>
-                    <input class="govuk-input" id="fullname" name="fullname" type="text">
-                </div>
-
-                <!-- Card type. -->
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="cardtype">
-                        Card type
-                    </label>
-                    <select class="govuk-select" id="cardtype" name="cardtype">
-                        <option value="">select one</option>
-                        <option value="visa">Visa</option>
-                        <option value="visa-debit">Visa Debit</option>
-                        <option value="mastercard">Mastercard</option>
-                    </select>
-                </div>
-
-                <!-- Card number. -->
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="cardnumber">
-                        Card number
-                    </label>
-                    <input class="govuk-input" id="cardnumber" name="cardnumber" type="text">
-                </div>
-
-                <!-- Expiry date. -->
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="expiry-month">
-                        Expiration
-                    </label>
-                    <input class="govuk-input govuk-input--width-2" id="expiry-month" name="expiry-month" type="text" placeholder="MM">
-                    &nbsp;
-                    <input class="govuk-input govuk-input--width-4" id="expiry-year" name="expiry-year" type="text" placeholder="YYYY">
-                </div>
-
-                <!-- Expiry date. -->
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="cvv">
-                        CVV
-                    </label>
-                    <input class="govuk-input govuk-input--width-4" id="cvv" name="cvv" type="text">
-                </div>
-            </fieldset>
-        </div>
-
-        <!-- Billing information. -->
-        <div class="govuk-grid-column-one-half">
-            <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-
-                    <div class="flex-columns">
-                        <h3 class="govuk-fieldset__heading">
-                            Billing information
-                        </h3>
-                        <div class="govuk-checkboxes__item small-checkbox govuk-!-margin-top-1">
-                            <input class="govuk-checkboxes__input" id="use-home" name="use-home" type="checkbox" value="1">
-                            <label class="govuk-label govuk-checkboxes__label" for="use-home">
-                                Use home address
-                            </label>
-                        </div>
-                    </div>
-                </legend>
-
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-line-1">
-                        First line of address
-                    </label>
-                    <input class="govuk-input" id="address-line-1" name="address-line-1" type="text">
-                </div>
-
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-line-2">
-                        Second line of address
-                    </label>
-                    <input class="govuk-input" id="address-line-2" name="address-line-2" type="text">
-                </div>
-
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-town">
-                        Town or city
-                    </label>
-                    <input class="govuk-input" id="address-town" name="address-town" type="text">
-                </div>
-
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-county">
-                        County
-                    </label>
-                    <input class="govuk-input" id="address-county" name="address-county" type="text">
-                </div>
-
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="address-postcode">
-                        Postcode
-                    </label>
-                    <input class="govuk-input" id="address-postcode" name="address-postcode" type="text">
-                </div>
-
-            </fieldset>
-        </div>
-
-    </div>
-
-    <!-- Where to send a receipt. -->
-    <!-- <div class="govuk-form-group">
-        <app-comms-method-select></app-comms-method-select>
-    </div> -->
-
-    <button type="submit" class="govuk-button" (click)="confirmPayment()">
+    <button type="submit" class="govuk-button" (click)="confirmPayment()" [disabled]="!canConfirmPayment()">
         Make payment
     </button>
 </form>

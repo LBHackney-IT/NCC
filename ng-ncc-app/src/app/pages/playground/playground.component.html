@@ -1,3 +1,29 @@
+<div>
+    <h2 class="govuk-heading-s">Test amounts for payment</h2>
+    <app-value-list class="govuk-body-s" emphasise="value">
+
+        <app-value-list-label>&pound;10.00</app-value-list-label>
+        <app-value-list-value>Successful transaction</app-value-list-value>
+
+        <app-value-list-label>&pound;10.10</app-value-list-label>
+        <app-value-list-value>Failed transaction</app-value-list-value>
+
+        <app-value-list-label>&pound;10.20</app-value-list-label>
+        <app-value-list-value>Referral</app-value-list-value>
+
+        <app-value-list-label>&pound;10.30</app-value-list-label>
+        <app-value-list-value>Verification failed</app-value-list-value>
+
+    </app-value-list>
+
+    <div class="govuk-form-group">
+        <input class="govuk-input govuk-input--width-10" [(ngModel)]="amount">
+        <button type="button" name="button" class="govuk-button" (click)="beginPayment()">Begin payment</button>
+    </div>
+
+</div>
+
+<hr>
 <app-warning>This is a warning.</app-warning>
 
 <app-dialogue [(show)]="show" [buttonText]="'All right then'" (closed)="handleClose()">
