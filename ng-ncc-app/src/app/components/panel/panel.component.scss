@@ -8,6 +8,9 @@ $panel-padding: 1rem !default;
 $panel-box-border-width: 2px !default;
 $panel-box-border-colour: govuk-colour("grey-3") !default;
 
+$panel-error-border-width: 4px !default;
+$panel-error-border-colour: $govuk-error-colour !default;
+
 ////////////////////
 
 :host {
@@ -21,5 +24,10 @@ $panel-box-border-colour: govuk-colour("grey-3") !default;
     &.panel--box {
         background: transparent;
         border: $panel-box-border-width solid $panel-box-border-colour;
+    }
+
+    &.panel--error {
+        background: transparent;
+        border: $panel-error-border-width solid $panel-error-border-colour;
     }
 }

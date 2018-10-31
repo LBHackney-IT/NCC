@@ -1,4 +1,4 @@
-<div class="message govuk-!-padding-5 govuk-!-margin-bottom-5">
+<app-panel class="govuk-!-margin-bottom-5" errorStyle="true">
 
     <!-- Failed login. -->
     <ng-template [ngIf]="isAccessError()">
@@ -18,7 +18,7 @@
         <p class="govuk-heading-m govuk-!-margin-0">If you think you should have access, speak to your Team Leader or Manager to give you access.</p>
     </ng-template>
 
-</div>
+</app-panel>
 
 <button class="govuk-button" type="button" name="button" *ngIf="!isPermissionError()" (click)="retry()">
     Try again
