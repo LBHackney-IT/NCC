@@ -15,7 +15,7 @@ export const environment = {
     authenticationLink: 'http://localhost:4200',
     disable: {
         authentication: true,
-        consoleLogs: true,
+        consoleLogs: false,
         previousCalls: false,
         identifyCaller: false,
         additionalCallReason: false
