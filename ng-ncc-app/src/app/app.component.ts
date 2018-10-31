@@ -9,6 +9,7 @@ import { initAll } from 'govuk-frontend';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { AuthService } from './services/auth.service';
+import { BackLinkService } from './services/back-link.service';
 
 @Component({
     selector: 'app-root',
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    constructor(private router: Router, private Auth: AuthService) {
+    constructor(private router: Router, private Auth: AuthService, private BackLink: BackLinkService) {
         this.router.events
             .pipe(
                 takeUntil(this._destroyed$)
@@ -43,6 +44,9 @@ export class AppComponent implements OnInit, OnDestroy {
                         // Scroll the content area to the top of its content.
                         this.contentArea.scrollToTop();
                         this.loading = false;
+
+                        // By default disable (or hide) the back link.
+                        this.BackLink.disable();
                         break;
 
                     case event instanceof NavigationCancel:
