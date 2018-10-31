@@ -45,6 +45,14 @@ export class NavigationComponent {
     }
 
     /**
+     * Returns TRUE if we've started a call.
+     * A call has been started if we have both a caller and a call nature (type and reason).
+     */
+    hasCallStarted(): boolean {
+        return this.isCallNatureSelected && this.Call.hasCaller();
+    }
+
+    /**
      * Returns TRUE if a call is currently active and the caller has been identified.
      */
     isCallerIdentified() {
