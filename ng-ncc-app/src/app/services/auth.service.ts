@@ -87,6 +87,13 @@ export class AuthService {
     }
 
     /**
+    * Returns the full name of the currently logged in user.
+     */
+    getFullName(): string {
+        return this.isLoggedIn() ? this._user.fullname : null;
+    }
+
+    /**
     * Returns the message given as a result of logging in.
      */
     getMessage(): string {
