@@ -11,6 +11,7 @@ export const environment = {
     authenticationLink: 'http://lbhwsappp01:4040',
     disable: {
         authentication: false,
+        consoleLogs: true,
         previousCalls: true,
         identifyCaller: true,
         additionalCallReason: true

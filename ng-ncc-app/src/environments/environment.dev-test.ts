@@ -13,6 +13,7 @@ export const environment = {
     authenticationLink: 'http://lbhwebintd01:1010',
     disable: {
         authentication: false,
+        consoleLogs: false,
         previousCalls: false,
         identifyCaller: false,
         additionalCallReason: false
