@@ -49,7 +49,6 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      * Performs a Citizen Index search.
      */
     performSearch() {
-        // For the time being, we are only searching for people by postcode.
         if (this.disable_identify_caller || this.searching) {
             return;
         }
