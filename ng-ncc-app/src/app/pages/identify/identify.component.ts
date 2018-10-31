@@ -42,6 +42,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
             this.addressSelected(this.Call.getTenancy());
         }
 
+        // Enable the app's back link.
         this.BackLink.enable();
         this.BackLink.setTarget('/log-call');
     }
