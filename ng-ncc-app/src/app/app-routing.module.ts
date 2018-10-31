@@ -72,7 +72,8 @@ export const AppRoutes: Routes = [
     {
         // Handling information returned from Paris.
         path: 'transaction/:data',
-        component: PageTransactionComponent
+        component: PageTransactionComponent,
+        canActivate: [AuthGuard]
     },
     {
         // Payment page.
