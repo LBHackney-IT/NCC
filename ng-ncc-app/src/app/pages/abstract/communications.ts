@@ -32,7 +32,7 @@ export class PageCommunications implements OnInit, OnDestroy {
     selected_details: CommsSelection;
     preview: ITemplatePreviewSettings;
     modal: { [propKey: string]: boolean };
-    _error: false;
+    _error: boolean;
 
     constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private UHTrigger: UHTriggerService,
         private route: ActivatedRoute) { }
