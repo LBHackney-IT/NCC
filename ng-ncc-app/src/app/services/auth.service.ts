@@ -40,7 +40,7 @@ export class AuthService {
     bypass() {
         if (environment.disable.authentication) {
             // Create a dummy agent.
-            this._user = {
+            this.set({
                 fullname: 'Unknown NCC Agent',
                 userid: '123456',
                 username: 'unknown.nccagent',
@@ -51,11 +51,18 @@ export class AuthService {
                     AUTH.ROLE_ACCESS,
                     AUTH.ROLE_AGENT
                 ]
-            } as IAuthentication;
+            } as IAuthentication);
             return true;
         }
 
         throw new Error('Bypassing authentication is not allowed.');
+    }
+
+    /**
+     * Returns TRUE if we have data as a result of an authentication attempt.
+     */
+    set(user: IAuthentication) {
+        this._user = user;
     }
 
     /**
