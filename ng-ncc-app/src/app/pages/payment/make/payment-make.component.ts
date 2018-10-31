@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
+import { PAGES } from '../../../constants/pages.constant';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { CallService } from '../../../services/call.service';
 import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
@@ -30,7 +31,7 @@ export class PagePaymentMakeComponent implements OnInit {
             localStorage.removeItem('ncc-payment');
 
             // Go to the transaction (completed) page, passing the returned information.
-            this.router.navigateByUrl(`/transaction/${response}`);
+            this.router.navigateByUrl(`${PAGES.TRANSACTION.route}/${response}`);
 
             // Close the window we opened below.
             // NOTE: there might not be a window reference: this might happen if the window was opened as a result of enabling popup windows

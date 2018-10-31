@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
+import { PAGES } from '../../constants/pages.constant';
 
 @Component({
     selector: 'app-note-form',
@@ -16,6 +17,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
+    page_defs = PAGES;
     TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
     containerStyle: Object; // used to control the inline style of .note-form__container.
     comment: string;
@@ -130,7 +132,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      * Navigate to the view notes page.
      */
     viewNotes() {
-        this.router.navigateByUrl('/notes');
+        this.router.navigateByUrl(PAGES.VIEW_NOTES.route);
     }
 
     /**

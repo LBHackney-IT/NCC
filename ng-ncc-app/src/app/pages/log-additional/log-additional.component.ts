@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { PAGES } from '../../constants/pages.constant';
 import { CallService } from '../../services/call.service';
 import { PageLogCallNature } from '../abstract/log-call-nature';
 
@@ -24,8 +25,8 @@ export class PageLogAdditionalComponent extends PageLogCallNature {
         // Set the call type and reason for the current call.
         this.Call.setCallNature(this.selected);
 
-        // Go to the Caller Details page.
-        this.router.navigateByUrl('comms');
+        // Go to the Comms page.
+        this.router.navigateByUrl(PAGES.COMMS.route);
     }
 
 
