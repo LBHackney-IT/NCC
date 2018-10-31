@@ -18,6 +18,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
+    OTHER = new LogCallReason(CALL_REASON.OTHER, 'Other');
     call_types: LogCallType[];
     call_reasons: Array<any>;
     selected: ILogCallSelection; // the selected call type and reason.
@@ -41,12 +42,6 @@ export class CallNatureComponent implements OnInit, OnDestroy {
                 data => {
                     this.call_types = data[0];
                     this.call_reasons = data[1];
-
-                    // Add "other" as an option for each call type.
-                    const other_option = new LogCallReason(CALL_REASON.OTHER, 'Other');
-                    Object.keys(this.call_reasons).forEach(key => {
-                        this.call_reasons[key].push(other_option);
-                    });
                 },
                 (error) => {
                     console.log('Error fetching call types and reasons:', error);
