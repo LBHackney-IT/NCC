@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from '../environments/environment';
 
+import { PAGES } from './constants/pages.constant';
 import { AuthGuard } from './auth/auth.guard';
 
 import { PageAuthComponent } from './pages/auth/auth.component';
@@ -35,12 +36,12 @@ export const AppRoutes: Routes = [
     // -------------------------------------------------------------------------------------------------------------------------------------
     {
         // A page for unidentified users, or those with no access.
-        path: 'try-again',
+        path: PAGES.TRY_AGAIN.route,
         component: PageTryAgainComponent
     },
     {
         // A page for testing and diagnosing components.
-        path: 'playground',
+        path: PAGES.PLAYGROUND.route,
         component: PagePlaygroundComponent
     },
 
@@ -48,7 +49,7 @@ export const AppRoutes: Routes = [
         // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
         // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
         // Normally we would add child pages to this route, but we want to keep the existing route paths.
-        path: 'auth/:code',
+        path: '${PAGES.AUTHENTICATION.route}/:code',
         pathMatch: 'full',
         canActivate: [AuthGuard],
         children: []
@@ -59,30 +60,30 @@ export const AppRoutes: Routes = [
     // -------------------------------------------------------------------------------------------------------------------------------------
     {
         // Previous x Calls page.
-        path: 'last-calls',
+        path: PAGES.PREVIOUS_CALLS.route,
         component: PageLastCallsComponent,
         canActivate: [AuthGuard]
     },
     {
         // Log Call page.
-        path: 'log-call',
+        path: PAGES.LOG_CALL.route,
         component: PageLogCallComponent,
         canActivate: [AuthGuard]
     },
     {
         // Handling information returned from Paris.
-        path: 'transaction/:data',
+        path: '${PAGES.TRANSACTION.route}/:data',
         component: PageTransactionComponent
     },
     {
-        // Payment page.
-        path: 'payment',
+        // Rent page.
+        path: PAGES.RENT.route,
         component: PagePaymentComponent,
         canActivate: [AuthGuard],
         children: [
             {
                 // Rent > Summary.
-                path: 'summary',
+                path: PAGES.RENT_SUMMARY.route,
                 component: PagePaymentSummaryComponent,
                 resolve: {
                     caller: IdentifiedCallerResolver
@@ -90,7 +91,7 @@ export const AppRoutes: Routes = [
             },
             {
                 // Rent > Transactions.
-                path: 'transactions',
+                path: PAGES.RENT_TRANSACTIONS.route,
                 component: PageTransactionHistoryComponent,
                 resolve: {
                     caller: IdentifiedCallerResolver
@@ -98,7 +99,7 @@ export const AppRoutes: Routes = [
             },
             {
                 // Rent > Make (Payment).
-                path: 'make',
+                path: PAGES.RENT_PAYMENT.route,
                 component: PagePaymentMakeComponent,
                 resolve: {
                     caller: IdentifiedCallerResolver
@@ -106,7 +107,7 @@ export const AppRoutes: Routes = [
             },
             {
                 // Rent > Communications.
-                path: 'communications',
+                path: PAGES.RENT_COMMS.route,
                 component: PageRentCommunicationsComponent,
                 resolve: {
                     caller: IdentifiedCallerResolver
@@ -116,13 +117,13 @@ export const AppRoutes: Routes = [
                 // Catch-all (which should go to the summary child page).
                 path: '',
                 pathMatch: 'full',
-                redirectTo: 'summary'
+                redirectTo: PAGES.RENT_SUMMARY.route
             }
         ]
     },
     {
         // Identify page.
-        path: 'caller-details',
+        path: PAGES.IDENTIFY.route,
         component: PageIdentifyComponent,
         canActivate: [AuthGuard],
         resolve: {
@@ -131,7 +132,7 @@ export const AppRoutes: Routes = [
     },
     {
         // [Edit] Contact Details page.
-        path: 'contact-details',
+        path: PAGES.EDIT_CONTACT_DETAILS.route,
         component: PageContactDetailsComponent,
         canActivate: [AuthGuard],
         resolve: {
@@ -141,7 +142,7 @@ export const AppRoutes: Routes = [
     },
     {
         // Comms page.
-        path: 'comms',
+        path: PAGES.COMMS.route,
         component: PageCommsComponent,
         canActivate: [AuthGuard],
         resolve: {
@@ -151,7 +152,7 @@ export const AppRoutes: Routes = [
     },
     {
         // View Notes page.
-        path: 'notes',
+        path: PAGES.VIEW_NOTES.route,
         component: PageViewNotesComponent,
         canActivate: [AuthGuard],
         resolve: {
@@ -161,7 +162,7 @@ export const AppRoutes: Routes = [
     },
     {
         // Log Additional Request page.
-        path: 'log-additional',
+        path: PAGES.ADDITIONAL_REASON.route,
         canActivate: [AuthGuard],
         component: PageLogAdditionalComponent,
         resolve: {
@@ -176,14 +177,14 @@ export const AppRoutes: Routes = [
         // Empty path (which should go to the home page).
         // If the "Previous x Calls" page has been disabled, the we go to the "Start New Call" page.
         path: '',
-        redirectTo: environment.disable.previousCalls ? '/log-call' : '/last-calls',
+        redirectTo: environment.disable.previousCalls ? PAGES.LOG_CALL.route : PAGES.PREVIOUS_CALLS.route,
         pathMatch: 'full'
     },
     {
         // Catch-all (which should go to the home page).
         // If the "Previous x Calls" page has been disabled, the we go to the "Start New Call" page.
         path: '**',
-        redirectTo: environment.disable.previousCalls ? '/log-call' : '/last-calls'
+        redirectTo: environment.disable.previousCalls ? PAGES.LOG_CALL.route : PAGES.PREVIOUS_CALLS.route
     }
 ];
 
