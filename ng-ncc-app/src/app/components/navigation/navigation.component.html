@@ -10,7 +10,7 @@
         <li class="navigation__separator"></li>
 
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.LOG_CALL.route" [class.disabled]="isCallActive()">
+            <a [routerLink]="page_defs.LOG_CALL.route" [class.disabled]="hasCallStarted()">
                 {{ page_defs.LOG_CALL.label }}
             </a>
         </li>

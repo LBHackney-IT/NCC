@@ -7,6 +7,7 @@ import { Component, HostBinding, Input } from '@angular/core';
 })
 export class PanelComponent {
     @HostBinding('class.panel--box') @Input() boxStyle?: boolean;
+    @HostBinding('class.panel--error') @Input() errorStyle?: boolean;
     // see https://stackoverflow.com/a/39161705/4073160
     // This will apply the panel--box class to the host element if the boxStyle attribute is truthy.
 }

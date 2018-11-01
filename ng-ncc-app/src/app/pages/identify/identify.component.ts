@@ -1,5 +1,6 @@
 import { environment } from '../../../environments/environment';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -11,7 +12,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
-import { Router } from '@angular/router';
+import { BackLinkService } from '../../services/back-link.service';
 
 @Component({
     selector: 'app-page-identify',
@@ -30,7 +31,8 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     results: ICitizenIndexSearchResult[];
     selected_address: IAddressSearchGroupedResult;
 
-    constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService) { }
+    constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService,
+        private BackLink: BackLinkService) { }
 
     ngOnInit() {
         this.searching = false;
@@ -40,6 +42,10 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
             this.existing_call = true;
             this.addressSelected(this.Call.getTenancy());
         }
+
+        // Enable the app's back link.
+        this.BackLink.enable();
+        this.BackLink.setTarget('/log-call');
     }
 
     ngOnDestroy() {
@@ -50,7 +56,6 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      * Performs a Citizen Index search.
      */
     performSearch() {
-        // For the time being, we are only searching for people by postcode.
         if (this.disable_identify_caller || this.searching) {
             return;
         }
