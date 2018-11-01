@@ -73,6 +73,7 @@ export class PagePaymentMakeComponent implements OnInit {
             this.Call.getCallID(),
             this.Call.getCaller().getContactID(),
             this.Call.getTenancyReference(),
+            this.Call.getPaymentReference(),
             this.Call.getCallNature().call_reason.id,
             this.Call.getTicketNumber(),
             this.getNumericAmount()

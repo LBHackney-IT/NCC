@@ -167,6 +167,13 @@ export class CallService {
     }
 
     /**
+     * Returns the payment reference number associated with the caller.
+     */
+    getPaymentReference(): string {
+        return this.account ? this.account.paymentReferenceNumber : null;
+    }
+
+    /**
      * Returns the account details associated with the caller.
      */
     getAccount(): IAccountDetails {
