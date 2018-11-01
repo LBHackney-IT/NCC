@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { PAGES } from '../../constants/pages.constant';
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
@@ -117,7 +118,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     tenantToEdit(caller: IdentifiedCaller) {
         this.Call.setCaller(caller);
         this.Call.setTenancy(this.selected_address);
-        this.router.navigateByUrl('contact-details');
+        this.router.navigateByUrl(PAGES.EDIT_CONTACT_DETAILS.route);
     }
 
     /**
@@ -164,7 +165,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      */
     nextStep() {
         if (this.Call.hasCaller()) {
-            this.router.navigateByUrl('comms');
+            this.router.navigateByUrl(PAGES.COMMS.route);
             // TODO determine which page (comms or payment) to go to, based on the call type and reason.
         }
     }

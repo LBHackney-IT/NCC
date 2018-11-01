@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { PAGES } from '../../constants/pages.constant';
 import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
@@ -31,7 +32,7 @@ export class PageLogCallComponent extends PageLogCallNature {
         this.Call.setCallNature(this.selected);
 
         // Go to the Caller Details page.
-        this.router.navigateByUrl('caller-details');
+        this.router.navigateByUrl(PAGES.IDENTIFY.route);
     }
 
     /**
