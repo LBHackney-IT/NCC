@@ -41,6 +41,13 @@
                         <p class="govuk-body">You will need to submit a request for a Rent Card in UHT.</p>
                     </div>
                 </ng-template>
+
+                <!-- Other (which should come last). -->
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="call-reason-other" name="call_reason" type="radio"
+                        [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="OTHER">
+                    <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
+                </div>
             </div>
 
             <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->
