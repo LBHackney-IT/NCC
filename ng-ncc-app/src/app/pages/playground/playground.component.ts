@@ -1,6 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { PAGES } from '../../constants/pages.constant';
+
 @Component({
     selector: 'app-playground',
     templateUrl: './playground.component.html',
@@ -28,7 +30,7 @@ export class PagePlaygroundComponent implements OnInit {
             this._w.close();
 
             // Go to the transaction (completed) page, passing the returned information.
-            this.router.navigateByUrl(`/transaction/${response}`);
+            this.router.navigateByUrl(`${PAGES.TRANSACTION.route}/${response}`);
         }
     }
 

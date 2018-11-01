@@ -12,10 +12,23 @@
             </p>
         </div>
 
-        <form (submit)="sendMessage($event)">
+        <app-panel errorStyle="true" *ngIf="_error">
+            <p class="govuk-heading-m govuk-!-margin-bottom-2">
+                Communications unavailable
+            </p>
+            <p class="govuk-heading-s govuk-!-margin-bottom-2">
+                The 3rd party system Gov Notify that send texts (SMS) and emails is currently not working. They will be working to fix the problem.
+            </p>
+            <p class="govuk-heading-s govuk-!-margin-0">
+                If it persists then contact ICT.
+            </p>
+        </app-panel>
+
+        <form (submit)="sendMessage($event)" *ngIf="!_error">
 
             <!-- Select the form to send. -->
-            <app-comms-templates title="Select an item to send:" (selected)="selectedOption($event)"></app-comms-templates>
+            <app-comms-templates title="Select an item to send:" (selected)="selectedOption($event)"
+                (error)="commsError()"></app-comms-templates>
 
             <!-- Select the communications method. -->
             <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->

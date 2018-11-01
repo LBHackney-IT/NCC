@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
+
+import { PAGES } from '../constants/pages.constant';
 import { CallService } from '../services/call.service';
 
 @Injectable()
@@ -12,7 +14,7 @@ export class CallerResolver implements Resolve<any[]> {
 
         if (!this.Call.hasCaller()) {
             console.log('We must have a caller to access this page.');
-            this.router.navigateByUrl('caller-details');
+            this.router.navigateByUrl(PAGES.IDENTIFY.route);
             return of([]);
         }
 
