@@ -5,6 +5,7 @@ import { switchMap, take } from 'rxjs/operators';
 import { PAYMENT_STATUS } from '../../constants/payment-status.constant';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { CallService } from '../../services/call.service';
+import { UHTriggerService } from '../../services/uhtrigger.service';
 import { IParisResponse } from '../../interfaces/paris-response';
 import { IPaymentInteraction } from '../../interfaces/payment-interaction';
 
@@ -16,7 +17,8 @@ import { IPaymentInteraction } from '../../interfaces/payment-interaction';
 export class PageTransactionComponent implements OnInit {
 
     data: IParisResponse;
-    constructor(private route: ActivatedRoute, private Call: CallService, private NCCAPI: NCCAPIService) { }
+    constructor(private route: ActivatedRoute, private Call: CallService, private NCCAPI: NCCAPIService,
+        private UHTrigger: UHTriggerService) { }
 
     /**
      *
@@ -37,7 +39,10 @@ export class PageTransactionComponent implements OnInit {
                 this.data = this._processData(params.get('data'));
                 this.getPaymentInteraction();
 
-                // this.UHTrigger.madePayment(this.Call.getTenancyReference(), this.form.to_pay);
+                if (this.wasSuccessful()) {
+                    // Record a note about the payment having been made.
+                    this.UHTrigger.madePayment(this.data.amount, this.data.receiptnumber);
+                }
             });
     }
 
