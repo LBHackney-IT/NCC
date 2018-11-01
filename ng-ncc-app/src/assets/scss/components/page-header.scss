@@ -35,6 +35,13 @@ $page-header-padding: 2rem !default;
     flex-grow: 1;
 }
 
+.page__header__column--id {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .page__header__logo {
     max-height: 40px;
 }
