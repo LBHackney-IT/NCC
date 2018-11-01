@@ -307,7 +307,7 @@ export class CallService {
      */
     private _formatNoteContent(note_content: string): string {
         if (CALL_REASON.OTHER === this.call_nature.call_reason.id) {
-            note_content = `${this.call_nature.other_reason}: ${note_content}`;
+            note_content = `Other: ${this.call_nature.other_reason}\n${note_content}`;
         }
 
         return note_content;
