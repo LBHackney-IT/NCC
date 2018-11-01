@@ -1,8 +1,10 @@
 import { environment } from '../../../environments/environment';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { PAGES } from '../../constants/pages.constant';
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
@@ -10,7 +12,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
-import { Router } from '@angular/router';
+import { BackLinkService } from '../../services/back-link.service';
 
 @Component({
     selector: 'app-page-identify',
@@ -29,7 +31,8 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     results: ICitizenIndexSearchResult[];
     selected_address: IAddressSearchGroupedResult;
 
-    constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService) { }
+    constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService,
+        private BackLink: BackLinkService) { }
 
     ngOnInit() {
         this.searching = false;
@@ -39,6 +42,10 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
             this.existing_call = true;
             this.addressSelected(this.Call.getTenancy());
         }
+
+        // Enable the app's back link.
+        this.BackLink.enable();
+        this.BackLink.setTarget('/log-call');
     }
 
     ngOnDestroy() {
@@ -49,7 +56,6 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      * Performs a Citizen Index search.
      */
     performSearch() {
-        // For the time being, we are only searching for people by postcode.
         if (this.disable_identify_caller || this.searching) {
             return;
         }
@@ -112,7 +118,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     tenantToEdit(caller: IdentifiedCaller) {
         this.Call.setCaller(caller);
         this.Call.setTenancy(this.selected_address);
-        this.router.navigateByUrl('contact-details');
+        this.router.navigateByUrl(PAGES.EDIT_CONTACT_DETAILS.route);
     }
 
     /**
@@ -159,7 +165,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      */
     nextStep() {
         if (this.Call.hasCaller()) {
-            this.router.navigateByUrl('comms');
+            this.router.navigateByUrl(PAGES.COMMS.route);
             // TODO determine which page (comms or payment) to go to, based on the call type and reason.
         }
     }

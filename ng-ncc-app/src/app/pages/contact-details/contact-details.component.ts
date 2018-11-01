@@ -8,6 +8,7 @@ import { ContactDetailsUpdate } from '../../classes/contact-details-update.class
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { BackLinkService } from '../../services/back-link.service';
 
 @Component({
     selector: 'app-contact-details',
@@ -29,7 +30,8 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         update: ContactDetailsUpdate
     };
 
-    constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService, private Call: CallService) { }
+    constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService, private Call: CallService,
+        private BackLink: BackLinkService) { }
 
     ngOnInit() {
         this.details = {
@@ -48,6 +50,10 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
                 console.log('Contact details:', data.details);
                 this._buildDetails(data.details);
             });
+
+        // Enable the app's back link.
+        this.BackLink.enable();
+        this.BackLink.setTarget('/caller-details');
     }
 
     ngOnDestroy() {

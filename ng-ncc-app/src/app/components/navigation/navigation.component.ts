@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CallService } from '../../services/call.service';
+import { PAGES } from '../../constants/pages.constant';
 
 @Component({
     selector: 'app-navigation',
@@ -16,6 +17,7 @@ export class NavigationComponent {
 
     constructor(private Call: CallService, private router: Router) { }
 
+    page_defs = PAGES;
     previous_call_count: number = environment.previousCallCount;
     disable_previous_calls: boolean = environment.disable.previousCalls;
     disable_additional_reasons: boolean = environment.disable.additionalCallReason;
@@ -25,7 +27,7 @@ export class NavigationComponent {
      */
     endCall() {
         this.Call.reset();
-        this.router.navigateByUrl('/log-call');
+        this.router.navigateByUrl(PAGES.PREVIOUS_CALLS.route);
     }
 
     /**
@@ -42,6 +44,14 @@ export class NavigationComponent {
      */
     isCallActive(): boolean {
         return null !== this.Call.getCallID();
+    }
+
+    /**
+     * Returns TRUE if we've started a call.
+     * A call has been started if we have both a caller and a call nature (type and reason).
+     */
+    hasCallStarted(): boolean {
+        return this.isCallNatureSelected && this.Call.hasCaller();
     }
 
     /**

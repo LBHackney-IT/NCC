@@ -6,5 +6,4 @@ import { PageCommunications } from '../abstract/communications';
     templateUrl: './comms.component.html',
     styleUrls: ['./comms.component.css']
 })
-export class PageCommsComponent extends PageCommunications {
-}
+export class PageCommsComponent extends PageCommunications { }
