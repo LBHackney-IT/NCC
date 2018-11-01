@@ -9,6 +9,7 @@ import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { NonTenantCaller } from '../../classes/non-tenant-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
@@ -24,7 +25,6 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     private _destroyed$ = new Subject();
 
     disable_identify_caller: boolean = environment.disable.identifyCaller;
-
     existing_call: boolean;
     searching: boolean;
     postcode: string;
@@ -45,7 +45,7 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
 
         // Enable the app's back link.
         this.BackLink.enable();
-        this.BackLink.setTarget('/log-call');
+        this.BackLink.setTarget(`/${PAGES.LOG_CALL.route}`);
     }
 
     ngOnDestroy() {
@@ -110,11 +110,16 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
         if (caller.isAnonymous()) {
             // We've selected "Not a tenant" (a non-tenant caller).
             console.log('Non-tenant caller.');
+
+            // To be able to obtain the respective tenancy reference, we must have a tenant's CRM ID.
+            // We'll use the CRM ID of the first tenant in the list.
+            const contact_id = this.selected_address.results[0].crmContactId;
+            this.Call.setCaller(new NonTenantCaller(contact_id));
         } else {
             // We've identified a tenant as the caller.
             console.log('Identified caller.');
+            this.Call.setCaller(caller);
         }
-        this.Call.setCaller(caller);
         this.Call.setTenancy(this.selected_address);
         this.nextStep();
     }

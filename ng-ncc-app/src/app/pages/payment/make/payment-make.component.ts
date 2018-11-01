@@ -107,4 +107,11 @@ export class PagePaymentMakeComponent implements OnInit {
         return parseFloat(this.amount);
     }
 
+    /**
+     *
+     */
+    isCallerIdentified(): boolean {
+        return this.Call.isCallerIdentified();
+    }
+
 }

@@ -31,7 +31,6 @@ import { ContactDetailsResolver } from './resolvers/contact-details-resolver.ser
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
-    // TODO use constants for the route paths.
     // -------------------------------------------------------------------------------------------------------------------------------------
     // PAGES NOT REQUIRING AUTHENTICATION
     // -------------------------------------------------------------------------------------------------------------------------------------

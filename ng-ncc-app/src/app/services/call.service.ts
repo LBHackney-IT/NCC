@@ -59,10 +59,9 @@ export class CallService {
 
     /**
      * Returns TRUE if the caller is a "non-tenant" caller.
-     * Non-tenant callers are anonymous callers with tenancy information.
      */
     isCallerNonTenant(): boolean {
-        return this.hasCaller() && this.caller.isAnonymous() && this.hasTenancy();
+        return this.hasCaller() && this.caller.isAnonymous() && (this.caller instanceOf NonTenantCaller);
     }
 
     /**
