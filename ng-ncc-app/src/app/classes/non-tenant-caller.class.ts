@@ -8,6 +8,7 @@ export class NonTenantCaller extends AnonymousCaller {
     private _crm_contact_id: string;
 
     constructor(crm_contact_id: string) {
+        super();
         this._crm_contact_id = crm_contact_id;
     }
 
