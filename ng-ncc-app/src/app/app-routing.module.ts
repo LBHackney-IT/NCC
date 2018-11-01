@@ -73,7 +73,8 @@ export const AppRoutes: Routes = [
     {
         // Handling information returned from Paris.
         path: '${PAGES.TRANSACTION.route}/:data',
-        component: PageTransactionComponent
+        component: PageTransactionComponent,
+        canActivate: [AuthGuard]
     },
     {
         // Rent page.
