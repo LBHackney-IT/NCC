@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { DPAService } from '../../services/dpa.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
 
     // A list of tenants under the address passed to this component.
     tenants: IdentifiedCaller[];
+    nonTenantCaller = new AnonymousCaller;
 
     crm_contact_id: string;
 

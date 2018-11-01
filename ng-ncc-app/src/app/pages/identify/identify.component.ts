@@ -106,7 +106,14 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     /**
      * Called when a tenant is selected from address results.
      */
-    tenantSelected(caller: IdentifiedCaller) {
+    tenantSelected(caller: ICaller) {
+        if (caller.isAnonymous()) {
+            // We've selected "Not a tenant" (a non-tenant caller).
+            console.log('Non-tenant caller.');
+        } else {
+            // We've identified a tenant as the caller.
+            console.log('Identified caller.');
+        }
         this.Call.setCaller(caller);
         this.Call.setTenancy(this.selected_address);
         this.nextStep();
