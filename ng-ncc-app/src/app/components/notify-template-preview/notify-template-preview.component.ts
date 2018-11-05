@@ -12,6 +12,7 @@ import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
     styleUrls: ['./notify-template-preview.component.scss']
 })
 export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDestroy {
+    @Input() editPlaceholders: boolean = true;
     @Input() settings: ITemplatePreviewSettings;
     @Output() settingsChange = new EventEmitter<ITemplatePreviewSettings>();
 
@@ -25,6 +26,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
 
     ngOnInit() {
         this.loading = false;
+
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -98,7 +100,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
         }
 
         // const regex = new RegExp('\(\(([A-za-z0-9 ]+)\)\)', 'gm');
-        const regex = /\(\((\?[A-za-z0-9 ]+)\)\)/gm;
+        const regex = /\(\(([A-za-z0-9 ]+)\)\)/gm;
         const placeholders: string[] = [];
 
         // Placeholders in the subject.
