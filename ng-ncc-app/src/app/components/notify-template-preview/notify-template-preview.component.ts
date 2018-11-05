@@ -81,7 +81,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
                 )
                 .subscribe(preview => {
                     this.preview = preview;
-                    this.settings.parameters = {};
+                    // this.settings.parameters = preview.parameters;
                     this.loading = false;
                     this.getPlaceholders();
                 });
@@ -98,7 +98,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
         }
 
         // const regex = new RegExp('\(\(([A-za-z0-9 ]+)\)\)', 'gm');
-        const regex = /\(\(([A-za-z0-9 ]+)\)\)/gm;
+        const regex = /\(\((\?[A-za-z0-9 ]+)\)\)/gm;
         const placeholders: string[] = [];
 
         // Placeholders in the subject.

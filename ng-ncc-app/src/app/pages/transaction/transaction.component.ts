@@ -1,29 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap, take } from 'rxjs/operators';
 
 import { PAYMENT_STATUS } from '../../constants/payment-status.constant';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 import { CallService } from '../../services/call.service';
 import { UHTriggerService } from '../../services/uhtrigger.service';
 import { IParisResponse } from '../../interfaces/paris-response';
 import { IPaymentInteraction } from '../../interfaces/payment-interaction';
+import { PageCommunications } from '../abstract/communications';
 
 @Component({
     selector: 'app-transaction',
     templateUrl: './transaction.component.html',
     styleUrls: ['./transaction.component.scss']
 })
-export class PageTransactionComponent implements OnInit {
+export class PageTransactionComponent extends PageCommunications implements OnInit {
 
     data: IParisResponse;
-    constructor(private route: ActivatedRoute, private Call: CallService, private NCCAPI: NCCAPIService,
-        private UHTrigger: UHTriggerService) { }
+
+    NCCAPI: NCCAPIService;
+
+    constructor(private injector: Injector) {
+        // see https://stackoverflow.com/a/48723478/4073160
+        // This had to be done in order to extend the communications abstract class, but be able to add
+        // a reference to the NCC API.
+        super(injector);
+        this.NCCAPI = this.injector.get(NCCAPIService);
+    }
 
     /**
      *
      */
     ngOnInit() {
+        super.ngOnInit();
         this.getData();
     }
 
@@ -90,6 +101,21 @@ export class PageTransactionComponent implements OnInit {
     wasSuccessful(): boolean {
         return 'true' === this.data.serviceprocessed;
         // 'false' evaluates to true.
+    }
+
+    /**
+     *
+     */
+    updatePreview() {
+        super.updatePreview();
+        if (this.shouldShowPreview()) {
+            this.preview.parameters = {
+                amount: this.data.amount,
+                date: this.data.date,
+                'payment ref': this.data.receiptnumber
+            };
+            console.log('parameters:', this.preview.parameters);
+        }
     }
 
 }
