@@ -37,6 +37,12 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
                 (data) => {
                     this._options = this._filterTemplates(data);
                     this._loading = false;
+
+                    // If there's only one template, select it.
+                    if (1 === this._options.length) {
+                        this._selected = this._options[0];
+                        this.selectedTemplate();
+                    }
                 },
                 (error) => {
                     this.error.emit();
