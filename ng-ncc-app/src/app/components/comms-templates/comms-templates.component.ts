@@ -62,6 +62,9 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
             options = options.filter((option: CommsOption) => !option.isSensitive());
         }
 
+        // Filter out receipt templates.
+        options = options.filter((option: CommsOption) => !option.isReceipt());
+
         return options;
     }
 

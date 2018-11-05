@@ -67,6 +67,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
 import { WarningComponent } from './components/warning/warning.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
 import { AgentComponent } from './components/agent/agent.component';
+import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 
 @NgModule({
     declarations: [
@@ -122,6 +123,7 @@ import { AgentComponent } from './components/agent/agent.component';
         WarningComponent,
         EnvNameComponent,
         AgentComponent,
+        CommsReceiptTemplatesComponent,
     ],
     imports: [
         BrowserModule,
