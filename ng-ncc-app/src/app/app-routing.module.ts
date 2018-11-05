@@ -49,7 +49,7 @@ export const AppRoutes: Routes = [
         // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
         // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
         // Normally we would add child pages to this route, but we want to keep the existing route paths.
-        path: '${PAGES.AUTHENTICATION.route}/:code',
+        path: `${PAGES.AUTHENTICATION.route}/:code`,
         pathMatch: 'full',
         canActivate: [AuthGuard],
         children: []
@@ -72,7 +72,7 @@ export const AppRoutes: Routes = [
     },
     {
         // Handling information returned from Paris.
-        path: '${PAGES.TRANSACTION.route}/:data',
+        path: `${PAGES.TRANSACTION.route}/:data`,
         component: PageTransactionComponent,
         canActivate: [AuthGuard]
     },
