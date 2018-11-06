@@ -307,7 +307,7 @@ export class NCCAPIService {
             'sshetty', // username
             amount
         ];
-        const return_url = `${window.location.origin}/payment.html?${return_data.join('$')}`;
+        const return_url = `${window.location.origin}/payment.html?ReturnValue=${return_data.join('$')}`;
 
         const parameters = {
             returnurl: encodeURIComponent(return_url),
