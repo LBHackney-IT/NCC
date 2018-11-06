@@ -92,6 +92,26 @@
 
     </app-panel>
 
+    <app-or></app-or>
+
+    <!-- An option to select a "non-tenant" caller. -->
+    <!-- Non-tenant callers can make payments toward a tenancy, but can't have access to sensitive information. -->
+    <app-panel boxStyle="true" class="tenant-list govuk-!-margin-bottom-3">
+        <div class="govuk-radios govuk-radios--inline">
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="changed-name-non-tenant" name="changed-name" type="radio"
+                     [(ngModel)]="_selected" [value]="nonTenantCaller">
+                <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-non-tenant">
+                    <span class="govuk-grid-column-full">
+                        <span class="govuk-body govuk-!-margin-bottom-1">
+                            Not a tenant
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </app-panel>
+
     <!-- Select this information. -->
     <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">
         Continue

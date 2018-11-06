@@ -57,8 +57,23 @@ export class NavigationComponent {
     /**
      * Returns TRUE if a call is currently active and the caller has been identified.
      */
-    isCallerIdentified() {
+    isCallerIdentified(): boolean {
         return this.Call.isCallerIdentified();
+    }
+
+    /**
+     * Returns TRUE if a call is currently active and the caller is able to make a payment.
+     */
+    isCallerAbleToPay(): boolean {
+        return this.Call.isCallerIdentified() || this.Call.isCallerNonTenant();
+    }
+
+    /**
+     *
+     */
+    getRentRoute(): string {
+        const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_SUMMARY.route;
+        return `${PAGES.RENT.route}/${page}`;
     }
 
 }

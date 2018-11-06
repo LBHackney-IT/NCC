@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { PAGES } from '../../constants/pages.constant';
 import { IContactDetails } from '../../interfaces/contact-details';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
@@ -53,7 +54,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
 
         // Enable the app's back link.
         this.BackLink.enable();
-        this.BackLink.setTarget('/caller-details');
+        this.BackLink.setTarget(`/${PAGES.IDENTIFY.route}`);
     }
 
     ngOnDestroy() {

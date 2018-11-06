@@ -6,6 +6,7 @@ export interface IAccountDetails {
     currentBalance: number;
     rent: number;
     housingReferenceNumber: string;
+    paymentReferenceNumber: string;
     directdebit: any;
     personNumber: any;
     responsible: boolean;

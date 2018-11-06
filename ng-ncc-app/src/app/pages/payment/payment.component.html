@@ -1,16 +1,16 @@
 <h1 class="govuk-heading-l">Rent</h1>
 
 <app-tabs>
-    <app-tab routerLinkActive="active">
+    <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">
         <a [routerLink]="page_defs.RENT_SUMMARY.route">{{ page_defs.RENT_SUMMARY.label }}</a>
     </app-tab>
-    <app-tab routerLinkActive="active">
+    <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">
         <a [routerLink]="page_defs.RENT_TRANSACTIONS.route">{{ page_defs.RENT_TRANSACTIONS.label }}</a>
     </app-tab>
     <app-tab routerLinkActive="active">
         <a [routerLink]="page_defs.RENT_PAYMENT.route">{{ page_defs.RENT_PAYMENT.label }}</a>
     </app-tab>
-    <app-tab routerLinkActive="active">
+    <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">
         <a [routerLink]="page_defs.RENT_COMMS.route">{{ page_defs.RENT_COMMS.label }}</a>
     </app-tab>
     <router-outlet></router-outlet>

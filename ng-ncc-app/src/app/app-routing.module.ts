@@ -24,13 +24,13 @@ import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
+import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
-    // TODO use constants for the route paths.
     // -------------------------------------------------------------------------------------------------------------------------------------
     // PAGES NOT REQUIRING AUTHENTICATION
     // -------------------------------------------------------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ export const AppRoutes: Routes = [
         // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
         // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
         // Normally we would add child pages to this route, but we want to keep the existing route paths.
-        path: '${PAGES.AUTHENTICATION.route}/:code',
+        path: `${PAGES.AUTHENTICATION.route}/:code`,
         pathMatch: 'full',
         canActivate: [AuthGuard],
         children: []
@@ -72,7 +72,7 @@ export const AppRoutes: Routes = [
     },
     {
         // Handling information returned from Paris.
-        path: '${PAGES.TRANSACTION.route}/:data',
+        path: `${PAGES.TRANSACTION.route}/:data`,
         component: PageTransactionComponent,
         canActivate: [AuthGuard]
     },
@@ -103,7 +103,7 @@ export const AppRoutes: Routes = [
                 path: PAGES.RENT_PAYMENT.route,
                 component: PagePaymentMakeComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: CallerCanPayResolver
                 }
             },
             {
