@@ -73,6 +73,7 @@ export class PagePaymentMakeComponent implements OnInit {
             this.Call.getCallID(),
             this.Call.getCaller().getContactID(),
             this.Call.getTenancyReference(),
+            this.Call.getPaymentReference(),
             this.Call.getCallNature().call_reason.id,
             this.Call.getTicketNumber(),
             this.getNumericAmount()
@@ -105,6 +106,13 @@ export class PagePaymentMakeComponent implements OnInit {
      */
     getNumericAmount(): number {
         return parseFloat(this.amount);
+    }
+
+    /**
+     *
+     */
+    isCallerIdentified(): boolean {
+        return this.Call.isCallerIdentified();
     }
 
 }

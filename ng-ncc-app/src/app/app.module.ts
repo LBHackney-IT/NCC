@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
+import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
@@ -133,6 +134,7 @@ import { AgentComponent } from './components/agent/agent.component';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AccountDetailsResolver,
+        CallerCanPayResolver,
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,

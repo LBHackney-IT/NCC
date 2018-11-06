@@ -277,7 +277,8 @@ export class NCCAPIService {
     /**
      * Begins processing a payment through Paris.
      */
-    beginPayment(call_id: string, crm_contact_id: string, tenancy_id: string, call_reason_id, ticket_number: string, amount: number) {
+    beginPayment(call_id: string, crm_contact_id: string, tenancy_id: string, payment_reference: string, call_reason_id,
+        ticket_number: string, amount: number) {
 
         // We have to obtain an interaction ID before redirecting to Paris.
         // We can get one by posting an automatic note, where a payment status if given.
@@ -291,7 +292,7 @@ export class NCCAPIService {
         )
             .pipe(
                 map((data: IJSONResponse) => {
-                    return this._redirectToParis(data.response.NCCInteraction.interactionId, amount);
+                    return this._redirectToParis(data.response.NCCInteraction.interactionId, payment_reference, amount);
                 })
             );
     }
@@ -299,7 +300,7 @@ export class NCCAPIService {
     /**
      *
      */
-    private _redirectToParis(interaction_id: string, amount: number) {
+    private _redirectToParis(interaction_id: string, payment_reference: string, amount: number) {
 
         const return_data = [
             interaction_id,
@@ -313,8 +314,9 @@ export class NCCAPIService {
             payforbasketmode: true,
             returntext: encodeURIComponent('Back to NCC'),
             ignoreconfirmation: true,
+            showcontactpage: 'no',
             data: encodeURIComponent('Keep this and return it at the end'),
-            recordxml: '<records><record><reference>006884</reference><fund>02</fund><amount>' + amount +
+            recordxml: `<records><record><reference>${payment_reference}</reference><fund>07</fund><amount>` + amount +
                 '</amount><text></text></record></records>'
         };
 

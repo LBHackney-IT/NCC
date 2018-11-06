@@ -9,6 +9,7 @@ import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
+import { NonTenantCaller } from '../classes/non-tenant-caller.class';
 import { ICRMServiceRequest } from '../interfaces/crmservicerequest';
 import { IAddressSearchGroupedResult } from '../interfaces/address-search-grouped-result';
 import { IAccountDetails } from '../interfaces/account-details';
@@ -55,6 +56,13 @@ export class CallService {
      */
     isCallerIdentified(): boolean {
         return this.hasCaller() && !this.caller.isAnonymous();
+    }
+
+    /**
+     * Returns TRUE if the caller is a "non-tenant" caller.
+     */
+    isCallerNonTenant(): boolean {
+        return this.hasCaller() && this.caller.isAnonymous() && (this.caller instanceof NonTenantCaller);
     }
 
     /**
@@ -156,6 +164,13 @@ export class CallService {
      */
     getTenancyReference(): string {
         return this.account ? this.account.tagReferenceNumber : null;
+    }
+
+    /**
+     * Returns the payment reference number associated with the caller.
+     */
+    getPaymentReference(): string {
+        return this.account ? this.account.paymentReferenceNumber : null;
     }
 
     /**
