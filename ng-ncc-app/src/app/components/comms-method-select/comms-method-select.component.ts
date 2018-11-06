@@ -133,21 +133,20 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
      * Returns a list of the caller's email addresses.
      */
     existingEmailAddresses(): string[] {
-        return this.details.email;
+        return this.details ? this.details.email : [];
     }
 
     /**
      * Returns a list of the caller's telephone numbers.
      */
     existingTelephoneNumbers(): string[] {
-        return this.details.mobile;
+        return this.details ? this.details.mobile : [];
     }
 
     /**
      *
      */
     checkDetails() {
-        console.log(this.selection);
         this.selected.emit(this.selection);
     }
 

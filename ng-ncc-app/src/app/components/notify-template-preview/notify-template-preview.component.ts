@@ -12,6 +12,7 @@ import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
     styleUrls: ['./notify-template-preview.component.scss']
 })
 export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDestroy {
+    @Input() editPlaceholders = true;
     @Input() settings: ITemplatePreviewSettings;
     @Output() settingsChange = new EventEmitter<ITemplatePreviewSettings>();
 
@@ -25,6 +26,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
 
     ngOnInit() {
         this.loading = false;
+
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -81,7 +83,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
                 )
                 .subscribe(preview => {
                     this.preview = preview;
-                    this.settings.parameters = {};
+                    // this.settings.parameters = preview.parameters;
                     this.loading = false;
                     this.getPlaceholders();
                 });

@@ -8,8 +8,8 @@
 	var rows = data.split('&');
 
     // The first item in the list of parameters will contain the interaction ID, username and amount concatenated by the literal string
-    // "%24".
-	var reserved = rows.shift().split('%24');
+    // "%24" (ReturnValue).
+	var reserved = rows.shift().split('=')[1].split('%24');
 
     // Create a series of key/value pairs from the rest of the data.
 	var pairs = rows.map(function(row) {
