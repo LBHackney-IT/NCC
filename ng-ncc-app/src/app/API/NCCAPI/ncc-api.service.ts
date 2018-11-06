@@ -307,10 +307,10 @@ export class NCCAPIService {
             'sshetty', // username
             amount
         ];
-        const return_url = `${window.location.origin}/payment.html?${return_data.join('$')}`;
+        const return_url = `${window.location.origin}/payment.html?ReturnValue=${return_data.join('$')}`;
 
         const parameters = {
-            returnurl: return_url,
+            returnurl: encodeURIComponent(return_url),
             payforbasketmode: true,
             returntext: encodeURIComponent('Back to NCC'),
             ignoreconfirmation: true,

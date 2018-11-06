@@ -83,6 +83,7 @@ export class PagePaymentMakeComponent implements OnInit {
                 // For some reason the URL is returned as an encoded string (which makes a BIG difference).
                 // console.log('Paris payment', url, decodeURIComponent(url));
                 url = decodeURIComponent(url);
+                console.log('Open a window for URL:', url);
                 this._w = window.open(url, 'NCCPayment');
             });
     }
