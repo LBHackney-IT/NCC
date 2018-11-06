@@ -45,7 +45,9 @@ export class PagePaymentMakeComponent implements OnInit {
     constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router) { }
 
     ngOnInit() {
-        this.account_details = this.Call.getAccount();
+        this.Call.getAccount()
+            .pipe(take(1))
+            .subscribe((account: IAccountDetails) => { this.account_details = account; });
         this.amount = null;
     }
 

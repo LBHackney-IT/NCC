@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
@@ -42,7 +42,9 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
             manual: {}
         };
 
-        this.account_details = this.Call.getAccount();
+        this.Call.getAccount()
+            .pipe(take(1))
+            .subscribe((account: IAccountDetails) => { this.account_details = account; });
 
         this.route.data
             .pipe(
