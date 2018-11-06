@@ -176,8 +176,8 @@ export class CallService {
     /**
      * Returns the account details associated with the caller.
      */
-    getAccount(): IAccountDetails {
-        return this.account;
+    getAccount(): Observable<IAccountDetails> {
+        return this.ManageATenancyAPI.getAccountDetails(this.caller.getContactID());
     }
 
     /**

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { ITransaction } from '../../../interfaces/transaction';
@@ -37,7 +37,10 @@ export class PagePaymentSummaryComponent implements OnInit, OnDestroy {
         this.selected_method = null;
         this.summary_cutoff = new Date();
         this.summary_cutoff.setMonth(this.summary_cutoff.getMonth() - 6);
-        this.account_details = this.Call.getAccount();
+
+        this.Call.getAccount()
+            .pipe(take(1))
+            .subscribe((account: IAccountDetails) => { this.account_details = account; });
 
         this.route.data
             .pipe(
