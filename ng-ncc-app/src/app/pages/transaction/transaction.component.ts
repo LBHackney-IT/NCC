@@ -60,6 +60,13 @@ export class PageTransactionComponent extends PageCommunications implements OnIn
     /**
      *
      */
+    getCallerName(): string {
+        return this.Call.getCaller().getName();
+    }
+
+    /**
+     *
+     */
     getPaymentInteraction() {
         this.NCCAPI.getPaymentInteractions(
             this.data.interactionId,
