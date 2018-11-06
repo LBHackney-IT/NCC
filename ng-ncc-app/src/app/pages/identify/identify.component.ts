@@ -43,9 +43,11 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
             this.addressSelected(this.Call.getTenancy());
         }
 
-        // Enable the app's back link.
-        this.BackLink.enable();
-        this.BackLink.setTarget(`/${PAGES.LOG_CALL.route}`);
+        // Enable the app's back link if there's no current caller.
+        if (!this.Call.hasCaller()) {
+            this.BackLink.enable();
+            this.BackLink.setTarget(`/${PAGES.LOG_CALL.route}`);
+        }
     }
 
     ngOnDestroy() {
