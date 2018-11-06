@@ -52,7 +52,9 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
         super.updatePreview();
         if (this.isSensitiveTemplateSelected() && this.preview) {
             this.preview.parameters = {
-                '+/-£0.00': formatCurrency(this.account_details.currentBalance, this.locale, '£')
+                'Tenancy reference': this.account_details.tagReferenceNumber,
+                'Rent balance': formatCurrency(this.account_details.currentBalance, this.locale, '£'),
+                'Rent amount': formatCurrency(this.account_details.rent, this.locale, '£')
             };
         }
     }
