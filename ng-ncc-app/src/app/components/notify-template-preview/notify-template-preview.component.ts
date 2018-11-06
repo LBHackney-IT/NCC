@@ -12,7 +12,7 @@ import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
     styleUrls: ['./notify-template-preview.component.scss']
 })
 export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() editPlaceholders: boolean = true;
+    @Input() editPlaceholders = true;
     @Input() settings: ITemplatePreviewSettings;
     @Output() settingsChange = new EventEmitter<ITemplatePreviewSettings>();
 
