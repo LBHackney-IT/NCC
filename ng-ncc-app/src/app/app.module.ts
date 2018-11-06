@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
+import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
@@ -66,6 +67,7 @@ import { EditorialComponent } from './components/editorial/editorial.component';
 import { WarningComponent } from './components/warning/warning.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
 import { AgentComponent } from './components/agent/agent.component';
+import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 
 @NgModule({
     declarations: [
@@ -121,6 +123,7 @@ import { AgentComponent } from './components/agent/agent.component';
         WarningComponent,
         EnvNameComponent,
         AgentComponent,
+        CommsReceiptTemplatesComponent,
     ],
     imports: [
         BrowserModule,
@@ -133,6 +136,7 @@ import { AgentComponent } from './components/agent/agent.component';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AccountDetailsResolver,
+        CallerCanPayResolver,
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,

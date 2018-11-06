@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, Injector, OnInit, OnDestroy } from '@angular/core';
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -34,8 +34,18 @@ export class PageCommunications implements OnInit, OnDestroy {
     modal: { [propKey: string]: boolean };
     _error: boolean;
 
-    constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private UHTrigger: UHTriggerService,
-        private route: ActivatedRoute) { }
+    Call: CallService;
+    NotifyAPI: NotifyAPIService;
+    route: ActivatedRoute;
+    UHTrigger: UHTriggerService;
+
+    constructor(private injectorObj: Injector) {
+        // See https://stackoverflow.com/a/48723478/4073160
+        this.Call = this.injectorObj.get(CallService);
+        this.NotifyAPI = this.injectorObj.get(NotifyAPIService);
+        this.route = this.injectorObj.get(ActivatedRoute);
+        this.UHTrigger = this.injectorObj.get(UHTriggerService);
+    }
 
     ngOnInit() {
         this._sending = false;
@@ -91,6 +101,7 @@ export class PageCommunications implements OnInit, OnDestroy {
      */
     selectedOption(option: CommsOption) {
         this.selected_option = option;
+        console.log('selected comms template:', this.selected_option);
         this.updatePreview();
     }
 

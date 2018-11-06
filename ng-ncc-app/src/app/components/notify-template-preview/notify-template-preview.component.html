@@ -9,7 +9,7 @@
 
     </div>
 
-    <div class="govuk-grid-column-one-half">
+    <div class="govuk-grid-column-one-half" *ngIf="editPlaceholders">
 
         <!-- A warning for agents not to enter any sensitive data. -->
         <app-warning *ngIf="hasPlaceholders()">

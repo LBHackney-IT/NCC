@@ -40,7 +40,7 @@
         </li>
 
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.RENT.route" [class.disabled]="!isCallerIdentified()">
+            <a [routerLink]="getRentRoute()" [class.disabled]="!isCallerAbleToPay()">
                 {{ page_defs.RENT.label }}
             </a>
         </li>

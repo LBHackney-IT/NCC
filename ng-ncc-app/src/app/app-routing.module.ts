@@ -24,13 +24,13 @@ import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
+import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 
 export const AppRoutes: Routes = [
-    // TODO use constants for the route paths.
     // -------------------------------------------------------------------------------------------------------------------------------------
     // PAGES NOT REQUIRING AUTHENTICATION
     // -------------------------------------------------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ export const AppRoutes: Routes = [
                 path: PAGES.RENT_PAYMENT.route,
                 component: PagePaymentMakeComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: CallerCanPayResolver
                 }
             },
             {

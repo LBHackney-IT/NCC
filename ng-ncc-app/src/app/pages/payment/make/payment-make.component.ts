@@ -73,6 +73,7 @@ export class PagePaymentMakeComponent implements OnInit {
             this.Call.getCallID(),
             this.Call.getCaller().getContactID(),
             this.Call.getTenancyReference(),
+            this.Call.getPaymentReference(),
             this.Call.getCallNature().call_reason.id,
             this.Call.getTicketNumber(),
             this.getNumericAmount()
@@ -82,6 +83,7 @@ export class PagePaymentMakeComponent implements OnInit {
                 // For some reason the URL is returned as an encoded string (which makes a BIG difference).
                 // console.log('Paris payment', url, decodeURIComponent(url));
                 url = decodeURIComponent(url);
+                console.log('Open a window for URL:', url);
                 this._w = window.open(url, 'NCCPayment');
             });
     }
@@ -105,6 +107,13 @@ export class PagePaymentMakeComponent implements OnInit {
      */
     getNumericAmount(): number {
         return parseFloat(this.amount);
+    }
+
+    /**
+     *
+     */
+    isCallerIdentified(): boolean {
+        return this.Call.isCallerIdentified();
     }
 
 }
