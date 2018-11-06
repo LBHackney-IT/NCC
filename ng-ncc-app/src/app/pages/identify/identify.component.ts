@@ -179,7 +179,11 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      */
     nextStep() {
         if (this.Call.hasCaller()) {
-            this.router.navigateByUrl(PAGES.COMMS.route);
+            // If caller is identified the ‘continue' button should take you to ’Caller Notes'.
+            // If caller is anonymous the ‘caller is anonymous’ button should take you to ‘General Communications’.
+            // Decided in isolation.
+            this.router.navigateByUrl(this.Call.isCallerIdentified() ? PAGES.VIEW_NOTES.route : PAGES.COMMS.route);
+
             // TODO determine which page (comms or payment) to go to, based on the call type and reason.
         }
     }
