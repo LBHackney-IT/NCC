@@ -56,6 +56,7 @@
                     Specify the call reason:
                 </label>
                 <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
+                    #otherReasonField
                     placeholder="Specify the call reason"
                     [(ngModel)]="selected.other_reason" (ngModelChange)="updateSelection()">
             </div>

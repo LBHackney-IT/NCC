@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -14,6 +14,7 @@ import { CALL_REASON } from '../../constants/call-reason.constant';
     styleUrls: ['./call-nature.component.scss']
 })
 export class CallNatureComponent implements OnInit, OnDestroy {
+    @ViewChild('otherReasonField') otherReasonField: ElementRef;
     @Output() changed = new EventEmitter<ILogCallSelection>();
 
     private _destroyed$ = new Subject();
@@ -23,7 +24,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
     call_reasons: Array<any>;
     selected: ILogCallSelection; // the selected call type and reason.
 
-    constructor(private HackneyAPI: HackneyAPIService) { }
+    constructor(private HackneyAPI: HackneyAPIService, private cdRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.selected = new ILogCallSelection;
@@ -57,14 +58,14 @@ export class CallNatureComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
+     * An iterator for the list of call types.
      */
     trackByCallType(index: number, item: string): number {
         return index;
     }
 
     /**
-     *
+     * An iterator for the list of call reasons.
      */
     trackByCallReason(index: number, item: LogCallReason): string {
         return item.id;
@@ -78,10 +79,27 @@ export class CallNatureComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
+     * Fires the changed event for this component.
      */
     updateSelection() {
         this.changed.emit(this.selected);
+
+        // see https://stackoverflow.com/a/46051865/4073160
+        // The "other reason" text field is normally hidden, so the ViewChild reference will normally be undefined.
+        // We can manually detect a change to the reference before setting the focus on the text field, if necessary.
+        this.cdRef.detectChanges();
+        if (this.isOtherReasonSelected()) {
+            this._focusOtherReason();
+        }
+    }
+
+    /**
+     * Set the focus on the other reason field.
+     */
+    private _focusOtherReason() {
+        if (this.otherReasonField) {
+            this.otherReasonField.nativeElement.focus();
+        }
     }
 
     /**
