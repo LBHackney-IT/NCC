@@ -1,4 +1,4 @@
-<app-panel class="govuk-!-margin-bottom-5" errorStyle="true">
+<app-panel class="govuk-!-margin-bottom-5" [errorStyle]="true">
     <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Failed payment</h1>
     <p class="govuk-heading-m govuk-!-margin-0">There was a problem taking a payment. You can try again by clicking the button below.</p>
 </app-panel>
@@ -9,7 +9,7 @@
 
 <form action="">
 
-    <app-panel class="govuk-!-margin-bottom-5">
+    <app-panel class="govuk-!-margin-bottom-5 govuk-body">
         <div class="flex-columns">
 
             <!-- Tenancy reference number. -->

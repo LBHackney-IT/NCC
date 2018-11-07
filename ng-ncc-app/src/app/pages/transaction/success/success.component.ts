@@ -24,14 +24,13 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
     ngOnInit() {
         super.ngOnInit();
         this.data = this.Transaction.data;
-        console.log(this.data);
     }
 
     /**
      *
      */
     getCallerName(): string {
-        return this.Call.getCaller().getName();
+        return this.Call.isCallerIdentified() ? this.Call.getCaller().getName() : 'anonymous';
     }
 
 
