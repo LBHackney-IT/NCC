@@ -21,7 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
     @ViewChild(ContentAreaComponent) private contentArea: ContentAreaComponent;
     // This is a reference to an <app-content-area> component within this component.
 
-    title = 'Neighbourhood Call Centre (NCC) CRM';
     loading = false;
 
     private _destroyed$ = new Subject();
@@ -62,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
      *
      */
     ngOnInit() {
-        initAll(); // initialise GOV.UK Frontend components.
+        // initAll(); // initialise GOV.UK Frontend components.
     }
 
     /**

@@ -6,6 +6,7 @@ import { PAGES } from '../../../constants/pages.constant';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { CallService } from '../../../services/call.service';
 import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
+import { PageTitleService } from '../../../services/page-title.service';
 
 @Component({
     selector: 'app-payment-make',
@@ -15,6 +16,8 @@ import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
 export class PagePaymentMakeComponent implements OnInit {
 
     private _w: Window;
+
+    PageTitle: PageTitleService;
 
     account_details: IAccountDetails;
     show_confirm: boolean;
@@ -42,9 +45,10 @@ export class PagePaymentMakeComponent implements OnInit {
         }
     }
 
-    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router) { }
+    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router, PageTitle: PageTitleService) { }
 
     ngOnInit() {
+        this.PageTitle.set(PAGES.RENT_PAYMENT.label);
         this.Call.getAccount()
             .pipe(take(1))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });

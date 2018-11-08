@@ -2,7 +2,9 @@ import { environment } from '../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 
 import { AUTH } from '../../constants/auth.constant';
+import { PAGES } from '../../constants/pages.constant';
 import { AuthService } from '../../services/auth.service';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-try-again',
@@ -13,9 +15,11 @@ export class PageTryAgainComponent implements OnInit {
 
     reason: number;
 
-    constructor(private Auth: AuthService) { }
+    constructor(private Auth: AuthService, private PageTitle: PageTitleService) { }
 
     ngOnInit() {
+        this.PageTitle.set(PAGES.TRY_AGAIN.label);
+
         // We shouldn't see this page unless we couldn't log in for some reason. But what was the error?
         // The only way we can tell is through the message.
         switch (this.Auth.getMessage()) {
