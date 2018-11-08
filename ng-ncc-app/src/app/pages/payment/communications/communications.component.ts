@@ -2,6 +2,7 @@ import { LOCALE_ID, Component, Inject, Injector, OnInit } from '@angular/core';
 import { formatCurrency } from '@angular/common';
 import { take } from 'rxjs/operators';
 
+import { PAGES } from '../../../constants/pages.constant';
 import { CommsOption } from '../../../classes/comms-option.class';
 import { PageCommunications } from '../../abstract/communications';
 import { DPAService } from '../../../services/dpa.service';
@@ -23,6 +24,7 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
      */
     ngOnInit() {
         super.ngOnInit();
+        this.PageTitle.set(PAGES.RENT_COMMS.label);
         this.Call.getAccount()
             .pipe(take(1))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });

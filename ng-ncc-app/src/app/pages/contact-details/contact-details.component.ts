@@ -10,6 +10,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { BackLinkService } from '../../services/back-link.service';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-contact-details',
@@ -32,9 +33,11 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     };
 
     constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService, private Call: CallService,
-        private BackLink: BackLinkService) { }
+        private BackLink: BackLinkService, private PageTitle: PageTitleService) { }
 
     ngOnInit() {
+        this.PageTitle.set(PAGES.EDIT_CONTACT_DETAILS.label);
+
         this.details = {
             original: null,
             update: new ContactDetailsUpdate

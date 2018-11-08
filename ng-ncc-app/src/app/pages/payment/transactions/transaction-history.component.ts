@@ -3,10 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { PAGES } from '../../../constants/pages.constant';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { PageHistory } from '../../abstract/history';
 import { CallService } from '../../../services/call.service';
+import { PageTitleService } from '../../../services/page-title.service';
 
 @Component({
     selector: 'app-transaction-history',
@@ -27,7 +29,8 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
 
     filter_type: string;
 
-    constructor(private Call: CallService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute) {
+    constructor(private Call: CallService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute,
+        private PageTitle: PageTitleService) {
         super();
     }
 
@@ -35,6 +38,8 @@ export class PageTransactionHistoryComponent extends PageHistory implements OnIn
      *
      */
     ngOnInit() {
+        this.PageTitle.set(PAGES.RENT_TRANSACTIONS.label);
+
         // Set up the filter.
         this.filter = {
             min_date: null,

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { PAGES } from '../../constants/pages.constant';
 import { CallService } from '../../services/call.service';
 import { PageLogCallNature } from '../abstract/log-call-nature';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-log-additional',
@@ -12,8 +13,12 @@ import { PageLogCallNature } from '../abstract/log-call-nature';
 })
 export class PageLogAdditionalComponent extends PageLogCallNature {
 
-    constructor(private router: Router, private Call: CallService) {
+    constructor(private router: Router, private Call: CallService, private PageTitle: PageTitleService) {
         super();
+    }
+
+    ngOnInit() {
+        this.PageTitle.set(PAGES.ADDITIONAL_REASON.label);
     }
 
     /**
