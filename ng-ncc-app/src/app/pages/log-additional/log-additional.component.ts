@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PAGES } from '../../constants/pages.constant';
@@ -11,7 +11,7 @@ import { PageTitleService } from '../../services/page-title.service';
     templateUrl: './log-additional.component.html',
     styleUrls: ['./log-additional.component.scss']
 })
-export class PageLogAdditionalComponent extends PageLogCallNature {
+export class PageLogAdditionalComponent extends PageLogCallNature implements OnInit {
 
     constructor(private router: Router, private Call: CallService, private PageTitle: PageTitleService) {
         super();

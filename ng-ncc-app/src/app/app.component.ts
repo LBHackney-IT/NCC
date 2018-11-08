@@ -61,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
      *
      */
     ngOnInit() {
-        //initAll(); // initialise GOV.UK Frontend components.
+        // initAll(); // initialise GOV.UK Frontend components.
     }
 
     /**
