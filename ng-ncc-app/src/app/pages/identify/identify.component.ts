@@ -14,6 +14,7 @@ import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
 import { BackLinkService } from '../../services/back-link.service';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-page-identify',
@@ -32,9 +33,11 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     selected_address: IAddressSearchGroupedResult;
 
     constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService,
-        private BackLink: BackLinkService) { }
+        private BackLink: BackLinkService, private PageTitle: PageTitleService) { }
 
     ngOnInit() {
+        this.PageTitle.set(PAGES.IDENTIFY.label);
+
         this.searching = false;
         this.existing_call = false;
 

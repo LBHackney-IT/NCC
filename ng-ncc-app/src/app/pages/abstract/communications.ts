@@ -17,6 +17,7 @@ import { INotifyAPIJSONResult } from '../../interfaces/notify-api-json-result';
 import { CONTACT } from '../../constants/contact.constant';
 import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { UHTriggerService } from '../../services/uhtrigger.service';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Injectable()
 export class PageCommunications implements OnInit, OnDestroy {
@@ -38,6 +39,7 @@ export class PageCommunications implements OnInit, OnDestroy {
     NotifyAPI: NotifyAPIService;
     route: ActivatedRoute;
     UHTrigger: UHTriggerService;
+    PageTitle: PageTitleService;
 
     constructor(private injectorObj: Injector) {
         // See https://stackoverflow.com/a/48723478/4073160
@@ -45,6 +47,7 @@ export class PageCommunications implements OnInit, OnDestroy {
         this.NotifyAPI = this.injectorObj.get(NotifyAPIService);
         this.route = this.injectorObj.get(ActivatedRoute);
         this.UHTrigger = this.injectorObj.get(UHTriggerService);
+        this.PageTitle = this.injectorObj.get(PageTitleService);
     }
 
     ngOnInit() {

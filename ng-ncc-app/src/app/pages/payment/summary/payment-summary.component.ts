@@ -3,14 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { CONTACT } from '../../../constants/contact.constant';
+import { PAGES } from '../../../constants/pages.constant';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { ITransaction } from '../../../interfaces/transaction';
 import { CommsOption } from '../../../classes/comms-option.class';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { NotifyAPIService } from '../../../API/NotifyAPI/notify-api.service';
 import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
-import { CONTACT } from '../../../constants/contact.constant';
 import { CallService } from '../../../services/call.service';
+import { PageTitleService } from '../../../services/page-title.service';
 
 @Component({
     selector: 'app-payment-summary',
@@ -30,9 +32,11 @@ export class PagePaymentSummaryComponent implements OnInit, OnDestroy {
     summary_cutoff: Date;
 
     constructor(private Call: CallService, private NotifyAPI: NotifyAPIService, private ManageATenancyAPI: ManageATenancyAPIService,
-        private route: ActivatedRoute) { }
+        private route: ActivatedRoute, private PageTitle: PageTitleService) { }
 
     ngOnInit() {
+        this.PageTitle.set(PAGES.RENT_SUMMARY.label);
+
         this.selected_template = null;
         this.selected_method = null;
         this.summary_cutoff = new Date();

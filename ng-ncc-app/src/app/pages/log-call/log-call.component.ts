@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PAGES } from '../../constants/pages.constant';
@@ -7,6 +7,7 @@ import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 import { CallService } from '../../services/call.service';
 import { PageLogCallNature } from '../abstract/log-call-nature';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-page-log-call',
@@ -14,12 +15,16 @@ import { PageLogCallNature } from '../abstract/log-call-nature';
     styleUrls: ['./log-call.component.css']
 })
 
-export class PageLogCallComponent extends PageLogCallNature {
+export class PageLogCallComponent extends PageLogCallNature implements OnInit {
 
     previous_calls: { [propKey: string]: any }[];
 
-    constructor(private router: Router, private Call: CallService) {
+    constructor(private router: Router, private Call: CallService, private PageTitle: PageTitleService) {
         super();
+    }
+
+    ngOnInit() {
+        this.PageTitle.set(PAGES.LOG_CALL.label);
     }
 
     /**

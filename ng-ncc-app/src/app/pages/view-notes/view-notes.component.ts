@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { PAGES } from '../../constants/pages.constant';
 import { PageHistory } from '../abstract/history';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-view-notes',
@@ -28,7 +30,7 @@ export class PageViewNotesComponent extends PageHistory implements OnInit, OnDes
     filter_reason: string;
     filter_caller: string;
 
-    constructor(private route: ActivatedRoute, private Call: CallService) {
+    constructor(private route: ActivatedRoute, private Call: CallService, private PageTitle: PageTitleService) {
         super();
     }
 
@@ -36,6 +38,8 @@ export class PageViewNotesComponent extends PageHistory implements OnInit, OnDes
      *
      */
     ngOnInit() {
+        this.PageTitle.set(PAGES.VIEW_NOTES.label);
+
         // Set up the filter.
         this.filter = {
             min_date: null,

@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PAGES } from '../../constants/pages.constant';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-playground',
@@ -34,12 +35,13 @@ export class PagePlaygroundComponent implements OnInit {
         }
     }
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private PageTitle: PageTitleService) { }
 
     /**
      *
      */
     ngOnInit() {
+        this.PageTitle.set(PAGES.PLAYGROUND.label);
         this.show = false;
     }
 
