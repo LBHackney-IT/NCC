@@ -17,6 +17,8 @@ export class PagePaymentMakeComponent implements OnInit {
 
     private _w: Window;
 
+    PageTitle: PageTitleService;
+
     account_details: IAccountDetails;
     show_confirm: boolean;
     amount: string;
@@ -43,7 +45,7 @@ export class PagePaymentMakeComponent implements OnInit {
         }
     }
 
-    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router, private PageTitle: PageTitleService) { }
+    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router, PageTitle: PageTitleService) { }
 
     ngOnInit() {
         this.PageTitle.set(PAGES.RENT_PAYMENT.label);
@@ -71,8 +73,6 @@ export class PagePaymentMakeComponent implements OnInit {
      * A callback for if the user confirms making a payment.
      */
     answeredYes() {
-        // console.log(`Confirmed payment of £${this.amount}.`);
-
         this.NCCAPI.beginPayment(
             this.Call.getCallID(),
             this.Call.getCaller().getContactID(),
@@ -85,9 +85,7 @@ export class PagePaymentMakeComponent implements OnInit {
             .pipe(take(1))
             .subscribe((url: string) => {
                 // For some reason the URL is returned as an encoded string (which makes a BIG difference).
-                // console.log('Paris payment', url, decodeURIComponent(url));
                 url = decodeURIComponent(url);
-                console.log('Open a window for URL:', url);
                 this._w = window.open(url, 'NCCPayment');
             });
     }

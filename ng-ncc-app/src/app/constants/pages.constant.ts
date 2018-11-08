@@ -13,6 +13,8 @@ export const PAGES = {
     EDIT_CONTACT_DETAILS: { route: 'contact-details', label: 'Edit Contact Details' },
     AUTHENTICATION: { route: 'auth', label: '' },
     TRANSACTION: { route: 'transaction', label: '' },
+    TRANSACTION_SUCCESS: { route: 'success', label: 'Successful Transaction' },
+    TRANSACTION_FAILED: { route: 'failed', label: 'Failed Transaction' },
     TRY_AGAIN: { route: 'try-again', label: 'Access Error' },
     PLAYGROUND: { route: 'playground', label: 'Playground' },
 };

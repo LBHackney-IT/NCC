@@ -19,6 +19,8 @@ import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-sum
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
+import { PageTransactionFailedComponent } from './pages/transaction/failed/failed.component';
+import { PageTransactionSuccessComponent } from './pages/transaction/success/success.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
@@ -72,9 +74,25 @@ export const AppRoutes: Routes = [
     },
     {
         // Handling information returned from Paris.
-        path: `${PAGES.TRANSACTION.route}/:data`,
-        component: PageTransactionComponent,
-        canActivate: [AuthGuard]
+        path: `${PAGES.TRANSACTION.route}`,
+        canActivate: [AuthGuard],
+        children: [
+            {
+                // Successful transaction page.
+                path: PAGES.TRANSACTION_SUCCESS.route,
+                component: PageTransactionSuccessComponent
+            },
+            {
+                // Failed transaction page.
+                path: PAGES.TRANSACTION_FAILED.route,
+                component: PageTransactionFailedComponent
+            },
+            {
+                // Failed transaction page.
+                path: ':data',
+                component: PageTransactionComponent
+            },
+        ]
     },
     {
         // Rent page.
