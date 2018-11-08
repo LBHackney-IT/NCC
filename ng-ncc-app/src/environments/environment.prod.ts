@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
     name: 'Live',
+    appName: 'Hackney NCC CRM',
     api: {
         hackney: 'https://api.hackney.gov.uk',
         manageATenancy: 'https://api.hackney.gov.uk/manageatenancy/v1',
