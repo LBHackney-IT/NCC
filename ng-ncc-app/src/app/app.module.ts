@@ -28,6 +28,8 @@ import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-sum
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
+import { PageTransactionFailedComponent } from './pages/transaction/failed/failed.component';
+import { PageTransactionSuccessComponent } from './pages/transaction/success/success.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
@@ -106,6 +108,8 @@ import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templ
         PagePlaygroundComponent,
         PageRentCommunicationsComponent,
         PageTransactionComponent,
+        PageTransactionFailedComponent,
+        PageTransactionSuccessComponent,
         PageTransactionHistoryComponent,
         PageTryAgainComponent,
         PageViewNotesComponent,

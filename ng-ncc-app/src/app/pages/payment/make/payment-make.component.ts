@@ -69,8 +69,6 @@ export class PagePaymentMakeComponent implements OnInit {
      * A callback for if the user confirms making a payment.
      */
     answeredYes() {
-        // console.log(`Confirmed payment of £${this.amount}.`);
-
         this.NCCAPI.beginPayment(
             this.Call.getCallID(),
             this.Call.getCaller().getContactID(),
@@ -83,9 +81,7 @@ export class PagePaymentMakeComponent implements OnInit {
             .pipe(take(1))
             .subscribe((url: string) => {
                 // For some reason the URL is returned as an encoded string (which makes a BIG difference).
-                // console.log('Paris payment', url, decodeURIComponent(url));
                 url = decodeURIComponent(url);
-                console.log('Open a window for URL:', url);
                 this._w = window.open(url, 'NCCPayment');
             });
     }
