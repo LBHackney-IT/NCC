@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
@@ -18,6 +18,9 @@ export class PagePaymentMakeComponent implements OnInit {
     private _w: Window;
 
     PageTitle: PageTitleService;
+    Call: CallService;
+    NCCAPI: NCCAPIService;
+    router: Router;
 
     account_details: IAccountDetails;
     show_confirm: boolean;
@@ -45,7 +48,12 @@ export class PagePaymentMakeComponent implements OnInit {
         }
     }
 
-    constructor(private Call: CallService, private NCCAPI: NCCAPIService, private router: Router, PageTitle: PageTitleService) { }
+    constructor(private injectorObj: Injector) {
+        this.Call = this.injectorObj.get(CallService);
+        this.NCCAPI = this.injectorObj.get(NCCAPIService);
+        this.router = this.injectorObj.get(Router);
+        this.PageTitle = this.injectorObj.get(PageTitleService);
+    }
 
     ngOnInit() {
         this.PageTitle.set(PAGES.RENT_PAYMENT.label);

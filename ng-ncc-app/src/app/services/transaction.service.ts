@@ -31,6 +31,11 @@ export class TransactionService {
     process(transaction_data: string) {
         this.clear();
         this.data = this._processData(transaction_data);
+
+        if (this.hasErrorMessage()) {
+            this.data.error = this.data.error.replace(/\+/g, ' ');
+        }
+
         this.getPaymentInteraction();
         // Note: we don't have to wait for this to complete.
 
@@ -84,6 +89,13 @@ export class TransactionService {
     wasSuccessful(): boolean {
         return 'true' === this.data.serviceprocessed;
         // 'false' evaluates to true.
+    }
+
+    /**
+     * Returns TRUE if there is an error message.
+     */
+    hasErrorMessage(): boolean {
+        return this.data.error && (this.data.error.length > 0);
     }
 
 }

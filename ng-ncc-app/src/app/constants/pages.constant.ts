@@ -15,6 +15,7 @@ export const PAGES = {
     TRANSACTION: { route: 'transaction', label: '' },
     TRANSACTION_SUCCESS: { route: 'success', label: 'Successful Transaction' },
     TRANSACTION_FAILED: { route: 'failed', label: 'Failed Transaction' },
+    TRANSACTION_ERROR: { route: 'error', label: 'Problem Making Payment' },
     TRY_AGAIN: { route: 'try-again', label: 'Access Error' },
     PLAYGROUND: { route: 'playground', label: 'Playground' },
 };
