@@ -34,9 +34,15 @@ export class PageTransactionComponent implements OnInit {
                 const data = params.get('data');
                 this.Transaction.process(data);
 
-                // Based on the outcome of the transaction, redirect to the appropriate page.
-                const transaction_state = this.Transaction.wasSuccessful() ? PAGES.TRANSACTION_SUCCESS.route :
-                    PAGES.TRANSACTION_FAILED.route;
+                let transaction_state;
+                if (this.Transaction.hasErrorMessage()) {
+                    transaction_state = PAGES.TRANSACTION_ERROR.route;
+                } else {
+                    // Based on the outcome of the transaction, redirect to the appropriate page.
+                    transaction_state = this.Transaction.wasSuccessful() ? PAGES.TRANSACTION_SUCCESS.route :
+                        PAGES.TRANSACTION_FAILED.route;
+                }
+
                 setTimeout(() => {
                     this.router.navigateByUrl(`${PAGES.TRANSACTION.route}/${transaction_state}`);
                 }, 200);
