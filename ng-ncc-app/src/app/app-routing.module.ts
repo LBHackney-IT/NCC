@@ -19,6 +19,7 @@ import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-sum
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
+import { PageTransactionErrorComponent } from './pages/transaction/error/error.component';
 import { PageTransactionFailedComponent } from './pages/transaction/failed/failed.component';
 import { PageTransactionSuccessComponent } from './pages/transaction/success/success.component';
 import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
@@ -81,6 +82,11 @@ export const AppRoutes: Routes = [
                 // Successful transaction page.
                 path: PAGES.TRANSACTION_SUCCESS.route,
                 component: PageTransactionSuccessComponent
+            },
+            {
+                // Error page.
+                path: PAGES.TRANSACTION_ERROR.route,
+                component: PageTransactionErrorComponent
             },
             {
                 // Failed transaction page.
