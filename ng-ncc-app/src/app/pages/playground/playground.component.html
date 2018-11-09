@@ -1,3 +1,4 @@
+<h2 class="govuk-heading-m">Test payment</h2>
 <div>
     <h2 class="govuk-heading-s">Test amounts for payment</h2>
     <app-value-list class="govuk-body-s" emphasise="value">
@@ -23,27 +24,31 @@
 
 </div>
 
-<hr>
+<h2 class="govuk-heading-m">Warning component</h2>
 <app-warning>This is a warning.</app-warning>
 
+<h2 class="govuk-heading-m">Dialogue component</h2>
 <app-dialogue [(show)]="show" [buttonText]="'All right then'" (closed)="handleClose()">
     <app-dialogue-title>Example title</app-dialogue-title>
     This is a dialogue.
 </app-dialogue>
-
 <button class="govuk-button" type="button" name="button" (click)="openModal()">Show dialogue...</button>
 
+<h2 class="govuk-heading-m">Comms template component</h2>
 <app-comms-templates (selected)="selectedTemplate($event)"></app-comms-templates>
 <app-comms-templates title="Custom title..." (selected)="selectedTemplate($event)"></app-comms-templates>
 <app-comms-templates title="Include sensitive templates:" includeSensitive="false" (selected)="selectedTemplate($event)"></app-comms-templates>
 
+<h2 class="govuk-heading-m">Receipt comms template component</h2>
 <app-comms-receipt-templates title="Receipt templates"></app-comms-receipt-templates>
 
+<h2 class="govuk-heading-m">Helper text component</h2>
 <p>
     Helper text demo:
     <app-helper>Some helper text here.</app-helper>
 </p>
 
+<h2 class="govuk-heading-m">Value list component</h2>
 <app-value-list>
 
     <app-value-list-label>Some label text here</app-value-list-label>
@@ -57,5 +62,23 @@
 
 </app-value-list>
 
+<h2 class="govuk-heading-m">Panel component</h2>
 <app-panel>Default panel...</app-panel>
 <app-panel boxStyle="true">Box panel...</app-panel>
+<app-panel errorStyle="true">Error panel...</app-panel>
+
+<h2 class="govuk-heading-m">"Or" component</h2>
+<app-or></app-or>
+
+<h2 class="govuk-heading-m">Tabs component</h2>
+<app-tabs>
+    <app-tab class="active">
+        <a>One</a>
+    </app-tab>
+    <app-tab>
+        <a>Two</a>
+    </app-tab>
+</app-tabs>
+
+<h2 class="govuk-heading-m">Secondary button component</h2>
+<button class="link-button">Button</button>
