@@ -20,7 +20,7 @@ export class PagePaymentMakeComponent implements OnInit {
     PageTitle: PageTitleService;
     Call: CallService;
     NCCAPI: NCCAPIService;
-    router: Router
+    router: Router;
 
     account_details: IAccountDetails;
     show_confirm: boolean;
