@@ -12,7 +12,7 @@
             </p>
         </div>
 
-        <app-panel errorStyle="true" *ngIf="_error">
+        <app-error-panel *ngIf="_error">
             <p class="govuk-heading-m govuk-!-margin-bottom-2">
                 Communications unavailable
             </p>
@@ -22,7 +22,7 @@
             <p class="govuk-heading-s govuk-!-margin-0">
                 If it persists then contact ICT.
             </p>
-        </app-panel>
+        </app-error-panel>
 
         <form (submit)="sendMessage($event)" *ngIf="!_error">
 

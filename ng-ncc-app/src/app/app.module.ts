@@ -71,6 +71,8 @@ import { WarningComponent } from './components/warning/warning.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
 import { AgentComponent } from './components/agent/agent.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
+import { ErrorPanelComponent } from './components/panel/error-panel/error-panel.component';
+import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 
 @NgModule({
     declarations: [
@@ -130,6 +132,8 @@ import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templ
         EnvNameComponent,
         AgentComponent,
         CommsReceiptTemplatesComponent,
+        ErrorPanelComponent,
+        BoxPanelComponent,
     ],
     imports: [
         BrowserModule,
