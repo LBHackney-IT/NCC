@@ -87,7 +87,7 @@ export class PagePaymentMakeComponent implements OnInit {
      * A callback for if the user confirms making a payment.
      */
     answeredYes() {
-        this.NCCAPI.getPaymentURL(this.Call, this.getNumericAmount())
+        this.NCCAPI.getPaymentURL(this.Call.getInteractionID(), this.Call.getPaymentReference(), this.getNumericAmount())
             .pipe(take(1))
             .subscribe((url: string) => {
                 // For some reason the URL is returned as an encoded string (which makes a BIG difference).
