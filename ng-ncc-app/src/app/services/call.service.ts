@@ -221,6 +221,9 @@ export class CallService {
         return null !== this.tenancy;
     }
 
+    /**
+     *
+     */
     _buildTenantsList() {
         this.tenants = this.tenancy.results.map((row) => {
             return {
@@ -230,8 +233,18 @@ export class CallService {
         });
     }
 
+    /**
+     *
+     */
     getTenants() {
         return this.tenants;
+    }
+
+    /**
+     *
+     */
+    getInteractionID(): string {
+        return this.interaction_id;
     }
 
     /**

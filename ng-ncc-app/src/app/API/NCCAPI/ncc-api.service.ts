@@ -18,6 +18,7 @@ import { NOTES } from '../../constants/notes.constant';
 import { CALL_REASON } from '../../constants/call-reason.constant';
 import { COMMS } from '../../constants/comms.constant';
 import { PAYMENT_STATUS } from '../../constants/payment-status.constant';
+import { CallService } from '../../services/call.service';
 
 @Injectable({
     providedIn: 'root'
@@ -277,31 +278,7 @@ export class NCCAPIService {
     /**
      * Begins processing a payment through Paris.
      */
-    beginPayment(call_id: string, crm_contact_id: string, tenancy_id: string, payment_reference: string, call_reason_id,
-        ticket_number: string, amount: number) {
-
-        // We have to obtain an interaction ID before redirecting to Paris.
-        // We can get one by posting an automatic note, where a payment status if given.
-        const parameters = {
-            PaymentStatus: PAYMENT_STATUS.INITIATED
-        };
-
-        return this.createAutomaticNote(
-            call_id, ticket_number, tenancy_id, call_reason_id, crm_contact_id, 'Beginning payment',
-            { PaymentStatus: PAYMENT_STATUS.INITIATED }
-        )
-            .pipe(
-                map((data: IJSONResponse) => {
-                    return this._redirectToParis(data.response.NCCInteraction.interactionId, payment_reference, amount);
-                })
-            );
-    }
-
-    /**
-     *
-     */
-    private _redirectToParis(interaction_id: string, payment_reference: string, amount: number) {
-
+    getPaymentURL(interaction_id: string, payment_reference: string, amount: number): Observable<string> {
         const return_data = [
             interaction_id,
             'sshetty', // username
@@ -321,7 +298,7 @@ export class NCCAPIService {
         };
 
         const url = `https://hackney.paris-epayments.co.uk/paymentstest/sales/launchinternet.aspx?${this._buildQueryString(parameters)}`;
-        return url;
+        return of(url);
     }
 
     /**

@@ -48,6 +48,9 @@ export class PagePaymentMakeComponent implements OnInit {
         }
     }
 
+    /**
+     *
+     */
     constructor(private injectorObj: Injector) {
         this.Call = this.injectorObj.get(CallService);
         this.NCCAPI = this.injectorObj.get(NCCAPIService);
@@ -55,6 +58,9 @@ export class PagePaymentMakeComponent implements OnInit {
         this.PageTitle = this.injectorObj.get(PageTitleService);
     }
 
+    /**
+     *
+     */
     ngOnInit() {
         this.PageTitle.set(PAGES.RENT_PAYMENT.label);
         this.Call.getAccount()
@@ -81,15 +87,7 @@ export class PagePaymentMakeComponent implements OnInit {
      * A callback for if the user confirms making a payment.
      */
     answeredYes() {
-        this.NCCAPI.beginPayment(
-            this.Call.getCallID(),
-            this.Call.getCaller().getContactID(),
-            this.Call.getTenancyReference(),
-            this.Call.getPaymentReference(),
-            this.Call.getCallNature().call_reason.id,
-            this.Call.getTicketNumber(),
-            this.getNumericAmount()
-        )
+        this.NCCAPI.getPaymentURL(this.Call, this.getNumericAmount())
             .pipe(take(1))
             .subscribe((url: string) => {
                 // For some reason the URL is returned as an encoded string (which makes a BIG difference).
