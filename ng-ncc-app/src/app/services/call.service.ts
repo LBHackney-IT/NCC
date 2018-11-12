@@ -4,7 +4,9 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 
 import { CALL_REASON } from '../constants/call-reason.constant';
 import { ICaller } from '../interfaces/caller';
+import { IJSONResponse } from '../interfaces/json-response';
 import { ILogCallSelection } from '../interfaces/log-call-selection';
+import { INCCNote } from '../interfaces/ncc-note';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
@@ -35,6 +37,7 @@ export class CallService {
     private caller: ICaller;
     private call_nature: ILogCallSelection;
     private call_id: string;
+    private interaction_id: string;
     private tenancy: IAddressSearchGroupedResult;
     private tenants: { [propKey: string]: string }[];
     private ticket_number: string;
@@ -155,7 +158,13 @@ export class CallService {
     createCallerNote() {
         if (this.call_id) {
             const name = this.caller.isAnonymous() ? 'anonymous' : this.caller.getName();
-            this.recordAutomaticNote(`Caller identified as ${name}.`);
+            this.recordAutomaticNote(`Caller identified as ${name}.`)
+                .subscribe((data: INCCNote) => {
+                    // Store the interaction ID from this note for later use (i.e. when and if making a payment.)
+                    // Making a payment via Paris requires an interaction ID, and since we're creating this note we can obtain one from it.
+                    this.interaction_id = data.interactionId;
+                    console.log('Interaction ID is', this.interaction_id);
+                });
         }
     }
 
@@ -186,7 +195,7 @@ export class CallService {
     setCallNature(selection: ILogCallSelection) {
         this.call_nature = selection;
         if (this.call_id) {
-            this.recordAutomaticNote(`Additional call reason.`);
+            this.recordAutomaticNote(`Additional call reason.`).subscribe();
         }
     }
 
@@ -212,6 +221,9 @@ export class CallService {
         return null !== this.tenancy;
     }
 
+    /**
+     *
+     */
     _buildTenantsList() {
         this.tenants = this.tenancy.results.map((row) => {
             return {
@@ -221,19 +233,33 @@ export class CallService {
         });
     }
 
+    /**
+     *
+     */
     getTenants() {
         return this.tenants;
+    }
+
+    /**
+     *
+     */
+    getInteractionID(): string {
+        return this.interaction_id;
     }
 
     /**
      * Reset the call to a new state.
      */
     reset() {
+        this.account = null;
         this.caller = null;
         this.call_nature = null;
         this.call_id = null;
-        this.ticket_number = null;
+        this.interaction_id = null;
         this.tenancy = null;
+        this.tenants = null;
+        this.ticket_number = null;
+
         console.log('Call was reset.');
     }
 
@@ -257,13 +283,16 @@ export class CallService {
 
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
-        ).pipe(take(1));
+        )
+            .pipe(take(1))
+            .pipe(map((data: IJSONResponse[]) => data[0].response.NCCInteraction));
+        // This allows us to retrieve the Observables results just once.
     }
 
     /**
      * Record an automatic note against the call.
      */
-    recordAutomaticNote(note_content: string) {
+    recordAutomaticNote(note_content: string): Observable<any> {
         note_content = this._formatNoteContent(note_content);
 
         return forkJoin(
@@ -281,7 +310,9 @@ export class CallService {
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
 
-        ).pipe(take(1)).subscribe();
+        )
+            .pipe(take(1))
+            .pipe(map((data: IJSONResponse[]) => data[0].response.NCCInteraction));
         // This allows us to retrieve the Observables results just once.
     }
 
