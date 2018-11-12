@@ -244,12 +244,19 @@ export class CallService {
         // If the call reason is "Other", prepend the note with the specfied reason text.
         note_content = this._formatNoteContent(note_content);
 
-        return this.NCCAPI.createManualNote(
-            this.call_id,
-            this.ticket_number,
-            this.call_nature.call_reason.id,
-            this.caller.getContactID(),
-            note_content
+        return forkJoin(
+
+            // Manual note...
+            this.NCCAPI.createManualNote(
+                this.call_id,
+                this.ticket_number,
+                this.call_nature.call_reason.id,
+                this.caller.getContactID(),
+                note_content
+            ),
+
+            // Action Diary note...
+            this.recordActionDiaryNote(note_content)
         ).pipe(take(1));
     }
 
