@@ -14,6 +14,8 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
     @Input() count: number;
 
     calls: ILastCall[];
+    error: boolean;
+
     private _destroyed$ = new Subject();
 
     constructor(private NCCAPI: NCCAPIService) { }
@@ -24,12 +26,14 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
     ngOnInit() {
         if (this.count) {
             this.NCCAPI.getLastCalls(this.count)
-                .pipe(
-                    takeUntil(this._destroyed$)
-                )
-                .subscribe((rows: ILastCall[]) => {
-                    this.calls = rows;
-                });
+                .pipe(takeUntil(this._destroyed$))
+                .subscribe(
+                    (rows: ILastCall[]) => {
+                        this.calls = rows;
+                    },
+                    (error) => {
+                        this.error = true;
+                    });
         }
     }
 
