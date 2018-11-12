@@ -29,7 +29,8 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
                 .pipe(takeUntil(this._destroyed$))
                 .subscribe(
                     (rows: ILastCall[]) => {
-                        this.calls = rows;
+                        this.error = true;
+                        // this.calls = rows;
                     },
                     (error) => {
                         this.error = true;
