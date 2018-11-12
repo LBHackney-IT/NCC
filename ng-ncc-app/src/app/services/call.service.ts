@@ -251,11 +251,15 @@ export class CallService {
      * Reset the call to a new state.
      */
     reset() {
+        this.account = null;
         this.caller = null;
         this.call_nature = null;
         this.call_id = null;
-        this.ticket_number = null;
+        this.interaction_id = null;
         this.tenancy = null;
+        this.tenants = null;
+        this.ticket_number = null;
+
         console.log('Call was reset.');
     }
 
