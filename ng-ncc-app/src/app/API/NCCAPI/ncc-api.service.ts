@@ -159,7 +159,7 @@ export class NCCAPIService {
                     }
 
                     // We also want the date formatted differently for sorting purposes.
-                    row.createdOnSort = date.format('YYYYMMDDhhmm');
+                    row.createdOnSort = date.format('YYYYMMDDhhmmss');
 
                     return row;
                 });
