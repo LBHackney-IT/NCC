@@ -17,7 +17,6 @@ import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver
 import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageHomeComponent } from './pages/home/home.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
 import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
@@ -98,7 +97,6 @@ import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templ
         PageAuthComponent,
         PageCommsComponent,
         PageContactDetailsComponent,
-        PageHomeComponent,
         PageIdentifyComponent,
         PageLastCallsComponent,
         PageLogAdditionalComponent,
