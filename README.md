@@ -1,6 +1,8 @@
 # NCC CRM Front End
 
 [![Known Vulnerabilities](https://snyk.io/test/github/LBHackney-IT/NCC/badge.svg?targetFile=ng-ncc-app%2Fpackage.json)](https://snyk.io/test/github/LBHackney-IT/NCC?targetFile=ng-ncc-app%2Fpackage.json)
+[![GitHub license](https://img.shields.io/github/license/LBHackney-IT/NCC.svg)](https://github.com/LBHackney-IT/NCC/blob/master/LICENSE)
+[![GitHub forks](https://img.shields.io/github/forks/LBHackney-IT/NCC.svg)](https://github.com/LBHackney-IT/NCC/network)
 
 A modern JavaScript front end for Hackney Council's Neighbourhood Contact Centre (NCC) CRM.
 
@@ -16,7 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-Install dependencies:
+Install this project's dependencies:
 
 ```
 # using npm
@@ -69,8 +71,6 @@ Front end: http://lbhwsappp01:3030
 ## Authors
 
 * **Drew Maughan** - *Front End Developer*
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
