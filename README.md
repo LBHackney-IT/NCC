@@ -3,6 +3,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/LBHackney-IT/NCC/badge.svg?targetFile=ng-ncc-app%2Fpackage.json)](https://snyk.io/test/github/LBHackney-IT/NCC?targetFile=ng-ncc-app%2Fpackage.json)
 [![GitHub license](https://img.shields.io/github/license/LBHackney-IT/NCC.svg)](https://github.com/LBHackney-IT/NCC/blob/master/LICENSE)
 [![GitHub forks](https://img.shields.io/github/forks/LBHackney-IT/NCC.svg)](https://github.com/LBHackney-IT/NCC/network)
+[![CodeFactor](https://www.codefactor.io/repository/github/lbhackney-it/ncc/badge)](https://www.codefactor.io/repository/github/lbhackney-it/ncc)
 
 A modern JavaScript front end for Hackney Council's Neighbourhood Contact Centre (NCC) CRM.
 
