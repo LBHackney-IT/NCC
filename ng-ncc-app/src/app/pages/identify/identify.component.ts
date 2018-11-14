@@ -1,6 +1,6 @@
 import { environment } from '../../../environments/environment';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -33,12 +33,11 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     selected_address: IAddressSearchGroupedResult;
 
     constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService,
-        private BackLink: BackLinkService, private PageTitle: PageTitleService) { }
+        private BackLink: BackLinkService, private PageTitle: PageTitleService, private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.PageTitle.set(PAGES.IDENTIFY.label);
 
-        this.searching = false;
         this.existing_call = false;
 
         if (this.Call.hasTenancy()) {
@@ -61,44 +60,20 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      * Performs a Citizen Index search.
      */
     performSearch(event: Event) {
-        if (this.disable_identify_caller || this.searching) {
+        if ((event && event.defaultPrevented) || this.disable_identify_caller || this.searching) {
             return;
         }
 
-        if (event && event.defaultPrevented) {
-            return;
-        }
-
-        this.results = null;
         this.selected_address = null;
-        this.searching = true;
 
-        this.router.navigateByUrl(`${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_ADDRESSES.route}`);
-        /*
-                const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
-                    .pipe(
-                        takeUntil(this._destroyed$)
-                    )
-                    .subscribe(
-                        (rows) => {
-                            this.results = rows;
-                        },
-                        (error) => {
-                            console.error(error);
-                        },
-                        () => {
-                            this.searching = false;
-                            subscription.unsubscribe();
-                        }
-                    );
-                    */
+        this.router.navigate([`./${PAGES.IDENTIFY_ADDRESSES.route}`, { postcode: this.postcode }], { relativeTo: this.route });
     }
 
     /**
      * Returns TRUE if the user can enter a search term.
      */
     canUseSearch() {
-        return !(this.disable_identify_caller || this.searching);
+        return !this.disable_identify_caller;
     }
 
     /**
