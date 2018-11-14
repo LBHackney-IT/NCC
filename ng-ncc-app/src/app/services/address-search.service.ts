@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observavle, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
+import { IAddressSearchGroupedResult } from '../interfaces/address-search-grouped-result';
 import { ICitizenIndexSearchResult } from '../interfaces/citizen-index-search-result';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AddressSearchService {
-
-    // This service is used to store information about an address search, used by a few components.
+    // This service is used to store information about an address search, and is used by the "identify" pages.
 
     private _searching: boolean;
     private _postcode: string;
     private _addresses: ICitizenIndexSearchResult[];
+    private _address: ICitizenIndexSearchResult;
     private _error: boolean;
 
     constructor(private HackneyAPI: HackneyAPIService) { }
@@ -31,40 +32,58 @@ export class AddressSearchService {
     }
 
     /**
-     *
+     * Sets the postcode to use for an address search.
      */
     setPostcode(postcode: string) {
         this._postcode = postcode;
     }
 
     /**
-     *
+     * Sets the address to use for tenant results.
+     */
+    setAddress(address: IAddressSearchGroupedResult) {
+        this._address = address;
+    }
+
+    /**
+     * Returns the address used for tenant results.
+     */
+    getAddress(): IAddressSearchGroupedResult {
+        return this._address;
+    }
+
+    /**
+     * Returns TRUE if this service is performing a search.
      */
     isSearching(): boolean {
         return this._searching;
     }
 
     /**
-     *
+     * Performs an address search based on a set postcode.
      */
-    performSearch(): Observable<void> {
-        if (this._searching) {
+    performSearch() {
+        if (this._searching || null === this._postcode) {
             return;
         }
 
         this._searching = true;
         this._addresses = null;
+
         return this.HackneyAPI.getCitizenIndexSearch(null, null, null, this._postcode)
             .pipe(finalize(() => {
+                // The finalize pipe is triggered when the Observable is completed,
+                // whether resolved or rejected. It's equivalent to finally() for Promises.
                 this._searching = false;
             }))
             .pipe(map((results) => {
+                // When the Observable is successful, we store the results in this._addresses.
                 this._addresses = results;
             }));
     }
 
     /**
-     *
+     * Returns a list of addresses matching the specified postcode.
      */
     getAddressResults(): ICitizenIndexSearchResult[] {
         return this._addresses;
