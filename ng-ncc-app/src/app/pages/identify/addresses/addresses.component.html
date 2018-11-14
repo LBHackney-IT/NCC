@@ -1,5 +1,5 @@
 <!-- A list of addresses matching the search query. -->
-<app-address-search-results [results]="results" (selected)="addressSelected($event)"></app-address-search-results>
+<app-address-search-results [results]="results" (onSelected)="addressSelected($event)"></app-address-search-results>
 
 <app-error-panel *ngIf="error">
     There was a problem with finding matching addresses.

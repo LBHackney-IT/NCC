@@ -9,7 +9,7 @@ import { IAddressSearchGroupedResult } from '../../interfaces/address-search-gro
 })
 export class AddressSearchResultsComponent implements OnChanges {
     @Input() results: ICitizenIndexSearchResult[];
-    @Output() selected = new EventEmitter<IAddressSearchGroupedResult>();
+    @Output() onSelected = new EventEmitter<IAddressSearchGroupedResult>();
 
     grouped_results: IAddressSearchGroupedResult[];
 
@@ -44,7 +44,7 @@ export class AddressSearchResultsComponent implements OnChanges {
      * Called when a result is selected from the list.
      */
     selectRow(result: IAddressSearchGroupedResult) {
-        this.selected.emit(result);
+        this.onSelected.emit(result);
     }
 
     /**

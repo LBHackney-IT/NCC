@@ -3,7 +3,9 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap, take } from 'rxjs/operators';
 
 import { HackneyAPIService } from '../../../API/HackneyAPI/hackney-api.service';
+import { AddressSearchService } from '../../../services/address-search.service';
 import { BackLinkService } from '../../../services/back-link.service';
+import { IAddressSearchGroupedResult } from '../../../interfaces/address-search-grouped-result';
 import { ICitizenIndexSearchResult } from '../../../interfaces/citizen-index-search-result';
 
 @Component({
@@ -13,6 +15,7 @@ import { ICitizenIndexSearchResult } from '../../../interfaces/citizen-index-sea
 })
 export class PageIdentifyAddressesComponent implements OnInit {
 
+    selected_address: IAddressSearchGroupedResult;
     results: ICitizenIndexSearchResult[];
     no_results: boolean;
     error: boolean;
@@ -23,6 +26,7 @@ export class PageIdentifyAddressesComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private AddressSearch: AddressSearchService,
         private BackLink: BackLinkService,
         private HackneyAPI: HackneyAPIService
     ) { }
@@ -31,25 +35,25 @@ export class PageIdentifyAddressesComponent implements OnInit {
      *
      */
     ngOnInit() {
-        this.route.paramMap.subscribe(params => {
-            const postcode = params.get('postcode');
-            console.log('postcode', postcode);
-            this.getAddressResults(params.get('postcode'));
-        });
-    }
-
-    /**
-     *
-     */
-    getAddressResults(postcode: string) {
-        this.HackneyAPI.getCitizenIndexSearch(null, null, null, postcode)
+        this.AddressSearch.performSearch()
             .pipe(take(1))
             .subscribe(
-                (rows: ICitizenIndexSearchResult[]) => { this.results = rows; },
+                () => { this.results = this.AddressSearch.getAddressResults(); },
                 (error) => {
                     console.error(error);
                     this.error = true;
                 }
             );
     }
+
+    /**
+     * Called when an address is selected from search results.
+     */
+    addressSelected(result: IAddressSearchGroupedResult) {
+        const selected_address = result;
+
+        // Navigate to the tenants list subpage.
+        this.router.navigate([`../${PAGES.IDENTIFY_TENANTS.route}`], { relativeTo: this.route });
+    }
+
 }

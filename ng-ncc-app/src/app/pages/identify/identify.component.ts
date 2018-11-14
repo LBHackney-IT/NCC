@@ -13,6 +13,7 @@ import { NonTenantCaller } from '../../classes/non-tenant-caller.class';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 import { ICaller } from '../../interfaces/caller';
 import { CallService } from '../../services/call.service';
+import { AddressSearchService } from '../../services/address-search.service';
 import { BackLinkService } from '../../services/back-link.service';
 import { PageTitleService } from '../../services/page-title.service';
 
@@ -27,16 +28,20 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
 
     disable_identify_caller: boolean = environment.disable.identifyCaller;
     existing_call: boolean;
-    searching: boolean;
-    postcode: string;
-    results: ICitizenIndexSearchResult[];
-    selected_address: IAddressSearchGroupedResult;
 
-    constructor(private router: Router, private HackneyAPI: HackneyAPIService, private Call: CallService,
-        private BackLink: BackLinkService, private PageTitle: PageTitleService, private route: ActivatedRoute) { }
+    constructor(
+        private router: Router,
+        private HackneyAPI: HackneyAPIService,
+        private Call: CallService,
+        private AddressSearch: AddressSearchService,
+        private BackLink: BackLinkService,
+        private PageTitle: PageTitleService,
+        private route: ActivatedRoute
+    ) { }
 
     ngOnInit() {
         this.PageTitle.set(PAGES.IDENTIFY.label);
+        this.AddressSearch.reset();
 
         this.existing_call = false;
 
@@ -64,16 +69,15 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.selected_address = null;
-
-        this.router.navigate([`./${PAGES.IDENTIFY_ADDRESSES.route}`, { postcode: this.postcode }], { relativeTo: this.route });
+        this.AddressSearch.setPostcode(this.postcode);
+        this.router.navigate([`./${PAGES.IDENTIFY_ADDRESSES.route}`], { relativeTo: this.route });
     }
 
     /**
      * Returns TRUE if the user can enter a search term.
      */
     canUseSearch() {
-        return !this.disable_identify_caller;
+        return !(this.disable_identify_caller /*|| this.AddressSearch.isSearching()*/);
     }
 
     /**
@@ -81,13 +85,6 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
      */
     canPerformSearch() {
         return this.canUseSearch() && !!(this.postcode);
-    }
-
-    /**
-     * Called when an address is selected from search results.
-     */
-    addressSelected(result: IAddressSearchGroupedResult) {
-        this.selected_address = result;
     }
 
     /**
