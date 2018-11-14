@@ -60,8 +60,12 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
     /**
      * Performs a Citizen Index search.
      */
-    performSearch() {
+    performSearch(event: Event) {
         if (this.disable_identify_caller || this.searching) {
+            return;
+        }
+
+        if (event && event.defaultPrevented) {
             return;
         }
 
@@ -69,22 +73,25 @@ export class PageIdentifyComponent implements OnInit, OnDestroy {
         this.selected_address = null;
         this.searching = true;
 
-        const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
-            .subscribe(
-                (rows) => {
-                    this.results = rows;
-                },
-                (error) => {
-                    console.error(error);
-                },
-                () => {
-                    this.searching = false;
-                    subscription.unsubscribe();
-                }
-            );
+        this.router.navigateByUrl(`${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_ADDRESSES.route}`);
+        /*
+                const subscription = this.HackneyAPI.getCitizenIndexSearch(null, null, null, this.postcode)
+                    .pipe(
+                        takeUntil(this._destroyed$)
+                    )
+                    .subscribe(
+                        (rows) => {
+                            this.results = rows;
+                        },
+                        (error) => {
+                            console.error(error);
+                        },
+                        () => {
+                            this.searching = false;
+                            subscription.unsubscribe();
+                        }
+                    );
+                    */
     }
 
     /**

@@ -8,14 +8,15 @@
 
             <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
             <app-panel class="govuk-!-margin-bottom-5">
-                <form action="" class="govuk-form-group govuk-!-margin-bottom-2" [class.disabled]="disable_identify_caller">
+                <form class="govuk-form-group govuk-!-margin-bottom-2"
+                      [class.disabled]="disable_identify_caller" (submit)="performSearch($event)">
                     <label class="govuk-label govuk-!-font-weight-bold" for="query">
                         Search by postcode:
                     </label>
                     <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text"
                         [(ngModel)]="postcode"
                         [disabled]="!canUseSearch()">
-                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" (click)="performSearch()" [disabled]="!canPerformSearch()">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" [disabled]="!canPerformSearch()">
                         Search
                     </button>
                 </form>
@@ -37,18 +38,9 @@
 
             <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-            <!-- A list of addresses matching the search query. -->
-            <app-address-search-results [results]="results" *ngIf="shouldShowAddresses()"
-                (selected)="addressSelected($event)"></app-address-search-results>
-        </div>
+            <router-outlet></router-outlet>
 
-        <!-- A list of tenants at the selected address. -->
-        <app-address-tenants-results [address]="selected_address" *ngIf="shouldShowTenants()"
-            [showBackButton]="!existing_call"
-            (beginEdit)="tenantToEdit($event)"
-            (selected)="tenantSelected($event)"
-            (back)="backToAddresses()">
-        </app-address-tenants-results>
+        </div>
 
     </div>
 

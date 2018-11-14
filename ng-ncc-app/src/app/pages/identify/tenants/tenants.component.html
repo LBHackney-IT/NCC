@@ -1,0 +1,7 @@
+<!-- A list of tenants at the selected address. -->
+<app-address-tenants-results [address]="selected_address" *ngIf="shouldShowTenants()"
+    [showBackButton]="!existing_call"
+    (beginEdit)="tenantToEdit($event)"
+    (selected)="tenantSelected($event)"
+    (back)="backToAddresses()">
+</app-address-tenants-results>
