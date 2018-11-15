@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap, take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { HackneyAPIService } from '../../../API/HackneyAPI/hackney-api.service';
@@ -14,7 +15,9 @@ import { ICitizenIndexSearchResult } from '../../../interfaces/citizen-index-sea
     templateUrl: './addresses.component.html',
     styleUrls: ['./addresses.component.scss']
 })
-export class PageIdentifyAddressesComponent implements OnInit {
+export class PageIdentifyAddressesComponent implements OnInit, OnDestroy {
+
+    private _destroyed$ = new Subject();
 
     results: ICitizenIndexSearchResult[];
     error: boolean;
@@ -31,17 +34,17 @@ export class PageIdentifyAddressesComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.AddressSearch.performSearch()
-            .pipe(take(1))
+        // Subscribe to changes to AddressSearch results, which will automatically update the list.
+        this.AddressSearch.getAddressResults()
             .subscribe(
-                () => {
-                    this.results = this.AddressSearch.getAddressResults();
-                },
-                (error) => {
-                    console.error(error);
-                    this.error = true;
+                (results) => {
+                    this.results = <ICitizenIndexSearchResult[]>results;
                 }
             );
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**

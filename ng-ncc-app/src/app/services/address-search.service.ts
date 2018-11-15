@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 
@@ -16,8 +16,10 @@ export class AddressSearchService {
     private _searching: boolean;
     private _postcode: string;
     private _addresses: ICitizenIndexSearchResult[];
-    private _address: ICitizenIndexSearchResult;
+    private _address: IAddressSearchGroupedResult;
     private _error: boolean;
+    private _subscription: Observable<void>;
+    private _resultsSubject = new Subject();
 
     constructor(private HackneyAPI: HackneyAPIService) { }
 
@@ -63,10 +65,6 @@ export class AddressSearchService {
      * Performs an address search based on a set postcode.
      */
     performSearch() {
-        if (this._searching || null === this._postcode) {
-            return;
-        }
-
         this._searching = true;
         this._addresses = null;
 
@@ -79,14 +77,18 @@ export class AddressSearchService {
             .pipe(map((results) => {
                 // When the Observable is successful, we store the results in this._addresses.
                 this._addresses = results;
+
+                // We also update the results subject, so that anything subscribed to the subject will be notified of updates.
+                this._resultsSubject.next(this._addresses);
             }));
     }
 
+
     /**
-     * Returns a list of addresses matching the specified postcode.
+     * Returns a Subject, which provides the search results when generated.
      */
-    getAddressResults(): ICitizenIndexSearchResult[] {
-        return this._addresses;
+    getAddressResults(): Subject {
+        return this._resultsSubject;
     }
 
 }

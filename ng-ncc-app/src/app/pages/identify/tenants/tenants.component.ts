@@ -8,6 +8,10 @@ import { BackLinkService } from '../../../services/back-link.service';
 import { CallService } from '../../../services/call.service';
 import { IAddressSearchGroupedResult } from '../../../interfaces/address-search-grouped-result';
 import { ICitizenIndexSearchResult } from '../../../interfaces/citizen-index-search-result';
+import { IdentifiedCaller } from '../../../classes/identified-caller.class';
+import { NonTenantCaller } from '../../../classes/non-tenant-caller.class';
+import { AnonymousCaller } from '../../../classes/anonymous-caller.class';
+import { ICaller } from '../../../interfaces/caller';
 
 @Component({
     selector: 'app-tenants',
