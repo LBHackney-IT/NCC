@@ -60,8 +60,9 @@ export class UHTriggerService {
     madePayment(amount: number, payment_reference: string) {
         // Only continue if there is an identified caller.
         if (this.Call.isCallerIdentified()) {
-            console.log('Recording payment:', payment_reference, amount);
-            this.Call.recordAutomaticNote(`Rent payment taken: £${amount} (ref: ${payment_reference})`);
+            this.Call.recordAutomaticNote(`Rent payment taken: £${amount} (ref: ${payment_reference})`)
+                .pipe(take(1))
+                .subscribe();
         }
     }
 
