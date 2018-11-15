@@ -37,11 +37,8 @@ export class ManageATenancyAPIService {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
                     return data.results as IAccountDetails;
-                },
-                    (error) => {
-                        console.log('Error fetching account details:', error);
-                    })
-            );
+                }
+                );
     }
 
     /**
@@ -55,11 +52,8 @@ export class ManageATenancyAPIService {
             .pipe(
                 map((data) => {
                     return data as IContactDetails;
-                },
-                    (error) => {
-                        console.log('Error fetching account details:', error);
-                    })
-            );
+                }
+                );
     }
 
     /**
@@ -75,11 +69,8 @@ export class ManageATenancyAPIService {
                     const details: ITransaction[] = Array.from(data.results);
 
                     return details;
-                },
-                    (error) => {
-                        console.log('Error fetching transactions:', error);
-                    })
-            );
+                }
+                );
     }
 
 }
