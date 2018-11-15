@@ -28,7 +28,7 @@
             <!-- The remaining balance. -->
             <div *ngIf="isCallerIdentified()">
                 <span class="govuk-!-margin-right-2">Balance after this payment</span>
-                <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ getCalculatedBalance() | currency:'GBP' }}</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ -getCalculatedBalance() | currency:'GBP' }}</span>
                 <span class="govuk-!-font-weight-bold" *ngIf="!account_details">--</span>
             </div>
 
