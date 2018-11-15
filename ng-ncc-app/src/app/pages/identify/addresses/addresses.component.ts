@@ -4,9 +4,7 @@ import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
-import { HackneyAPIService } from '../../../API/HackneyAPI/hackney-api.service';
 import { AddressSearchService } from '../../../services/address-search.service';
-import { BackLinkService } from '../../../services/back-link.service';
 import { IAddressSearchGroupedResult } from '../../../interfaces/address-search-grouped-result';
 import { ICitizenIndexSearchResult } from '../../../interfaces/citizen-index-search-result';
 
@@ -28,14 +26,13 @@ export class PageIdentifyAddressesComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private AddressSearch: AddressSearchService,
-        private BackLink: BackLinkService,
-        private HackneyAPI: HackneyAPIService
+        private AddressSearch: AddressSearchService
     ) { }
 
     ngOnInit() {
         // Subscribe to changes to AddressSearch results, which will automatically update the list.
         this.AddressSearch.getAddressResults()
+            .pipe(takeUntil(this._destroyed$))
             .subscribe(
                 (results) => {
                     this.results = <ICitizenIndexSearchResult[]>results;

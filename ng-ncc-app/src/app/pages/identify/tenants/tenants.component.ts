@@ -33,6 +33,10 @@ export class PageIdentifyTenantsComponent implements OnInit {
 
     ngOnInit() {
         this.address = this.AddressSearch.getAddress();
+
+        // The Back link should go to the addresses subpage.
+        this.BackLink.enable();
+        this.BackLink.setTarget(`${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_ADDRESSES.route}`);
     }
 
     /**

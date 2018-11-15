@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable, of } from 'rxjs';
+import { ReplaySubject, Observable, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 
@@ -19,7 +19,12 @@ export class AddressSearchService {
     private _address: IAddressSearchGroupedResult;
     private _error: boolean;
     private _subscription: Observable<void>;
-    private _resultsSubject = new Subject();
+
+    // We're using a ReplaySubject to provide address search results.
+    // ReplaySubjects will provide the last value given to it, if available,
+    // so we can return to this subpage with any search results displayed.
+    // see http://reactivex.io/documentation/subject.html
+    private _resultsSubject = new ReplaySubject();
 
     constructor(private HackneyAPI: HackneyAPIService) { }
 
@@ -85,9 +90,9 @@ export class AddressSearchService {
 
 
     /**
-     * Returns a Subject, which provides the search results when generated.
+     * Returns a ReplaySubject, which provides the search results when generated.
      */
-    getAddressResults(): Subject {
+    getAddressResults() {
         return this._resultsSubject;
     }
 
