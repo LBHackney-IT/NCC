@@ -5,8 +5,10 @@ export const environment = {
     name: 'TEST Live',
     appName: 'Hackney NCC CRM',
     api: {
-        hackney: 'https://sandboxapi.hackney.gov.uk/hackneyapi',
-        manageATenancy: 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1',
+        hackney: 'https://api.hackney.gov.uk',
+        // hackney: 'https://sandboxapi.hackney.gov.uk/hackneyapi',
+        manageATenancy: 'https://api.hackney.gov.uk/manageatenancy/v1',
+        // manageATenancy: 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1',
         ncc: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/',
         notify: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier'
     },
