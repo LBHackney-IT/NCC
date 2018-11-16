@@ -4,11 +4,11 @@ import { PAGES } from '../../constants/pages.constant';
 import { CallService } from '../../services/call.service';
 
 @Component({
-    selector: 'app-payment',
-    templateUrl: './payment.component.html',
-    styleUrls: ['./payment.component.css']
+    selector: 'app-rent',
+    templateUrl: './rent.component.html',
+    styleUrls: ['./rent.component.css']
 })
-export class PagePaymentComponent {
+export class PageRentComponent {
 
     page_defs = PAGES;
 

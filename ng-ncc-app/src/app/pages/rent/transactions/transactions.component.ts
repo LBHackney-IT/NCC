@@ -11,11 +11,11 @@ import { CallService } from '../../../services/call.service';
 import { PageTitleService } from '../../../services/page-title.service';
 
 @Component({
-    selector: 'app-transaction-history',
-    templateUrl: './transaction-history.component.html',
-    styleUrls: ['./transaction-history.component.scss']
+    selector: 'app-rent-transactions',
+    templateUrl: './transactions.component.html',
+    styleUrls: ['./transactions.component.scss']
 })
-export class PageTransactionHistoryComponent extends PageHistory implements OnInit, OnDestroy {
+export class PageRentTransactionsComponent extends PageHistory implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 

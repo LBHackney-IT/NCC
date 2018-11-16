@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 
 import { PAGES } from '../../../constants/pages.constant';
-import { PagePaymentMakeComponent } from '../../payment/make/payment-make.component';
+import { PageRentPaymentComponent } from '../../rent/payment/payment.component';
 import { PageTitleService } from '../../../services/page-title.service';
 import { TransactionService } from '../../../services/transaction.service';
 
@@ -10,7 +10,7 @@ import { TransactionService } from '../../../services/transaction.service';
     templateUrl: './failed.component.html',
     styleUrls: ['./failed.component.scss']
 })
-export class PageTransactionFailedComponent extends PagePaymentMakeComponent implements OnInit {
+export class PageTransactionFailedComponent extends PageRentPaymentComponent implements OnInit {
 
     Transaction: TransactionService;
 

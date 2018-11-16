@@ -9,7 +9,7 @@ import { DPAService } from '../../../services/dpa.service';
 import { IAccountDetails } from '../../../interfaces/account-details';
 
 @Component({
-    selector: 'app-communications',
+    selector: 'app-rent-communications',
     templateUrl: './communications.component.html',
     styleUrls: ['./communications.component.css']
 })
