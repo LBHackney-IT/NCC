@@ -29,7 +29,11 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
 
     filter_type: string;
 
-    constructor(private Call: CallService, private ManageATenancyAPI: ManageATenancyAPIService, private route: ActivatedRoute,
+    constructor(
+        private Call: CallService,
+        private ManageATenancyAPI: ManageATenancyAPIService,
+        private route: ActivatedRoute,
+        private router: Router,
         private PageTitle: PageTitleService) {
         super();
     }
@@ -76,11 +80,19 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
     }
 
     /**
-     *
+     * Clear the transaction filter.
      */
     clearFilter() {
         this.filter_type = null;
         this.filterTransactions();
+    }
+
+    /**
+     * Begin creating a statement.
+     */
+    createStatement() {
+        console.log('Create a statement.');
+        this.router.navigate([PAGES.RENT_STATEMENT.route]);
     }
 
 }

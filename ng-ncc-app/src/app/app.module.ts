@@ -73,6 +73,7 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
+import { DateFieldComponent } from './components/date-field/date-field.component';
 
 @NgModule({
     declarations: [
@@ -134,6 +135,7 @@ import { WarningComponent } from './components/warning/warning.component';
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
+        DateFieldComponent,
     ],
     imports: [
         BrowserModule,

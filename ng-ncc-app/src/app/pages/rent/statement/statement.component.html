@@ -1,3 +1,30 @@
-<p>
-  statement works!
-</p>
+<h1 class="govuk-heading-l">Statement Preview</h1>
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="date-hint" role="group">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">Dates</h1>
+        </legend>
+        <span id="date-hint" class="govuk-hint">Example 10 03 2018</span>
+
+        <div class="govuk-grid-row">
+
+            <!-- FROM date -->
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-1">From</h2>
+                <app-date-field [(date)]="from_date"></app-date-field>
+            </div>
+
+            <!-- TO date -->
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-1">Until</h2>
+                <app-date-field [(date)]="until_date"></app-date-field>
+            </div>
+
+            <div class="govuk-grid-column-one-third">
+                <button class="govuk-button govuk-!-margin-top-8" type="button" name="button">Refresh</button>
+            </div>
+
+        </div>
+    </fieldset>
+</div>
