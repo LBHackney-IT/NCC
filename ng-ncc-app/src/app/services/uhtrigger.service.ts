@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { CONTACT } from '../constants/contact.constant';
 import { COMMS } from '../constants/comms.constant';

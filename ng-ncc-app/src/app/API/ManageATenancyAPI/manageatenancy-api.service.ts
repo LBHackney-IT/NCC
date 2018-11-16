@@ -37,8 +37,8 @@ export class ManageATenancyAPIService {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
                     return data.results as IAccountDetails;
-                }
-                );
+                })
+            );
     }
 
     /**
@@ -52,8 +52,8 @@ export class ManageATenancyAPIService {
             .pipe(
                 map((data) => {
                     return data as IContactDetails;
-                }
-                );
+                })
+            );
     }
 
     /**
@@ -69,8 +69,8 @@ export class ManageATenancyAPIService {
                     const details: ITransaction[] = Array.from(data.results);
 
                     return details;
-                }
-                );
+                })
+            );
     }
 
 }
