@@ -24,13 +24,6 @@ export class UHTriggerService {
      * Called when a comms template has been sent to the caller.
      */
     sentComms(template: string, method: string, data: { [propKey: string]: string }) {
-        console.log(template, method, data);
-
-        // Only continue if there is an identified caller.
-        // if (!this.Call.isCallerIdentified()) {
-        //     return;
-        // }
-
         const call_type = this.Call.getCallNature().call_type.label;
         const call_reason = this.Call.getCallNature().call_reason.label;
         let notify_method: string;
@@ -60,8 +53,9 @@ export class UHTriggerService {
     madePayment(amount: number, payment_reference: string) {
         // Only continue if there is an identified caller.
         if (this.Call.isCallerIdentified()) {
-            console.log('Recording payment:', payment_reference, amount);
-            this.Call.recordAutomaticNote(`Rent payment taken: £${amount} (ref: ${payment_reference})`);
+            this.Call.recordAutomaticNote(`Rent payment taken: £${amount} (ref: ${payment_reference})`)
+                .pipe(take(1))
+                .subscribe();
         }
     }
 
