@@ -26,6 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private _destroyed$ = new Subject();
 
     constructor(private router: Router, private Auth: AuthService, private BackLink: BackLinkService) {
+        // This part handles the display of the route loading activity bar.
         this.router.events
             .pipe(
                 takeUntil(this._destroyed$)
@@ -57,22 +58,16 @@ export class AppComponent implements OnInit, OnDestroy {
             });
     }
 
-    /**
-     *
-     */
     ngOnInit() {
         // initAll(); // initialise GOV.UK Frontend components.
     }
 
-    /**
-     *
-     */
     ngOnDestroy() {
         this._destroyed$.next();
     }
 
     /**
-     *
+     * Returns TRUE if there is a logged in user.
      */
     loggedIn(): boolean {
         return this.Auth.isLoggedIn();

@@ -70,6 +70,8 @@ import { WarningComponent } from './components/warning/warning.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
 import { AgentComponent } from './components/agent/agent.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
+import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
+import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
 
 @NgModule({
     declarations: [
@@ -98,6 +100,8 @@ import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templ
         PageCommsComponent,
         PageContactDetailsComponent,
         PageIdentifyComponent,
+        PageIdentifyAddressesComponent,
+        PageIdentifyTenantsComponent,
         PageLastCallsComponent,
         PageLogAdditionalComponent,
         PageLogCallComponent,

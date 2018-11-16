@@ -22,6 +22,9 @@ export class AddressSearchResultsComponent implements OnChanges {
         this._organiseResults();
     }
 
+    /**
+     *
+     */
     trackByMethod(index: number, item: IAddressSearchGroupedResult): string {
         return item.id;
     }

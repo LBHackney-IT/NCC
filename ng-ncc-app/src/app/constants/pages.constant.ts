@@ -2,6 +2,8 @@ export const PAGES = {
     PREVIOUS_CALLS: { route: 'home', label: 'Home' },
     LOG_CALL: { route: 'log-call', label: 'Start New Call' },
     IDENTIFY: { route: 'identify', label: 'Caller Identification' },
+    IDENTIFY_ADDRESSES: { route: 'addresses', label: 'Caller Identification' },
+    IDENTIFY_TENANTS: { route: 'tenants', label: 'Caller Identification' },
     ADDITIONAL_REASON: { route: 'log-additional', label: 'Additional Call Reason' },
     VIEW_NOTES: { route: 'view-notes', label: 'Caller Notes' },
     COMMS: { route: 'comms', label: 'General Communications' },

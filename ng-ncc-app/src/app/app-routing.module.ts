@@ -9,6 +9,8 @@ import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
+import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
+import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
 import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
 import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
@@ -152,7 +154,17 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             call_nature: CallNatureResolver
-        }
+        },
+        children: [
+            {
+                path: PAGES.IDENTIFY_ADDRESSES.route,
+                component: PageIdentifyAddressesComponent
+            },
+            {
+                path: PAGES.IDENTIFY_TENANTS.route,
+                component: PageIdentifyTenantsComponent
+            }
+        ]
     },
     {
         // [Edit] Contact Details page.
