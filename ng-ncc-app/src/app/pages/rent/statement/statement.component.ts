@@ -1,8 +1,12 @@
 import { environment } from '../../../../environments/environment';
 import { Component, Injector, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import * as moment from 'moment';
 
+import { PAGES } from '../../../constants/pages.constant';
 import { PageCommunications } from '../../abstract/communications';
+import { BackLinkService } from '../../../services/back-link.service';
+import { CommsSelection } from '../../../classes/comms-selection.class';
 
 @Component({
     selector: 'app-rent-statement',
@@ -11,26 +15,38 @@ import { PageCommunications } from '../../abstract/communications';
 })
 export class PageRentStatementComponent extends PageCommunications implements OnInit {
 
-    from_date: string = '13/08/2017';
-    until_date: string = '15/08/2018';
+    from_date: string;
+    until_date: string;
     statement_url: SafeResourceUrl;
 
+    private BackLink: BackLinkService;
     private sanitiser: DomSanitizer;
 
     constructor(private injector: Injector) {
         super(injector);
+        this.BackLink = this.injector.get(BackLinkService);
         this.sanitiser = this.injector.get(DomSanitizer);
     }
 
     ngOnInit() {
         super.ngOnInit();
+
+        this.BackLink.enable();
+        this.BackLink.setTarget(PAGES.RENT_TRANSACTIONS.route);
+
+        // Set default dates.
+        this.until_date = moment().format('DD/MM/YYYY');
+        this.from_date = moment().subtract(30, 'days').format('DD/MM/YYYY');
+
+        // Automatically generate a statement.
+        this.refreshStatement();
     }
 
     /**
      *
      */
     getContactID(): string {
-        return '84b2db6d-7aef-e611-86a4-00505698417b';
+        return this.Call.getCaller().getContactID(); //'84b2db6d-7aef-e611-86a4-00505698417b';
     }
 
     /**
@@ -51,9 +67,21 @@ export class PageRentStatementComponent extends PageCommunications implements On
     }
 
     /**
+     * Called when valid communication method and respective details are entered.
+     */
+    onSelectCommsMethod(details: CommsSelection) {
+        this.selected_details = details;
+    }
+
+    onInvalidCommsMethod() {
+        this.selected_details = null;
+    }
+
+
+    /**
      * Attempts to send the selected message via the Notify API.
      */
-    sendMessage(event) {
+    sendStatement(event) {
         if (event && event.defaultPrevented) {
             return;
         }

@@ -152,10 +152,10 @@ export const AppRoutes: Routes = [
         // Statement page.
         path: PAGES.RENT_STATEMENT.route,
         component: PageRentStatementComponent,
-        // canActivate: [AuthGuard],
-        // resolve: {
-        //     caller: IdentifiedCallerResolver
-        // }
+        canActivate: [AuthGuard],
+        resolve: {
+            caller: IdentifiedCallerResolver
+        }
     },
     {
         // Identify page.

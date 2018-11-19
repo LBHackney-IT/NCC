@@ -22,27 +22,25 @@
             </div>
 
             <div class="govuk-grid-column-one-third">
-                <button class="govuk-button govuk-!-margin-top-8" type="button" name="button"
+                <button class="govuk-button govuk-!-margin-top-9" type="button" name="button"
                     (click)="refreshStatement()" [disabled]="!canRefresh()">Refresh</button>
             </div>
 
         </div>
     </fieldset>
 
-    <div *ngIf="statement_url">
+    <form (submit)="sendStatement($event)" *ngIf="statement_url">
 
         <!-- An IFRAME displaying the statement. -->
         <iframe [src]="statement_url" width="100%" height="500"></iframe>
 
         <!-- Select the communications method. -->
         <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
-        <div class="govuk-!-margin-top-5 govuk-!-margin-bottom-3">
+        <div class="govuk-!-margin-top-5 govuk-!-margin-bottom-5">
             <app-comms-method-select
-            [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
-            [disableSMS]="true"
-            [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
-            (selected)="onSelectCommsMethod($event)"
-            (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
+                [disableSMS]="true"
+                (selected)="onSelectCommsMethod($event)"
+                (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
         </div>
 
         <!-- Send the message to the caller. -->
@@ -50,7 +48,7 @@
             Send
         </button>
 
-    </div>
+    </form>
 
     <!-- Confirmation modal. -->
     <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
