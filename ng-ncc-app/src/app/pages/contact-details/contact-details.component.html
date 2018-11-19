@@ -1,5 +1,11 @@
+<app-panel class="govuk-!-margin-bottom-9" errorStyle="true" *ngIf="saving_error">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Unable to save new details</h2>
+    <p class="govuk-body">There was a problem saving the new details for this tenant. Click 'Add new' below and try again.</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+</app-panel>
+
 <app-panel errorStyle="true" *ngIf="error; else contactDetails">
-    <app-panel-header>Tenant details load failure</app-panel-header>
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Tenant details load failure</h2>
     <p class="govuk-body">There was a problem loading the details for this tenant. Click 'Back' above and try again.</p>
     <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
 </app-panel>
