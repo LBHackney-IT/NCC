@@ -40,13 +40,11 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        console.log('notes component', changes);
         if (changes.tenancyReference) {
             // The tenancy reference has changed, so load the notes associated with the tenancy reference.
             this._loadNotes();
         } else {
             // The filter or date settings have changed, so update what is displayed.
-            console.log('filter has changed.');
             this._filterNotes();
         }
     }
