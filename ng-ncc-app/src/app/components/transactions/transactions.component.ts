@@ -20,6 +20,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
 
     private _destroyed$ = new Subject();
 
+    error: boolean;
     _loading: boolean;
     _rows: ITransaction[];
     _filtered: ITransaction[];
@@ -72,6 +73,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     _loadTransactions() {
+        this.error = false;
         this._loading = true;
         const subscription = this.ManageATenancyAPI
             .getTransactions(this.tenancyRef)
@@ -89,7 +91,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
                     this._filterTransactions();
                 },
                 (error) => {
-                    console.error(error);
+                    this.error = true;
                 },
                 () => {
                     subscription.unsubscribe();
