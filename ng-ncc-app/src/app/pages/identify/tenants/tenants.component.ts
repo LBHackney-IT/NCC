@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { HackneyAPIService } from '../../../API/HackneyAPI/hackney-api.service';
@@ -21,6 +23,7 @@ import { ICaller } from '../../../interfaces/caller';
 export class PageIdentifyTenantsComponent implements OnInit {
 
     address: IAddressSearchGroupedResult;
+    error: boolean;
 
     constructor(
         private route: ActivatedRoute,
@@ -45,7 +48,12 @@ export class PageIdentifyTenantsComponent implements OnInit {
     tenantToEdit(caller: IdentifiedCaller) {
         this.Call.setCaller(caller);
         this.Call.setTenancy(this.address);
-        this.router.navigateByUrl(PAGES.EDIT_CONTACT_DETAILS.route);
+        this.router.navigateByUrl(PAGES.EDIT_CONTACT_DETAILS.route)
+            .catch(() => {
+                console.log('could not begin editing!');
+                caller.error = true;
+                return of([]);
+            });
     }
 
     /**

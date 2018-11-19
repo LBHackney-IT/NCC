@@ -26,6 +26,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     new_mobile: string[];
     new_email: string[];
     _saving: boolean;
+    error: boolean;
 
     details: {
         original: IContactDetails,
@@ -50,14 +51,14 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
             .pipe(
                 takeUntil(this._destroyed$)
             )
-            .subscribe((data) => {
-                console.log('Contact details:', data.details);
-                this._buildDetails(data.details);
-            });
+            .subscribe(
+                (data) => { this._buildDetails(data.details); },
+                () => { this.error = true; }
+            );
 
         // Enable the app's back link.
         this.BackLink.enable();
-        this.BackLink.setTarget(`/${PAGES.IDENTIFY.route}`);
+        this.BackLink.setTarget(`/${PAGES.IDENTIFY_TENANTS.route}`);
     }
 
     ngOnDestroy() {
