@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable, of } from 'rxjs';
-import { catchError, finalize, map, of } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 
 
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
@@ -90,10 +90,9 @@ export class AddressSearchService {
                 }),
                 catchError((err, caught) => {
                     // If an error (e.g. server error) occurred.
-                    console.error(err);
                     this._error = true;
-                    this._resultsSubject.error();
-
+                    this._resultsSubject.next(null);
+                    // We don't want to use this._resultsSubject.error() as it will kill the stream.
                     return of([]);
                 })
             );
