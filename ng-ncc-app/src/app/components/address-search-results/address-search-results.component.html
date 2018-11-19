@@ -9,4 +9,9 @@
 </div>
 
 <!-- No results. -->
-<app-no-results *ngIf="hasNoResults()"></app-no-results>
+<app-error-panel *ngIf="hasNoResults()">
+    <app-panel-heading>Postcode not found</app-panel-heading>
+    <p class="govuk-body govuk-!-margin-bottom-0">
+        There are no addresses for this postcode. Make sure the postcode is correct and try again.
+    </p>
+</app-error-panel>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable, of } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { catchError, finalize, map, of } from 'rxjs/operators';
 
 
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
@@ -72,6 +72,7 @@ export class AddressSearchService {
     performSearch() {
         this._searching = true;
         this._addresses = null;
+        this._error = false;
 
         return this.HackneyAPI.getCitizenIndexSearch(null, null, null, this._postcode)
             .pipe(finalize(() => {
@@ -79,13 +80,23 @@ export class AddressSearchService {
                 // whether resolved or rejected. It's equivalent to finally() for Promises.
                 this._searching = false;
             }))
-            .pipe(map((results) => {
-                // When the Observable is successful, we store the results in this._addresses.
-                this._addresses = results;
+            .pipe(
+                map(results => {
+                    // When the Observable is successful, we store the results in this._addresses.
+                    this._addresses = results;
 
-                // We also update the results subject, so that anything subscribed to the subject will be notified of updates.
-                this._resultsSubject.next(this._addresses);
-            }));
+                    // We also update the results subject, so that anything subscribed to the subject will be notified of updates.
+                    this._resultsSubject.next(this._addresses);
+                }),
+                catchError((err, caught) => {
+                    // If an error (e.g. server error) occurred.
+                    console.error(err);
+                    this._error = true;
+                    this._resultsSubject.error();
+
+                    return of([]);
+                })
+            );
     }
 
 
@@ -94,6 +105,10 @@ export class AddressSearchService {
      */
     getAddressResults() {
         return this._resultsSubject;
+    }
+
+    hasError(): boolean {
+        return this._error;
     }
 
 }
