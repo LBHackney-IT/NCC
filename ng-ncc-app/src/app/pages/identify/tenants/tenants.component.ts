@@ -50,7 +50,6 @@ export class PageIdentifyTenantsComponent implements OnInit {
         this.Call.setTenancy(this.address);
         this.router.navigateByUrl(PAGES.EDIT_CONTACT_DETAILS.route)
             .catch(() => {
-                console.log('could not begin editing!');
                 caller.error = true;
                 return of([]);
             });
