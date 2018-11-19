@@ -16,6 +16,7 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
 
     calls: ILastCall[];
     today: any;
+    error: boolean;
 
     private _destroyed$ = new Subject();
 
@@ -31,9 +32,10 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
                 .pipe(
                     takeUntil(this._destroyed$)
                 )
-                .subscribe((rows: ILastCall[]) => {
-                    this.calls = rows;
-                });
+                .subscribe(
+                    (rows: ILastCall[]) => { this.calls = rows; },
+                    () => { this.error = true; }
+                );
         }
     }
 

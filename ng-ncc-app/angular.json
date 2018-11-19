@@ -25,7 +25,6 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": [
-                            "web.config",
                             "src/favicon.ico",
                             "src/error.html",
                             "src/payment.html",
