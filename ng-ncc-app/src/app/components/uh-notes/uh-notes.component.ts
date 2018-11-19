@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
@@ -22,6 +22,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
 
     private _destroyed$ = new Subject();
 
+    error: boolean;
     _loading: boolean;
     _rows: INCCUHNote[];
     _filtered: INCCUHNote[];
@@ -74,20 +75,16 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
 
         this._loading = true;
         this.NCCAPI.getDiaryAndNotes(this.tenancyReference)
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
+            .pipe(takeUntil(this._destroyed$))
+            .pipe(finalize(() => {
+                this._loading = false;
+            }))
             .subscribe(
                 (rows) => {
                     this._rows = rows;
                     this._filterNotes();
                 },
-                (error) => {
-                    console.error(error);
-                },
-                () => {
-                    this._loading = false;
-                }
+                () => { this.error = true; }
             );
     }
 
