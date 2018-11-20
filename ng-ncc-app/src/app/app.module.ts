@@ -73,6 +73,7 @@ import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templ
 import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
 import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
 import { HeadingComponent } from './components/panel/heading/heading.component';
+import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 
 @NgModule({
     declarations: [
@@ -97,6 +98,7 @@ import { HeadingComponent } from './components/panel/heading/heading.component';
         NoteFormComponent,
         NotifyTemplatePreviewComponent,
         OrComponent,
+        PageAddNotesComponent,
         PageAuthComponent,
         PageCommsComponent,
         PageContactDetailsComponent,
