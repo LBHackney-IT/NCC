@@ -8,6 +8,7 @@ import { CALL_REASON } from '../../constants/call-reason.constant';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { CallRevisionService } from '../../services/call-revision.service';
 import { PageHistory } from '../abstract/history';
+import { BackLinkService } from '../../services/back-link.service';
 import { PageTitleService } from '../../services/page-title.service';
 import { ILastCall } from '../../interfaces/last-call';
 
@@ -27,11 +28,14 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
 
     constructor(
         private router: Router,
+        private BackLink: BackLinkService,
         private NCCAPI: NCCAPIService,
         private CallRevision: CallRevisionService,
         private PageTitle: PageTitleService
     ) {
         super();
+
+        // Make sure we have a previous call, otherwise go to the "home" page.
         this.previous_call = this.CallRevision.getPreviousCall();
         if (!this.previous_call) {
             this.router.navigate([PAGES.PREVIOUS_CALLS.route]);
@@ -39,8 +43,11 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
     }
 
     ngOnInit() {
-        // Make sure we have a previous call, otherwise go to the "home" page.
         this.PageTitle.set(PAGES.VIEW_NOTES.label);
+
+        // Enable the back link and have it go to the "home" page.
+        this.BackLink.enable();
+        this.BackLink.setTarget(PAGES.PREVIOUS_CALLS.route);
     }
 
     /**
