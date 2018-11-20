@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,6 +13,7 @@ import * as moment from 'moment';
 })
 export class LastCallsListComponent implements OnInit, OnDestroy {
     @Input() count: number;
+    @Output() viewNote = new EventEmitter<ILastCall>();
 
     calls: ILastCall[];
     today: any;
@@ -51,6 +52,14 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
      */
     trackByIndex(index: number, item: {}): number {
         return index;
+    }
+
+    /**
+     * Called when the "view" link of a note is selected.
+     */
+    beginAddNotes(row: ILastCall) {
+        this.viewNote.emit(row);
+        return false;
     }
 
 }

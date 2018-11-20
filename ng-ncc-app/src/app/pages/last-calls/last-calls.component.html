@@ -4,4 +4,4 @@
     When you have a new incoming call select 'Start New Call' in the sidebar.
 </p>
 
-<app-last-calls-list [count]="call_count"></app-last-calls-list>
+<app-last-calls-list [count]="call_count" (viewNote)="beginAddNotes($event)"></app-last-calls-list>
