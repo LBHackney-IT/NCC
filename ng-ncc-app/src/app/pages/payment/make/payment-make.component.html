@@ -12,8 +12,7 @@
             <!-- Tenancy reference number. -->
             <div>
                 <span class="govuk-!-font-weight-bold govuk-!-margin-right-2">Tenancy ref no.</span>
-                <a href="" *ngIf="account_details">{{ account_details.tagReferenceNumber }}</a>
-                <span *ngIf="!account_details">--</span>
+                {{ account_details ? account_details.tagReferenceNumber : '--' }}
             </div>
 
             <!-- The amount to pay. -->
