@@ -15,6 +15,7 @@ import { NOTES } from '../../constants/notes.constant';
 })
 export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     @Input() tenancyReference: string;
+    @Input() refresh: string; // used to reload the list of notes without changing the tenancy reference.
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
@@ -40,7 +41,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        if (changes.tenancyReference) {
+        if (changes.tenancyReference || changes.refresh) {
             // The tenancy reference has changed, so load the notes associated with the tenancy reference.
             this._loadNotes();
         } else {

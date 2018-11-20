@@ -3,8 +3,24 @@
 
         <h1 class="govuk-heading-l">Add notes to call</h1>
 
+        <app-panel>
+            <form (submit)="saveNote($event)">
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="more-detail">
+                        Add a new note:
+                    </label>
+                    <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="3"
+                        [disabled]="saving" [(ngModel)]="note"></textarea>
+                </div>
+
+                <button class="govuk-button govuk-!-margin-bottom-1" type="submit" name="button" [disabled]="!canSaveNote()">Save</button>
+
+            </form>
+        </app-panel>
+
         <!-- A list of notes. -->
-        <app-uh-notes [tenancyReference]="getTenancyReference()"></app-uh-notes>
+        <app-uh-notes [tenancyReference]="getTenancyReference()" [refresh]="refresh"></app-uh-notes>
 
     </div>
 </div>
