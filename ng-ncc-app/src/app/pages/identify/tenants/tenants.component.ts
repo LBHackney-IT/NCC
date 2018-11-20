@@ -56,14 +56,6 @@ export class PageIdentifyTenantsComponent implements OnInit {
     }
 
     /**
-     * Called if the user hits the Anonymous caller button.
-     */
-    anonymousSelected() {
-        this.Call.setCaller(new AnonymousCaller);
-        this.nextStep();
-    }
-
-    /**
      * Called when a tenant is selected from address results.
      */
     tenantSelected(caller: ICaller) {

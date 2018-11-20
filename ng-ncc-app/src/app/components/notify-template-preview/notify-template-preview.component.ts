@@ -18,6 +18,7 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
 
     private _destroyed$ = new Subject();
 
+    error: boolean;
     loading: boolean;
     placeholders: string[];
     preview: INotifyAPITemplate;
@@ -77,16 +78,20 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDest
     updatePreview() {
         if (!this.loading) {
             this.loading = true;
+            this.error = false;
             this.NotifyAPI.getTemplatePreview(this.settings.template_id, this.settings.version)
                 .pipe(
                     takeUntil(this._destroyed$)
                 )
-                .subscribe(preview => {
-                    this.preview = preview;
-                    // this.settings.parameters = preview.parameters;
-                    this.loading = false;
-                    this.getPlaceholders();
-                });
+                .subscribe(
+                    preview => {
+                        this.preview = preview;
+                        // this.settings.parameters = preview.parameters;
+                        this.loading = false;
+                        this.getPlaceholders();
+                    },
+                    () => { this.error = true; }
+                );
         }
     }
 
