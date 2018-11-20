@@ -72,6 +72,7 @@ import { AgentComponent } from './components/agent/agent.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
 import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
+import { HeadingComponent } from './components/panel/heading/heading.component';
 
 @NgModule({
     declarations: [
@@ -132,6 +133,7 @@ import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.c
         EnvNameComponent,
         AgentComponent,
         CommsReceiptTemplatesComponent,
+        HeadingComponent,
     ],
     imports: [
         BrowserModule,

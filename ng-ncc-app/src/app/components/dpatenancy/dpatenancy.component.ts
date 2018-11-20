@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { catchError, takeUntil } from 'rxjs/operators';
 
 import { DPAService } from '../../services/dpa.service';
 
@@ -13,6 +13,7 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     @Input() crmContactID: string;
 
     private _destroyed$ = new Subject();
+    error: boolean;
 
     constructor(private DPA: DPAService) { }
 
@@ -22,7 +23,11 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.DPA.buildAnswers(this.crmContactID)
             .pipe(
-                takeUntil(this._destroyed$)
+                takeUntil(this._destroyed$),
+                catchError((err, caught) => {
+                    this.error = true;
+                    return of([]);
+                })
             )
             .subscribe();
     }
