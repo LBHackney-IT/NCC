@@ -22,6 +22,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
     OTHER = new LogCallReason(CALL_REASON.OTHER, 'Other');
     call_types: LogCallType[];
     call_reasons: Array<any>;
+    error: boolean;
     selected: ILogCallSelection; // the selected call type and reason.
 
     constructor(private HackneyAPI: HackneyAPIService, private cdRef: ChangeDetectorRef) { }
@@ -44,9 +45,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
                     this.call_types = data[0];
                     this.call_reasons = data[1];
                 },
-                (error) => {
-                    console.log('Error fetching call types and reasons:', error);
-                }
+                () => { this.error = true; }
             );
     }
 
