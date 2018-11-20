@@ -80,8 +80,11 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
             .pipe(finalize(() => { this.saving = false; }))
             .subscribe(
                 () => {
-                    const now = new Date();
                     this.note = null;
+
+                    // Update the list of notes.
+                    // It doesn't matter what we set refresh to, as long as it has a different value than before.
+                    const now = new Date();
                     this.refresh = now.toDateString();
                 },
                 () => { this.error = true; },
