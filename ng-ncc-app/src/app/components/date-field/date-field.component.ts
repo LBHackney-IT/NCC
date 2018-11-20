@@ -9,7 +9,7 @@ import * as moment from 'moment';
 })
 export class DateFieldComponent implements OnChanges, OnInit {
     @Input() date: string;
-    @Input() format: string = 'DD/MM/YYYY';
+    @Input() format = 'DD/MM/YYYY';
     @Output() dateChange = new EventEmitter<string>();
 
     day: number;
@@ -66,7 +66,7 @@ export class DateFieldComponent implements OnChanges, OnInit {
         date.year(this.year);
 
         if (date.isValid()) {
-            console.log('date changed', date.format(this.format));
+            // console.log('date changed', date.format(this.format));
             this.dateChange.emit(date.format(this.format));
         }
     }

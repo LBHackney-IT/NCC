@@ -46,7 +46,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
      *
      */
     getContactID(): string {
-        return this.Call.getCaller().getContactID(); //'84b2db6d-7aef-e611-86a4-00505698417b';
+        return this.Call.getCaller().getContactID();
     }
 
     /**
@@ -61,7 +61,8 @@ export class PageRentStatementComponent extends PageCommunications implements On
      */
     refreshStatement() {
         if (this.canRefresh()) {
-            const url = `${environment.api.statement}?contactid=${this.getContactID()}&startdate=${this.from_date}&enddate=${this.until_date}`;
+            const url = `${environment.api.statement}?contactid=${this.getContactID()}` +
+                `&startdate=${this.from_date}&enddate=${this.until_date}`;
             this.statement_url = this.sanitiser.bypassSecurityTrustResourceUrl(url);
         }
     }
@@ -86,7 +87,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
             return;
         }
 
-        console.log('Send the statement!');
+        // console.log('Send the statement!');
     }
 
 }

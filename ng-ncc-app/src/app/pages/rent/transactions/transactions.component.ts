@@ -91,7 +91,6 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
      * Begin creating a statement.
      */
     createStatement() {
-        console.log('Create a statement.');
         this.router.navigate([PAGES.RENT_STATEMENT.route]);
     }
 

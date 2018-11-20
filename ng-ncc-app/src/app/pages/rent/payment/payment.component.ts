@@ -100,7 +100,7 @@ export class PageRentPaymentComponent implements OnInit {
      * A callback for if the user cancels making a payment.
      */
     answeredNo() {
-        console.log('Cancelled payment.');
+        // console.log('Cancelled payment.');
     }
 
     /**

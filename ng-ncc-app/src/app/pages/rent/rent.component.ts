@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs'
-import { take, catchError } from 'rxjs/operators'
+import { of } from 'rxjs';
+import { take, catchError } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { CallService } from '../../services/call.service';

@@ -22,6 +22,6 @@ export class PageTransactionFailedComponent extends PageRentPaymentComponent imp
     ngOnInit() {
         super.ngOnInit();
         this.PageTitle.set(PAGES.TRANSACTION_FAILED.label);
-        console.log(this.Transaction.data ? this.Transaction.data.error : 'no transaction data.');
+        // console.log(this.Transaction.data ? this.Transaction.data.error : 'no transaction data.');
     }
 }
