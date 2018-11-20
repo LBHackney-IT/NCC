@@ -17,4 +17,8 @@ export class CallRevisionService {
         this._call = call;
     }
 
+    getPreviousCall(): ILastCall {
+        return this._call;
+    }
+
 }
