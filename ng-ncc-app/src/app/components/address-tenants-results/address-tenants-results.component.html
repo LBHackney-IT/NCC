@@ -84,6 +84,12 @@
                 <button class="link-button govuk-!-margin-bottom-3" type="button" name="button" (click)="editContactDetails(row)">
                     Edit tenant details
                 </button>
+
+                <app-panel errorStyle="true" *ngIf="row.error">
+                    <app-panel-header>Tenant details load failure</app-panel-header>
+                    <p class="govuk-body">There was a problem loading the details for this tenant. Click 'Back' above and try again.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+                </app-panel>
             </div>
         </div>
 
