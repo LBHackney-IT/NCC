@@ -73,6 +73,12 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
+import { EnvNameComponent } from './components/env-name/env-name.component';
+import { AgentComponent } from './components/agent/agent.component';
+import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
+import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
+import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
+import { HeadingComponent } from './components/panel/heading/heading.component';
 import { DateFieldComponent } from './components/date-field/date-field.component';
 
 @NgModule({
@@ -135,6 +141,10 @@ import { DateFieldComponent } from './components/date-field/date-field.component
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
+        EnvNameComponent,
+        AgentComponent,
+        CommsReceiptTemplatesComponent,
+        HeadingComponent,
         DateFieldComponent,
     ],
     imports: [

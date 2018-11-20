@@ -56,7 +56,7 @@
                     <!-- Limit displayed transactions to the specified dates. -->
                     <div class="govuk-form-group">
                         <label class="govuk-label" for="period">
-                            Show transactions for:
+                            Show notes for:
                         </label>
                         <select class="govuk-select govuk-input--width-20" id="period" name="period"
                             [(ngModel)]="period" (ngModelChange)="filterByDate()">
@@ -73,5 +73,6 @@
             [filter]="filter.manual"
             [minDate]="filter.min_date"
             [maxDate]="filter.max_date"></app-uh-notes>
+
     </div>
 </div>

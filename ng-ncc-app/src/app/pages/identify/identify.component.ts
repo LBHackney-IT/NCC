@@ -12,6 +12,7 @@ import { CallService } from '../../services/call.service';
 import { AddressSearchService } from '../../services/address-search.service';
 import { BackLinkService } from '../../services/back-link.service';
 import { PageTitleService } from '../../services/page-title.service';
+import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 
 @Component({
     selector: 'app-page-identify',
@@ -86,6 +87,27 @@ export class PageIdentifyComponent implements OnInit {
      */
     canPerformSearch() {
         return this.canUseSearch() && !!(this.postcode);
+    }
+
+    /**
+     * Called if the user hits the Anonymous caller button.
+     */
+    anonymousSelected() {
+        this.Call.setCaller(new AnonymousCaller);
+        this.nextStep();
+    }
+
+    /**
+     * Navigatw to the next step, having selected a tenant (or an anonymous caller).
+     */
+    nextStep() {
+        if (this.Call.hasCaller()) {
+            // If caller is identified the ‘continue' button should take you to ’Caller Notes'.
+            // If caller is anonymous the ‘caller is anonymous’ button should take you to ‘General Communications’.
+            // Decided in isolation.
+            // TODO determine which page (comms or payment) to go to, based on the call type and reason.
+            this.router.navigateByUrl(this.Call.isCallerIdentified() ? PAGES.VIEW_NOTES.route : PAGES.COMMS.route);
+        }
     }
 
 }

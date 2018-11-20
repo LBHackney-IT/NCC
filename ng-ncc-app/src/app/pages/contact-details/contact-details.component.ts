@@ -26,6 +26,8 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     new_mobile: string[];
     new_email: string[];
     _saving: boolean;
+    error: boolean;
+    saving_error: boolean;
 
     details: {
         original: IContactDetails,
@@ -50,14 +52,14 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
             .pipe(
                 takeUntil(this._destroyed$)
             )
-            .subscribe((data) => {
-                console.log('Contact details:', data.details);
-                this._buildDetails(data.details);
-            });
+            .subscribe(
+                (data) => { this._buildDetails(data.details); },
+                () => { this.error = true; }
+            );
 
         // Enable the app's back link.
         this.BackLink.enable();
-        this.BackLink.setTarget(`/${PAGES.IDENTIFY.route}`);
+        this.BackLink.setTarget(`/${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_TENANTS.route}`);
     }
 
     ngOnDestroy() {
@@ -183,14 +185,8 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
 
         new_details.sanitise();
 
-        console.log('Telephone number saved as:', new_details.telephone);
-        console.log('Mobile numbers saved as:', new_details.mobile);
-        console.log('Email addresses saved as:', new_details.email);
-        console.log('Default telephone number is:', new_details.default.telephone);
-        console.log('Default mobile number is:', new_details.default.mobile);
-        console.log('Default email address is:', new_details.default.email);
-
         this._saving = true;
+        this.saving_error = false;
 
         const subscription = this.NCCAPI.saveContactDetails(caller.getContactID(), new_details)
             .subscribe(
@@ -200,7 +196,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
                     this.new_mobile = [];
                     this.new_email = [];
                 },
-                (error) => { console.log(error); },
+                () => { this.saving_error = true; },
                 () => {
                     subscription.unsubscribe();
                     this._saving = false;

@@ -35,7 +35,17 @@ export class PageIdentifyAddressesComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._destroyed$))
             .subscribe(
                 (results) => {
-                    this.results = <ICitizenIndexSearchResult[]>results;
+                    if (null === results) {
+                        this.error = true;
+                        this.results = null;
+                    } else {
+                        this.error = false;
+                        this.results = <ICitizenIndexSearchResult[]>results;
+                    }
+                },
+                () => {
+                    this.error = true;
+                    this.results = null;
                 }
             );
     }
