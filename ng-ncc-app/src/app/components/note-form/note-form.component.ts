@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
@@ -23,6 +23,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     comment: string;
     show: boolean;          // whether the note component is visible on the page.
     saving: boolean;        // set to TRUE when saving a note.
+    error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
 
     constructor(private inj: Injector, private router: Router, private Call: CallService) {
@@ -140,20 +141,16 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      */
     saveNote() {
         if (this.canSaveNote()) {
+            this.error = false;
             this.saving = true;
             const subscription = this.Call.recordManualNote(this.comment)
+                .pipe(take(1))
+                .pipe(finalize(() => {
+                    this.saving = false;
+                }))
                 .subscribe(
-                    () => {
-                        console.log('Added a note.');
-                        this._resetComment();
-                    },
-                    (error) => {
-                        console.log(error);
-                    },
-                    () => {
-                        this.saving = false;
-                        subscription.unsubscribe();
-                    }
+                    () => { this._resetComment(); },
+                    () => { this.error = true; }
                 );
         }
     }
