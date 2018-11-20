@@ -54,6 +54,14 @@
 
             </div>
 
+            <app-panel class="govuk-!-margin-bottom-5" errorStyle="true" *ngIf="error">
+                <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Failed to save</h2>
+                <p class="govuk-body">
+                    There was a problem adding a note to this call. Please try again.
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+            </app-panel>
+
         </form>
     </div>
 </div>
