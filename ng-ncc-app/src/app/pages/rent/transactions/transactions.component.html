@@ -39,8 +39,12 @@
 
 </div>
 
+<!-- Create a statement. -->
+<button class="govuk-button" type="button" name="button" (click)="createStatement()">
+    Create 30 day statement
+</button>
 
-<!-- ITransaction history. -->
+<!-- Transaction history. -->
 <app-transactions *ngIf="account_details"
     [isTall]="true"
     [filter]="filter.manual"

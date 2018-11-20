@@ -15,11 +15,11 @@ import { CallService } from '../../../services/call.service';
 import { PageTitleService } from '../../../services/page-title.service';
 
 @Component({
-    selector: 'app-payment-summary',
-    templateUrl: './payment-summary.component.html',
-    styleUrls: ['./payment-summary.component.scss']
+    selector: 'app-rent-summary',
+    templateUrl: './summary.component.html',
+    styleUrls: ['./summary.component.scss']
 })
-export class PagePaymentSummaryComponent implements OnInit, OnDestroy {
+export class PageRentSummaryComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 

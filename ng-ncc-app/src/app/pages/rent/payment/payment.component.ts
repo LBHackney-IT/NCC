@@ -9,11 +9,11 @@ import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
 import { PageTitleService } from '../../../services/page-title.service';
 
 @Component({
-    selector: 'app-payment-make',
-    templateUrl: './payment-make.component.html',
-    styleUrls: ['./payment-make.component.scss']
+    selector: 'app-rent-payment',
+    templateUrl: './payment.component.html',
+    styleUrls: ['./payment.component.scss']
 })
-export class PagePaymentMakeComponent implements OnInit {
+export class PageRentPaymentComponent implements OnInit {
 
     private _w: Window;
 
@@ -100,7 +100,7 @@ export class PagePaymentMakeComponent implements OnInit {
      * A callback for if the user cancels making a payment.
      */
     answeredNo() {
-        console.log('Cancelled payment.');
+        // console.log('Cancelled payment.');
     }
 
     /**
