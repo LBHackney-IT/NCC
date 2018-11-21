@@ -6,6 +6,7 @@ import { map, take } from 'rxjs/operators';
 import { Observable, forkJoin, of, from } from 'rxjs';
 
 import { INotifyAPIJSONResult } from '../../interfaces/notify-api-json-result';
+import { INotifyStatementParameters } from '../../interfaces/notify-statement-parameters';
 import { CommsOption } from '../../classes/comms-option.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
 import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
@@ -101,6 +102,23 @@ export class NotifyAPIService {
         return this.http
             .post(`${this._url}/SendSMS?MobileNumber=${mobile}&TemplateId=${template_id}&TemplateData=${template_data}`, {});
     }
+
+    /**
+     * Send a statement via email through GOV.UK Notify.
+     */
+    sendEmailStatement(parameters: INotifyStatementParameters) {
+        const template_data = JSON.stringify(parameters.TemplateData);
+
+        return this.http
+            .post(`${this._url}/SendEmailPdfStatements` +
+                `?EmailTo=${parameters.EmailTo}` +
+                `&TemplateId=${parameters.TemplateId}` +
+                `&ContactId=${parameters.ContactId}` +
+                `&StartDate=${parameters.StartDate}` +
+                `&EndDate=${parameters.EndDate}` +
+                `&TemplateData=${template_data}`, {});
+    }
+
 
     /**
      * Organise the templates obtained from GOV.UK Notify into a grouped list.
