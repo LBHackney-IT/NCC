@@ -160,7 +160,7 @@ export class NCCAPIService {
                     }
 
                     // We also want the date formatted differently for sorting purposes.
-                    row.createdOnSort = date.format('YYYYMMDDhhmmss');
+                    row.createdOnSort = date.format('YYYYMMDDHHmmss');
 
                     return row;
                 });
@@ -212,8 +212,6 @@ export class NCCAPIService {
      *
      */
     authenticate(code: string): Observable<IAuthentication> {
-        console.log('authenticate attempt with code:', code);
-
         return this.http
             .get(`${this._url}SSO/Authenticate?userdata=${encodeURIComponent(code)}`, {})
             .pipe(map((json: IJSONResponse) => {
