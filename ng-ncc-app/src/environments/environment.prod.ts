@@ -17,5 +17,8 @@ export const environment = {
         identifyCaller: true,
         additionalCallReason: true
     },
-    previousCallCount: 10
+    previousCallCount: 10,
+    notifyTemplate: {
+        statement: 'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
+    }
 };

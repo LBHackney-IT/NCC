@@ -53,10 +53,12 @@ import { ContentAreaComponent } from './components/content-area/content-area.com
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
 import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
+import { DateFieldComponent } from './components/date-field/date-field.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
+import { HeadingComponent } from './components/panel/heading/heading.component';
 import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
@@ -73,13 +75,6 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
-import { EnvNameComponent } from './components/env-name/env-name.component';
-import { AgentComponent } from './components/agent/agent.component';
-import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
-import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
-import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
-import { HeadingComponent } from './components/panel/heading/heading.component';
-import { DateFieldComponent } from './components/date-field/date-field.component';
 
 @NgModule({
     declarations: [

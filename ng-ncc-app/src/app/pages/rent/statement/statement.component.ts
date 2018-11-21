@@ -1,12 +1,17 @@
 import { environment } from '../../../../environments/environment';
 import { Component, Injector, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { finalize, take } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { PAGES } from '../../../constants/pages.constant';
+import { CONTACT } from '../../../constants/contact.constant';
 import { PageCommunications } from '../../abstract/communications';
 import { BackLinkService } from '../../../services/back-link.service';
 import { CommsSelection } from '../../../classes/comms-selection.class';
+import { IAccountDetails } from '../../../interfaces/account-details';
+import { INotifyAPIJSONResult } from '../../../interfaces/notify-api-json-result';
+import { INotifyStatementParameters } from '../../../interfaces/notify-statement-parameters';
 
 @Component({
     selector: 'app-rent-statement',
@@ -15,9 +20,11 @@ import { CommsSelection } from '../../../classes/comms-selection.class';
 })
 export class PageRentStatementComponent extends PageCommunications implements OnInit {
 
+    account: IAccountDetails;
     from_date: string;
     until_date: string;
     statement_url: SafeResourceUrl;
+    sending: boolean;
 
     private BackLink: BackLinkService;
     private sanitiser: DomSanitizer;
@@ -37,6 +44,12 @@ export class PageRentStatementComponent extends PageCommunications implements On
         // Set default dates.
         this.until_date = moment().format('DD/MM/YYYY');
         this.from_date = moment().subtract(30, 'days').format('DD/MM/YYYY');
+
+        // Obtain account details.
+        this.Call.getAccount()
+            .pipe(take(1))
+            .subscribe((account) => { this.account = account; });
+
 
         // Automatically generate a statement.
         this.refreshStatement();
@@ -74,6 +87,9 @@ export class PageRentStatementComponent extends PageCommunications implements On
         this.selected_details = details;
     }
 
+    /**
+     *
+     */
     onInvalidCommsMethod() {
         this.selected_details = null;
     }
@@ -87,7 +103,40 @@ export class PageRentStatementComponent extends PageCommunications implements On
             return;
         }
 
-        // console.log('Send the statement!');
+        switch (this.selected_details.method) {
+            case CONTACT.METHOD_EMAIL:
+
+                // Build a set of parameters for sending the statement.
+                const parameters = {
+                    EmailTo: this.selected_details.getDetail(),
+                    ContactId: this.getContactID(),
+                    StartDate: this.from_date,
+                    EndDate: this.until_date,
+                    TemplateId: environment.notifyTemplate.statement,
+                    TemplateData: {
+                        'rent amount': this.account.rent,
+                        'rent balance': this.account.currentBalance
+                    }
+                } as INotifyStatementParameters;
+
+                // Send the statement!
+                this.sending = true;
+                this.NotifyAPI.sendEmailStatement(parameters)
+                    .pipe(take(1))
+                    .pipe(finalize(() => { this.sending = false; }))
+                    .subscribe(
+                        (json: INotifyAPIJSONResult) => {
+                            if (1 === json.response) {
+                                this.modal.confirmed = true;
+                            } else {
+                                this.modal.error = true;
+                            }
+                        },
+                        () => {
+                            this.modal.error = true;
+                        });
+                break;
+        }
     }
 
 }
