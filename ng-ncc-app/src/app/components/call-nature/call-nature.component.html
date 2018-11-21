@@ -1,9 +1,9 @@
-<app-panel errorStyle="true" *ngIf="error; else interface">
+<app-error-panel *ngIf="error; else interface">
     <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Types and reasons aren't loading</h2>
     <p class="govuk-body govuk-!-margin-bottom-0">
         There was a problem loading the call types and reasons. You will need to contact ICT to resolve this.
     </p>
-</app-panel>
+</app-error-panel>
 
 <ng-template #interface>
     <div class="govuk-grid-row">
