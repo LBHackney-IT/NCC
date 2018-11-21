@@ -212,8 +212,6 @@ export class NCCAPIService {
      *
      */
     authenticate(code: string): Observable<IAuthentication> {
-        console.log('authenticate attempt with code:', code);
-
         return this.http
             .get(`${this._url}SSO/Authenticate?userdata=${encodeURIComponent(code)}`, {})
             .pipe(map((json: IJSONResponse) => {
