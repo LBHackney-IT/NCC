@@ -112,7 +112,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                         key => {
                             const term = this.filter[key];
                             if (term && 'null' !== term) {
-                                outcome = outcome && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase()));
+                                outcome = outcome && (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
                             }
                         });
                 }
@@ -142,7 +142,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      * Returns the call reason for a note, or "Other" if unspecified.
      */
     getCallReason(note: INCCUHNote): string {
-        return note.callreason ? note.callReasonType : 'Other';
+        return note.callReasonType ? note.callReasonType : 'Other';
     }
 
 }

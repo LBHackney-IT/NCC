@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { take, finalize } from 'rxjs/operators';
+import { take, finalize, map } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { CALL_REASON } from '../../constants/call-reason.constant';
+import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { CallRevisionService } from '../../services/call-revision.service';
 import { PageHistory } from '../abstract/history';
 import { BackLinkService } from '../../services/back-link.service';
 import { PageTitleService } from '../../services/page-title.service';
+import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
 import { ILastCall } from '../../interfaces/last-call';
 
 @Component({
@@ -25,10 +27,21 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
     note: string;
     refresh: string;
     saving: boolean;
+    tenants_list: string[];
+
+    filter_settings: {
+        min_date: Date,
+        max_date: Date,
+        manual: { [propKey: string]: string }
+    };
+
+    filter_reason: string;
+    filter_tenant: string;
 
     constructor(
         private router: Router,
         private BackLink: BackLinkService,
+        private ManageATenancyAPI: ManageATenancyAPIService,
         private NCCAPI: NCCAPIService,
         private CallRevision: CallRevisionService,
         private PageTitle: PageTitleService
@@ -48,6 +61,12 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
         // Enable the back link and have it go to the "home" page.
         this.BackLink.enable();
         this.BackLink.setTarget(PAGES.PREVIOUS_CALLS.route);
+
+        // Set up the filter.
+        this.clearFilter();
+
+        // Generate a list of tenants.
+        this.getTenants();
     }
 
     /**
@@ -57,6 +76,42 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
         if (this.previous_call) {
             return this.previous_call.housingref;
         }
+    }
+
+    /**
+     *
+     */
+    getTenants() {
+        this.ManageATenancyAPI.getAccountDetailsByReference(this.getTenancyReference())
+            .pipe(take(1))
+            .subscribe((result: IAccountDetailsByReference) => {
+                this.tenants_list = result.ListOfTenants.map((tenant) => `${tenant.forename} ${tenant.surname}`);
+            });
+    }
+
+    /**
+     * Set the manual filtering options for the list of notes.
+     */
+    filterNotes() {
+        this.filter.manual = {
+            callReasonType: this.filter_reason,
+            clientName: this.filter_tenant
+        };
+        console.log(this.filter.manual);
+    }
+
+    /**
+     *
+     */
+    clearFilter() {
+        this.filter = {
+            min_date: null,
+            max_date: null,
+            manual: {}
+        };
+        this.filter_reason = null;
+        this.filter_tenant = null;
+        this.filterNotes();
     }
 
     /**

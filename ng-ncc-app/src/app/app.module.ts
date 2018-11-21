@@ -49,7 +49,6 @@ import { BoxPanelComponent } from './components/panel/box-panel/box-panel.compon
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
-import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
 import { ContentAreaComponent } from './components/content-area/content-area.component';
