@@ -1,7 +1,7 @@
-<app-panel errorStyle="true" *ngIf="error; else lastCalls">
-    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Table load failure</h2>
+<app-error-panel *ngIf="error; else lastCalls">
+    <app-panel-heading>Table load failure</app-panel-heading>
     <p class="govuk-body govuk-!-margin-bottom-0">There was a problem loading the list of your previous calls. If this continues you will need to contact ICT.</p>
-</app-panel>
+</app-error-panel>
 
 <ng-template #lastCalls>
     <table class="govuk-table govuk-!-margin-top-9">

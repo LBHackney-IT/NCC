@@ -44,8 +44,10 @@ import { AddressTenantsResultsComponent } from './components/address-tenants-res
 import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
 import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
+import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
+import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
@@ -58,6 +60,7 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
+import { ErrorPanelComponent } from './components/panel/error-panel/error-panel.component';
 import { HeadingComponent } from './components/panel/heading/heading.component';
 import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
@@ -84,6 +87,7 @@ import { WarningComponent } from './components/warning/warning.component';
         AppComponent,
         BackLinkComponent,
         BackLinkConfirmComponent,
+        BoxPanelComponent,
         CallNatureComponent,
         CommsMethodSelectComponent,
         CommsReceiptTemplatesComponent,
@@ -93,10 +97,13 @@ import { WarningComponent } from './components/warning/warning.component';
         CurrentCallerComponent,
         DPADialogueComponent,
         DPATenancyComponent,
+        DateFieldComponent,
         DialogueComponent,
         DialogueTitleComponent,
         EditorialComponent,
         EnvNameComponent,
+        ErrorPanelComponent,
+        HeadingComponent,
         HelperComponent,
         LastCallsListComponent,
         NavigationComponent,
@@ -136,11 +143,6 @@ import { WarningComponent } from './components/warning/warning.component';
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
-        EnvNameComponent,
-        AgentComponent,
-        CommsReceiptTemplatesComponent,
-        HeadingComponent,
-        DateFieldComponent,
     ],
     imports: [
         BrowserModule,
