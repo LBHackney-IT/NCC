@@ -19,6 +19,7 @@ import { IPaymentInteraction } from '../interfaces/payment-interaction';
 import { AuthService } from '../services/auth.service';
 import { LogCallType } from '../classes/log-call-type.class';
 import { LogCallReason } from '../classes/log-call-reason.class';
+import { NotesService } from '../services/notes.service';
 
 @Injectable({
     providedIn: 'root'
@@ -43,8 +44,13 @@ export class CallService {
     private tenants: { [propKey: string]: string }[];
     private ticket_number: string;
 
-    constructor(private Auth: AuthService, private HackneyAPI: HackneyAPIService, private ManageATenancyAPI: ManageATenancyAPIService,
-        private NCCAPI: NCCAPIService) {
+    constructor(
+        private Auth: AuthService,
+        private HackneyAPI: HackneyAPIService,
+        private ManageATenancyAPI: ManageATenancyAPIService,
+        private NCCAPI: NCCAPIService,
+        private Notes: NotesService
+    ) {
         this.reset();
     }
 
@@ -262,7 +268,8 @@ export class CallService {
         this.tenants = null;
         this.ticket_number = null;
 
-        console.log('Call was reset.');
+        this.Notes.disable();
+        // console.log('Call was reset.');
     }
 
     /**

@@ -5,6 +5,7 @@ import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
+import { NotesService } from '../../services/notes.service';
 import { PAGES } from '../../constants/pages.constant';
 
 @Component({
@@ -26,7 +27,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
 
-    constructor(private inj: Injector, private router: Router, private Call: CallService) {
+    constructor(private inj: Injector, private router: Router, private Call: CallService, private Notes: NotesService) {
         // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
         // https://stackoverflow.com/a/40026333/4073160
         const parentComponent = this.inj.get(ContentAreaComponent);
@@ -59,7 +60,9 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         // - the caller is NOT anonymous.
         // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
         // However, it was mentioned that anonymous callers should only have "automatic" notes.
-        const outcome: boolean = this.Call.isCallerIdentified() && this.Call.hasCallNature();
+
+        // const outcome: boolean = this.Call.isCallerIdentified() && this.Call.hasCallNature();
+        const outcome = this.Notes.isEnabled();
 
         // Make sure the form is closed if we shouldn't show it.
         if (!outcome) {

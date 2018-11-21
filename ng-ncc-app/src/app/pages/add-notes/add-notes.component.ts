@@ -7,6 +7,7 @@ import { PAGES } from '../../constants/pages.constant';
 import { CALL_REASON } from '../../constants/call-reason.constant';
 import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { NotesService } from '../../services/notes.service';
 import { CallRevisionService } from '../../services/call-revision.service';
 import { PageHistory } from '../abstract/history';
 import { BackLinkService } from '../../services/back-link.service';
@@ -44,7 +45,8 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
         private ManageATenancyAPI: ManageATenancyAPIService,
         private NCCAPI: NCCAPIService,
         private CallRevision: CallRevisionService,
-        private PageTitle: PageTitleService
+        private PageTitle: PageTitleService,
+        private Notes: NotesService
     ) {
         super();
 
@@ -67,6 +69,9 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
 
         // Generate a list of tenants.
         this.getTenants();
+
+        // Display the add note form.
+        this.Notes.enable();
     }
 
     /**
