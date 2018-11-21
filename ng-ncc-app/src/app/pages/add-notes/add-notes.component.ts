@@ -21,7 +21,7 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
     // This page is similar to the View Notes page, except it doesn't have a dependency on the Call service or an identified caller.
 
     previous_call: ILastCall;
-    error: true;
+    error: boolean;
     note: string;
     refresh: string;
     saving: boolean;
