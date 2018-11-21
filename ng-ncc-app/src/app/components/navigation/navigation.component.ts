@@ -71,6 +71,14 @@ export class NavigationComponent {
     /**
      *
      */
+    getIdentifyRoute(): string {
+        const page = this.Call.hasTenancy() ? `${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_TENANTS.route}` : PAGES.IDENTIFY.route;
+        return page;
+    }
+
+    /**
+     *
+     */
     getRentRoute(): string {
         const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_SUMMARY.route;
         return `${PAGES.RENT.route}/${page}`;
