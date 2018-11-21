@@ -1,7 +1,7 @@
 <!-- A list of addresses matching the search query. -->
 <app-address-search-results [results]="results" (selected)="addressSelected($event)"></app-address-search-results>
 
-<app-panel errorStyle="true" *ngIf="error">
+<app-error-panel *ngIf="error">
     <app-panel-heading>Postcode loading error</app-panel-heading>
     <p class="govuk-body">
         There was a problem loading addresses for this postcode, make sure the postcode is correct.
@@ -9,4 +9,4 @@
     <p class="govuk-body govuk-!-margin-bottom-0">
         If the problem continues you will need to contact ICT to resolve the issue.
     </p>
-</app-panel>
+</app-error-panel>

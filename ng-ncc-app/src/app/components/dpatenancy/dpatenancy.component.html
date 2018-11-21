@@ -1,8 +1,8 @@
-<app-panel errorStyle="true" *ngIf="error; else dpaInformation">
+<app-error-panel *ngIf="error; else dpaInformation">
     <app-panel-heading>Tenancy loading error</app-panel-heading>
     <p class="govuk-body">There was a problem loading the tenancy details for this address.</p>
     <p class="govuk-body govuk-!-margin-bottom-0">If the problem continues you will need to contact ICT to resolve the issue.</p>
-</app-panel>
+</app-error-panel>
 
 <ng-template #dpaInformation>
     <app-value-list class="govuk-body-s">
