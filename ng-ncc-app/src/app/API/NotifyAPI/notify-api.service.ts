@@ -56,7 +56,7 @@ export class NotifyAPIService {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_flatten
                     return results;
                 },
-                () => { return of([]); }
+                () => of([]) // equivalent to function() { return of([]); }.
             )
         );
     }
