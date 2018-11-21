@@ -1,12 +1,12 @@
 <h1 class="govuk-heading-l">Rent</h1>
 
-<app-panel class="govuk-!-margin-bottom-5" errorStyle="true" *ngIf="error">
+<app-error-panel class="govuk-!-margin-bottom-5"*ngIf="error">
     <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Account load failure</h2>
     <p class="govuk-body">
         There was a problem loading the rent account for this tenancy. You will have to use Universal Housing until this is resolved.
     </p>
     <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
-</app-panel>
+</app-error-panel>
 
 <app-tabs>
     <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">

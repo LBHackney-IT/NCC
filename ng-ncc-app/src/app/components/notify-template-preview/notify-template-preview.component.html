@@ -1,11 +1,11 @@
-<app-panel errorStyle="true" *ngIf="error; else displayPreview">
+<app-error-panel *ngIf="error; else displayPreview">
     <p class="govuk-heading-m govuk-!-margin-bottom-3">
         Preview unavailable
     </p>
     <p class="govuk-body govuk-!-margin-0">
         The preview for this template is not loading. If it persists you will need to contact ICT.
     </p>
-</app-panel>
+</app-error-panel>
 
 <ng-template #displayPreview>
     <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>

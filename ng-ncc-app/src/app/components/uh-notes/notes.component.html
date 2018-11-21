@@ -1,12 +1,12 @@
 <div class="notes govuk-!-margin-bottom-2">
 
-    <app-panel errorStyle="true" *ngIf="error; else displayNotes">
+    <app-error-panel *ngIf="error; else displayNotes">
         <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Table load failure</h2>
         <p class="govuk-body">
             There was a problem loading the list notes for this tenancy. You will need to use Universal Housing until it is resolved.
         </p>
         <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
-    </app-panel>
+    </app-error-panel>
 
     <!-- Table of notes. -->
     <ng-template #displayNotes>
