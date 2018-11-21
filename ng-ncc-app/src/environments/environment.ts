@@ -10,7 +10,8 @@ export const environment = {
         hackney: 'https://sandboxapi.hackney.gov.uk/hackneyapi',
         manageATenancy: 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1',
         ncc: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/',
-        notify: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier'
+        notify: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier',
+        statement: 'http://lbhwebintd01:5050/CustomerTransactions'
     },
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
     authenticationLink: 'http://localhost:4200',

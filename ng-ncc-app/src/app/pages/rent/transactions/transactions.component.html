@@ -1,0 +1,54 @@
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <!-- Transaction filter. -->
+        <form class="govuk-!-margin-bottom-5" (submit)="filterTransactions()">
+            <app-panel>
+                <div class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="govuk-visually-hidden govuk-label govuk-!-font-weight-bold" for="filter-manual">
+                        Search by type
+                    </label>
+                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="filter-manual" name="filter-manual" type="search"
+                        placeholder="Search by type"
+                        [(ngModel)]="filter_type">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1">
+                        Search
+                    </button>
+                    <button type="button" class="link-button govuk-!-margin-bottom-0" (click)="clearFilter()">
+                        Reset
+                    </button>
+                </div>
+            </app-panel>
+        </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+        <!-- Limit displayed transactions to the specified dates. -->
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="period">
+                Show transactions for:
+            </label>
+            <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="period" (ngModelChange)="filterByDate()">
+                <option *ngFor="let row of period_options; trackBy: trackByIndex" [value]="row.key">{{ row.label }}</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+
+<!-- Create a statement. -->
+<button class="govuk-button" type="button" name="button" (click)="createStatement()">
+    Create 30 day statement
+</button>
+
+<!-- Transaction history. -->
+<app-transactions *ngIf="account_details"
+    [isTall]="true"
+    [filter]="filter.manual"
+    [minDate]="filter.min_date"
+    [maxDate]="filter.max_date"
+    [tenancyRef]="account_details.tagReferenceNumber"
+    [currentBalance]="account_details.currentBalance"></app-transactions>

@@ -22,6 +22,9 @@ export class AddressSearchResultsComponent implements OnChanges {
         this._organiseResults();
     }
 
+    /**
+     *
+     */
     trackByMethod(index: number, item: IAddressSearchGroupedResult): string {
         return item.id;
     }
@@ -53,10 +56,12 @@ export class AddressSearchResultsComponent implements OnChanges {
     _organiseResults() {
         if (this.results && this.results.length) {
 
-            // Group the results by their household ID.
+            // Group the results.
+            // Results from the sandbox API had a "householdID" key, which was missing from live data.
+            // The only thing we could really use was the "fullAddressSearch" key.
             // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_groupby
             const grouped_results = this.results.reduce(
-                (r, v: ICitizenIndexSearchResult, i, a, k = v.householdId) => (
+                (r, v: ICitizenIndexSearchResult, i, a, k = v.fullAddressSearch) => (
                     (r[k] || (r[k] = {
                         id: k,
                         address: v.fullAddressDisplay,

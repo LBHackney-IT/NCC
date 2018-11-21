@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, take } from 'rxjs/operators';
-import { Observable, forkJoin, of, from } from 'rxjs';
+import { Observable, forkJoin, of, ReplaySubject, from } from 'rxjs';
 
 import { CALL_REASON } from '../constants/call-reason.constant';
 import { ICaller } from '../interfaces/caller';
@@ -34,6 +34,7 @@ export class CallService {
     // - account details associated with the caller.
 
     private account: IAccountDetails;
+    private accountSubject = new ReplaySubject<IAccountDetails>();
     private caller: ICaller;
     private call_nature: ILogCallSelection;
     private call_id: string;
@@ -141,6 +142,7 @@ export class CallService {
 
                         // Handle the tenant's account data.
                         this.account = response.account;
+                        this.accountSubject.next(response.account);
                         console.log(`Account details were obtained.`);
                     },
                     (error) => {
@@ -185,8 +187,8 @@ export class CallService {
     /**
      * Returns the account details associated with the caller.
      */
-    getAccount(): Observable<IAccountDetails> {
-        return this.ManageATenancyAPI.getAccountDetails(this.caller.getContactID());
+    getAccount(): ReplaySubject<IAccountDetails> {
+        return this.accountSubject;
     }
 
     /**

@@ -1,28 +1,38 @@
-<div class="transactions govuk-!-margin-bottom-2" [class.transactions--tall]="isTall">
+<app-panel class="govuk-!-margin-bottom-5" errorStyle="true" *ngIf="error; else transactionList">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Transaction load failure</h2>
+    <p class="govuk-body">
+        There was a problem loading the list of previous transactions. You will need to use Universal Housing until it is resolved.
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+</app-panel>
 
-    <!-- Table of transactions. -->
-    <table class="govuk-table govuk-!-margin-bottom-1">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Date</th>
-                <th class="govuk-table__header" scope="col">Type</th>
-                <th class="govuk-table__header govuk-table__header--numeric" scope="col">Amount</th>
-                <th class="govuk-table__header govuk-table__header--numeric" scope="col">Balance</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let row of _filtered; trackBy: trackByMethod">
-                <td class="govuk-table__cell" scope="row">{{ row.postDate | date:'dd/MM/yyyy HH:mm' }}</td>
-                <td class="govuk-table__cell">{{ row.debDesc }}</td>
-                <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.realValue | currency:'GBP' }}</td>
-                <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.balance | currency:'GBP' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<ng-template #transactionList>
+    <div class="transactions govuk-!-margin-bottom-2" [class.transactions--tall]="isTall">
 
-    <!-- Loading prompt. -->
-    <div *ngIf="_loading" class="loading">
-        Loading...
+        <!-- Table of transactions. -->
+        <table class="govuk-table govuk-!-margin-bottom-1">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="col">Date</th>
+                    <th class="govuk-table__header" scope="col">Type</th>
+                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">Amount</th>
+                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">Balance</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row" *ngFor="let row of _filtered; trackBy: trackByMethod">
+                    <td class="govuk-table__cell" scope="row">{{ row.postDate | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <td class="govuk-table__cell">{{ row.debDesc }}</td>
+                    <td class="govuk-table__cell govuk-table__cell--numeric">{{ -row.realValue | currency:'GBP' }}</td>
+                    <td class="govuk-table__cell govuk-table__cell--numeric">{{ -row.balance | currency:'GBP' }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Loading prompt. -->
+        <div *ngIf="_loading" class="loading">
+            Loading...
+        </div>
+
     </div>
-
-</div>
+</ng-template>

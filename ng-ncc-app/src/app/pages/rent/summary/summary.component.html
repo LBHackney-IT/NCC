@@ -1,0 +1,47 @@
+<!-- Rent balance. -->
+<app-panel class="govuk-!-margin-bottom-5">
+    <div class="govuk-grid-row">
+
+        <!-- Current balance. -->
+        <div class="govuk-grid-column-one-quarter">
+            <h3 class="govuk-!-font-weight-bold">Current balance</h3>
+            <p class="govuk-!-font-size-24 govuk-!-font-weight-bold" [class.inCredit]="isInCredit()" [class.inDebit]="isInDebit()">
+                <span *ngIf="account_details">{{ -account_details.currentBalance | currency:'GBP' }}</span>
+                <span *ngIf="!account_details">--</span>
+            </p>
+        </div>
+
+        <!-- Rent amount. -->
+        <div class="govuk-grid-column-one-quarter">
+            <h3 class="govuk-!-font-weight-bold">Rent amount</h3>
+            <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                <span *ngIf="account_details">{{ account_details.rent | currency:'GBP' }}</span>
+                <span *ngIf="!account_details">--</span>
+            </p>
+        </div>
+
+        <!-- Next payment date. -->
+        <!-- <div class="govuk-grid-column-one-quarter">
+            <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Next payment</h3>
+            <p class="govuk-!-font-size-24">27/08/2018</p>
+        </div> -->
+
+        <!-- Agreement plan. -->
+        <!-- <div class="govuk-grid-column-one-quarter">
+            <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                <a href="">Agreement plan</a>
+            </h3>
+            <p class="govuk-!-font-size-24">27/08/2019</p>
+        </div> -->
+
+    </div>
+</app-panel>
+
+<!-- Payment history. -->
+<h2 class="govuk-heading-m">Payment history</h2>
+
+<app-transactions *ngIf="account_details"
+    [isTall]="true"
+    [minDate]="summary_cutoff"
+    [tenancyRef]="account_details.tagReferenceNumber"
+    [currentBalance]="account_details.currentBalance"></app-transactions>

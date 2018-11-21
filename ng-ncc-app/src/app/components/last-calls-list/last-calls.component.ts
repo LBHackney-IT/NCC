@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { ILastCall } from '../../interfaces/last-call';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-last-calls-list',
@@ -14,6 +15,7 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
     @Input() count: number;
 
     calls: ILastCall[];
+    today: any;
     error: boolean;
 
     private _destroyed$ = new Subject();
@@ -25,16 +27,13 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         if (this.count) {
+            this.today = moment().format('MMMM Do YYYY');
             this.NCCAPI.getLastCalls(this.count)
                 .pipe(takeUntil(this._destroyed$))
                 .subscribe(
-                    (rows: ILastCall[]) => {
-                        this.error = true;
-                        // this.calls = rows;
-                    },
-                    (error) => {
-                        this.error = true;
-                    });
+                    (rows: ILastCall[]) => { this.calls = rows; },
+                    () => { this.error = true; }
+                );
         }
     }
 

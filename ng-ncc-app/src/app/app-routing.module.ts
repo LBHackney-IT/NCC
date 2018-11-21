@@ -8,21 +8,23 @@ import { AuthGuard } from './auth/auth.guard';
 import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageHomeComponent } from './pages/home/home.component';
+import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
+import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
 import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
 import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
-import { PagePaymentComponent } from './pages/payment/payment.component';
-import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
-import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
-import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
+import { PageRentCommunicationsComponent } from './pages/rent/communications/communications.component';
+import { PageRentComponent } from './pages/rent/rent.component';
+import { PageRentPaymentComponent } from './pages/rent/payment/payment.component';
+import { PageRentStatementComponent } from './pages/rent/statement/statement.component';
+import { PageRentSummaryComponent } from './pages/rent/summary/summary.component';
+import { PageRentTransactionsComponent } from './pages/rent/transactions/transactions.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionErrorComponent } from './pages/transaction/error/error.component';
 import { PageTransactionFailedComponent } from './pages/transaction/failed/failed.component';
 import { PageTransactionSuccessComponent } from './pages/transaction/success/success.component';
-import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
@@ -103,13 +105,13 @@ export const AppRoutes: Routes = [
     {
         // Rent page.
         path: PAGES.RENT.route,
-        component: PagePaymentComponent,
+        component: PageRentComponent,
         canActivate: [AuthGuard],
         children: [
             {
                 // Rent > Summary.
                 path: PAGES.RENT_SUMMARY.route,
-                component: PagePaymentSummaryComponent,
+                component: PageRentSummaryComponent,
                 resolve: {
                     caller: IdentifiedCallerResolver
                 }
@@ -117,7 +119,7 @@ export const AppRoutes: Routes = [
             {
                 // Rent > Transactions.
                 path: PAGES.RENT_TRANSACTIONS.route,
-                component: PageTransactionHistoryComponent,
+                component: PageRentTransactionsComponent,
                 resolve: {
                     caller: IdentifiedCallerResolver
                 }
@@ -125,7 +127,7 @@ export const AppRoutes: Routes = [
             {
                 // Rent > Make (Payment).
                 path: PAGES.RENT_PAYMENT.route,
-                component: PagePaymentMakeComponent,
+                component: PageRentPaymentComponent,
                 resolve: {
                     caller: CallerCanPayResolver
                 }
@@ -147,13 +149,32 @@ export const AppRoutes: Routes = [
         ]
     },
     {
+        // Statement page.
+        path: PAGES.RENT_STATEMENT.route,
+        component: PageRentStatementComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+            caller: IdentifiedCallerResolver
+        }
+    },
+    {
         // Identify page.
         path: PAGES.IDENTIFY.route,
         component: PageIdentifyComponent,
         canActivate: [AuthGuard],
         resolve: {
             call_nature: CallNatureResolver
-        }
+        },
+        children: [
+            {
+                path: PAGES.IDENTIFY_ADDRESSES.route,
+                component: PageIdentifyAddressesComponent
+            },
+            {
+                path: PAGES.IDENTIFY_TENANTS.route,
+                component: PageIdentifyTenantsComponent
+            }
+        ]
     },
     {
         // [Edit] Contact Details page.

@@ -1,0 +1,25 @@
+<h1 class="govuk-heading-l">Rent</h1>
+
+<app-panel class="govuk-!-margin-bottom-5" errorStyle="true" *ngIf="error">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Account load failure</h2>
+    <p class="govuk-body">
+        There was a problem loading the rent account for this tenancy. You will have to use Universal Housing until this is resolved.
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+</app-panel>
+
+<app-tabs>
+    <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">
+        <a [routerLink]="page_defs.RENT_SUMMARY.route">{{ page_defs.RENT_SUMMARY.label }}</a>
+    </app-tab>
+    <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">
+        <a [routerLink]="page_defs.RENT_TRANSACTIONS.route">{{ page_defs.RENT_TRANSACTIONS.label }}</a>
+    </app-tab>
+    <app-tab routerLinkActive="active">
+        <a [routerLink]="page_defs.RENT_PAYMENT.route">{{ page_defs.RENT_PAYMENT.label }}</a>
+    </app-tab>
+    <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">
+        <a [routerLink]="page_defs.RENT_COMMS.route">{{ page_defs.RENT_COMMS.label }}</a>
+    </app-tab>
+    <router-outlet></router-outlet>
+</app-tabs>
