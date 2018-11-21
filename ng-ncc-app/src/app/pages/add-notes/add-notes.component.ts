@@ -97,7 +97,6 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
             callReasonType: this.filter_reason,
             clientName: this.filter_tenant
         };
-        console.log(this.filter.manual);
     }
 
     /**
