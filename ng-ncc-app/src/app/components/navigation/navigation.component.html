@@ -1,6 +1,7 @@
 <nav class="page__menu">
     <ul class="navigation__list">
 
+        <!-- "Home" page. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.PREVIOUS_CALLS.route" [class.disabled]="disable_previous_calls">
                 {{ page_defs.PREVIOUS_CALLS.label }}
@@ -9,47 +10,70 @@
 
         <li class="navigation__separator"></li>
 
+        <!-- Start new call. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.LOG_CALL.route" [class.disabled]="hasCallStarted()">
                 {{ page_defs.LOG_CALL.label }}
             </a>
         </li>
 
+        <!-- Identify caller. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.IDENTIFY.route" [class.disabled]="!isCallNatureSelected()">
                 {{ page_defs.IDENTIFY.label }}
             </a>
         </li>
 
+        <li class="navigation__separator"></li>
+
+        <!-- Add another call reason. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.ADDITIONAL_REASON.route" [class.disabled]="!isCallActive() || disable_additional_reasons">
                 {{ page_defs.ADDITIONAL_REASON.label }}
             </a>
         </li>
 
+        <!-- See caller notes. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!isCallerIdentified()">
                 {{ page_defs.VIEW_NOTES.label }}
             </a>
         </li>
 
+        <!-- Send emails, texts and letters. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.COMMS.route" [class.disabled]="!isCallActive()">
                 {{ page_defs.COMMS.label }}
             </a>
         </li>
 
+        <!-- View/pay rent. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="getRentRoute()" [class.disabled]="!isCallerAbleToPay()">
                 {{ page_defs.RENT.label }}
             </a>
         </li>
 
+        <!-- TODO: request a callback. -->
+        <!--
+        <li class="navigation__item" routerLinkActive="navigation__item--active">
+            <a [routerLink]="page_defs.REQUEST_CALLBACK.route">
+                {{ page_defs.REQUEST_CALLBACK.label }}
+            </a>
+        </li>
+        -->
+
+        <li class="navigation__spacer"></li>
+
+        <!-- End call. -->
         <li class="navigation__item" *ngIf="isCallActive()">
             <a (click)="endCall()">
                 End call
             </a>
         </li>
+
+        <li class="navigation__spacer"></li>
+
     </ul>
 
     <!-- Feedback button. -->
@@ -57,6 +81,6 @@
         Report a problem / provide feedback
     </a>
 
-    <!-- Message to go here. -->
+    <!-- Editorial essage to go here. -->
     <app-editorial></app-editorial>
 </nav>

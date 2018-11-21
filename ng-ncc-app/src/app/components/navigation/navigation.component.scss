@@ -72,13 +72,22 @@ $navigation-menu-separator-colour: #CCC !default;
     }
 }
 
-.navigation__separator {
+.navigation__separator,
+.navigation__spacer {
     margin: 1rem 0;
     &:before {
         content: "";
         display: block;
+    }
+}
+.navigation__separator {
+    &:before {
         height: 2px;
         width: 50%;
         background-color: $navigation-menu-separator-colour;
     }
+}
+
+.navigation__spacer {
+    height: 1rem;
 }
