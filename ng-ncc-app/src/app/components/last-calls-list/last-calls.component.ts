@@ -29,9 +29,7 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
         if (this.count) {
             this.today = moment().format('MMMM Do YYYY');
             this.NCCAPI.getLastCalls(this.count)
-                .pipe(
-                    takeUntil(this._destroyed$)
-                )
+                .pipe(takeUntil(this._destroyed$))
                 .subscribe(
                     (rows: ILastCall[]) => { this.calls = rows; },
                     () => { this.error = true; }

@@ -17,18 +17,18 @@
     <h2 class="govuk-heading-m">Tenancy details</h2>
 
     <!-- Display the address of the property. -->
-    <app-panel boxStyle="true" class="govuk-!-margin-bottom-3">
+    <app-box-panel class="govuk-!-margin-bottom-3">
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h2>
         <app-dpa-tenancy [crmContactID]="crm_contact_id"></app-dpa-tenancy>
-    </app-panel>
+    </app-box-panel>
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">Tenant details</h2>
 
-    <app-panel boxStyle="true" class="tenant-list govuk-!-margin-bottom-3">
+    <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios govuk-radios--inline">
             <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index; trackBy: trackByMethod">
                 <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
@@ -93,13 +93,13 @@
             </div>
         </div>
 
-    </app-panel>
+    </app-box-panel>
 
     <app-or></app-or>
 
     <!-- An option to select a "non-tenant" caller. -->
     <!-- Non-tenant callers can make payments toward a tenancy, but can't have access to sensitive information. -->
-    <app-panel boxStyle="true" class="tenant-list govuk-!-margin-bottom-3">
+    <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios govuk-radios--inline">
             <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="changed-name-non-tenant" name="changed-name" type="radio"
@@ -113,7 +113,7 @@
                 </label>
             </div>
         </div>
-    </app-panel>
+    </app-box-panel>
 
     <!-- Select this information. -->
     <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">
