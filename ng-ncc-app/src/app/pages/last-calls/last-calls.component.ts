@@ -6,6 +6,7 @@ import { PAGES } from '../../constants/pages.constant';
 import { ILastCall } from '../../interfaces/last-call';
 import { PageTitleService } from '../../services/page-title.service';
 import { CallRevisionService } from '../../services/call-revision.service';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
     selector: 'app-last-calls',
@@ -18,12 +19,14 @@ export class PageLastCallsComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private Notes: NotesService,
         private PageTitle: PageTitleService,
         private CallRevision: CallRevisionService
     ) { }
 
     ngOnInit() {
         this.PageTitle.set(PAGES.PREVIOUS_CALLS.label);
+        this.Notes.disable();
     }
 
     /**

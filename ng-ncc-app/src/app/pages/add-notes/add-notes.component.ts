@@ -52,7 +52,7 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
 
         // Make sure we have a previous call, otherwise go to the "home" page.
         this.previous_call = this.CallRevision.getPreviousCall();
-        if (!this.previous_call) {
+        if (!(this.previous_call && this.previous_call.housingref)) {
             this.router.navigate([PAGES.PREVIOUS_CALLS.route]);
         }
     }
@@ -71,7 +71,15 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
         this.getTenants();
 
         // Display the add note form.
-        this.Notes.enable();
+        const settings = {
+            call_id: this.previous_call.servicerequestid,
+            ticket_number: this.previous_call.ticketnumber,
+            call_reason_id: this.previous_call.callreasonId,
+            other_reason: null,
+            crm_contact_id: this.previous_call.contactid,
+            tenancy_reference: this.previous_call.housingref
+        };
+        this.Notes.enable(this.previous_call.name, settings);
     }
 
     /**

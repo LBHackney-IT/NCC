@@ -115,8 +115,8 @@ export class CallService {
      */
     setCaller(caller: ICaller) {
         this.caller = caller;
-        console.log('Caller has been set to:', this.caller.getName());
-        console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
+        // console.log('Caller has been set to:', this.caller.getName());
+        // console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
 
         const contact_id = caller.getContactID();
         if (contact_id) {
@@ -141,7 +141,7 @@ export class CallService {
                         // Deal with the created call.
                         this.call_id = response.call.id;
                         this.ticket_number = response.call.ticketNumber;
-                        console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
+                        // console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
 
                         // Create an automatic note mentioning the selected caller.
                         this.createCallerNote();
@@ -150,6 +150,17 @@ export class CallService {
                         this.account = response.account;
                         this.accountSubject.next(response.account);
                         console.log(`Account details were obtained.`);
+
+                        // Enable the add note form.
+                        const settings = {
+                            call_id: this.call_id,
+                            ticket_number: this.ticket_number,
+                            call_reason_id: this.call_nature.call_reason.id,
+                            other_reason: this.call_nature.other_reason,
+                            crm_contact_id: this.caller.getContactID(),
+                            tenancy_reference: this.account.tagReferenceNumber
+                        };
+                        this.Notes.enable(this.caller.getName(), settings);
                     },
                     (error) => {
                         console.error(error);
