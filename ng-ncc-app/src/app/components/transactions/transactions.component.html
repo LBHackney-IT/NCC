@@ -1,10 +1,10 @@
-<app-panel class="govuk-!-margin-bottom-5" errorStyle="true" *ngIf="error; else transactionList">
+<app-error-panel class="govuk-!-margin-bottom-5" *ngIf="error; else transactionList">
     <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Transaction load failure</h2>
     <p class="govuk-body">
         There was a problem loading the list of previous transactions. You will need to use Universal Housing until it is resolved.
     </p>
     <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
-</app-panel>
+</app-error-panel>
 
 <ng-template #transactionList>
     <div class="transactions govuk-!-margin-bottom-2" [class.transactions--tall]="isTall">

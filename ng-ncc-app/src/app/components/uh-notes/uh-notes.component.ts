@@ -138,4 +138,11 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
         return note.clientName ? note.clientName : 'anonymous';
     }
 
+    /**
+     * Returns the call reason for a note, or "Other" if unspecified.
+     */
+    getCallReason(note: INCCUHNote): string {
+        return note.callreason ? note.callReasonType : 'Other';
+    }
+
 }
