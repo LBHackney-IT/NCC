@@ -42,13 +42,10 @@ export class PageIdentifyComponent implements OnInit {
 
         this.existing_call = false;
 
-        // if (this.Call.hasTenancy()) {
-        //     this.existing_call = true;
-        //     this.addressSelected(this.Call.getTenancy());
-        // }
-
-        // Enable the app's back link if there's no current caller.
-        if (!this.Call.hasCaller()) {
+        if (this.Call.hasTenancy()) {
+            this.existing_call = true;
+        } else if (!this.Call.hasCaller()) {
+            // Enable the app's back link if there's no current caller.
             this.BackLink.enable();
             this.BackLink.setTarget(`/${PAGES.LOG_CALL.route}`);
         }

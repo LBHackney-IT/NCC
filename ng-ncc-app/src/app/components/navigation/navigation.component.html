@@ -19,7 +19,7 @@
 
         <!-- Identify caller. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.IDENTIFY.route" [class.disabled]="!isCallNatureSelected()">
+            <a [routerLink]="getIdentifyRoute()" [class.disabled]="!isCallNatureSelected()">
                 {{ page_defs.IDENTIFY.label }}
             </a>
         </li>
