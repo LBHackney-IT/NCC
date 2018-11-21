@@ -8,6 +8,8 @@ import * as moment from 'moment';
  */
 export class IdentifiedCaller implements ICaller {
 
+    error: boolean;
+
     constructor(private _details: ICitizenIndexSearchResult) { }
 
     isAnonymous(): boolean {
