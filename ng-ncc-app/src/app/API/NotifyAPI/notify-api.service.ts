@@ -39,10 +39,7 @@ export class NotifyAPIService {
                     const templates: Array<object> = Array.from(data.response.templates);
 
                     return templates;
-                },
-                    (error) => {
-                        console.log('Error fetching templates:', error);
-                    })
+                })
             );
     }
 
@@ -59,10 +56,7 @@ export class NotifyAPIService {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_flatten
                     return results;
                 },
-                (error) => {
-                    console.log('Error fetching templates:', error);
-                    return of([]);
-                }
+                () => { return of([]); }
             )
         );
     }
