@@ -12,17 +12,15 @@
             </p>
         </div>
 
-        <app-panel errorStyle="true" *ngIf="_error">
-            <p class="govuk-heading-m govuk-!-margin-bottom-3">
-                Communications unavailable
-            </p>
+        <app-error-panel *ngIf="_error">
+            <app-panel-heading>Communications unavailable</app-panel-heading>
             <p class="govuk-body">
                 The 3rd party system Gov Notify that sends texts (SMS) and emails is currently not working. They will be working to fix the problem.
             </p>
             <p class="govuk-body govuk-!-margin-0">
                 If it persists you will need to contact ICT.
             </p>
-        </app-panel>
+        </app-error-panel>
 
         <form (submit)="sendMessage($event)" *ngIf="!_error">
 

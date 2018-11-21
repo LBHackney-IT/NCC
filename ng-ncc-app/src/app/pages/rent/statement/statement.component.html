@@ -44,7 +44,7 @@
         </div>
 
         <!-- Send the message to the caller. -->
-        <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
+        <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()" [disabled]="sending">
             Send
         </button>
 
