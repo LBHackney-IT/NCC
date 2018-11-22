@@ -1,3 +1,5 @@
+import { environment } from '../../../environments/environment';
+
 import { Component, Injector, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -5,7 +7,10 @@ import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
+import { NotesService } from '../../services/notes.service';
 import { PAGES } from '../../constants/pages.constant';
+import { IAddNoteParameters } from '../../interfaces/add-note-parameters';
+
 
 @Component({
     selector: 'app-note-form',
@@ -26,7 +31,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
 
-    constructor(private inj: Injector, private router: Router, private Call: CallService) {
+    constructor(private inj: Injector, private router: Router, private Call: CallService, private Notes: NotesService) {
         // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
         // https://stackoverflow.com/a/40026333/4073160
         const parentComponent = this.inj.get(ContentAreaComponent);
@@ -59,7 +64,9 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         // - the caller is NOT anonymous.
         // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
         // However, it was mentioned that anonymous callers should only have "automatic" notes.
-        const outcome: boolean = this.Call.isCallerIdentified() && this.Call.hasCallNature();
+
+        // const outcome: boolean = this.Call.isCallerIdentified() && this.Call.hasCallNature();
+        const outcome = this.Notes.isEnabled();
 
         // Make sure the form is closed if we shouldn't show it.
         if (!outcome) {
@@ -79,6 +86,8 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
         if (this.expanded) {
             setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
+        } else {
+            this.error = false;
         }
     }
 
@@ -86,28 +95,24 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      * Returns TRUE if the caller is anonymous.
      */
     isCallerAnonymous(): boolean {
-        return !this.Call.isCallerIdentified();
+        return environment.anonymousUserID === this.Notes.getSettings().crm_contact_id;
     }
 
     /**
      * Returns the caller's name.
      */
     getCallerName(): string {
-        return this.Call.getCaller().getName();
+        const name = this.Notes.getName();
+        return name ? name : 'anonymous';
+        // return this.Call.getCaller().getName();
     }
 
     /**
      *
      */
     getTenancyReference(): string {
-        return this.Call.getTenancyReference();
-    }
-
-    /**
-     *
-     */
-    getCallID(): string {
-        return this.Call.getCallID();
+        return this.Notes.getSettings().tenancy_reference;
+        // return this.Call.getTenancyReference();
     }
 
     /**
@@ -126,7 +131,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      * Returns TRUE if we have enough information to save a note.
      */
     canSaveNote(): boolean {
-        return !this.saving && !!(this.comment) && !!(this.getCallID());
+        return !this.saving && !!(this.comment) && !!(this.Notes.getSettings().call_id);
     }
 
     /**
@@ -138,12 +143,14 @@ export class NoteFormComponent implements OnInit, OnDestroy {
 
     /**
      * This is called when the form is submitted.
+     * Here we save a manual note.
      */
     saveNote() {
         if (this.canSaveNote()) {
             this.error = false;
             this.saving = true;
-            const subscription = this.Call.recordManualNote(this.comment)
+
+            this.Notes.recordManualNote(this.comment)
                 .pipe(take(1))
                 .pipe(finalize(() => {
                     this.saving = false;

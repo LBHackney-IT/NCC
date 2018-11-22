@@ -6,6 +6,7 @@ import { PAGES } from './constants/pages.constant';
 import { AuthGuard } from './auth/auth.guard';
 
 import { PageAuthComponent } from './pages/auth/auth.component';
+import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
@@ -73,6 +74,12 @@ export const AppRoutes: Routes = [
         // Log Call page.
         path: PAGES.LOG_CALL.route,
         component: PageLogCallComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        // Add Notes page.
+        path: PAGES.ADD_NOTES.route,
+        component: PageAddNotesComponent,
         canActivate: [AuthGuard]
     },
     {

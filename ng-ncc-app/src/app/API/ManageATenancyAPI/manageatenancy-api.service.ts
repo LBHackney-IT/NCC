@@ -5,9 +5,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, of, from } from 'rxjs';
 
-import { IJSONResponse } from '../../interfaces/json-response';
 import { IAccountDetails } from '../../interfaces/account-details';
+import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
 import { IContactDetails } from '../../interfaces/contact-details';
+import { IJSONResponse } from '../../interfaces/json-response';
 import { ITransaction } from '../../interfaces/transaction';
 
 @Injectable({
@@ -39,6 +40,16 @@ export class ManageATenancyAPIService {
                     return data.results as IAccountDetails;
                 })
             );
+    }
+
+    /**
+     * Get account details for a tenancy by a reference.
+     * The reference can be either the tenancy (tag) reference or a Paris payment reference.
+     */
+    getAccountDetailsByReference(reference: string): Observable<IAccountDetailsByReference> {
+        return this.http
+            .get(`${this._url}/Accounts/AccountDetailsByPaymentorTagReference?referencenumber=${reference}`, {})
+            .pipe(map((data: IJSONResponse) => data.results[0]));
     }
 
     /**

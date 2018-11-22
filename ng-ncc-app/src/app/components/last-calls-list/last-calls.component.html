@@ -25,7 +25,7 @@
                 <td class="govuk-table__cell">{{ row.callreason || 'Other' }}</td>
                 <td class="govuk-table__cell">{{ row.createdon | date: "dd/MM/yyyy HH:mm" }}</td>
                 <td class="govuk-table__cell">
-                    <a routeLink="/">View</a>
+                    <a href="" (click)="beginAddNotes(row)">View</a>
                 </td>
             </tr>
         </tbody>

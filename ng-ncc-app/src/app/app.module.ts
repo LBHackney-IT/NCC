@@ -14,6 +14,7 @@ import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
 
+import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
@@ -47,7 +48,6 @@ import { BackLinkConfirmComponent } from './components/back-link-confirm/back-li
 import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
-import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
@@ -111,6 +111,7 @@ import { WarningComponent } from './components/warning/warning.component';
         NoteFormComponent,
         NotifyTemplatePreviewComponent,
         OrComponent,
+        PageAddNotesComponent,
         PageAuthComponent,
         PageCommsComponent,
         PageContactDetailsComponent,

@@ -3,7 +3,7 @@
 
         <!-- "Home" page. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.PREVIOUS_CALLS.route" [class.disabled]="disable_previous_calls">
+            <a [routerLink]="page_defs.PREVIOUS_CALLS.route" [class.disabled]="disable_previous_calls || hasCallStarted()">
                 {{ page_defs.PREVIOUS_CALLS.label }}
             </a>
         </li>
