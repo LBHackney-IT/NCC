@@ -23,15 +23,15 @@
                                     [(ngModel)]="filter_reason">
                             </div>
 
-                            <!-- Search by the caller. -->
+                            <!-- Filter by the caller's name. -->
                             <div class="govuk-form-group govuk-!-margin-bottom-2">
                                 <label class="govuk-visually-hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-caller">
                                     Search by caller
                                 </label>
-                                <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_caller">
+                                <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_tenant">
                                     <option [value]="null">All tenants</option>
-                                    <option *ngFor="let row of tenants; trackBy: trackByTenants" [value]="row.full_name">
-                                        {{ row.full_name }}
+                                    <option *ngFor="let name of tenants_list" [value]="name">
+                                        {{ name }}
                                     </option>
                                 </select>
                             </div>
@@ -68,8 +68,8 @@
         </form>
 
         <!-- A list of notes. -->
-        <app-uh-notes [tenancyReference]="getTenancyReference()"
-            [tenants]="tenants"
+        <app-uh-notes
+            [tenancyReference]="getTenancyReference()"
             [filter]="filter.manual"
             [minDate]="filter.min_date"
             [maxDate]="filter.max_date"></app-uh-notes>
