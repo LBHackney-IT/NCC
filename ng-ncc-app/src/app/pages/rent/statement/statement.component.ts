@@ -39,7 +39,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
         super.ngOnInit();
 
         this.BackLink.enable();
-        this.BackLink.setTarget(PAGES.RENT_TRANSACTIONS.route);
+        this.BackLink.setTarget(`${PAGES.RENT.route}/${PAGES.RENT_TRANSACTIONS.route}`);
 
         // Set default dates.
         this.until_date = moment().format('DD/MM/YYYY');
