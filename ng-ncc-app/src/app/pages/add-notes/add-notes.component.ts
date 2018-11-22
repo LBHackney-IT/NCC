@@ -22,14 +22,12 @@ import { ILastCall } from '../../interfaces/last-call';
 })
 export class PageAddNotesComponent extends PageHistory implements OnInit {
     // This page is similar to the View Notes page, except it doesn't have a dependency on the Call service or an identified caller.
+    // TODO perhaps we could reuse the View Notes page.
 
     previous_call: ILastCall;
-    error: boolean;
-    note: string;
-    refresh: string;
-    saving: boolean;
     tenants_list: string[];
 
+    // NOTES FILTER SETTINGS.
     filter_settings: {
         min_date: Date,
         max_date: Date,
@@ -49,11 +47,12 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
         private Notes: NotesService
     ) {
         super();
-
-        // Make sure we have a previous call, otherwise go to the "home" page.
         this.previous_call = this.CallRevision.getPreviousCall();
-        if (!(this.previous_call && this.previous_call.housingref)) {
+
+        // Are we meant to be on this page?
+        if (!this.previous_call) {
             this.router.navigate([PAGES.PREVIOUS_CALLS.route]);
+            return false;
         }
     }
 
@@ -92,7 +91,7 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
     }
 
     /**
-     *
+     * Fetches a list of tenants associated with the specified tenancy reference.
      */
     getTenants() {
         this.ManageATenancyAPI.getAccountDetailsByReference(this.getTenancyReference())
@@ -113,7 +112,7 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
     }
 
     /**
-     *
+     * Clears/resets the notes filter settings.
      */
     clearFilter() {
         this.filter = {
@@ -124,77 +123,6 @@ export class PageAddNotesComponent extends PageHistory implements OnInit {
         this.filter_reason = null;
         this.filter_tenant = null;
         this.filterNotes();
-    }
-
-    /**
-     * Returns TRUE if the agent can save a new note.
-     */
-    canSaveNote(): boolean {
-        return !this.saving && this.note && (this.note.length > 0);
-    }
-
-    /**
-     * Saves a new note.
-     */
-    saveNote(event) {
-        if (this.saving || (event && event.defaultPrevented)) {
-            return;
-        }
-
-        this.saving = true;
-        this.error = false;
-
-        const note_content = this._formatNoteContent(this.note);
-
-        forkJoin(
-            this._saveManualNote(note_content), // Manual note
-            this._saveActionDiaryNote(note_content) // Action Diary note
-        )
-            .pipe(take(1))
-            .pipe(finalize(() => { this.saving = false; }))
-            .subscribe(
-                () => {
-                    this.note = null;
-
-                    // Update the list of notes.
-                    // It doesn't matter what we set refresh to, as long as it has a different value than before.
-                    const now = new Date();
-                    this.refresh = now.toDateString();
-                },
-                () => { this.error = true; },
-        );
-    }
-
-    /**
-     * Saves a new note.
-     */
-    private _saveManualNote(note_content: string) {
-        return this.NCCAPI.createManualNote(
-            this.previous_call.servicerequestid,
-            this.previous_call.ticketnumber,
-            this.previous_call.callreasonId,
-            this.previous_call.contactid,
-            note_content
-        );
-    }
-
-    /**
-     * Saves a new note.
-     */
-    private _saveActionDiaryNote(note_content: string) {
-        const note = `${this.previous_call.name}: ${note_content}`;
-        return this.NCCAPI.createActionDiaryEntry(this.previous_call.housingref, note);
-    }
-
-    /**
-     *
-     */
-    private _formatNoteContent(note_content: string): string {
-        if (CALL_REASON.OTHER === this.previous_call.callreasonId) {
-            note_content = `Other: ${this.previous_call.callreasonId}\n${note_content}`;
-        }
-
-        return note_content;
     }
 
 }

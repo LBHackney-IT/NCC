@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, of } from 'rxjs';
+import { Subject, forkJoin, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
@@ -11,41 +11,69 @@ import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 })
 export class NotesService {
     // This service controls the visibility of the add note form.
-    // TODO this service should probably also be used to create notes.
+    // TODO this service should probably also be used to create automatic notes.
 
+    _added$ = new Subject<void>();
     _name: string | null = null;
     _settings: IAddNoteParameters = null;
     _visible: boolean;
 
     constructor(private NCCAPI: NCCAPIService) { }
 
+    /**
+     * Attempt to enable the add note form.
+     * This will fail if we don't have a tenancy reference defined (which will happen if viewing calls from an anonymous user).
+     */
     enable(name: string, settings: IAddNoteParameters) {
-        console.log('Enable add note', name, settings);
-        this._visible = true;
-        this._name = name;
-        this._settings = settings;
+        // console.log('Enable add note', name, settings);
+        if (settings.tenancy_reference) {
+            this._visible = true;
+            this._name = name;
+            this._settings = settings;
+        } else {
+            this.disable();
+        }
     }
 
+    /**
+     * Disable the add note form.
+     */
     disable() {
         this._visible = false;
         this._name = null;
         this._settings = null;
     }
 
+    /**
+     * Returns TRUE if the add note form is (and should be) enabled.
+     */
     isEnabled(): boolean {
         return this._visible;
     }
 
+    /**
+     * Returns the settings used when enabling the add note form.
+     */
     getSettings(): IAddNoteParameters {
         return this._settings;
     }
 
+    /**
+     * Returns the caller/tenant name to display on the add note form.
+     */
     getName(): string {
         return this._name;
     }
 
     /**
-     * Record a manual note against the call, with a corresponding Action Diary note.
+     * Returns an Observable representing a list of notes.
+     */
+    load(tenancy_reference: string) {
+        return this.NCCAPI.getDiaryAndNotes(tenancy_reference);
+    }
+
+    /**
+     * Record a manual note, with a corresponding Action Diary note.
      */
     recordManualNote(note_content: string) {
         note_content = this._formatNoteContent(note_content);
@@ -63,7 +91,12 @@ export class NotesService {
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
         )
-            .pipe(map((data: IJSONResponse[]) => data[0].response.NCCInteraction));
+            .pipe(map((data: IJSONResponse[]) => {
+                // Inform anything subscribed to note addition events that a note was added.
+                this._added$.next();
+
+                return data[0].response.NCCInteraction;
+            }));
     }
 
     /**
@@ -78,6 +111,13 @@ export class NotesService {
         }
 
         return of(true);
+    }
+
+    /**
+     * Returns a Subject that is "triggered" when a note has been added.
+     */
+    noteWasAdded(): Subject<void> {
+        return this._added$;
     }
 
     /**
