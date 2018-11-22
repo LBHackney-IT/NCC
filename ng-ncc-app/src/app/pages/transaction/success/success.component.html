@@ -64,7 +64,7 @@
 </form>
 
 <!-- Confirmation modal. -->
-<app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+<app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="returnToPayment()">
     Message sent successfully.
 </app-dialogue>
 
