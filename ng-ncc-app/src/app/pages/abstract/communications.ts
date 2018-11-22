@@ -205,27 +205,7 @@ export class PageCommunications implements OnInit, OnDestroy {
         if (observe) {
             const subscription = observe.subscribe(
                 (feedback) => {
-                    /*
-                    {
-                      "response": {
-                        "content": {
-                          "from_email": "hackney.council.housing.contact@notifications.service.gov.uk",
-                          "body": "...",
-                          "subject": "Your Call With Us"
-                        },
-                        "id": "3151d743-c118-42a7-bad6-85c57c8c1555",
-                        "reference": null,
-                        "uri": "https://api.notifications.service.gov.uk/v2/notifications/...",
-                        "template": {
-                          "id": "6dc4b959-62e1-4c28-abef-faf67376b372",
-                          "uri": "https://api.notifications.service.gov.uk/services/...",
-                          "version": 2
-                        }
-                      }
-                    }
-                    */
                     this.modal.confirmed = true;
-
                     this.UHTrigger.sentComms(template_name, method, parameters);
                 },
                 (error) => {
@@ -245,6 +225,9 @@ export class PageCommunications implements OnInit, OnDestroy {
         return index;
     }
 
+    /**
+     *
+     */
     commsError() {
         this._error = true;
     }

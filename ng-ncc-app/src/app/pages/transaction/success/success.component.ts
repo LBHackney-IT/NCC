@@ -1,4 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { IParisResponse } from '../../../interfaces/paris-response';
@@ -16,17 +17,22 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
 
     data: IParisResponse;
 
-    Transaction: TransactionService;
     PageTitle: PageTitleService;
+    router: Router;
+    Transaction: TransactionService;
 
     constructor(private injector: Injector) {
         super(injector);
-        this.Transaction = this.injector.get(TransactionService);
         this.PageTitle = this.injector.get(PageTitleService);
+        this.router = this.injector.get(Router);
+        this.Transaction = this.injector.get(TransactionService);
 
         this.PageTitle.set(PAGES.TRANSACTION_SUCCESS.label);
     }
 
+    /**
+     *
+     */
     ngOnInit() {
         super.ngOnInit();
         this.data = this.Transaction.data;
@@ -38,7 +44,6 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
     getCallerName(): string {
         return this.Call.isCallerIdentified() ? this.Call.getCaller().getName() : 'anonymous';
     }
-
 
     /**
      *
@@ -53,6 +58,14 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
             };
             console.log('parameters:', this.preview.parameters);
         }
+    }
+
+    /**
+     *
+     */
+    returnToPayment() {
+        // Go (back?) to the rent payment page.
+        this.router.navigate([`${PAGES.RENT.route}/${PAGES.RENT_PAYMENT.route}`]);
     }
 
 }
