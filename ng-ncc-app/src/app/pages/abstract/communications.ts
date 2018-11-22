@@ -104,7 +104,6 @@ export class PageCommunications implements OnInit, OnDestroy {
      */
     selectedOption(option: CommsOption) {
         this.selected_option = option;
-        console.log('selected comms template:', this.selected_option);
         this.updatePreview();
     }
 
@@ -167,7 +166,6 @@ export class PageCommunications implements OnInit, OnDestroy {
         }
 
         if (CONTACT.METHOD_POST === this.selected_details.method) {
-            console.log('Sending something by post, nothing more to do.');
             // TODO Record that something is going to be sent by post.
             this.modal.confirmed = true;
             return;
@@ -186,46 +184,24 @@ export class PageCommunications implements OnInit, OnDestroy {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
                 // TODO Record that something was sent via email.
-                console.log('send email', address, template_id);
                 observe = this.NotifyAPI.sendEmail(address, template_id, parameters);
                 break;
 
             case CONTACT.METHOD_SMS:
                 // Send a text message.
                 // TODO Record that something was sent via SMS.
-                console.log('send sms', address, template_id);
                 observe = this.NotifyAPI.sendSMS(address, template_id, parameters);
                 break;
 
             default:
-                console.log('Unsupported method:', method);
+                // console.log('Unsupported method:', method);
                 this._sending = false;
         }
 
         if (observe) {
             const subscription = observe.subscribe(
                 (feedback) => {
-                    /*
-                    {
-                      "response": {
-                        "content": {
-                          "from_email": "hackney.council.housing.contact@notifications.service.gov.uk",
-                          "body": "...",
-                          "subject": "Your Call With Us"
-                        },
-                        "id": "3151d743-c118-42a7-bad6-85c57c8c1555",
-                        "reference": null,
-                        "uri": "https://api.notifications.service.gov.uk/v2/notifications/...",
-                        "template": {
-                          "id": "6dc4b959-62e1-4c28-abef-faf67376b372",
-                          "uri": "https://api.notifications.service.gov.uk/services/...",
-                          "version": 2
-                        }
-                      }
-                    }
-                    */
                     this.modal.confirmed = true;
-
                     this.UHTrigger.sentComms(template_name, method, parameters);
                 },
                 (error) => {
@@ -245,6 +221,9 @@ export class PageCommunications implements OnInit, OnDestroy {
         return index;
     }
 
+    /**
+     *
+     */
     commsError() {
         this._error = true;
     }
