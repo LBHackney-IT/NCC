@@ -56,7 +56,6 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
                 date: this.data.date,
                 'payment ref': this.data.receiptnumber
             };
-            console.log('parameters:', this.preview.parameters);
         }
     }
 

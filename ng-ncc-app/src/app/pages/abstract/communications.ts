@@ -104,7 +104,6 @@ export class PageCommunications implements OnInit, OnDestroy {
      */
     selectedOption(option: CommsOption) {
         this.selected_option = option;
-        console.log('selected comms template:', this.selected_option);
         this.updatePreview();
     }
 
@@ -167,7 +166,6 @@ export class PageCommunications implements OnInit, OnDestroy {
         }
 
         if (CONTACT.METHOD_POST === this.selected_details.method) {
-            console.log('Sending something by post, nothing more to do.');
             // TODO Record that something is going to be sent by post.
             this.modal.confirmed = true;
             return;
@@ -186,19 +184,17 @@ export class PageCommunications implements OnInit, OnDestroy {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
                 // TODO Record that something was sent via email.
-                console.log('send email', address, template_id);
                 observe = this.NotifyAPI.sendEmail(address, template_id, parameters);
                 break;
 
             case CONTACT.METHOD_SMS:
                 // Send a text message.
                 // TODO Record that something was sent via SMS.
-                console.log('send sms', address, template_id);
                 observe = this.NotifyAPI.sendSMS(address, template_id, parameters);
                 break;
 
             default:
-                console.log('Unsupported method:', method);
+                // console.log('Unsupported method:', method);
                 this._sending = false;
         }
 
