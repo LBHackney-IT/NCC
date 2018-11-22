@@ -8,6 +8,7 @@ import { LogCallType } from '../../classes/log-call-type.class';
 import { CallService } from '../../services/call.service';
 import { PageLogCallNature } from '../abstract/log-call-nature';
 import { PageTitleService } from '../../services/page-title.service';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
     selector: 'app-page-log-call',
@@ -19,12 +20,13 @@ export class PageLogCallComponent extends PageLogCallNature implements OnInit {
 
     previous_calls: { [propKey: string]: any }[];
 
-    constructor(private router: Router, private Call: CallService, private PageTitle: PageTitleService) {
+    constructor(private router: Router, private Call: CallService, private Notes: NotesService, private PageTitle: PageTitleService) {
         super();
     }
 
     ngOnInit() {
         this.PageTitle.set(PAGES.LOG_CALL.label);
+        this.Notes.disable();
     }
 
     /**

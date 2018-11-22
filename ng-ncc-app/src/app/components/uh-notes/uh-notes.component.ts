@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@a
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { NotesService } from '../../services/notes.service';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { NOTES } from '../../constants/notes.constant';
 
@@ -27,13 +27,18 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     _rows: INCCUHNote[];
     _filtered: INCCUHNote[];
 
-    constructor(private NCCAPI: NCCAPIService) { }
+    constructor(private Notes: NotesService) { }
 
     /**
      *
      */
     ngOnInit() {
         this._loading = false;
+
+        // Subscribe to note addition events from the Notes service.
+        this.Notes.noteWasAdded()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => { this._loadNotes() });
     }
 
     /**
@@ -64,7 +69,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     *
+     * Fetches a list of notes associated with the specified tenancy reference.
      */
     _loadNotes() {
         if (this._loading || null === this.tenancyReference) {
@@ -72,7 +77,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this._loading = true;
-        this.NCCAPI.getDiaryAndNotes(this.tenancyReference)
+        this.Notes.load(this.tenancyReference)
             .pipe(takeUntil(this._destroyed$))
             .pipe(finalize(() => {
                 this._loading = false;
@@ -87,7 +92,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     *
+     * Sets the filter on the list of notes.
      */
     _filterNotes() {
         const min_date = this.minDate ? this.minDate.toISOString() : null;
@@ -111,7 +116,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                         key => {
                             const term = this.filter[key];
                             if (term && 'null' !== term) {
-                                outcome = outcome && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase()));
+                                outcome = outcome && (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
                             }
                         });
                 }
@@ -141,7 +146,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      * Returns the call reason for a note, or "Other" if unspecified.
      */
     getCallReason(note: INCCUHNote): string {
-        return note.callreason ? note.callReasonType : 'Other';
+        return note.callReasonType ? note.callReasonType : 'Other';
     }
 
 }

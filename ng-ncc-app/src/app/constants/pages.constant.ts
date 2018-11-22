@@ -6,6 +6,7 @@ export const PAGES = {
     IDENTIFY_TENANTS: { route: 'tenants', label: 'Caller Identification' },
     ADDITIONAL_REASON: { route: 'log-additional', label: 'Add another call reason' },
     VIEW_NOTES: { route: 'view-notes', label: 'See caller notes' },
+    ADD_NOTES: { route: 'add-notes', label: 'Add notes' },
     COMMS: { route: 'comms', label: 'Send emails, texts, and letters' },
     RENT: { route: 'rent', label: 'Rent' },
     RENT_SUMMARY: { route: 'summary', label: 'Statement' },
