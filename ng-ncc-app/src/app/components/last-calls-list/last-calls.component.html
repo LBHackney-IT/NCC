@@ -25,7 +25,7 @@
                 <td class="govuk-table__cell">{{ row.callreason || 'Other' }}</td>
                 <td class="govuk-table__cell">{{ row.createdon | date: "dd/MM/yyyy HH:mm" }}</td>
                 <td class="govuk-table__cell">
-                    <a href="" (click)="beginAddNotes(row)">View</a>
+                    <a href="" *ngIf="row.housingref" (click)="beginAddNotes(row)">View</a>
                 </td>
             </tr>
         </tbody>
