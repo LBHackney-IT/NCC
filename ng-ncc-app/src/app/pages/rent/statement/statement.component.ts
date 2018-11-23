@@ -94,6 +94,18 @@ export class PageRentStatementComponent extends PageCommunications implements On
         this.selected_details = null;
     }
 
+    /**
+     *
+     */
+    getButtonText(): string {
+        switch (this.selected_details.method) {
+            case CONTACT.METHOD_EMAIL:
+                return 'Send';
+            default:
+                return 'Print';
+        }
+    }
+
 
     /**
      * Attempts to send the selected message via the Notify API.
