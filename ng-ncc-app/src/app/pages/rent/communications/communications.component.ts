@@ -37,10 +37,12 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
         super.selectedOption(option);
 
         // This page will provide access to GOV.UK Notify templates that will require DPA answers from the caller.
-        if (option.isSensitive()) {
-            this.modal.dpa = true; // display the dialogue for prompting for DPA answers.
-        } else {
-            this.updatePreview();
+        if (option) {
+            if (option.isSensitive()) {
+                this.modal.dpa = true; // display the dialogue for prompting for DPA answers.
+            } else {
+                this.updatePreview();
+            }
         }
     }
 
@@ -48,7 +50,7 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
      *
      */
     isSensitiveTemplateSelected(): boolean {
-        return this.selected_option.isSensitive();
+        return this.selected_option && this.selected_option.isSensitive();
     }
 
     /**
@@ -63,6 +65,14 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
                 'Rent amount': formatCurrency(this.account_details.rent, this.locale, '£')
             };
         }
+    }
+
+    /**
+     *
+     */
+    commsSuccess() {
+        // Reset the comms information.
+        this.resetComms();
     }
 
 }

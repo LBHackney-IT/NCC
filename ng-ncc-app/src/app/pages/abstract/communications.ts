@@ -1,4 +1,4 @@
-import { Injectable, Injector, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, Injector, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -18,9 +18,13 @@ import { CONTACT } from '../../constants/contact.constant';
 import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { UHTriggerService } from '../../services/uhtrigger.service';
 import { PageTitleService } from '../../services/page-title.service';
+import { CommsMethodSelectComponent } from '../../components/comms-method-select/comms-method-select.component';
+import { CommsTemplatesComponent } from '../../components/comms-templates/comms-templates.component';
 
 @Injectable()
 export class PageCommunications implements OnInit, OnDestroy {
+    @ViewChild(CommsMethodSelectComponent) commsMethodSelect: CommsMethodSelectComponent;
+    @ViewChild(CommsTemplatesComponent) commsTemplates: CommsTemplatesComponent;
 
     private _destroyed$ = new Subject();
 
@@ -72,6 +76,11 @@ export class PageCommunications implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    resetComms() {
+        this.commsMethodSelect.reset();
+        this.commsTemplates.reset();
     }
 
     /**
@@ -220,6 +229,11 @@ export class PageCommunications implements OnInit, OnDestroy {
     trackByIndex(index: number, item: {}): number {
         return index;
     }
+
+    /**
+     *
+     */
+    commsSuccess() { }
 
     /**
      *

@@ -15,4 +15,12 @@ export class PageCommsComponent extends PageCommunications implements OnInit {
         super.ngOnInit();
         this.PageTitle.set(PAGES.COMMS.label);
     }
+
+    /**
+     *
+     */
+    commsSuccess() {
+        this.resetComms();
+    }
+
 }
