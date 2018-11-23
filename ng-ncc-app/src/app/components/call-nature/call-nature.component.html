@@ -43,10 +43,25 @@
                                 [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="reason">
                             <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                         </div>
-                        <div class="govuk-radios__conditional" id="conditional-how-contacted-conditional-3"
-                            [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
-                            *ngIf="'Rent card' === reason.label">
-                            <p class="govuk-body">You will need to submit a request for a Rent Card in UHT.</p>
+
+                        <!-- Secondary labels. -->
+
+                        <!-- Applying for a rent card... -->
+                        <div class="govuk-radios__conditional" [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
+                            *ngIf="'Apply for a rent card' === reason.label">
+                            <p class="govuk-body">Do this on Universal Housing.</p>
+                        </div>
+
+                        <!-- Former tenancy arrears... -->
+                        <div class="govuk-radios__conditional" [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
+                            *ngIf="'Check Former Tenancy Arrears' === reason.label">
+                            <p class="govuk-body">Do this on Universal Housing.</p>
+                        </div>
+
+                        <!-- Universal Credit... -->
+                        <div class="govuk-radios__conditional" [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
+                            *ngIf="'Discuss Universal Credit' === reason.label">
+                            <p class="govuk-body">See Universal Housing for breakdown of charges.</p>
                         </div>
                     </ng-template>
 
