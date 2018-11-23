@@ -40,45 +40,8 @@
                     https://stackoverflow.com/questions/6061869/are-block-level-elements-allowed-inside-inline-level-elements-in-html5
                     -->
 
-                    <!-- The contact's name. -->
-                    <span class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                        <span class="govuk-heading-m govuk-!-margin-bottom-1">{{ row.getName() }}</span>
-                        <!--<p class="govuk-body-s govuk-!-margin-bottom-0">
-                            <b>Ms J Bell</b> &ndash; <span>Advocate/Secondary contact</span>
-                        </p>-->
-                    </span>
+                    <app-address-tenant [tenant]="row"></app-address-tenant>
 
-                    <!-- Contact details. -->
-                    <span class="govuk-grid-column-one-half">
-                        <span class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</span>
-
-                        <app-value-list class="govuk-body-s">
-                            <app-value-list-label>Telephone</app-value-list-label>
-                            <app-value-list-value>
-                                <div *ngFor="let number of row.getTelephoneNumbers(); trackBy: trackByMethod">
-                                    {{ number }}
-                                </div>
-                                <em *ngIf="row.hasNoTelephoneNumbers()">none</em>
-                            </app-value-list-value>
-
-                            <app-value-list-label>Email</app-value-list-label>
-                            <app-value-list-value>
-                                <div *ngFor="let email of row.getEmailAddresses(); trackBy: trackByMethod">
-                                    {{ email }}
-                                </div>
-                                <em *ngIf="row.hasNoEmailAddresses()">none</em>
-                            </app-value-list-value>
-                        </app-value-list>
-                    </span>
-
-                    <!-- DPA. -->
-                    <span class="govuk-grid-column-one-half">
-                        <span class="govuk-heading-s govuk-!-margin-bottom-2">DPA</span>
-                        <app-value-list class="govuk-body-s">
-                            <app-value-list-label>Date of birth</app-value-list-label>
-                            <app-value-list-value>{{ row.getDateOfBirth() }}</app-value-list-value>
-                        </app-value-list>
-                    </span>
                 </label>
 
                 <button class="link-button govuk-!-margin-bottom-3" type="button" name="button" (click)="editContactDetails(row)">
