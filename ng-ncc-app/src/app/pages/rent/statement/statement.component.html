@@ -39,6 +39,7 @@
         <div class="govuk-!-margin-top-5 govuk-!-margin-bottom-5">
             <app-comms-method-select
                 [disableSMS]="true"
+                [postText]="'Print the statement by clicking the \'print\' button in the window above.'"
                 (selected)="onSelectCommsMethod($event)"
                 (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
         </div>

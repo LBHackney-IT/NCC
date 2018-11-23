@@ -21,6 +21,7 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
     @Input() disableEmail?: boolean;
     @Input() disablePost?: boolean;
     @Input() disableSMS?: boolean;
+    @Input() postText?: string;
 
     // Pass the selected comms method and details through an [Observable] event.
     @Output() selected = new EventEmitter<CommsSelection>();
