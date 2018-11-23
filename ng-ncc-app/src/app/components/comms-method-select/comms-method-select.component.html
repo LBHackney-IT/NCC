@@ -88,10 +88,15 @@
             </div>
             <div class="govuk-radios__conditional" id="method-by-post" *ngIf="isPostSelected()">
 
-                <p class="govuk-body">
-                    This letter won’t be sent out automatically. You will need to write down the address and send this yourself.<br>
-                    Click ‘Send’ to capture that you are sending a letter yourself.
+                <p class="govuk-body" *ngIf="postText; else defaultPostText">
+                    {{ postText }}
                 </p>
+                <ng-template #defaultPostText>
+                    <p class="govuk-body">
+                        This letter won’t be sent out automatically. You will need to write down the address and send this yourself.<br>
+                        Click ‘Send’ to capture that you are sending a letter yourself.
+                    </p>
+                </ng-template>
 
             </div>
         </div>

@@ -21,6 +21,7 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
     @Input() disableEmail?: boolean;
     @Input() disablePost?: boolean;
     @Input() disableSMS?: boolean;
+    @Input() postText?: string;
 
     // Pass the selected comms method and details through an [Observable] event.
     @Output() selected = new EventEmitter<CommsSelection>();
@@ -67,7 +68,6 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
      *
      */
     _useCallerInformation() {
-        console.log('No contact details found, using caller information.');
         const details = new ContactDetailsUpdate;
         details.mobile = this.caller.getTelephoneNumbers();
         details.email = this.caller.getEmailAddresses();
@@ -76,7 +76,6 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
 
     _setDefaults() {
         if (this.details) {
-            console.log('Setting defaults...');
             this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email || [].concat(this.details.email).pop();
             this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile || [].concat(this.details.mobile).pop();
         }
