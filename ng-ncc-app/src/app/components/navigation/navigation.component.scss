@@ -9,6 +9,7 @@ $navigation-menu-separator-colour: #CCC !default;
 
 ////////////////////
 
+@import "../../../assets/scss/vars.scss";
 @import "~govuk-frontend/settings/media-queries";
 
 // The "navigation" sidebar is set to be hidden if the screen is narrower than a typical tablet device.
@@ -90,4 +91,10 @@ $navigation-menu-separator-colour: #CCC !default;
 
 .navigation__spacer {
     height: 1rem;
+}
+
+.navigation__heading {
+    display: block;
+    font-family: $govuk-font-family;
+    padding: 8px 30px 8px 14px;
 }

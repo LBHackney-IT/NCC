@@ -26,6 +26,8 @@
 
         <li class="navigation__separator"></li>
 
+        <li class="navigation__heading">This call:</li>
+
         <!-- Add another call reason. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.ADDITIONAL_REASON.route" [class.disabled]="!isCallActive() || disable_additional_reasons">
