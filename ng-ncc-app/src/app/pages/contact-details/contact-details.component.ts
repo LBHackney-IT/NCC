@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { IContactDetails } from '../../interfaces/contact-details';
@@ -19,20 +19,21 @@ import { PageTitleService } from '../../services/page-title.service';
 })
 export class PageContactDetailsComponent implements OnInit, OnDestroy {
 
+    // TODO it doesn't make much sense to create a new call (which happens from the identify tenant page) in order to edit contact details.
+    // I would think that editing contact details would be an option available from the navigation, once a tenant has been identified.
+    // However, this is how the feature was intended to work.
+
     private _destroyed$ = new Subject();
 
     MAX_OPTIONS = 0;        // maximum number of each contact method we can have for a caller (set to 0 for infinite).
+    caller: IdentifiedCaller;
     new_telephone: string[];
     new_mobile: string[];
     new_email: string[];
-    _saving: boolean;
+    saving: boolean;
     error: boolean;
     saving_error: boolean;
-
-    details: {
-        original: IContactDetails,
-        update: ContactDetailsUpdate
-    };
+    update: ContactDetailsUpdate
 
     constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService, private Call: CallService,
         private BackLink: BackLinkService, private PageTitle: PageTitleService) { }
@@ -40,20 +41,14 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.PageTitle.set(PAGES.EDIT_CONTACT_DETAILS.label);
 
-        this.details = {
-            original: null,
-            update: new ContactDetailsUpdate
-        };
-        this.new_telephone = [];
-        this.new_mobile = [];
-        this.new_email = [];
+        this._resetDetails();
 
         this.route.data
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
+            .pipe(take(1))
             .subscribe(
-                (data) => { this._buildDetails(data.details); },
+                (data: { caller: IdentifiedCaller, details: ContactDetailsUpdate }) => {
+                    this._buildDetails(data.caller, data.details);
+                },
                 () => { this.error = true; }
             );
 
@@ -67,33 +62,57 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     }
 
     /**
+     *
+     */
+    private _resetDetails() {
+        this.update = new ContactDetailsUpdate;
+        this.new_telephone = [];
+        this.new_mobile = [];
+        this.new_email = [];
+    }
+
+    /**
      * Populates our form model with the identified caller's existing details.
      */
-    _buildDetails(details: IContactDetails) {
-        this.details.original = details;
-        // this.details.update = new ContactDetailsUpdate;
+    private _buildDetails(caller: IdentifiedCaller, details: ContactDetailsUpdate) {
+        this.caller = caller;
 
-        this.details.update.telephone = [];
-        // this.details.telephone = this.caller.getTelephoneNumbers();
-        // - currently no distinction between mobile and telephone numbers.
-        this.details.update.mobile = [
-            details.telephone1,
-            details.telephone2,
-            details.telephone3
-        ].filter(row => row);
-        this.details.update.email = [
-            details.emailAddress
-        ].filter(row => row);
+        // TELEPHONE
+        // Do we have existing details from the NCC API?
+        if (details && details.telephone) {
+            this.update.telephone = details.telephone;
+        } else {
+            // "Import" telephone numbers from the Hackney API results.
+            // - currently no distinction between mobile and telephone numbers.
+        }
+
+        // MOBILE
+        // Do we have existing details from the NCC API?
+        if (details && details.mobile) {
+            this.update.mobile = details.mobile;
+        } else {
+            // "Import" mobile numbers from the Hackney API results.
+            this.update.mobile = caller.getTelephoneNumbers();
+        }
+
+        // EMAIL
+        // Do we have existing details from the NCC API?
+        if (details && details.email) {
+            this.update.email = details.email;
+        } else {
+            // "Import" email addresses from the Hackney API results.
+            this.update.email = caller.getEmailAddresses();
+        }
 
         // If there's only one of each contact method, set it as the default.
-        if (1 === this.details.update.telephone.length) {
-            this.details.update.default.telephone = this.details.update.telephone[0];
+        if (1 === this.update.telephone.length) {
+            this.update.default.telephone = this.update.telephone[0];
         }
-        if (1 === this.details.update.mobile.length) {
-            this.details.update.default.mobile = this.details.update.mobile[0];
+        if (1 === this.update.mobile.length) {
+            this.update.default.mobile = this.update.mobile[0];
         }
-        if (1 === this.details.update.email.length) {
-            this.details.update.default.email = this.details.update.email[0];
+        if (1 === this.update.email.length) {
+            this.update.default.email = this.update.email[0];
         }
     }
 
@@ -104,7 +123,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         // Only add a new field if there are no empty fields.
         if (this._hasNoEmptyFields(this.new_telephone)) {
             this.new_telephone.push(null);
-            this.details.update.default.telephone = null;
+            this.update.default.telephone = null;
         }
     }
 
@@ -115,7 +134,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         // Only add a new field if there are no empty fields.
         if (this._hasNoEmptyFields(this.new_mobile)) {
             this.new_mobile.push(null);
-            this.details.update.default.mobile = null;
+            this.update.default.mobile = null;
         }
     }
 
@@ -126,7 +145,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         // Only add a new field if there are no empty fields.
         if (this._hasNoEmptyFields(this.new_email)) {
             this.new_email.push(null);
-            this.details.update.default.email = null;
+            this.update.default.email = null;
         }
     }
 
@@ -134,7 +153,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
      * Returns TRUE if we have the maximum number of telephone numbers allowed.
      */
     hasEnoughTelephoneNumbers(): boolean {
-        const existing = this.details.update.telephone.length;
+        const existing = this.update.telephone.length;
         const added = this.new_telephone.length;
         return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
@@ -143,7 +162,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
      * Returns TRUE if we have the maximum number of mobile numbers allowed.
      */
     hasEnoughMobileNumbers(): boolean {
-        const existing = this.details.update.mobile.length;
+        const existing = this.update.mobile.length;
         const added = this.new_mobile.length;
         return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
@@ -152,7 +171,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
      * Returns TRUE if we have the maximum number of email addresses allowed.
      */
     hasEnoughEmailAddresses(): boolean {
-        const existing = this.details.update.email.length;
+        const existing = this.update.email.length;
         const added = this.new_email.length;
         return this.MAX_OPTIONS && this.MAX_OPTIONS <= (existing + added);
     }
@@ -178,20 +197,20 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
      */
     saveDetails() {
         const caller = this.Call.getCaller();
-        const new_details = Object.assign(new ContactDetailsUpdate, this.details.update); // Create a copy.
+        const new_details = Object.assign(new ContactDetailsUpdate, this.update); // Create a copy.
         new_details.telephone = new_details.telephone.concat(this.new_telephone);
         new_details.mobile = new_details.mobile.concat(this.new_mobile);
         new_details.email = new_details.email.concat(this.new_email);
 
         new_details.sanitise();
 
-        this._saving = true;
+        this.saving = true;
         this.saving_error = false;
 
         const subscription = this.NCCAPI.saveContactDetails(caller.getContactID(), new_details)
             .subscribe(
                 () => {
-                    this.details.update = new_details;
+                    this.update = new_details;
                     this.new_telephone = [];
                     this.new_mobile = [];
                     this.new_email = [];
@@ -199,7 +218,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
                 () => { this.saving_error = true; },
                 () => {
                     subscription.unsubscribe();
-                    this._saving = false;
+                    this.saving = false;
                 }
             );
     }
