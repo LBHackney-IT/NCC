@@ -33,7 +33,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     saving: boolean;
     error: boolean;
     saving_error: boolean;
-    update: ContactDetailsUpdate
+    update: ContactDetailsUpdate;
 
     constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService, private Call: CallService,
         private BackLink: BackLinkService, private PageTitle: PageTitleService) { }
