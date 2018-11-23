@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
+import * as moment from 'moment';
 
 import { NotesService } from '../../services/notes.service';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
@@ -95,8 +96,8 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      * Sets the filter on the list of notes.
      */
     _filterNotes() {
-        const min_date = this.minDate ? this.minDate.toISOString() : null;
-        const max_date = this.maxDate ? this.maxDate.toISOString() : null;
+        const min_date = this.minDate ? moment(this.minDate).format('YYYYMMDDHHmmss') : null;
+        const max_date = this.maxDate ? moment(this.maxDate).format('YYYYMMDDHHmmss') : null;
 
         this._filtered = this._rows.filter(
             item => {
@@ -104,10 +105,10 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
 
                 // Check against the provided dates (if set).
                 if (outcome && min_date) {
-                    outcome = item.createdOn >= min_date;
+                    outcome = item.createdOnSort >= min_date;
                 }
                 if (outcome && max_date) {
-                    outcome = item.createdOn < max_date;
+                    outcome = item.createdOnSort < max_date;
                 }
 
                 if (outcome && this.filter) {
