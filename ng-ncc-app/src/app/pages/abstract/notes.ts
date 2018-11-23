@@ -86,6 +86,7 @@ export abstract class PageNotes extends PageHistory implements OnInit {
         this.filter_reason = null;
         this.filter_tenant = null;
         this.filterNotes();
+        this.filterByDate();
     }
 
 }
