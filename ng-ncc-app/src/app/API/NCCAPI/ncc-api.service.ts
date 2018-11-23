@@ -196,7 +196,7 @@ export class NCCAPIService {
     /**
      * Obtains contact details for a person, including defaults.
      */
-    getContactDetails(crm_contact_id: string) {
+    getContactDetails(crm_contact_id: string): Observable<ContactDetailsUpdate> {
         const parameters = {
             contactid: crm_contact_id
         };

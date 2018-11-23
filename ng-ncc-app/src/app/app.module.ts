@@ -40,6 +40,7 @@ import { PageViewNotesComponent } from './pages/view-notes/view-notes.component'
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { AddressResultTenantComponent } from './components/address-tenants-results/tenant/tenant.component';
 import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { AgentComponent } from './components/agent/agent.component';
@@ -81,6 +82,7 @@ import { WarningComponent } from './components/warning/warning.component';
 
 @NgModule({
     declarations: [
+        AddressResultTenantComponent,
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
         AgentComponent,
