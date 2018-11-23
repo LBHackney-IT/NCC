@@ -61,6 +61,17 @@ export class UHTriggerService {
     }
 
     /**
+     * Called when a statement was sent.
+     */
+    sentStatement(method: string) {
+        if (this.Call.isCallerIdentified()) {
+            this.Call.recordAutomaticNote(`Statement sent by ${method}.`)
+                .pipe(take(1))
+                .subscribe();
+        }
+    }
+
+    /**
      * Handle a comms template sent as a result of the Rent call type.
      */
     _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {

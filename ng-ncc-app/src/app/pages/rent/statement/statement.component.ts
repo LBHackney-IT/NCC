@@ -12,6 +12,7 @@ import { CommsSelection } from '../../../classes/comms-selection.class';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { INotifyAPIJSONResult } from '../../../interfaces/notify-api-json-result';
 import { INotifyStatementParameters } from '../../../interfaces/notify-statement-parameters';
+import { UHTriggerService } from '../../../services/uhtrigger.service';
 
 @Component({
     selector: 'app-rent-statement',
@@ -33,6 +34,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
         super(injector);
         this.BackLink = this.injector.get(BackLinkService);
         this.sanitiser = this.injector.get(DomSanitizer);
+        this.UHTrigger = this.injector.get(UHTriggerService);
     }
 
     ngOnInit() {
@@ -140,6 +142,9 @@ export class PageRentStatementComponent extends PageCommunications implements On
                         (json: INotifyAPIJSONResult) => {
                             if (1 === json.response) {
                                 this.modal.confirmed = true;
+
+                                // Create an automatic note.
+                                this.UHTrigger.sentStatement('email');
                             } else {
                                 this.modal.error = true;
                             }
@@ -147,6 +152,13 @@ export class PageRentStatementComponent extends PageCommunications implements On
                         () => {
                             this.modal.error = true;
                         });
+                break;
+
+            case CONTACT.METHOD_POST:
+                this.modal.confirmed = true;
+
+                // Create an automatic note.
+                this.UHTrigger.sentStatement('post');
                 break;
         }
     }
