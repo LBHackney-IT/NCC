@@ -190,7 +190,7 @@ export class CallService {
                     const call_type = this.call_nature.call_type.label;
                     const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
                         this.call_nature.call_reason.label;
-                    this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`)
+                    this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`);
                 });
         }
     }
@@ -374,7 +374,6 @@ export class CallService {
      */
     recordActionDiaryNote(note_content: string) {
         const tenancy_reference = this.getTenancyReference();
-        console.log('do we have a tenancy reference?', tenancy_reference);
         if (tenancy_reference) {
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
             const note = `${this.caller.getName()}: ${note_content}`;
