@@ -37,7 +37,11 @@ export class ManageATenancyAPIService {
                 map((data: any) => {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
-                    return data.results as IAccountDetails;
+                    const account: IAccountDetails = data.results;
+
+                    // For consistency across the app, the current balance returned from the API has to be reversed.
+                    account.currentBalance = -account.currentBalance;
+                    return account;
                 })
             );
     }
