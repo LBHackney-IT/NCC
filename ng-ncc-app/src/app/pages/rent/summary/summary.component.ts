@@ -88,14 +88,14 @@ export class PageRentSummaryComponent implements OnInit, OnDestroy {
      *
      */
     isInCredit(): boolean {
-        return this.account_details && this.account_details.currentBalance < 0;
+        return this.account_details && this.account_details.currentBalance > 0;
     }
 
     /**
      *
      */
     isInDebit(): boolean {
-        return this.account_details && this.account_details.currentBalance > 0;
+        return this.account_details && this.account_details.currentBalance < 0;
     }
 
 }
