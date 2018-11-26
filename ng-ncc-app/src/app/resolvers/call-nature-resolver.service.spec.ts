@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CallNatureResolverService } from './call-nature-resolver.service';
+import { CallNatureResolver } from './call-nature-resolver.service';
 
-describe('CallNatureResolverService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [CallNatureResolverService]
+describe('CallNatureResolver', () => {
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [CallNatureResolver]
+        });
     });
-  });
 
-  it('should be created', inject([CallNatureResolverService], (service: CallNatureResolverService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should be created', inject([CallNatureResolver], (service: CallNatureResolver) => {
+        expect(service).toBeTruthy();
+    }));
 });

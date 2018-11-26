@@ -1,12 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
 
 import { BackLinkService } from './back-link.service';
 
-describe('BackLinkService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+let httpClientSpy: { get: jasmine.Spy };
+let BackLink: BackLinkService;
 
-  it('should be created', () => {
-    const service: BackLinkService = TestBed.get(BackLinkService);
-    expect(service).toBeTruthy();
-  });
+describe('BackLinkService', () => {
+    beforeEach(() => {
+        // from the Angular tutorial: https://angular.io/guide/testing#testing-http-services
+        httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        BackLink = new BackLinkService(<any>httpClientSpy);
+    });
+
+    it('should be created', () => {
+        expect(BackLink).toBeTruthy();
+    }));
 });

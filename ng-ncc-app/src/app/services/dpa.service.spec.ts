@@ -1,12 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
 
 import { DPAService } from './dpa.service';
 
-describe('DPAService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+let httpClientSpy: { get: jasmine.Spy };
+let DPA: DPAService;
 
-  it('should be created', () => {
-    const service: DPAService = TestBed.get(DPAService);
-    expect(service).toBeTruthy();
-  });
+describe('DPAService', () => {
+    beforeEach(() => {
+        // from the Angular tutorial: https://angular.io/guide/testing#testing-http-services
+        httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        DPA = new DPAService(<any>httpClientSpy);
+    });
+
+    it('should be created', () => {
+        expect(DPA).toBeTruthy();
+    }));
 });

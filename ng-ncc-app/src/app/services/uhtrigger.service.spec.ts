@@ -1,12 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
 
 import { UHTriggerService } from './uhtrigger.service';
 
-describe('UHTriggerService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+let httpClientSpy: { get: jasmine.Spy };
+let UHTrigger: UHTriggerService;
 
-  it('should be created', () => {
-    const service: UHTriggerService = TestBed.get(UHTriggerService);
-    expect(service).toBeTruthy();
-  });
+describe('UHTriggerService', () => {
+    beforeEach(() => {
+        // from the Angular tutorial: https://angular.io/guide/testing#testing-http-services
+        httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        UHTrigger = new UHTriggerService(<any>httpClientSpy);
+    });
+
+    it('should be created', () => {
+        expect(UHTrigger).toBeTruthy();
+    }));
 });

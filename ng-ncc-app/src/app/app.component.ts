@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     @ViewChild(ContentAreaComponent) private contentArea: ContentAreaComponent;
     // This is a reference to an <app-content-area> component within this component.
 
+    title = 'Hackney Neighbourhood Call Centre';
     loading = false;
 
     private _destroyed$ = new Subject();

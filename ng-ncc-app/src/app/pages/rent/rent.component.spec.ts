@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageRentComponent } from './payment.component';
+import { PageRentComponent } from './rent.component';
 
 describe('PageRentComponent', () => {
     let component: PageRentComponent;
