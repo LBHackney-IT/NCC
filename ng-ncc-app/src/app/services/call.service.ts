@@ -143,13 +143,13 @@ export class CallService {
                         this.ticket_number = response.call.ticketNumber;
                         // console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
 
-                        // Create an automatic note mentioning the selected caller.
-                        this.createCallerNote();
-
                         // Handle the tenant's account data.
                         this.account = response.account;
                         this.accountSubject.next(response.account);
                         console.log(`Account details were obtained.`);
+
+                        // Create an automatic note mentioning the selected caller.
+                        this.createCallerNote();
 
                         // Enable the add note form.
                         const settings = {
@@ -177,12 +177,20 @@ export class CallService {
     createCallerNote() {
         if (this.call_id) {
             const name = this.caller.isAnonymous() ? 'anonymous' : this.caller.getName();
+
             this.recordAutomaticNote(`Caller identified as ${name}.`)
+                .pipe(take(1))
                 .subscribe((data: INCCNote) => {
                     // Store the interaction ID from this note for later use (i.e. when and if making a payment.)
                     // Making a payment via Paris requires an interaction ID, and since we're creating this note we can obtain one from it.
                     this.interaction_id = data.interactionId;
                     console.log('Interaction ID is', this.interaction_id);
+
+                    // Record an Action Diary note about the call type and reason.
+                    const call_type = this.call_nature.call_type.label;
+                    const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
+                        this.call_nature.call_reason.label;
+                    this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`);
                 });
         }
     }
