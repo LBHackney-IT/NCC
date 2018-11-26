@@ -26,6 +26,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
     until_date: string;
     statement_url: SafeResourceUrl;
     sending: boolean;
+    success_message: string;
 
     private BackLink: BackLinkService;
     private sanitiser: DomSanitizer;
@@ -135,12 +136,14 @@ export class PageRentStatementComponent extends PageCommunications implements On
 
                 // Send the statement!
                 this.sending = true;
+                this.success_message = null;
                 this.NotifyAPI.sendEmailStatement(parameters)
                     .pipe(take(1))
                     .pipe(finalize(() => { this.sending = false; }))
                     .subscribe(
                         (json: INotifyAPIJSONResult) => {
                             if (1 === json.response) {
+                                this.success_message = 'Statement sent successfully.';
                                 this.modal.confirmed = true;
 
                                 // Create an automatic note.
@@ -155,6 +158,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
                 break;
 
             case CONTACT.METHOD_POST:
+                this.success_message = '\'Send by post\' confirmed.';
                 this.modal.confirmed = true;
 
                 // Create an automatic note.
