@@ -38,11 +38,7 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
                     this._options = this._filterTemplates(data);
                     this._loading = false;
 
-                    // If there's only one template, select it.
-                    if (1 === this._options.length) {
-                        this._selected = this._options[0];
-                        this.selectedTemplate();
-                    }
+                    this.reset();
                 },
                 (error) => {
                     this.error.emit();
@@ -52,6 +48,16 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    reset() {
+        // If there's only one template, select it.
+        if (1 === this._options.length) {
+            this._selected = this._options[0];
+        } else {
+            this._selected = null;
+        }
+        this.selectedTemplate();
     }
 
     trackByMethod(index: number, item: CommsOption): number {
