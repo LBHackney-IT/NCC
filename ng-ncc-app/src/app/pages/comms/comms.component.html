@@ -48,7 +48,7 @@
             </button>
 
             <!-- Confirmation modal. -->
-            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
                 Message sent successfully.
             </app-dialogue>
 

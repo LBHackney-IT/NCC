@@ -67,6 +67,14 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
     /**
      *
      */
+    reset() {
+        this.selection = new CommsSelection;
+        this.postText = null;
+    }
+
+    /**
+     *
+     */
     _useCallerInformation() {
         const details = new ContactDetailsUpdate;
         details.mobile = this.caller.getTelephoneNumbers();
