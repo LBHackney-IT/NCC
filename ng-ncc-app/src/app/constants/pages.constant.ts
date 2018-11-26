@@ -8,7 +8,7 @@ export const PAGES = {
     VIEW_NOTES: { route: 'view-notes', label: 'See caller notes' },
     ADD_NOTES: { route: 'add-notes', label: 'Add notes' },
     COMMS: { route: 'comms', label: 'Send emails, texts, and letters' },
-    RENT: { route: 'rent', label: 'Rent' },
+    RENT: { route: 'rent', label: 'View/pay rent' },
     RENT_SUMMARY: { route: 'summary', label: 'Statement' },
     RENT_TRANSACTIONS: { route: 'transactions', label: 'Transaction History' },
     RENT_PAYMENT: { route: 'make', label: 'Pay Rent' },
