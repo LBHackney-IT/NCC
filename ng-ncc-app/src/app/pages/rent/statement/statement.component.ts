@@ -167,4 +167,12 @@ export class PageRentStatementComponent extends PageCommunications implements On
         }
     }
 
+    /**
+     *
+     */
+    commsSuccess() {
+        // Go to the Transactions tab on the Rent page.
+        this.router.navigate([`${PAGES.RENT.route}/${PAGES.RENT_TRANSACTIONS.route}`]);
+    }
+
 }
