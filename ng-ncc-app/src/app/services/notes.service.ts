@@ -16,6 +16,7 @@ export class NotesService {
     _added$ = new Subject<void>();
     _name: string | null = null;
     _settings: IAddNoteParameters = null;
+    _enabled: boolean;
     _visible: boolean;
 
     constructor(private NCCAPI: NCCAPIService) { }
@@ -27,9 +28,10 @@ export class NotesService {
     enable(name: string, settings: IAddNoteParameters) {
         // console.log('Enable add note', name, settings);
         if (settings.tenancy_reference) {
-            this._visible = true;
+            this._enabled = true;
             this._name = name;
             this._settings = settings;
+            this._visible = false;
         } else {
             this.disable();
         }
@@ -39,15 +41,28 @@ export class NotesService {
      * Disable the add note form.
      */
     disable() {
-        this._visible = false;
+        this._enabled = false;
         this._name = null;
         this._settings = null;
+        this._visible = false;
+    }
+
+    toggle() {
+        this._visible = !this._visible;
+        console.log('note form visible', this._visible);
     }
 
     /**
      * Returns TRUE if the add note form is (and should be) enabled.
      */
     isEnabled(): boolean {
+        return this._enabled;
+    }
+
+    /**
+     * Returns TRUE if the add note form is (and should be) visible.
+     */
+    isVisible(): boolean {
         return this._visible;
     }
 

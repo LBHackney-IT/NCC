@@ -34,15 +34,15 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     constructor(private inj: Injector, private router: Router, private Call: CallService, private Notes: NotesService) {
         // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
         // https://stackoverflow.com/a/40026333/4073160
-        const parentComponent = this.inj.get(ContentAreaComponent);
-        if (parentComponent) {
-            // Subscribe to the ContentAreaComponent's eventScrolled [Observable] event.
-            parentComponent.eventScrolled
-                .pipe(
-                    takeUntil(this._destroyed$)
-                )
-                .subscribe(value => this._reposition(value));
-        }
+        // const parentComponent = this.inj.get(ContentAreaComponent);
+        // if (parentComponent) {
+        //     // Subscribe to the ContentAreaComponent's eventScrolled [Observable] event.
+        //     parentComponent.eventScrolled
+        //         .pipe(
+        //             takeUntil(this._destroyed$)
+        //         )
+        //         .subscribe(value => this._reposition(value));
+        // }
     }
 
     ngOnInit() {

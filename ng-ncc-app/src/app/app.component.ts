@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { initAll } from 'govuk-frontend';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
-import { ContentAreaComponent } from './components/content-area/content-area.component';
+// import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { AuthService } from './services/auth.service';
 import { BackLinkService } from './services/back-link.service';
 
@@ -18,7 +18,7 @@ import { BackLinkService } from './services/back-link.service';
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-    @ViewChild(ContentAreaComponent) private contentArea: ContentAreaComponent;
+    // @ViewChild(ContentAreaComponent) private contentArea: ContentAreaComponent;
     // This is a reference to an <app-content-area> component within this component.
 
     loading = false;
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
                     case event instanceof NavigationEnd:
                         // Scroll the content area to the top of its content.
-                        this.contentArea.scrollToTop();
+                        // this.contentArea.scrollToTop();
                         this.loading = false;
 
                         // By default disable (or hide) the back link.

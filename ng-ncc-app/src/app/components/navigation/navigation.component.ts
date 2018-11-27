@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CallService } from '../../services/call.service';
+import { NotesService } from '../../services/notes.service';
 import { PAGES } from '../../constants/pages.constant';
 
 @Component({
@@ -15,7 +16,7 @@ import { PAGES } from '../../constants/pages.constant';
 })
 export class NavigationComponent {
 
-    constructor(private Call: CallService, private router: Router) { }
+    constructor(private Call: CallService, private Notes: NotesService, private router: Router) { }
 
     page_defs = PAGES;
     previous_call_count: number = environment.previousCallCount;
@@ -82,6 +83,13 @@ export class NavigationComponent {
     getRentRoute(): string {
         const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_SUMMARY.route;
         return `${PAGES.RENT.route}/${page}`;
+    }
+
+    /**
+     *
+     */
+    toggleAddNote() {
+        this.Notes.toggle();
     }
 
 }

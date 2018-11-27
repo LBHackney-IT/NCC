@@ -40,6 +40,9 @@
             <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!isCallerIdentified()">
                 {{ page_defs.VIEW_NOTES.label }}
             </a>
+
+            <!-- For for taking notes. -->
+            <button class="navigation__notes" (click)="toggleAddNote()" type="button" name="button">Add note</button>
         </li>
 
         <!-- Send emails, texts and letters. -->
