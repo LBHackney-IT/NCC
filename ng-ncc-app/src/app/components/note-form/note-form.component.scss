@@ -18,36 +18,21 @@ $note-form-close-offset: 1rem !default;
 ////////////////////
 
 :host {
+    background: $note-form-bg-colour;
+    border: $note-form-border-width solid $note-form-border-colour;
+    color: $note-form-text-colour;
     display: block;
+    max-width: $note-form-max-width;
+    padding: $note-form-padding;
     position: absolute;
     right: 0;
     top: 50%;
     transform: translate3d(0,-50%,0);
-}
-
-.note-form__container {
-    // max-width: $note-form-max-width;
-    // width: 100%;
-    // position: absolute;
-    // right: 0;
-    // top: $note-form-top;
-    // // width: $note-form-width;
-    // z-index: $note-form-z-index;
-    // text-align: right;
-}
-
-.note-form__container__form {
-    background: $note-form-bg-colour;
-    border: $note-form-border-width solid $note-form-border-colour;
-    color: $note-form-text-colour;
-    margin-top: -$note-form-border-width;
-    padding: $note-form-padding;
-    position: relative;
-    text-align: left;
     width: 100%;
+    z-index: $note-form-z-index;
 }
 
-.note-form__container__close {
+.form__close {
     cursor: pointer;
     font-size: $note-form-close-size;
     display: block;
