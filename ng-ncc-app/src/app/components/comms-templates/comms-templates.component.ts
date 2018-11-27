@@ -81,7 +81,8 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
         // Filter out excluded templates (defined above).
         const excluded = this.exclude;
         options = options.filter((option: CommsOption) => {
-            const match_email = option.templates[CONTACT.METHOD_EMAIL] && -1 !== excluded.indexOf(option.templates[CONTACT.METHOD_EMAIL].id);
+            const match_email = option.templates[CONTACT.METHOD_EMAIL] &&
+                -1 !== excluded.indexOf(option.templates[CONTACT.METHOD_EMAIL].id);
             const match_sms = option.templates[CONTACT.METHOD_SMS] && -1 !== excluded.indexOf(option.templates[CONTACT.METHOD_SMS].id);
             const match_post = option.templates[CONTACT.METHOD_POST] && -1 !== excluded.indexOf(option.templates[CONTACT.METHOD_POST].id);
 

@@ -56,7 +56,7 @@ export class PagePlaygroundComponent implements OnInit {
      *
      */
     handleClose() {
-        console.log('Modal was closed.');
+        // console.log('Modal was closed.');
     }
 
     /**
@@ -64,7 +64,7 @@ export class PagePlaygroundComponent implements OnInit {
      */
     selectedTemplate(option: any) {
         if (option) {
-            console.log(option.name, option.isSensitive());
+            // console.log(option.name, option.isSensitive());
         }
     }
 
