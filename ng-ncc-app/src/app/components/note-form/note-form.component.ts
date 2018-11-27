@@ -87,11 +87,11 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      * Show or hide the note form.
      */
     toggle() {
-        this.expanded = !this.expanded;
+        this.Notes.toggle();
 
         // Set the focus on the comment field if the form is visible.
         // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
-        if (this.expanded) {
+        if (this.Notes.isVisible()) {
             setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
         } else {
             this.error = false;

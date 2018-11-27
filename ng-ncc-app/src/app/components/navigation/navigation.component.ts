@@ -42,10 +42,12 @@ export class NavigationComponent implements AfterViewChecked {
      *
      */
     private _positionNotesForm() {
-        const el = this.notesButton.nativeElement;
-        const rect = el.getBoundingClientRect();
+        if (this.notesButton) {
+            const el = this.notesButton.nativeElement;
+            const rect = el.getBoundingClientRect();
 
-        this.Notes.positionForm(rect.right, rect.top);
+            this.Notes.positionForm(rect.right, rect.top);
+        }
     }
 
     /**
@@ -108,6 +110,13 @@ export class NavigationComponent implements AfterViewChecked {
     getRentRoute(): string {
         const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_SUMMARY.route;
         return `${PAGES.RENT.route}/${page}`;
+    }
+
+    /**
+     *
+     */
+    areNotesEnabled(): boolean {
+        return this.Notes.isEnabled();
     }
 
     /**

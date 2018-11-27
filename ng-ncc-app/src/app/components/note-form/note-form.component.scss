@@ -18,15 +18,17 @@ $note-form-close-offset: 1rem !default;
 ////////////////////
 
 :host {
-    background: $note-form-bg-colour;
-    border: $note-form-border-width solid $note-form-border-colour;
-    color: $note-form-text-colour;
-    display: block;
     max-width: $note-form-max-width;
-    padding: $note-form-padding;
     position: absolute;
     width: 100%;
     z-index: $note-form-z-index;
+}
+
+.form {
+    background: $note-form-bg-colour;
+    border: $note-form-border-width solid $note-form-border-colour;
+    color: $note-form-text-colour;
+    padding: $note-form-padding;
 }
 
 .form__close {
