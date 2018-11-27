@@ -20,7 +20,6 @@ import { PageRentCommunicationsComponent } from './pages/rent/communications/com
 import { PageRentComponent } from './pages/rent/rent.component';
 import { PageRentPaymentComponent } from './pages/rent/payment/payment.component';
 import { PageRentStatementComponent } from './pages/rent/statement/statement.component';
-import { PageRentSummaryComponent } from './pages/rent/summary/summary.component';
 import { PageRentTransactionsComponent } from './pages/rent/transactions/transactions.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionErrorComponent } from './pages/transaction/error/error.component';
@@ -116,14 +115,6 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
-                // Rent > Summary.
-                path: PAGES.RENT_SUMMARY.route,
-                component: PageRentSummaryComponent,
-                resolve: {
-                    caller: IdentifiedCallerResolver
-                }
-            },
-            {
                 // Rent > Transactions.
                 path: PAGES.RENT_TRANSACTIONS.route,
                 component: PageRentTransactionsComponent,
@@ -151,7 +142,7 @@ export const AppRoutes: Routes = [
                 // Catch-all (which should go to the summary child page).
                 path: '',
                 pathMatch: 'full',
-                redirectTo: PAGES.RENT_SUMMARY.route
+                redirectTo: PAGES.RENT_TRANSACTIONS.route
             }
         ]
     },
