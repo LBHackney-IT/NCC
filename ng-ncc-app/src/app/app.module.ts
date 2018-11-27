@@ -29,7 +29,6 @@ import { PageRentCommunicationsComponent } from './pages/rent/communications/com
 import { PageRentComponent } from './pages/rent/rent.component';
 import { PageRentPaymentComponent } from './pages/rent/payment/payment.component';
 import { PageRentStatementComponent } from './pages/rent/statement/statement.component';
-import { PageRentSummaryComponent } from './pages/rent/summary/summary.component';
 import { PageRentTransactionsComponent } from './pages/rent/transactions/transactions.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionErrorComponent } from './pages/transaction/error/error.component';
@@ -129,7 +128,6 @@ import { AccountBalanceComponent } from './components/account-balance/account-ba
         PageRentComponent,
         PageRentPaymentComponent,
         PageRentStatementComponent,
-        PageRentSummaryComponent,
         PageRentTransactionsComponent,
         PageTransactionComponent,
         PageTransactionErrorComponent,
