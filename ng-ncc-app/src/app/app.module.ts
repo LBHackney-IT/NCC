@@ -29,7 +29,6 @@ import { PageRentCommunicationsComponent } from './pages/rent/communications/com
 import { PageRentComponent } from './pages/rent/rent.component';
 import { PageRentPaymentComponent } from './pages/rent/payment/payment.component';
 import { PageRentStatementComponent } from './pages/rent/statement/statement.component';
-import { PageRentSummaryComponent } from './pages/rent/summary/summary.component';
 import { PageRentTransactionsComponent } from './pages/rent/transactions/transactions.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionErrorComponent } from './pages/transaction/error/error.component';
@@ -79,6 +78,7 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
+import { AccountBalanceComponent } from './components/account-balance/account-balance.component';
 
 @NgModule({
     declarations: [
@@ -128,7 +128,6 @@ import { WarningComponent } from './components/warning/warning.component';
         PageRentComponent,
         PageRentPaymentComponent,
         PageRentStatementComponent,
-        PageRentSummaryComponent,
         PageRentTransactionsComponent,
         PageTransactionComponent,
         PageTransactionErrorComponent,
@@ -146,6 +145,7 @@ import { WarningComponent } from './components/warning/warning.component';
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
+        AccountBalanceComponent,
     ],
     imports: [
         BrowserModule,

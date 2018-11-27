@@ -80,7 +80,7 @@ export class NavigationComponent {
      *
      */
     getRentRoute(): string {
-        const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_SUMMARY.route;
+        const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_TRANSACTIONS.route;
         return `${PAGES.RENT.route}/${page}`;
     }
 
