@@ -73,6 +73,9 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
         this.amount = null;
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
     }

@@ -43,7 +43,7 @@ export class PageRentSummaryComponent implements OnInit, OnDestroy {
         this.summary_cutoff.setMonth(this.summary_cutoff.getMonth() - 6);
 
         this.Call.getAccount()
-            .pipe(take(1))
+            .pipe(takeUntil(this._destroyed$))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });
 
         this.route.data

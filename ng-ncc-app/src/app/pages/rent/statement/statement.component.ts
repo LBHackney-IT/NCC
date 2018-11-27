@@ -1,7 +1,8 @@
 import { environment } from '../../../../environments/environment';
 import { Component, Injector, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { finalize, take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { PAGES } from '../../../constants/pages.constant';
@@ -28,6 +29,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
     sending: boolean;
     success_message: string;
 
+    private _destroyed$ = new Subject();
     private BackLink: BackLinkService;
     private sanitiser: DomSanitizer;
 
@@ -50,12 +52,19 @@ export class PageRentStatementComponent extends PageCommunications implements On
 
         // Obtain account details.
         this.Call.getAccount()
-            .pipe(take(1))
+            .pipe(takeUntil(this._destroyed$))
             .subscribe((account) => { this.account = account; });
 
 
         // Automatically generate a statement.
         this.refreshStatement();
+    }
+
+    /**
+     *
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
