@@ -22,7 +22,7 @@ export class PageRentComponent implements OnInit {
         this.Call.getAccount()
             .pipe(take(1))
             .subscribe(
-                (data) => { this.account_details = data },
+                (data) => { this.account_details = data; },
                 () => {
                     this.error = true;
                 }
