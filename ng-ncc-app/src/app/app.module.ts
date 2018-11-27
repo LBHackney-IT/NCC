@@ -79,6 +79,7 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
+import { AccountBalanceComponent } from './components/account-balance/account-balance.component';
 
 @NgModule({
     declarations: [
@@ -146,6 +147,7 @@ import { WarningComponent } from './components/warning/warning.component';
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
+        AccountBalanceComponent,
     ],
     imports: [
         BrowserModule,
