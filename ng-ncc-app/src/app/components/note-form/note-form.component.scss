@@ -25,9 +25,6 @@ $note-form-close-offset: 1rem !default;
     max-width: $note-form-max-width;
     padding: $note-form-padding;
     position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translate3d(0,-50%,0);
     width: 100%;
     z-index: $note-form-z-index;
 }

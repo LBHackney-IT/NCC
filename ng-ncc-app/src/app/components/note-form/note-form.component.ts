@@ -1,6 +1,6 @@
 import { environment } from '../../../environments/environment';
 
-import { Component, Injector, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostBinding, Injector, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
@@ -18,6 +18,9 @@ import { IAddNoteParameters } from '../../interfaces/add-note-parameters';
     styleUrls: ['./note-form.component.scss']
 })
 export class NoteFormComponent implements OnInit, OnDestroy {
+    @HostBinding('style.left.px') x: number = 0;
+    @HostBinding('style.top.px') y: number = 0;
+
     @ViewChild('commentField') commentField: ElementRef;
 
     private _destroyed$ = new Subject();
@@ -53,6 +56,13 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.expanded = false;
         this._resetComment();
+
+        this.Notes.updatePosition()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((coords: { x: number, y: number }) => {
+                this.x = coords.x;
+                this.y = coords.y;
+            });
     }
 
     ngOnDestroy() {
