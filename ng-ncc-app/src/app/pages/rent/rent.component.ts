@@ -4,6 +4,7 @@ import { take, catchError } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { CallService } from '../../services/call.service';
+import { IAccountDetails } from '../../interfaces/account-details';
 
 @Component({
     selector: 'app-rent',
