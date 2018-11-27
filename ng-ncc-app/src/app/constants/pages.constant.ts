@@ -11,7 +11,7 @@ export const PAGES = {
     RENT: { route: 'rent', label: 'View/pay rent' },
     RENT_TRANSACTIONS: { route: 'transactions', label: 'Transaction History' },
     RENT_PAYMENT: { route: 'make', label: 'Pay Rent' },
-    RENT_COMMS: { route: 'comms', label: 'Communications' },
+    RENT_COMMS: { route: 'comms', label: 'Communications to caller' },
     RENT_STATEMENT: { route: 'statement', label: 'Statement Preview' },
     REQUEST_CALLBACK: { route: 'callback', label: 'Request a callback' },
     EDIT_CONTACT_DETAILS: { route: 'contact-details', label: 'Edit Contact Details' },
