@@ -12,6 +12,13 @@ export class NonTenantCaller extends AnonymousCaller {
         this._crm_contact_id = crm_contact_id;
     }
 
+    getName(): string {
+        return 'Non-tenant';
+    }
+
+    /**
+     * Returns the caller's CRM contact ID.
+     */
     getContactID(): string {
         return this._crm_contact_id;
     }

@@ -157,7 +157,7 @@ export class CallService {
                             ticket_number: this.ticket_number,
                             call_reason_id: this.call_nature.call_reason.id,
                             other_reason: this.call_nature.other_reason,
-                            crm_contact_id: this.caller.getContactID(),
+                            crm_contact_id: this.caller.getContactIDForNotes(),
                             tenancy_reference: this.account.tagReferenceNumber
                         };
                         this.Notes.enable(this.caller.getName(), settings);
