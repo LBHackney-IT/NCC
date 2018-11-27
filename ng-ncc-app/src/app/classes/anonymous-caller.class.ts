@@ -12,7 +12,17 @@ export class AnonymousCaller implements ICaller {
         return true;
     }
 
+    /**
+     * Returns the caller's CRM contact ID.
+     */
     getContactID(): string {
+        return environment.anonymousUserID;
+    }
+
+    /**
+     * Returns the the CRM contact ID to use for recording notes.
+     */
+    getContactIDForNotes(): string {
         return environment.anonymousUserID;
     }
 
