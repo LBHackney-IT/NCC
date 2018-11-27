@@ -63,7 +63,9 @@ export class PagePlaygroundComponent implements OnInit {
      *
      */
     selectedTemplate(option: any) {
-        console.log(option.name, option.isSensitive());
+        if (option) {
+            console.log(option.name, option.isSensitive());
+        }
     }
 
     /**
