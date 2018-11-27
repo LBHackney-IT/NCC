@@ -1,6 +1,7 @@
-import { Component, HostListener, Injector, OnInit } from '@angular/core';
+import { Component, HostListener, Injector, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { IAccountDetails } from '../../../interfaces/account-details';
@@ -13,10 +14,11 @@ import { PageTitleService } from '../../../services/page-title.service';
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.scss']
 })
-export class PageRentPaymentComponent implements OnInit {
+export class PageRentPaymentComponent implements OnInit, OnDestroy {
 
     private _w: Window;
 
+    private _destroyed$ = new Subject();
     PageTitle: PageTitleService;
     Call: CallService;
     NCCAPI: NCCAPIService;
@@ -64,9 +66,15 @@ export class PageRentPaymentComponent implements OnInit {
     ngOnInit() {
         this.PageTitle.set(PAGES.RENT_PAYMENT.label);
         this.Call.getAccount()
-            .pipe(take(1))
-            .subscribe((account: IAccountDetails) => { this.account_details = account; });
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((account: IAccountDetails) => {
+                this.account_details = account;
+            });
         this.amount = null;
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
