@@ -42,6 +42,7 @@ export class PageCommunications implements OnInit, OnDestroy {
     Call: CallService;
     NotifyAPI: NotifyAPIService;
     route: ActivatedRoute;
+    router: Router;
     UHTrigger: UHTriggerService;
     PageTitle: PageTitleService;
 
@@ -50,6 +51,7 @@ export class PageCommunications implements OnInit, OnDestroy {
         this.Call = this.injectorObj.get(CallService);
         this.NotifyAPI = this.injectorObj.get(NotifyAPIService);
         this.route = this.injectorObj.get(ActivatedRoute);
+        this.router = this.injectorObj.get(Router);
         this.UHTrigger = this.injectorObj.get(UHTriggerService);
         this.PageTitle = this.injectorObj.get(PageTitleService);
     }
