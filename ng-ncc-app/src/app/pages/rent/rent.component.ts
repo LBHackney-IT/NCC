@@ -12,6 +12,7 @@ import { CallService } from '../../services/call.service';
 })
 export class PageRentComponent implements OnInit {
 
+    account_details: IAccountDetails;
     error: boolean;
     page_defs = PAGES;
 
@@ -22,7 +23,7 @@ export class PageRentComponent implements OnInit {
         this.Call.getAccount()
             .pipe(take(1))
             .subscribe(
-                () => { },
+                (data) => { this.account_details = data; },
                 () => {
                     this.error = true;
                 }
