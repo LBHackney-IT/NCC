@@ -36,7 +36,8 @@ export class DPAService {
                         this._tenancy = {
                             rent_balance: -data.currentBalance,
                             rent_amount: data.rent,
-                            tenancy_reference: data.tagReferenceNumber
+                            tenancy_reference: data.tagReferenceNumber,
+                            payment_reference: data.paymentReferenceNumber
                         };
                         this._crm_contact_id = crm_contact_id;
                     }
@@ -46,6 +47,13 @@ export class DPAService {
 
     reset() {
         this._tenancy = null;
+    }
+
+    /**
+     *
+     */
+    getPaymentReference(): string {
+        return this._tenancy ? this._tenancy.payment_reference : null;
     }
 
     /**
