@@ -7,6 +7,7 @@ import { Observable, of, from } from 'rxjs';
 
 import { IAccountDetails } from '../../interfaces/account-details';
 import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IContactDetails } from '../../interfaces/contact-details';
 import { IJSONResponse } from '../../interfaces/json-response';
 import { ITransaction } from '../../interfaces/transaction';
@@ -106,7 +107,7 @@ export class ManageATenancyAPIService {
         return this.http
             .get(`${this._url}/CitizenIndexSearch?${query}`)
             .pipe(
-                map((response: IHackneyAPIJSONResult) => {
+                map((response: IJSONResponse) => {
                     // TODO perhaps filter out any unwanted/unnecessary information.
                     return response.results;
                 })
