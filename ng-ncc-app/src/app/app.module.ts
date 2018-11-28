@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
+import { WindowService } from './services/window.service';
+
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
@@ -162,7 +164,8 @@ import { WarningComponent } from './components/warning/warning.component';
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,
-        IdentifiedCallerResolver
+        IdentifiedCallerResolver,
+        WindowService
     ],
     bootstrap: [AppComponent]
 })
