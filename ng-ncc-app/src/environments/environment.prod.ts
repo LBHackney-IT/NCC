@@ -14,9 +14,9 @@ export const environment = {
     disable: {
         authentication: false,
         consoleLogs: true,
-        previousCalls: true,
-        identifyCaller: true,
-        additionalCallReason: true
+        previousCalls: false,
+        identifyCaller: false,
+        additionalCallReason: false
     },
     previousCallCount: 10,
     notifyTemplate: {
