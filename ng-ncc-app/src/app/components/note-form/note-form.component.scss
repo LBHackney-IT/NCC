@@ -15,46 +15,23 @@ $note-form-field-height: 15rem !default;
 $note-form-close-size: 2rem !default;
 $note-form-close-offset: 1rem !default;
 
-$note-form-toggle-bg-colour: rgba($white, .85) !default;
-$note-form-toggle-border: 2px solid $govuk-text-colour !default;
-$note-form-toggle-text-colour: $dark-grey !default;
-$note-form-toggle-padding: 1rem !default;
-
 ////////////////////
 
-.note-form__container {
+:host {
     max-width: $note-form-max-width;
-    width: 100%;
     position: absolute;
-    right: 0;
-    top: $note-form-top;
-    // width: $note-form-width;
+    width: 100%;
     z-index: $note-form-z-index;
-    text-align: right;
 }
 
-// The "Add note" button.
-.note-form__container__toggle {
-    background: $note-form-toggle-bg-colour;
-    border: $note-form-toggle-border;
-    color: $note-form-toggle-text-colour;
-    cursor: pointer;
-    display: inline-block;
-    padding: $note-form-toggle-padding;
-}
-
-.note-form__container__form {
+.form {
     background: $note-form-bg-colour;
     border: $note-form-border-width solid $note-form-border-colour;
     color: $note-form-text-colour;
-    margin-top: -$note-form-border-width;
     padding: $note-form-padding;
-    position: relative;
-    text-align: left;
-    width: 100%;
 }
 
-.note-form__container__close {
+.form__close {
     cursor: pointer;
     font-size: $note-form-close-size;
     display: block;

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
 import { Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { NotesService } from '../../services/notes.service';
@@ -39,7 +39,9 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
         // Subscribe to note addition events from the Notes service.
         this.Notes.noteWasAdded()
             .pipe(takeUntil(this._destroyed$))
-            .subscribe(() => { this._loadNotes() });
+            .subscribe(() => {
+                this._loadNotes();
+            });
     }
 
     /**
@@ -79,7 +81,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
 
         this._loading = true;
         this.Notes.load(this.tenancyReference)
-            .pipe(takeUntil(this._destroyed$))
+            .pipe(take(1))
             .pipe(finalize(() => {
                 this._loading = false;
             }))

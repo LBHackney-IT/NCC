@@ -67,6 +67,9 @@ export class PageHistory {
         this.filtered_history = this.history;
     }
 
+    /**
+     *
+     */
     clearFilter() {
         this.filter = {};
     }
@@ -76,7 +79,7 @@ export class PageHistory {
      */
     filterByDate() {
         let min_date = new Date();
-        let max_date = new Date();
+        let max_date = null;
 
         switch (this.period) {
             case this.PERIOD_SIX_MONTHS:

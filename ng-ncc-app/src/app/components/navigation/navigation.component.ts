@@ -2,10 +2,11 @@
 // <app-navigation></app-navigation>
 
 import { environment } from '../../../environments/environment';
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CallService } from '../../services/call.service';
+import { NotesService } from '../../services/notes.service';
 import { PAGES } from '../../constants/pages.constant';
 
 @Component({
@@ -13,14 +14,41 @@ import { PAGES } from '../../constants/pages.constant';
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent {
+export class NavigationComponent implements AfterViewChecked {
 
-    constructor(private Call: CallService, private router: Router) { }
+    constructor(private Call: CallService, private Notes: NotesService, private router: Router) { }
 
     page_defs = PAGES;
     previous_call_count: number = environment.previousCallCount;
     disable_previous_calls: boolean = environment.disable.previousCalls;
     disable_additional_reasons: boolean = environment.disable.additionalCallReason;
+
+    @ViewChild('notesButton') notesButton: ElementRef;
+
+    // Listen to the scroll event on this component.
+    @HostListener('scroll', ['$event'])
+    onScrollEvent(event: UIEvent): void {
+        this._positionNotesForm();
+    }
+
+    /**
+     *
+     */
+    ngAfterViewChecked() {
+        this._positionNotesForm();
+    }
+
+    /**
+     *
+     */
+    private _positionNotesForm() {
+        if (this.notesButton) {
+            const el = this.notesButton.nativeElement;
+            const rect = el.getBoundingClientRect();
+
+            this.Notes.positionForm(rect.right, rect.top);
+        }
+    }
 
     /**
      * "Ends" the current call and navigates to the log call page.
@@ -82,6 +110,20 @@ export class NavigationComponent {
     getRentRoute(): string {
         const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_TRANSACTIONS.route;
         return `${PAGES.RENT.route}/${page}`;
+    }
+
+    /**
+     *
+     */
+    areNotesEnabled(): boolean {
+        return this.Notes.isEnabled();
+    }
+
+    /**
+     *
+     */
+    toggleAddNote() {
+        this.Notes.toggle();
     }
 
 }

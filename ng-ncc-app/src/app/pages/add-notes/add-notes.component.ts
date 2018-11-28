@@ -5,7 +5,6 @@ import { take, map } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
-import { NotesService } from '../../services/notes.service';
 import { CallRevisionService } from '../../services/call-revision.service';
 import { PageNotes } from '../abstract/notes';
 import { BackLinkService } from '../../services/back-link.service';
@@ -25,7 +24,6 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
     BackLink: BackLinkService;
     CallRevision: CallRevisionService;
     ManageATenancyAPI: ManageATenancyAPIService;
-    Notes: NotesService;
     router: Router;
 
     constructor(private injectorObj: Injector) {
@@ -33,7 +31,6 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
         this.BackLink = this.injectorObj.get(BackLinkService);
         this.CallRevision = this.injectorObj.get(CallRevisionService);
         this.ManageATenancyAPI = this.injectorObj.get(ManageATenancyAPIService);
-        this.Notes = this.injectorObj.get(NotesService);
         this.router = this.injectorObj.get(Router);
     }
 
@@ -61,7 +58,7 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
             crm_contact_id: this.previous_call.contactid,
             tenancy_reference: this.previous_call.housingref
         };
-        this.Notes.enable(this.previous_call.name, settings);
+        setTimeout(() => { this.Notes.enable(this.previous_call.name, settings); }, 10);
     }
 
     /**
