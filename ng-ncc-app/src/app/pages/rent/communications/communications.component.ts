@@ -16,8 +16,6 @@ import { IAccountDetails } from '../../../interfaces/account-details';
 })
 export class PageRentCommunicationsComponent extends PageCommunications implements OnInit {
 
-    private _destroyed$ = new Subject();
-
     constructor(@Inject(LOCALE_ID) private locale: string, private injector: Injector) {
         super(injector);
     }

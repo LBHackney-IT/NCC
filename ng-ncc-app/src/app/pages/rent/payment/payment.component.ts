@@ -1,7 +1,7 @@
 import { Component, HostListener, Injector, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { IAccountDetails } from '../../../interfaces/account-details';
