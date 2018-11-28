@@ -146,7 +146,7 @@ export class CallService {
                         // Handle the tenant's account data.
                         this.account = response.account;
                         this.accountSubject.next(response.account);
-                        console.log(`Account details were obtained.`);
+                        console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
 
                         // Create an automatic note mentioning the selected caller.
                         this.createCallerNote();
@@ -190,7 +190,9 @@ export class CallService {
                     const call_type = this.call_nature.call_type.label;
                     const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
                         this.call_nature.call_reason.label;
-                    this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`);
+                    this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`)
+                        .pipe(take(1))
+                        .subscribe();
                 });
         }
     }
@@ -286,6 +288,8 @@ export class CallService {
         this.tenancy = null;
         this.tenants = null;
         this.ticket_number = null;
+
+        this.accountSubject.next(null);
 
         this.Notes.disable();
         // console.log('Call was reset.');

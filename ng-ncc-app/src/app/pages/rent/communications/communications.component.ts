@@ -1,6 +1,7 @@
 import { LOCALE_ID, Component, Inject, Injector, OnInit } from '@angular/core';
 import { formatCurrency } from '@angular/common';
-import { take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { CommsOption } from '../../../classes/comms-option.class';
@@ -15,6 +16,8 @@ import { IAccountDetails } from '../../../interfaces/account-details';
 })
 export class PageRentCommunicationsComponent extends PageCommunications implements OnInit {
 
+    private _destroyed$ = new Subject();
+
     constructor(@Inject(LOCALE_ID) private locale: string, private injector: Injector) {
         super(injector);
     }
@@ -26,8 +29,15 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
         super.ngOnInit();
         this.PageTitle.set(PAGES.RENT_COMMS.label);
         this.Call.getAccount()
-            .pipe(take(1))
+            .pipe(takeUntil(this._destroyed$))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });
+    }
+
+    /**
+     *
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
