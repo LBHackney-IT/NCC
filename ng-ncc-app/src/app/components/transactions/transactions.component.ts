@@ -82,10 +82,13 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
             )
             .subscribe(
                 (rows) => {
+                    // We don't get the balance from the API for each transaction row, so we have to calculate it ourselves.
+                    // NOTE: the values returned from the API is the reverse of what should be displayed.
                     let balance = this.currentBalance;
                     this._rows = rows.map((row) => {
                         row.balance = balance;
-                        balance -= row.realValue;
+                        row.realValue = -row.realValue;
+                        balance += row.realValue;
                         return row;
                     });
                     this._filterTransactions();
