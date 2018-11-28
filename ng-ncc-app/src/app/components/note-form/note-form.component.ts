@@ -1,12 +1,13 @@
 import { environment } from '../../../environments/environment';
 
-import { Component, Injector, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostBinding, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
+import { WindowService } from '../../services/window.service';
 import { NotesService } from '../../services/notes.service';
 import { PAGES } from '../../constants/pages.constant';
 import { IAddNoteParameters } from '../../interfaces/add-note-parameters';
@@ -18,12 +19,17 @@ import { IAddNoteParameters } from '../../interfaces/add-note-parameters';
     styleUrls: ['./note-form.component.scss']
 })
 export class NoteFormComponent implements OnInit, OnDestroy {
+    @HostBinding('style.left.px') x: number;
+    @HostBinding('style.top.px') y: number;
+
+    @ViewChild('commentForm') commentForm: ElementRef;
     @ViewChild('commentField') commentField: ElementRef;
 
     private _destroyed$ = new Subject();
 
     page_defs = PAGES;
     TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
+    FORM_GAP = 20;
     containerStyle: Object; // used to control the inline style of .note-form__container.
     comment: string;
     show: boolean;          // whether the note component is visible on the page.
@@ -31,23 +37,33 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
 
-    constructor(private inj: Injector, private router: Router, private Call: CallService, private Notes: NotesService) {
-        // We can listen for the <app-content-area/> eventScrolled event by using an Injector.
-        // https://stackoverflow.com/a/40026333/4073160
-        const parentComponent = this.inj.get(ContentAreaComponent);
-        if (parentComponent) {
-            // Subscribe to the ContentAreaComponent's eventScrolled [Observable] event.
-            parentComponent.eventScrolled
-                .pipe(
-                    takeUntil(this._destroyed$)
-                )
-                .subscribe(value => this._reposition(value));
-        }
-    }
+    constructor(
+        private element: ElementRef,
+        private router: Router,
+        private Call: CallService,
+        private Notes: NotesService,
+        private Window: WindowService
+    ) { }
 
     ngOnInit() {
         this.expanded = false;
         this._resetComment();
+
+        this.Notes.updatePosition()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((coords: { x: number, y: number }) => {
+                this.x = coords.x;
+
+                // We want to position the form so it is visible within the viewport.
+                const el = this.element.nativeElement;
+                const wh = this.Window.nativeWindow.innerHeight;
+
+                if ((coords.y + el.clientHeight) > wh) {
+                    this.y = wh - el.clientHeight - this.FORM_GAP;
+                } else {
+                    this.y = coords.y;
+                }
+            });
     }
 
     ngOnDestroy() {
@@ -65,26 +81,18 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
         // However, it was mentioned that anonymous callers should only have "automatic" notes.
 
-        // const outcome: boolean = this.Call.isCallerIdentified() && this.Call.hasCallNature();
-        const outcome = this.Notes.isEnabled();
-
-        // Make sure the form is closed if we shouldn't show it.
-        if (!outcome) {
-            this.expanded = false;
-        }
-
-        return outcome;
+        return this.Notes.isVisible();
     }
 
     /**
      * Show or hide the note form.
      */
     toggle() {
-        this.expanded = !this.expanded;
+        this.Notes.toggle();
 
         // Set the focus on the comment field if the form is visible.
         // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
-        if (this.expanded) {
+        if (this.Notes.isVisible()) {
             setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
         } else {
             this.error = false;

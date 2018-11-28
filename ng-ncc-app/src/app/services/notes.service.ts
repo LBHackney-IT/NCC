@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, forkJoin, of } from 'rxjs';
+import { ReplaySubject, Subject, forkJoin, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
@@ -13,9 +13,11 @@ export class NotesService {
     // This service controls the visibility of the add note form.
     // TODO this service should probably also be used to create automatic notes.
 
-    _added$ = new Subject<void>();
+    _added$ = new ReplaySubject<void>();
+    _position$ = new Subject<{ x: number, y: number }>();
     _name: string | null = null;
     _settings: IAddNoteParameters = null;
+    _enabled: boolean;
     _visible: boolean;
 
     constructor(private NCCAPI: NCCAPIService) { }
@@ -27,9 +29,10 @@ export class NotesService {
     enable(name: string, settings: IAddNoteParameters) {
         // console.log('Enable add note', name, settings);
         if (settings.tenancy_reference) {
-            this._visible = true;
+            this._enabled = true;
             this._name = name;
             this._settings = settings;
+            this._visible = false;
         } else {
             this.disable();
         }
@@ -39,15 +42,27 @@ export class NotesService {
      * Disable the add note form.
      */
     disable() {
-        this._visible = false;
+        this._enabled = false;
         this._name = null;
         this._settings = null;
+        this._visible = false;
+    }
+
+    toggle() {
+        this._visible = !this._visible;
     }
 
     /**
      * Returns TRUE if the add note form is (and should be) enabled.
      */
     isEnabled(): boolean {
+        return this._enabled;
+    }
+
+    /**
+     * Returns TRUE if the add note form is (and should be) visible.
+     */
+    isVisible(): boolean {
         return this._visible;
     }
 
@@ -118,6 +133,17 @@ export class NotesService {
      */
     noteWasAdded(): Subject<void> {
         return this._added$;
+    }
+
+    /**
+     *
+     */
+    positionForm(x: number, y: number) {
+        this._position$.next({ x: x, y: y });
+    }
+
+    updatePosition() {
+        return this._position$;
     }
 
     /**
