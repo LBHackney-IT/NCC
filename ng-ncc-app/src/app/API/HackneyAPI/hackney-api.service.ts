@@ -9,7 +9,6 @@ import { Observable, of, from } from 'rxjs';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 import { IHackneyAPIJSONResult } from '../../interfaces/hackney-api-json-result';
-import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 
 @Injectable({
     providedIn: 'root'
