@@ -1,10 +1,14 @@
 @import "../../../assets/scss/vars.scss";
-@import "../../../assets/scss/components/radio-text-field.scss";
-@import "~govuk-frontend/all";
+@import "~govuk-frontend/helpers/colour";
+
+$account-balance-credit-colour: govuk-colour("green") !default;
+$account-balance-debit-colour: govuk-colour("red") !default;
+
+////////////////////
 
 .inCredit {
-    color: govuk-colour("green");
+    color: $account-balance-credit-colour;
 }
 .inDebit {
-    color: govuk-colour("red");
+    color: $account-balance-debit-colour;
 }

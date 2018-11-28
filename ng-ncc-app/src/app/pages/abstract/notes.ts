@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { CallService } from '../../services/call.service';
 import { NotesService } from '../../services/notes.service';
 import { PageTitleService } from '../../services/page-title.service';
 
-export abstract class PageNotes extends PageHistory implements OnInit, OnDestroy {
+export abstract class PageNotes extends PageHistory implements OnInit {
 
     tenants_list: string[];
 
