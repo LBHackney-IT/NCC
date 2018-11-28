@@ -58,7 +58,7 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
             crm_contact_id: this.previous_call.contactid,
             tenancy_reference: this.previous_call.housingref
         };
-        setTimeout(() => { this.Notes.enable(this.previous_call.name, settings) }, 10);
+        setTimeout(() => { this.Notes.enable(this.previous_call.name, settings); }, 10);
     }
 
     /**

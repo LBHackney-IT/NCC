@@ -50,7 +50,6 @@ export class NotesService {
 
     toggle() {
         this._visible = !this._visible;
-        console.log('note form visible', this._visible);
     }
 
     /**

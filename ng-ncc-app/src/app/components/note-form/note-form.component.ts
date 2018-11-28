@@ -19,8 +19,8 @@ import { IAddNoteParameters } from '../../interfaces/add-note-parameters';
     styleUrls: ['./note-form.component.scss']
 })
 export class NoteFormComponent implements OnInit, OnDestroy {
-    @HostBinding('style.left.px') x: number = 0;
-    @HostBinding('style.top.px') y: number = 0;
+    @HostBinding('style.left.px') x: number;
+    @HostBinding('style.top.px') y: number;
 
     @ViewChild('commentForm') commentForm: ElementRef;
     @ViewChild('commentField') commentField: ElementRef;
