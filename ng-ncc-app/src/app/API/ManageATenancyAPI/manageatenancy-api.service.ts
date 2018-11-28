@@ -7,6 +7,7 @@ import { Observable, of, from } from 'rxjs';
 
 import { IAccountDetails } from '../../interfaces/account-details';
 import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IContactDetails } from '../../interfaces/contact-details';
 import { IJSONResponse } from '../../interfaces/json-response';
 import { ITransaction } from '../../interfaces/transaction';
@@ -84,6 +85,31 @@ export class ManageATenancyAPIService {
                     const details: ITransaction[] = Array.from(data.results);
 
                     return details;
+                })
+            );
+    }
+
+    /**
+     * Searches for citizens and returns a list of results.
+     */
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
+        Observable<ICitizenIndexSearchResult[]> {
+
+        // Build the query part of the URL.
+        let query = '';
+        if (first_name) { query += `firstname=${first_name}`; }
+        if (last_name) { query += `surname=${last_name}`; }
+        if (address) { query += `addressline12=${address}`; }
+        if (postcode) { query += `postcode=${postcode}`; }
+        query += '&IsAdvanceSearch=false';
+        // very important to set IsAdvanceSearch to false.
+
+        return this.http
+            .get(`${this._url}/CitizenIndexSearch?${query}`)
+            .pipe(
+                map((response: IJSONResponse) => {
+                    // TODO perhaps filter out any unwanted/unnecessary information.
+                    return response.results;
                 })
             );
     }
