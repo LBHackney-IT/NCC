@@ -26,7 +26,7 @@ export class PageCommunications implements OnInit, OnDestroy {
     @ViewChild(CommsMethodSelectComponent) commsMethodSelect: CommsMethodSelectComponent;
     @ViewChild(CommsTemplatesComponent) commsTemplates: CommsTemplatesComponent;
 
-    private _destroyed$ = new Subject();
+    protected _destroyed$ = new Subject();
 
     CONTACT_METHOD = CONTACT;
     _sending: boolean;

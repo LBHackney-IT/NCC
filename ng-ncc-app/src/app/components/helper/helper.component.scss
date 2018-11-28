@@ -1,5 +1,7 @@
 @import "../../../assets/scss/vars.scss";
-@import "~govuk-frontend/all";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
+@import "~govuk-frontend/settings/typography-font";
 
 $helper-icon-bg-colour: $govuk-text-colour !default;
 $helper-icon-text-colour: govuk-colour("white") !default;

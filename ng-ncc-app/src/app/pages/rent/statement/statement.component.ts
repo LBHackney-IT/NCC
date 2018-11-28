@@ -29,7 +29,6 @@ export class PageRentStatementComponent extends PageCommunications implements On
     sending: boolean;
     success_message: string;
 
-    private _destroyed$ = new Subject();
     private BackLink: BackLinkService;
     private sanitiser: DomSanitizer;
 

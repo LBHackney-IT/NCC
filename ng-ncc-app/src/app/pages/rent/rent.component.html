@@ -1,4 +1,7 @@
-<h1 class="govuk-heading-l">Rent account ({{ account_details.tagReferenceNumber }})</h1>
+<h1 class="govuk-heading-l">
+    Rent account
+    <span *ngIf="account_details">({{ account_details.tagReferenceNumber }})</span>
+</h1>
 
 <app-error-panel class="govuk-!-margin-bottom-5" *ngIf="error">
     <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Account load failure</h2>
