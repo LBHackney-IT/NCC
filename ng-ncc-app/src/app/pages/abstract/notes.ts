@@ -1,15 +1,16 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { PageHistory } from '../abstract/history';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
+import { NotesService } from '../../services/notes.service';
 import { PageTitleService } from '../../services/page-title.service';
 
-export abstract class PageNotes extends PageHistory implements OnInit {
+export abstract class PageNotes extends PageHistory implements OnInit, OnDestroy {
 
     tenants_list: string[];
 
@@ -22,11 +23,13 @@ export abstract class PageNotes extends PageHistory implements OnInit {
     filter_reason: string;
 
     route: ActivatedRoute;
+    Notes: NotesService;
     PageTitle: PageTitleService;
 
     constructor(private injector: Injector) {
         super();
         this.route = this.injector.get(ActivatedRoute);
+        this.Notes = this.injector.get(NotesService);
         this.PageTitle = this.injector.get(PageTitleService);
     }
 
