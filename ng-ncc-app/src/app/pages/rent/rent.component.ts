@@ -20,6 +20,7 @@ export class PageRentComponent implements OnInit {
     constructor(private Call: CallService) { }
 
     ngOnInit() {
+        // TODO why do we do this?
         this.Call.getAccount()
             .pipe(take(1))
             .subscribe(
@@ -29,6 +30,7 @@ export class PageRentComponent implements OnInit {
                 }
             );
     }
+
 
     isIdentifiedCaller(): boolean {
         return this.Call.isCallerIdentified();

@@ -52,7 +52,7 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
         };
 
         this.Call.getAccount()
-            .pipe(take(1))
+            .pipe(takeUntil(this._destroyed$))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });
 
         this.route.data
