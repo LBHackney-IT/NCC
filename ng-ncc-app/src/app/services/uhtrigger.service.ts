@@ -75,6 +75,7 @@ export class UHTriggerService {
      * Handle a comms template sent as a result of the Rent call type.
      */
     _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {
+        // console.log('sent rent comms', template, method);
         this.Call.recordCommsNote(template, method);
     }
 
