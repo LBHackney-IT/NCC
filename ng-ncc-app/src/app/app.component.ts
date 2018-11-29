@@ -20,7 +20,6 @@ import { BackLinkService } from './services/back-link.service';
 export class AppComponent implements OnInit, OnDestroy {
 
     loading = false;
-    version = VERSION;
 
     private _destroyed$ = new Subject();
 
@@ -69,6 +68,14 @@ export class AppComponent implements OnInit, OnDestroy {
      */
     loggedIn(): boolean {
         return this.Auth.isLoggedIn();
+    }
+
+    /**
+     * Returns the current version number.
+     */
+    getVersion(): string {
+        const tag_string = VERSION.tag ? ` (${VERSION.tag})` : '';
+        return `version ${VERSION.version}${tag_string}`;
     }
 
 }

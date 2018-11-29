@@ -1,5 +1,7 @@
 // https://medium.com/@amcdnl/version-stamping-your-app-with-the-angular-cli-d563284bb94d
+
 const { gitDescribeSync } = require('git-describe');
+// https://github.com/tvdstaaij/node-git-describe
 const { version } = require('../package.json');
 const { resolve, relative } = require('path');
 const { writeFileSync } = require('fs-extra');
