@@ -16,6 +16,7 @@ export const environment = {
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
     authenticationLink: 'http://localhost:4200',
     disable: {
+        advanceSearch: true,
         authentication: true,
         consoleLogs: false,
         previousCalls: false,

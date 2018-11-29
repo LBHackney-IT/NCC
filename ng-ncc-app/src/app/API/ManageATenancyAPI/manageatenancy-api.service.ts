@@ -92,7 +92,8 @@ export class ManageATenancyAPIService {
     /**
      * Searches for citizens and returns a list of results.
      */
-    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string,
+        advanceSearch: boolean = false):
         Observable<ICitizenIndexSearchResult[]> {
 
         // Build the query part of the URL.
@@ -101,7 +102,7 @@ export class ManageATenancyAPIService {
         if (last_name) { query += `surname=${last_name}`; }
         if (address) { query += `addressline12=${address}`; }
         if (postcode) { query += `postcode=${postcode}`; }
-        query += '&IsAdvanceSearch=false';
+        query += `&IsAdvanceSearch=${advanceSearch ? "true" : "false"}`;
         // very important to set IsAdvanceSearch to false.
 
         return this.http
