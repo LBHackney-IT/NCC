@@ -102,7 +102,7 @@ export class ManageATenancyAPIService {
         if (last_name) { query += `surname=${last_name}`; }
         if (address) { query += `addressline12=${address}`; }
         if (postcode) { query += `postcode=${postcode}`; }
-        query += `&IsAdvanceSearch=${advanceSearch ? "true" : "false"}`;
+        query += `&IsAdvanceSearch=${advanceSearch ? 'true' : 'false'}`;
         // very important to set IsAdvanceSearch to false.
 
         return this.http
