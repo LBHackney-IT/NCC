@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -24,9 +25,7 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
     _options: CommsOption[];
     _selected: CommsOption = null;
     default_title = 'Select form to send:';
-    exclude = [
-        'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
-    ];
+    exclude = environment.disable.commsTemplates;
 
     constructor(private NotifyAPI: NotifyAPIService) { }
 
