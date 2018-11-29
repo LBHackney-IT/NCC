@@ -18,7 +18,10 @@ export const environment = {
         consoleLogs: false,
         previousCalls: false,
         identifyCaller: false,
-        additionalCallReason: false
+        additionalCallReason: false,
+        commsTemplates: [
+            'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
+        ]
     },
     previousCallCount: 10,
     notifyTemplate: {
