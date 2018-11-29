@@ -1,6 +1,7 @@
 // APP component.
 // <app-root></app-root>
 
+import { VERSION } from '../environments/version';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +20,7 @@ import { BackLinkService } from './services/back-link.service';
 export class AppComponent implements OnInit, OnDestroy {
 
     loading = false;
+    version = VERSION;
 
     private _destroyed$ = new Subject();
 

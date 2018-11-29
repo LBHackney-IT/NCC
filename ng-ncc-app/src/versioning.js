@@ -4,12 +4,14 @@ const { version } = require('../package.json');
 const { resolve, relative } = require('path');
 const { writeFileSync } = require('fs-extra');
 
-const gitInfo = gitDescribeSync({
+const git_path = resolve(__dirname, '../..'); // as this is in a subfolder.
+const gitInfo = gitDescribeSync(git_path, {
     dirtyMark: false,
     dirtySemver: false
 });
 
 gitInfo.version = version;
+// note: this version number is read from package.json, which we can update manually.
 
 const file = resolve(__dirname, '..', 'src', 'environments', 'version.ts');
 writeFileSync(file,
