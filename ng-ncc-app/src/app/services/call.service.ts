@@ -123,7 +123,7 @@ export class CallService {
 
             // We're subscribing to two API endpoints, so we can use forkJoin here to ensure that both are successful.
             // If either one fails we will get an error.
-            const subscription = forkJoin(
+            forkJoin(
                 // Create a call to record notes against.
                 this.NCCAPI.createCall(contact_id),
 
@@ -131,6 +131,7 @@ export class CallService {
                 // The tenancy reference is required to record Action Diary entries.
                 this.ManageATenancyAPI.getAccountDetails(contact_id)
             )
+                .pipe(take(1))
                 .pipe(
                     map(data => {
                         return { call: <ICRMServiceRequest>data[0], account: data[1] };
@@ -146,13 +147,11 @@ export class CallService {
                         // Handle the tenant's account data.
                         this.account = response.account;
                         this.accountSubject.next(response.account);
-                        console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
-
-                        // Create an automatic note mentioning the selected caller.
-                        this.createCallerNote();
+                        // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
 
                         // Enable the add note form.
                         const settings = {
+                            agent_name: this.Auth.getFullName(),
                             call_id: this.call_id,
                             ticket_number: this.ticket_number,
                             call_reason_id: this.call_nature.call_reason.id,
@@ -161,12 +160,12 @@ export class CallService {
                             tenancy_reference: this.account.tagReferenceNumber
                         };
                         this.Notes.enable(this.caller.getName(), settings);
+
+                        // Create an automatic note mentioning the selected caller.
+                        this.createCallerNote();
                     },
                     (error) => {
                         console.error(error);
-                    },
-                    () => {
-                        subscription.unsubscribe();
                     });
         }
     }
@@ -187,18 +186,14 @@ export class CallService {
                     console.log('Interaction ID is', this.interaction_id);
 
                     // Record an Action Diary note about the call type and reason.
-                    this.recordActionDiaryNote(`calling about ${this._getCallNatureAsText()}`)
+                    const call_type = this.call_nature.call_type.label;
+                    const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
+                        this.call_nature.call_reason.label;
+                    this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`)
                         .pipe(take(1))
                         .subscribe();
                 });
         }
-    }
-
-    private _getCallNatureAsText(): string {
-        const call_type = this.call_nature.call_type.label;
-        const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
-            this.call_nature.call_reason.label;
-        return `${call_type} - ${call_reason}`;
     }
 
     /**
@@ -228,8 +223,7 @@ export class CallService {
     setCallNature(selection: ILogCallSelection) {
         this.call_nature = selection;
         if (this.call_id) {
-            // If we're already on a call, record an automatic note about the [changed] call nature.
-            this.recordAutomaticNote(`Additional call reason: ${this._getCallNatureAsText()}`)
+            this.recordAutomaticNote(`Additional call reason.`)
                 .pipe(take(1))
                 .subscribe();
         }
@@ -297,61 +291,21 @@ export class CallService {
         this.ticket_number = null;
 
         this.accountSubject.next(null);
-
         this.Notes.disable();
-        // console.log('Call was reset.');
     }
 
     /**
      * Record a manual note against the call.
      */
     recordManualNote(note_content: string): Observable<any> {
-        // If the call reason is "Other", prepend the note with the specfied reason text.
-        note_content = this._formatNoteContent(note_content);
-
-        return forkJoin(
-
-            // Manual note...
-            this.NCCAPI.createManualNote(
-                this.call_id,
-                this.ticket_number,
-                this.call_nature.call_reason.id,
-                this.caller.getContactID(),
-                note_content
-            ),
-
-            // Action Diary note...
-            this.recordActionDiaryNote(note_content)
-        )
-            .pipe(take(1))
-            .pipe(map((data: IJSONResponse[]) => data[0].response.NCCInteraction));
-        // This allows us to retrieve the Observables results just once.
+        return this.Notes.recordManualNote(note_content);
     }
 
     /**
      * Record an automatic note against the call.
      */
     recordAutomaticNote(note_content: string): Observable<any> {
-        note_content = this._formatNoteContent(note_content);
-
-        return forkJoin(
-
-            // Automatic note...
-            this.NCCAPI.createAutomaticNote(
-                this.call_id,
-                this.ticket_number,
-                this.getTenancyReference(),
-                this.call_nature.call_reason.id,
-                this.caller.getContactID(),
-                note_content
-            ),
-
-            // Action Diary note...
-            this.recordActionDiaryNote(note_content)
-
-        )
-            .pipe(take(1))
-            .pipe(map((data: IJSONResponse[]) => data[0].response.NCCInteraction));
+        return this.Notes.recordAutomaticNote(note_content);
         // This allows us to retrieve the Observables results just once.
     }
 
@@ -359,39 +313,14 @@ export class CallService {
      * Record an automatic comms note against the call.
      */
     recordCommsNote(notify_template_name: string, notify_method: string) {
-        const note_content = `${notify_template_name} comms sent by ${notify_method}.`;
-
-        return forkJoin(
-
-            // Automatic note...
-            this.NCCAPI.createAutomaticNote(
-                this.call_id,
-                this.ticket_number,
-                this.getTenancyReference(),
-                this.call_nature.call_reason.id,
-                this.caller.getContactID(),
-                note_content,
-                { GovNotifyTemplateType: notify_template_name, GovNotifyChannelType: notify_method }
-            ),
-
-            // Action Diary note...
-            this.recordActionDiaryNote(note_content)
-        ).pipe(take(1)).subscribe();
-        // This allows us to retrieve the Observables results just once.
+        return this.Notes.recordCommsNote(notify_template_name, notify_method);
     }
 
     /**
      * Record an Action Diary entry against the tenancy associated with the call (if present).
      */
     recordActionDiaryNote(note_content: string) {
-        const tenancy_reference = this.getTenancyReference();
-        if (tenancy_reference) {
-            // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
-            const note = `${this.caller.getName()}: ${note_content}`;
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
-        }
-
-        return of(true);
+        return this.Notes.recordActionDiaryNote(note_content);
     }
 
     /**

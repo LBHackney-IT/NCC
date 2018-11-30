@@ -88,10 +88,39 @@ export class NotesService {
     }
 
     /**
-     * Record a manual note, with a corresponding Action Diary note.
+     * Record an automatic note against the call.
+     * A corresponding Action Diary note is also created.
+     */
+    recordAutomaticNote(note_content: string): Observable<any> {
+        return forkJoin(
+
+            // Automatic note...
+            this.NCCAPI.createAutomaticNote(
+                this._settings.call_id,
+                this._settings.ticket_number,
+                this._settings.tenancy_reference,
+                this._settings.call_reason_id,
+                this._settings.crm_contact_id,
+                this._formatNoteContent(note_content)
+            ),
+
+            // Action Diary note...
+            this.recordActionDiaryNote(note_content)
+
+        )
+            .pipe(map((data: IJSONResponse[]) => {
+                // Inform anything subscribed to note addition events that a note was added.
+                this._added$.next();
+
+                return data[0].response.NCCInteraction;
+            }));
+    }
+
+    /**
+     * Record a manual note.
+     * A corresponding Action Diary note is also created.
      */
     recordManualNote(note_content: string) {
-        note_content = this._formatNoteContent(note_content);
         return forkJoin(
 
             // Manual note...
@@ -100,7 +129,7 @@ export class NotesService {
                 this._settings.ticket_number,
                 this._settings.call_reason_id,
                 this._settings.crm_contact_id,
-                note_content
+                this._formatNoteContent(note_content)
             ),
 
             // Action Diary note...
@@ -120,12 +149,51 @@ export class NotesService {
     recordActionDiaryNote(note_content: string) {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
+            const note = [];
+            const reason = this._settings.other_reason ? this._settings.other_reason : 'none';
+
+            // Add the agent's name.
+            note.push(`Logged by: ${this._settings.agent_name}`);
+
+            // Add the additional call reason, if there is one.
+            note.push(`Additional reason: ${reason}`);
+
+            // The actual message.
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
-            const note = `${this._name}: ${note_content}`;
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
+            note.push(`${this._name}: ${note_content}`);
+
+            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note.join('\n'));
         }
 
         return of(true);
+    }
+
+    /**
+     * Record an automatic note about communications being sent.
+     * A corresponding Action Diary note is also created.
+     */
+    recordCommsNote(notify_template_name: string, notify_method: string) {
+        const note_content = `${notify_template_name} comms sent by ${notify_method}.`;
+
+        return forkJoin(
+
+            // Automatic note...
+            this.NCCAPI.createAutomaticNote(
+                this._settings.call_id,
+                this._settings.ticket_number,
+                this._settings.tenancy_reference,
+                this._settings.call_reason_id,
+                this._settings.crm_contact_id,
+                note_content,
+                {
+                    GovNotifyTemplateType: notify_template_name,
+                    GovNotifyChannelType: notify_method
+                }
+            ),
+
+            // Action Diary note...
+            this.recordActionDiaryNote(note_content)
+        );
     }
 
     /**
@@ -142,6 +210,9 @@ export class NotesService {
         this._position$.next({ x: x, y: y });
     }
 
+    /**
+     *
+     */
     updatePosition() {
         return this._position$;
     }
