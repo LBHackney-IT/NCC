@@ -1,7 +1,6 @@
 // APP component.
 // <app-root></app-root>
 
-import { VERSION } from '../environments/version';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -68,14 +67,6 @@ export class AppComponent implements OnInit, OnDestroy {
      */
     loggedIn(): boolean {
         return this.Auth.isLoggedIn();
-    }
-
-    /**
-     * Returns the current version number.
-     */
-    getVersion(): string {
-        const tag_string = VERSION.tag ? ` (${VERSION.tag})` : '';
-        return `version ${VERSION.version}${tag_string}`;
     }
 
 }

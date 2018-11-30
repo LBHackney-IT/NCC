@@ -1,30 +1,5 @@
 <!-- PAGE HEADER. -->
-<header class="page__header" role="banner" data-module="header">
-    <div class="page__header__inner">
-
-        <!-- Hackney logo. -->
-        <div class="page__header__column page__header__column--logo">
-            <img class="page__header__logo" src="assets/img/hackney-logo-white.png" alt="Hackney">
-        </div>
-
-        <div class="page__header__column page__header__column--title">
-            <p class="govuk-!-font-size-24 govuk-!-margin-bottom-1">NCC - CRM</p>
-            <app-env-name class="govuk-body-s"></app-env-name>
-        </div>
-
-        <div class="page__header__column page__header__column--id">
-            <!-- Display the current caller's name (if present) -->
-            <app-current-caller></app-current-caller>
-
-            <!-- Display the logged in agent's name and avatar. -->
-            <app-agent></app-agent>
-        </div>
-
-        <!-- The Add Note form. -->
-        <app-note-form></app-note-form>
-
-    </div>
-</header>
+<app-header></app-header>
 
 <div class="container">
     <app-route-loading *ngIf="loading"></app-route-loading>
@@ -47,9 +22,4 @@
 
 
 <!-- PAGE FOOTER. -->
-<!-- (not in the sketch, but might be useful to have.) -->
-<footer class="page__footer">
-    <div class="page__footer__version govuk-body-s govuk-!-margin-bottom-0">
-        {{ getVersion() }}
-    </div>
-</footer>
+<app-footer></app-footer>
