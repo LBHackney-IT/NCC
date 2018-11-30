@@ -187,14 +187,18 @@ export class CallService {
                     console.log('Interaction ID is', this.interaction_id);
 
                     // Record an Action Diary note about the call type and reason.
-                    const call_type = this.call_nature.call_type.label;
-                    const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
-                        this.call_nature.call_reason.label;
-                    this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`)
+                    this.recordActionDiaryNote(`calling about ${this._getCallNatureAsText()}`)
                         .pipe(take(1))
                         .subscribe();
                 });
         }
+    }
+
+    private _getCallNatureAsText(): string {
+        const call_type = this.call_nature.call_type.label;
+        const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
+            this.call_nature.call_reason.label;
+        return `${call_type} - ${call_reason}`;
     }
 
     /**
@@ -224,7 +228,10 @@ export class CallService {
     setCallNature(selection: ILogCallSelection) {
         this.call_nature = selection;
         if (this.call_id) {
-            this.recordAutomaticNote(`Additional call reason.`).subscribe();
+            // If we're already on a call, record an automatic note about the [changed] call nature.
+            this.recordAutomaticNote(`Additional call reason: ${this._getCallNatureAsText()}`)
+                .pipe(take(1))
+                .subscribe();
         }
     }
 
