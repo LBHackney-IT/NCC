@@ -83,6 +83,7 @@ import { WarningComponent } from './components/warning/warning.component';
 import { AccountBalanceComponent } from './components/account-balance/account-balance.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 
 @NgModule({
     declarations: [
@@ -152,6 +153,7 @@ import { HeaderComponent } from './components/header/header.component';
         AccountBalanceComponent,
         FooterComponent,
         HeaderComponent,
+        TenancyTypeComponent,
     ],
     imports: [
         BrowserModule,

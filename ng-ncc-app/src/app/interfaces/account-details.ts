@@ -14,4 +14,6 @@ export interface IAccountDetails {
     forename: string | null;
     surname: string | null;
     tenuretype: string;
+    agreementType: string;
+    isAgreementTerminated: boolean;
 }
