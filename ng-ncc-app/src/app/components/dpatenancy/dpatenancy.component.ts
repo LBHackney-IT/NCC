@@ -49,6 +49,13 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     /**
      *
      */
+    getTenancyDPAPaymentReference(): string {
+        return this.DPA.getPaymentReference();
+    }
+
+    /**
+     *
+     */
     getTenancyDPABalance(): string {
         const result = this.DPA.getTenancyRentBalance();
         return result ? result.toString() : null;
