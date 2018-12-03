@@ -35,6 +35,9 @@
     <span class="govuk-heading-s govuk-!-margin-bottom-2">DPA</span>
     <app-value-list class="govuk-body-s">
         <app-value-list-label>Date of birth</app-value-list-label>
-        <app-value-list-value>{{ tenant.getDateOfBirth() }}</app-value-list-value>
+        <app-value-list-value>
+            {{ tenant.getDateOfBirth() }}
+            <em *ngIf="!tenant.getDateOfBirth()">none</em>
+        </app-value-list-value>
     </app-value-list>
 </span>
