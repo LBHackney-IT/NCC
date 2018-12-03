@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject, forkJoin, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
