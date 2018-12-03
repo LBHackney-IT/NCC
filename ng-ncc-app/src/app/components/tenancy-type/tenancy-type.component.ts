@@ -46,7 +46,7 @@ export class TenancyTypeComponent implements OnInit {
             .pipe(take(1))
             .subscribe((data: IAccountDetails) => {
                 this.account = data;
-            })
+            });
     }
 
     getTenantType(): string {
