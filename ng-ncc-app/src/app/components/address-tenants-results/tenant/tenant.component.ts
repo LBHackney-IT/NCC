@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 
+import { IAccountDetails } from '../../../interfaces/account-details';
 import { ContactDetailsUpdate } from '../../../classes/contact-details-update.class';
 import { IdentifiedCaller } from '../../../classes/identified-caller.class';
 import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
+import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
 
 @Component({
     selector: 'app-address-tenant',
@@ -16,15 +18,16 @@ export class AddressResultTenantComponent implements OnInit {
 
     @Input() tenant: IdentifiedCaller;
 
+    account: IAccountDetails;
     details: ContactDetailsUpdate;
 
-    constructor(private NCCAPI: NCCAPIService) { }
+    constructor(private ManageATenancyAPI: ManageATenancyAPIService, private NCCAPI: NCCAPIService) { }
 
     ngOnInit() {
         // Attempt to obtain contact details from the NCC API.
         this.NCCAPI.getContactDetails(this.tenant.getContactID())
             .pipe(take(1))
-            .subscribe((data: ContactDetailsUpdate) => {
+            .subscribe((data) => {
                 this.details = data;
             });
     }
