@@ -30,4 +30,4 @@ export const TENURE = [
     { key: 'TPL', label: 'Temporary private let' },
     { key: 'TRA', label: 'Temporary Traveller' },
     { key: null, label: 'Temp Traveller' },
-]
+];
