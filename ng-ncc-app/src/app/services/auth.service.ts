@@ -23,9 +23,9 @@ export class AuthService {
         return this.NCCAPI.authenticate(code)
             .pipe(
                 map((data: IAuthentication) => {
-                    if (data.success) {
-                        console.log('Successfully logged in as', data.username);
-                    }
+                    // if (data.success) {
+                    //     console.log('Successfully logged in as', data.username);
+                    // }
 
                     // Whatever the outcome of the authentication attempt, we store the data locally.
                     this._user = data;
