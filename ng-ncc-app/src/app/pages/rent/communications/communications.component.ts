@@ -34,13 +34,6 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
     /**
      *
      */
-    ngOnDestroy() {
-        this._destroyed$.next();
-    }
-
-    /**
-     *
-     */
     selectedOption(option: CommsOption) {
         super.selectedOption(option);
 
