@@ -7,7 +7,7 @@ export const environment = {
         manageATenancy: 'https://api.hackney.gov.uk/manageatenancy/v1',
         ncc: 'https://api.hackney.gov.uk/lbhnccapi/api/',
         notify: 'https://api.hackney.gov.uk/lbhnccapi/api/GovNotifier',
-        statement: 'http://lbhwebintd01:5050/CustomerTransactions'
+        statement: 'http://secure.ncc.hackney.gov.uk:5050/CustomerTransactions'
     },
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
     authenticationLink: 'http://lbhwsappp01:4040',
