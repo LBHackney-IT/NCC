@@ -117,9 +117,16 @@ export class CallService {
         this.caller = caller;
         // console.log('Caller has been set to:', this.caller.getName());
         // console.log(`The caller ${caller.isAnonymous() ? 'is' : 'is not'} anonymous.`);
+        this._createNewCall();
+    }
 
-        const contact_id = caller.getContactID();
-        if (contact_id) {
+    /**
+     * Attempts to create a new call, based on set information.
+     * At the very least a caller is required to have been set.
+     */
+    private _createNewCall() {
+        if (this.caller) {
+            const contact_id = this.caller.getContactID();
 
             // We're subscribing to two API endpoints, so we can use forkJoin here to ensure that both are successful.
             // If either one fails we will get an error.
@@ -127,24 +134,25 @@ export class CallService {
                 // Create a call to record notes against.
                 this.NCCAPI.createCall(contact_id),
 
-                // We can also obtain the associated tenancy reference via the Manage A Tenancy API.
+                // We also fetch account details, in order to obtain the associated tenancy reference, via the Manage A Tenancy API.
                 // The tenancy reference is required to record Action Diary entries.
                 this.ManageATenancyAPI.getAccountDetails(contact_id)
             )
                 .pipe(take(1))
                 .pipe(
                     map(data => {
+                        // This simply gives us named references to the Observable results.
                         return { call: <ICRMServiceRequest>data[0], account: data[1] };
                     })
                 )
                 .subscribe(
                     (response) => {
-                        // Deal with the created call.
                         this.call_id = response.call.id;
                         this.ticket_number = response.call.ticketNumber;
                         // console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
 
                         // Handle the tenant's account data.
+                        // Anything subscribed to getAccountDetails() will receive updated account information.
                         this.account = response.account;
                         this.accountSubject.next(response.account);
                         // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
@@ -193,7 +201,7 @@ export class CallService {
                     // Store the interaction ID from this note for later use (i.e. when and if making a payment.)
                     // Making a payment via Paris requires an interaction ID, and since we're creating this note we can obtain one from it.
                     this.interaction_id = data.interactionId;
-                    console.log('Interaction ID is', this.interaction_id);
+                    // console.log('Interaction ID is', this.interaction_id);
                 });
         }
     }
@@ -224,11 +232,23 @@ export class CallService {
      */
     setCallNature(selection: ILogCallSelection) {
         this.call_nature = selection;
+
+        let observe$: Observable<any>;
+
         if (this.call_id) {
-            this.recordAutomaticNote(`Additional call reason.`)
-                .pipe(take(1))
-                .subscribe();
+            // If we're currently in a call, record a note mentioning the additional call reason.
+            // Wait for the note to be recorded before creating a new call.
+            observe$ = this.recordAutomaticNote(`Additional call reason.`)
+        } else {
+            observe$ = of([]);
         }
+
+        // Attempt to create a new call.
+        // We create a new call to set the [new] call type and reason.
+        observe$.pipe(take(1))
+            .subscribe(() => {
+                this._createNewCall();
+            });
     }
 
     /**

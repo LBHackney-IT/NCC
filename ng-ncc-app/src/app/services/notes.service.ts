@@ -26,17 +26,18 @@ export class NotesService {
     /**
      * Attempt to enable the add note form.
      * This will fail if we don't have a tenancy reference defined (which will happen if viewing calls from an anonymous user).
+     * However, we still want to be able to record automatic notes for anonymous users.
      */
     enable(name: string, settings: IAddNoteParameters) {
-        // console.log('Enable add note', name, settings);
         if (settings.tenancy_reference) {
             this._enabled = true;
             this._name = name;
-            this._settings = settings;
             this._visible = false;
         } else {
             this.disable();
         }
+
+        this._settings = settings;
     }
 
     /**
