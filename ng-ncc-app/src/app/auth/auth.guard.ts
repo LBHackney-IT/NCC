@@ -18,29 +18,18 @@ export class AuthGuard implements CanActivate {
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-        const code = next.params.code;
-        console.log('AuthGuard#canActivate called with code:', code);
-
         if (this.Auth.isLoggedIn()) {
             // There's already a logged in user.
-            console.log('User is already logged in.', this.Auth.hasAccess());
             return this.Auth.hasAccess();
         }
 
+        const code = next.params.code;
+
         if (code) {
             // Attempt to confirm that a user is logged in. The Observable will return true or false based on success.
-            console.log('Authenticating...');
-            return this.Auth.attempt(next.params.code)
+            return this.Auth.attempt(code)
                 .pipe(
                     map((outcome: boolean) => {
-                        console.log('authenticated?', outcome, this.Auth.getMessage());
-
-                        if (outcome) {
-                            console.log('has access:', this.Auth.hasAccess());
-                            console.log('is a representative:', this.Auth.isAgent());
-                            console.log('is a team leader:', this.Auth.isTeamLeader());
-                        }
-
                         // If the authentication was successful, redirect to the "last x calls" page.
                         // If unsuccessful, redirect to the "try again" page.
                         this.router.navigate([outcome ? '/last-calls' : '/try-again']);
@@ -48,12 +37,11 @@ export class AuthGuard implements CanActivate {
                         return outcome;
                     }));
         } else if (environment.disable.authentication) {
-            console.log('Attempt to bypass authentication.');
+            // Attempt to bypass authentication, which won't work if the respective environment variable isn't set.
             return this.Auth.bypass();
         }
 
         // No code or logged in user.
-        console.log('No code provided.');
         this.router.navigate(['/try-again']);
         return false;
     }
