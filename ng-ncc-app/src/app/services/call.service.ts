@@ -171,9 +171,6 @@ export class CallService {
 
                         // Create an automatic note mentioning the selected caller.
                         this.createCallerNote();
-                    },
-                    (error) => {
-                        console.error(error);
                     });
         }
     }
@@ -245,7 +242,7 @@ export class CallService {
         if (this.call_id) {
             // If we're currently in a call, record a note mentioning the additional call reason.
             // Wait for the note to be recorded before creating a new call.
-            observe$ = this.recordAutomaticNote(`Additional call reason: ${this._getCallNatureAsText()}`)
+            observe$ = this.recordAutomaticNote(`Additional call reason: ${this._getCallNatureAsText()}`);
         } else {
             observe$ = of([]);
         }
