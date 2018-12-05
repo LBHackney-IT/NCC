@@ -24,7 +24,7 @@ export const environment = {
             'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
         ]
     },
-    previousCallCount: 10,
+    previousCallCount: 50,
     notifyTemplate: {
         statement: 'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
     }

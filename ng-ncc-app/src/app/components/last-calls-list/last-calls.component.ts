@@ -4,7 +4,6 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { ILastCall } from '../../interfaces/last-call';
-import * as moment from 'moment';
 
 @Component({
     selector: 'app-last-calls-list',
@@ -28,7 +27,6 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         if (this.count) {
-            this.today = moment().format('MMMM Do YYYY');
             this.NCCAPI.getLastCalls(this.count)
                 .pipe(takeUntil(this._destroyed$))
                 .subscribe(
