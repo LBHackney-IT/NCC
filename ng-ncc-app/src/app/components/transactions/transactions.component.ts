@@ -50,7 +50,6 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
             this._loadTransactions();
         } else {
             // The filter or date settings have changed, so update what is displayed.
-            console.log('filter has changed.');
             this._filterTransactions();
         }
     }

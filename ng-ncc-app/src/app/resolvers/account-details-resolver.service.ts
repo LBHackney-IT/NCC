@@ -16,7 +16,7 @@ export class AccountDetailsResolver implements Resolve<any[]> {
             // Fetch the account details for the caller.
             return this.ManageATenancyAPI.getAccountDetails(caller.getContactID());
         } else {
-            console.log('No caller to fetch details for.');
+            // No caller to fetch details for.
             return of(null);
         }
     }

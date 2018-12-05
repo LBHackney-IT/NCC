@@ -46,7 +46,6 @@ import { AddressSearchResultsComponent } from './components/address-search-resul
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
-import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
@@ -93,7 +92,6 @@ import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.com
         AgentComponent,
         AppComponent,
         BackLinkComponent,
-        BackLinkConfirmComponent,
         BoxPanelComponent,
         CallNatureComponent,
         CommsMethodSelectComponent,
