@@ -19,5 +19,10 @@
         <app-value-list-label>Rent amount</app-value-list-label>
         <app-value-list-value>{{ getTenancyDPARent() | currency:'GBP' }}</app-value-list-value>
 
+        <app-value-list-label>Next payment amount</app-value-list-label>
+        <app-value-list-value>
+            <app-next-payment-amount [account]="getAccount()"></app-next-payment-amount>
+        </app-value-list-value>
+
     </app-value-list>
 </ng-template>

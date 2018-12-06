@@ -36,7 +36,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
     constructor(@Inject(LOCALE_ID) private locale: string, private injector: Injector) {
         super(injector);
         this.BackLink = this.injector.get<BackLinkService>(BackLinkService);
-        this.sanitiser = this.injector.get<DomSanitizer>(DomSanitizer);
+        this.sanitiser = this.injector.get(DomSanitizer);
         this.UHTrigger = this.injector.get<UHTriggerService>(UHTriggerService);
         // see https://stackoverflow.com/questions/49424837/lint-warning-get-is-deprecated-when-trying-to-manually-inject-ngcontrol
     }

@@ -12,6 +12,7 @@ import { ITenancyDPA } from '../interfaces/tenancy-dpa';
 })
 export class DPAService {
 
+    private _account: IAccountDetails;
     private _crm_contact_id: string;
     private _tenancy: ITenancyDPA;
 
@@ -33,6 +34,7 @@ export class DPAService {
             .pipe(
                 map((data: IAccountDetails) => {
                     if (data) {
+                        this._account = data;
                         this._tenancy = {
                             rent_balance: -data.currentBalance,
                             rent_amount: data.rent,
@@ -47,6 +49,10 @@ export class DPAService {
 
     reset() {
         this._tenancy = null;
+    }
+
+    get account(): IAccountDetails {
+        return this._account;
     }
 
     /**

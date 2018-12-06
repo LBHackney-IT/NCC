@@ -38,6 +38,10 @@ export class ManageATenancyAPIService {
                 map((data: any) => {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
+
+                    data.results.currentBalance = parseInt(data.results.currentBalance, 10);
+                    data.results.benefit = parseInt(data.results.benefit, 10);
+                    data.results.rent = parseInt(data.results.rent, 10);
                     const account: IAccountDetails = data.results;
 
                     // For consistency across the app, the current balance returned from the API has to be reversed.
