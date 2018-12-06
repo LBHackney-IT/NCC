@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PAGES } from '../../constants/pages.constant';
+import { IAccountDetails } from '../../interfaces/account-details';
 import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
@@ -13,6 +14,22 @@ export class PagePlaygroundComponent implements OnInit {
 
     private _w: Window;
 
+    account: IAccountDetails = {
+        propertyReferenceNumber: "00013513",
+        benefit: 118.75,
+        tagReferenceNumber: "000015/01",
+        paymentReferenceNumber: "1003001502",
+        accountid: "e3d050d8-169f-e711-8100-70106faa4841",
+        currentBalance: 760.19,
+        rent: 129.98,
+        housingReferenceNumber: "000015",
+        directdebit: null,
+        tenancyStartDate: "1970-07-06",
+        agreementType: "M",
+        isAgreementTerminated: false,
+        tenuretype: "Secure",
+        accountType: "1"
+    };
     show: boolean;
     amount = 10;
 
