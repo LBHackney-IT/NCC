@@ -37,7 +37,7 @@ export class DPAService {
                     if (data) {
                         this._account = data;
                         this._tenancy = {
-                            rent_balance: -data.currentBalance,
+                            rent_balance: data.currentBalance,
                             rent_amount: data.rent,
                             tenancy_reference: data.tagReferenceNumber,
                             payment_reference: data.paymentReferenceNumber
