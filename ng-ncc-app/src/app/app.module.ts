@@ -84,6 +84,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 
 @NgModule({
     declarations: [
@@ -154,6 +155,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
         HeaderComponent,
         TenancyTypeComponent,
         NumbersOnlyDirective,
+        NextPaymentAmountComponent,
     ],
     imports: [
         BrowserModule,

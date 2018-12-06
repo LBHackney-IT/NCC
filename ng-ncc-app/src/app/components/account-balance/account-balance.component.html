@@ -19,11 +19,14 @@
             </p>
         </div>
 
-        <!-- Next payment date. -->
-        <!-- <div class="govuk-grid-column-one-quarter">
-            <h3 class="govuk-!-font-size-24 govuk-!-font-weight-bold">Next payment</h3>
-            <p class="govuk-!-font-size-24">27/08/2018</p>
-        </div> -->
+        <!-- Next payment amount. -->
+        <div class="govuk-grid-column-one-quarter">
+            <h3 class="govuk-!-font-weight-bold">Next payment</h3>
+            <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                <app-next-payment-amount *ngIf="account" [account]="account"></app-next-payment-amount>
+                <span *ngIf="!account">--</span>
+            </p>
+        </div>
 
         <!-- Agreement plan. -->
         <!-- <div class="govuk-grid-column-one-quarter">
