@@ -20,6 +20,7 @@
                 <span class="govuk-!-margin-right-2">Pay now</span>
                 <label>
                     &pound; <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="number" placeholder="0.00"
+                        disabled
                         [(ngModel)]="amount">
                 </label>
             </div>
@@ -34,13 +35,17 @@
         </div>
     </app-panel>
 
-    <p class="govuk-body">
-        Payment will be made in Paris.
-    </p>
+    <app-warning>
+        Please go to Paris to take payment.
+    </app-warning>
 
-    <button type="submit" class="govuk-button" (click)="confirmPayment()" [disabled]="!canConfirmPayment()">
+    <!-- <p class="govuk-body">
+        Payment will be made in Paris.
+    </p> -->
+
+    <!-- <button type="submit" class="govuk-button" (click)="confirmPayment()" [disabled]="!canConfirmPayment()">
         Make payment
-    </button>
+    </button> -->
 </form>
 
 
