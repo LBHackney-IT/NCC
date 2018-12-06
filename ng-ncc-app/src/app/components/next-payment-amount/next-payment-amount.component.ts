@@ -26,7 +26,6 @@ export class NextPaymentAmountComponent implements OnChanges {
     }
 
     get value(): number {
-
-        return this.balance + this.rent - this.benefit;
+        return -(this.balance - this.rent + this.benefit);
     }
 }
