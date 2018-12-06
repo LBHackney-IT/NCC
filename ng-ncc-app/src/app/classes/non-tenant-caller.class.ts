@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 import { AnonymousCaller } from '../classes/anonymous-caller.class';
 
 /**
@@ -5,15 +7,22 @@ import { AnonymousCaller } from '../classes/anonymous-caller.class';
  */
 export class NonTenantCaller extends AnonymousCaller {
 
-    private _crm_contact_id: string;
-
-    constructor(crm_contact_id: string) {
-        super();
-        this._crm_contact_id = crm_contact_id;
+    getName(): string {
+        return 'Non-tenant';
     }
 
-    getContactID(): string {
-        return this._crm_contact_id;
+    /**
+     * Returns the caller's CRM contact ID.
+     */
+    getContactID(): string | null {
+        return environment.nonTenantUserID;
+    }
+
+    /**
+     * Returns the the CRM contact ID to use for recording notes.
+     */
+    getContactIDForNotes(): string | null {
+        return environment.nonTenantUserID;
     }
 
 }
