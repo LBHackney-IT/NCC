@@ -26,6 +26,8 @@
 
         <li class="navigation__separator"></li>
 
+        <li class="navigation__heading">This call:</li>
+
         <!-- Add another call reason. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.ADDITIONAL_REASON.route" [class.disabled]="!isCallActive() || disable_additional_reasons">
@@ -38,6 +40,10 @@
             <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!isCallerIdentified()">
                 {{ page_defs.VIEW_NOTES.label }}
             </a>
+
+            <!-- For for taking notes. -->
+            <button #notesButton class="navigation__notes" type="button" name="button" *ngIf="areNotesEnabled()"
+                (click)="toggleAddNote()">Add note</button>
         </li>
 
         <!-- Send emails, texts and letters. -->

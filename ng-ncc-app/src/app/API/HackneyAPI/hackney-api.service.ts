@@ -9,7 +9,6 @@ import { Observable, of, from } from 'rxjs';
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 import { IHackneyAPIJSONResult } from '../../interfaces/hackney-api-json-result';
-import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 
 @Injectable({
     providedIn: 'root'
@@ -76,31 +75,6 @@ export class HackneyAPIService {
                             groups[call_type].push(reason);
                         });
                     return groups;
-                })
-            );
-    }
-
-    /**
-     * Searches for citizens and returns a list of results.
-     */
-    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
-        Observable<ICitizenIndexSearchResult[]> {
-
-        // Build the query part of the URL.
-        let query = '';
-        if (first_name) { query += `firstname=${first_name}`; }
-        if (last_name) { query += `surname=${last_name}`; }
-        if (address) { query += `addressline12=${address}`; }
-        if (postcode) { query += `postcode=${postcode}`; }
-        query += '&IsAdvanceSearch=false';
-        // very important to set IsAdvanceSearch to false.
-
-        return this.http
-            .get(`${this._url}/v1/CitizenIndexSearch?${query}`)
-            .pipe(
-                map((response: IHackneyAPIJSONResult) => {
-                    // TODO perhaps filter out any unwanted/unnecessary information.
-                    return response.results;
                 })
             );
     }

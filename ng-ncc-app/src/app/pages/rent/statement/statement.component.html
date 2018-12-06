@@ -52,8 +52,8 @@
     </form>
 
     <!-- Confirmation modal. -->
-    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
-        Statement sent successfully.
+    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
+        {{ success_message }}
     </app-dialogue>
 
     <app-dialogue [(show)]="modal.error">

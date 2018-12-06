@@ -24,7 +24,7 @@
     </button>
 
     <!-- Confirmation modal. -->
-    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
         Message sent successfully.
     </app-dialogue>
 
@@ -82,8 +82,6 @@
             <!-- DPA questions for the tenant. -->
             <div class="govuk-grid-column-one-half govuk-body-s">
                 <app-value-list>
-                    <app-value-list-label>National Insurance number</app-value-list-label>
-                    <app-value-list-value>...</app-value-list-value>
                     <app-value-list-label>Date of birth</app-value-list-label>
                     <app-value-list-value>{{ caller.getDateOfBirth() }}</app-value-list-value>
                 </app-value-list>

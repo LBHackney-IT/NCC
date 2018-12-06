@@ -1,12 +1,13 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { PageHistory } from '../abstract/history';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
+import { NotesService } from '../../services/notes.service';
 import { PageTitleService } from '../../services/page-title.service';
 
 export abstract class PageNotes extends PageHistory implements OnInit {
@@ -22,11 +23,13 @@ export abstract class PageNotes extends PageHistory implements OnInit {
     filter_reason: string;
 
     route: ActivatedRoute;
+    Notes: NotesService;
     PageTitle: PageTitleService;
 
     constructor(private injector: Injector) {
         super();
         this.route = this.injector.get(ActivatedRoute);
+        this.Notes = this.injector.get(NotesService);
         this.PageTitle = this.injector.get(PageTitleService);
     }
 
@@ -86,6 +89,7 @@ export abstract class PageNotes extends PageHistory implements OnInit {
         this.filter_reason = null;
         this.filter_tenant = null;
         this.filterNotes();
+        this.filterByDate();
     }
 
 }

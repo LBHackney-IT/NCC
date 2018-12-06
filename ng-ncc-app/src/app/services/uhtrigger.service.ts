@@ -53,8 +53,19 @@ export class UHTriggerService {
      */
     madePayment(amount: number, payment_reference: string) {
         // Only continue if there is an identified caller.
-        if (this.Call.isCallerIdentified()) {
+        if (this.Call.isCallerIdentified() || this.Call.isCallerNonTenant()) {
             this.Call.recordAutomaticNote(`Rent payment taken: £${amount} (ref: ${payment_reference})`)
+                .pipe(take(1))
+                .subscribe();
+        }
+    }
+
+    /**
+     * Called when a statement was sent.
+     */
+    sentStatement(method: string) {
+        if (this.Call.isCallerIdentified()) {
+            this.Call.recordAutomaticNote(`Statement sent by ${method}.`)
                 .pipe(take(1))
                 .subscribe();
         }
@@ -64,7 +75,9 @@ export class UHTriggerService {
      * Handle a comms template sent as a result of the Rent call type.
      */
     _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {
-        this.Call.recordCommsNote(template, method);
+        this.Call.recordCommsNote(template, method)
+            .pipe(take(1))
+            .subscribe();
     }
 
 }

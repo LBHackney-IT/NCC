@@ -3,6 +3,7 @@ import { Subject, of } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
 import { DPAService } from '../../services/dpa.service';
+import { IAccountDetails } from '../../interfaces/account-details';
 
 @Component({
     selector: 'app-dpa-tenancy',
@@ -42,6 +43,12 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     /**
      *
      */
+    getAccount(): IAccountDetails {
+        return this.DPA.account;
+    }
+    /**
+     *
+     */
     getTenancyDPAReference(): string {
         return this.DPA.getTenancyReference();
     }
@@ -49,9 +56,16 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     /**
      *
      */
+    getTenancyDPAPaymentReference(): string {
+        return this.DPA.getPaymentReference();
+    }
+
+    /**
+     *
+     */
     getTenancyDPABalance(): string {
         const result = this.DPA.getTenancyRentBalance();
-        return result ? result.toString() : null;
+        return null === result ? null : result.toString();
     }
 
     /**

@@ -1,6 +1,7 @@
 import { LOCALE_ID, Component, Inject, Injector, OnInit } from '@angular/core';
 import { formatCurrency } from '@angular/common';
-import { take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { CommsOption } from '../../../classes/comms-option.class';
@@ -26,7 +27,7 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
         super.ngOnInit();
         this.PageTitle.set(PAGES.RENT_COMMS.label);
         this.Call.getAccount()
-            .pipe(take(1))
+            .pipe(takeUntil(this._destroyed$))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });
     }
 
@@ -37,10 +38,12 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
         super.selectedOption(option);
 
         // This page will provide access to GOV.UK Notify templates that will require DPA answers from the caller.
-        if (option.isSensitive()) {
-            this.modal.dpa = true; // display the dialogue for prompting for DPA answers.
-        } else {
-            this.updatePreview();
+        if (option) {
+            if (option.isSensitive()) {
+                this.modal.dpa = true; // display the dialogue for prompting for DPA answers.
+            } else {
+                this.updatePreview();
+            }
         }
     }
 
@@ -48,7 +51,7 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
      *
      */
     isSensitiveTemplateSelected(): boolean {
-        return this.selected_option.isSensitive();
+        return this.selected_option && this.selected_option.isSensitive();
     }
 
     /**
@@ -63,6 +66,14 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
                 'Rent amount': formatCurrency(this.account_details.rent, this.locale, '£')
             };
         }
+    }
+
+    /**
+     *
+     */
+    commsSuccess() {
+        // Reset the comms information.
+        this.resetComms();
     }
 
 }

@@ -13,7 +13,7 @@ export class CallNatureResolver implements Resolve<any[]> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
 
         if (!this.Call.hasCallNature()) {
-            console.log('We must have a call type and reason to access this page.');
+            // No call nature (type and reason) was set, so we redirect to the Log Call page.
             this.router.navigateByUrl(PAGES.LOG_CALL.route);
             return of([]);
         }

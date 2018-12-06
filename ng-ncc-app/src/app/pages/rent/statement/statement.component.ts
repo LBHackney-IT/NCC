@@ -1,7 +1,9 @@
 import { environment } from '../../../../environments/environment';
-import { Component, Injector, OnInit } from '@angular/core';
+import { LOCALE_ID, Component, Inject, Injector, OnInit } from '@angular/core';
+import { formatCurrency } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { finalize, take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { PAGES } from '../../../constants/pages.constant';
@@ -12,6 +14,7 @@ import { CommsSelection } from '../../../classes/comms-selection.class';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { INotifyAPIJSONResult } from '../../../interfaces/notify-api-json-result';
 import { INotifyStatementParameters } from '../../../interfaces/notify-statement-parameters';
+import { UHTriggerService } from '../../../services/uhtrigger.service';
 
 @Component({
     selector: 'app-rent-statement',
@@ -25,14 +28,17 @@ export class PageRentStatementComponent extends PageCommunications implements On
     until_date: string;
     statement_url: SafeResourceUrl;
     sending: boolean;
+    success_message: string;
 
     private BackLink: BackLinkService;
     private sanitiser: DomSanitizer;
 
-    constructor(private injector: Injector) {
+    constructor(@Inject(LOCALE_ID) private locale: string, private injector: Injector) {
         super(injector);
-        this.BackLink = this.injector.get(BackLinkService);
+        this.BackLink = this.injector.get<BackLinkService>(BackLinkService);
         this.sanitiser = this.injector.get(DomSanitizer);
+        this.UHTrigger = this.injector.get<UHTriggerService>(UHTriggerService);
+        // see https://stackoverflow.com/questions/49424837/lint-warning-get-is-deprecated-when-trying-to-manually-inject-ngcontrol
     }
 
     ngOnInit() {
@@ -47,7 +53,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
 
         // Obtain account details.
         this.Call.getAccount()
-            .pipe(take(1))
+            .pipe(takeUntil(this._destroyed$))
             .subscribe((account) => { this.account = account; });
 
 
@@ -126,20 +132,25 @@ export class PageRentStatementComponent extends PageCommunications implements On
                     EndDate: this.until_date,
                     TemplateId: environment.notifyTemplate.statement,
                     TemplateData: {
-                        'rent amount': this.account.rent,
-                        'rent balance': this.account.currentBalance
+                        'rent amount': formatCurrency(this.account.rent, this.locale, '£'),
+                        'rent balance': formatCurrency(this.account.currentBalance, this.locale, '£')
                     }
                 } as INotifyStatementParameters;
 
                 // Send the statement!
                 this.sending = true;
+                this.success_message = null;
                 this.NotifyAPI.sendEmailStatement(parameters)
                     .pipe(take(1))
                     .pipe(finalize(() => { this.sending = false; }))
                     .subscribe(
                         (json: INotifyAPIJSONResult) => {
                             if (1 === json.response) {
+                                this.success_message = 'Statement sent successfully.';
                                 this.modal.confirmed = true;
+
+                                // Create an automatic note.
+                                this.UHTrigger.sentStatement('email');
                             } else {
                                 this.modal.error = true;
                             }
@@ -148,7 +159,23 @@ export class PageRentStatementComponent extends PageCommunications implements On
                             this.modal.error = true;
                         });
                 break;
+
+            case CONTACT.METHOD_POST:
+                this.success_message = '\'Send by post\' confirmed.';
+                this.modal.confirmed = true;
+
+                // Create an automatic note.
+                this.UHTrigger.sentStatement('post');
+                break;
         }
+    }
+
+    /**
+     *
+     */
+    commsSuccess() {
+        // Go to the Transactions tab on the Rent page.
+        this.router.navigate([`${PAGES.RENT.route}/${PAGES.RENT_TRANSACTIONS.route}`]);
     }
 
 }

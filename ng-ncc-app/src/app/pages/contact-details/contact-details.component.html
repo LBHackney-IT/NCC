@@ -84,11 +84,12 @@
                             <!-- text field... -->
                             <div class="govuk-form-group govuk-!-margin-left-3">
                                 <label class="govuk-label govuk-visually-hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
-                                <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}" required
-                                [(ngModel)]="new_telephone[i]"
-                                (focus)="update.default.telephone = row;"
-                                (blur)="update.default.telephone = row;"
-                                [disabled]="saving">
+                                <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}"
+                                    required appNumbersOnly
+                                    [(ngModel)]="new_telephone[i]"
+                                    (focus)="update.default.telephone = row;"
+                                    (blur)="update.default.telephone = row;"
+                                    [disabled]="saving">
                             </div>
 
                         </div>
@@ -130,7 +131,8 @@
                             <!-- text field... -->
                             <div class="govuk-form-group govuk-!-margin-left-3">
                                 <label class="govuk-label govuk-visually-hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
-                                <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}" required
+                                <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}"
+                                    required appNumbersOnly
                                     [(ngModel)]="new_mobile[i]" (focus)="update.default.mobile = row;"
                                     (blur)="update.default.mobile = row;"
                                     [disabled]="saving">

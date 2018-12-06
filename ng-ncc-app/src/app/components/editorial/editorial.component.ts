@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { AuthService } from '../../services/auth.service';
@@ -14,11 +14,15 @@ export class EditorialComponent implements OnInit, OnDestroy {
 
     editing: boolean;
     saving: boolean;
+    error: boolean;
     content: string;
     new_content: string;
 
     private _destroyed$ = new Subject();
 
+    /**
+     *
+     */
     constructor(private NCCAPI: NCCAPIService, private Auth: AuthService) { }
 
     /**
@@ -26,9 +30,7 @@ export class EditorialComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.NCCAPI.getEditorial()
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
+            .pipe(takeUntil(this._destroyed$))
             .subscribe((content: string) => {
                 this.content = content;
             });
@@ -42,14 +44,14 @@ export class EditorialComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
+     * Returns TRUE if the editorial text can be edited.
      */
     canEdit(): boolean {
         return this.Auth.isTeamLeader();
     }
 
     /**
-     *
+     * Enables the form for editing the editorial text.
      */
     beginEdit() {
         if (this.canEdit()) {
@@ -59,32 +61,35 @@ export class EditorialComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
+     * Saves updated editorial text.
      */
     saveText() {
         if (this.saving || !this.canEdit()) {
             return;
         }
 
+        this.error = false;
         this.saving = true;
 
-        const subscription = this.NCCAPI.setEditorial(this.new_content)
+        this.NCCAPI.setEditorial(this.new_content)
+            .pipe(take(1))
+            .pipe(finalize(() => {
+                this.saving = false;
+            }))
             .subscribe(
                 () => {
-                    console.log('Editorial was updated.');
+                    // successful update.
                     this.content = this.new_content;
                     this.resetText();
                 },
-                (error) => { console.log(error); },
-                () => {
-                    this.saving = false;
-                    subscription.unsubscribe();
+                (error) => {
+                    this.error = true;
                 }
             );
     }
 
     /**
-     *
+     * Resets the editorial text form.
      */
     resetText() {
         this.new_content = null;
