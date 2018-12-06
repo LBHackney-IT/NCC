@@ -3,6 +3,7 @@ import { Subject, of } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
 import { DPAService } from '../../services/dpa.service';
+import { IAccountDetails } from '../../interfaces/account-details';
 
 @Component({
     selector: 'app-dpa-tenancy',
@@ -42,7 +43,7 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     /**
      *
      */
-    getAccount(): string {
+    getAccount(): IAccountDetails {
         return this.DPA.account;
     }
     /**
