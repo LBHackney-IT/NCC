@@ -29,6 +29,7 @@ export class NotesService {
      * However, we still want to be able to record automatic notes for anonymous users.
      */
     enable(name: string, settings: IAddNoteParameters) {
+        console.log(settings);
         if (settings.tenancy_reference) {
             this._enabled = true;
             this._name = name;

@@ -3,9 +3,14 @@ import { environment } from '../../environments/environment';
 import { AnonymousCaller } from '../classes/anonymous-caller.class';
 
 /**
- * This class represents an anonymous caller, as selected from the Identify page.
+ * This class represents a non-tenant caller, as selected from the Identify page.
+ * Non-tenant callers are able to make payments toward a tenancy account, but cannot access sensitive information.
  */
 export class NonTenantCaller extends AnonymousCaller {
+
+    constructor(public tenancy_reference: string) {
+        super();
+    }
 
     getName(): string {
         return 'Non-tenant';

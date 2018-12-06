@@ -158,6 +158,9 @@ export class CallService {
                         // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
 
                         // Enable the add note form.
+                        const tenancy_reference = this.caller instanceof NonTenantCaller ?
+                            this.caller.tenancy_reference : this.account.tagReferenceNumber;
+                        console.log(this.caller instanceof NonTenantCaller, tenancy_reference);
                         const settings = {
                             agent_name: this.Auth.getFullName(),
                             call_id: this.call_id,
@@ -165,7 +168,7 @@ export class CallService {
                             call_reason_id: this.call_nature.call_reason.id,
                             other_reason: this.call_nature.other_reason,
                             crm_contact_id: this.caller.getContactIDForNotes(),
-                            tenancy_reference: this.account.tagReferenceNumber
+                            tenancy_reference: tenancy_reference
                         };
                         this.Notes.enable(this.caller.getName(), settings);
 

@@ -61,13 +61,13 @@ export class PageIdentifyTenantsComponent implements OnInit {
      * Called when a tenant is selected from address results.
      */
     tenantSelected(caller: ICaller) {
-        if (caller.isAnonymous()) {
-            // We've selected "Not a tenant" (a non-tenant caller).
-            this.Call.setCaller(new NonTenantCaller);
-        } else {
-            // We've identified a tenant as the caller.
-            this.Call.setCaller(caller);
-        }
+        // if (caller.isAnonymous()) {
+        //     // We've selected "Not a tenant" (a non-tenant caller).
+        //     this.Call.setCaller(new NonTenantCaller);
+        // } else {
+        //     // We've identified a tenant as the caller.
+        this.Call.setCaller(caller);
+        // }
         this.Call.setTenancy(this.address);
         this.nextStep();
     }

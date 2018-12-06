@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, forkJoin, of, from, ReplaySubject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { Observable, forkJoin, of, from } from 'rxjs';
 
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 
@@ -12,6 +12,7 @@ import { ITenancyDPA } from '../interfaces/tenancy-dpa';
 })
 export class DPAService {
 
+    private _subject$ = new ReplaySubject();
     private _account: IAccountDetails;
     private _crm_contact_id: string;
     private _tenancy: ITenancyDPA;
@@ -43,8 +44,13 @@ export class DPAService {
                         };
                         this._crm_contact_id = crm_contact_id;
                     }
+                    this._subject$.next();
                 })
             );
+    }
+
+    getUpdates(): ReplaySubject<{}> {
+        return this._subject$;
     }
 
     reset() {
