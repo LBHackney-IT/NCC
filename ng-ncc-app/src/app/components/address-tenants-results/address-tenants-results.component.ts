@@ -43,7 +43,7 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
             .pipe(takeUntil(this._destroyed$))
             .subscribe(() => {
                 this.nonTenantCaller = new NonTenantCaller(this.DPA.getTenancyReference());
-            })
+            });
     }
 
     ngOnChanges() {
