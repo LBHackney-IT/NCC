@@ -39,13 +39,13 @@ export class ManageATenancyAPIService {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
 
-                    data.results.currentBalance = parseInt(data.results.currentBalance, 10);
-                    data.results.benefit = parseInt(data.results.benefit, 10);
-                    data.results.rent = parseInt(data.results.rent, 10);
+                    data.results.currentBalance = -parseFloat(data.results.currentBalance);
+                    data.results.benefit = parseFloat(data.results.benefit);
+                    data.results.rent = parseFloat(data.results.rent);
                     const account: IAccountDetails = data.results;
 
                     // For consistency across the app, the current balance returned from the API has to be reversed.
-                    account.currentBalance = -account.currentBalance;
+                    // account.currentBalance = -account.currentBalance;
                     return account;
                 })
             );
