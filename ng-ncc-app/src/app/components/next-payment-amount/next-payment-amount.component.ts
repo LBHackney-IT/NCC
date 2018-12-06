@@ -18,9 +18,11 @@ export class NextPaymentAmountComponent implements OnChanges {
     rent: number;
 
     ngOnChanges() {
-        this.balance = this.account.currentBalance;
-        this.benefit = this.account.benefit;
-        this.rent = this.account.rent;
+        if (this.account) {
+            this.balance = this.account.currentBalance;
+            this.benefit = this.account.benefit;
+            this.rent = this.account.rent;
+        }
     }
 
     get value(): number {
