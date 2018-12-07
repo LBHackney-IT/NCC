@@ -11,6 +11,9 @@ import { PageTitleService } from '../../services/page-title.service';
 })
 export class PageCommsComponent extends PageCommunications implements OnInit {
 
+    /**
+     *
+     */
     ngOnInit() {
         super.ngOnInit();
         this.PageTitle.set(PAGES.COMMS.label);
@@ -21,6 +24,17 @@ export class PageCommsComponent extends PageCommunications implements OnInit {
      */
     commsSuccess() {
         this.resetComms();
+    }
+
+    /**
+     *
+     */
+    getRentPageRoute(): string {
+        return PAGES.RENT.route;
+    }
+
+    isRentLinkVisible(): boolean {
+        return this.Call.isCallerIdentified();
     }
 
 }
