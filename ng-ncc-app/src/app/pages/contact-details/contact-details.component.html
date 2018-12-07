@@ -72,6 +72,10 @@
                             </label>
                         </div>
 
+                        <app-warning *ngIf="new_telephone.length">
+                            Check DPA before adding new details.
+                        </app-warning>
+
                         <!-- New home number(s). -->
                         <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_telephone; let i = index; trackBy: trackByIndex;">
                             <!-- See the component for trackByIndex(). -->
@@ -120,6 +124,10 @@
                             </label>
                         </div>
 
+                        <app-warning *ngIf="new_mobile.length">
+                            Check DPA before adding new details.
+                        </app-warning>
+
                         <!-- New mobile number(s). -->
                         <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_mobile; let i = index; trackBy: trackByIndex;">
 
@@ -166,6 +174,10 @@
                                 {{ row }}
                             </label>
                         </div>
+
+                        <app-warning *ngIf="new_email.length">
+                            Check DPA before adding new details.
+                        </app-warning>
 
                         <!-- New email address(es). -->
                         <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_email; let i = index; trackBy: trackByIndex;">
