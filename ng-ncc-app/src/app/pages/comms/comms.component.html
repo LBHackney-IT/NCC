@@ -1,11 +1,23 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-l">Communications</h1>
+        <h1 class="govuk-heading-l">Non-sensitive communications</h1>
+
+        <p class="govuk-body">
+            Here you can send non-sensitive emails and texts.
+            <ng-container *ngIf="isRentLinkVisible()">
+                <br>
+                To send sensitive information visit the <a routerLink="getRentPageRoute()">'View/pay rent'</a> page after verifying Data Protection.
+            </ng-container>
+        </p>
+
+        <p class="govuk-body">
+            If the caller would like to set up a Standing Order for rent payments they will need to tell their bank the details below.
+        </p>
 
         <div class="govuk-inset-text">
             <p>
-                <b>Standing order details</b><br>
+                <b>Standing Order details for rent payments</b><br>
                 Bank name: Lloyds<br>
                 Account number: 00641877<br>
                 Sort code: 30-00-02
