@@ -31,7 +31,8 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
     FORM_GAP = 20;
     containerStyle: Object; // used to control the inline style of .note-form__container.
-    comment: string;
+    comment: string = null;
+    transferred: boolean;
     show: boolean;          // whether the note component is visible on the page.
     saving: boolean;        // set to TRUE when saving a note.
     error: boolean;         // set to TRUE if there was a problem with saving a note.
@@ -169,7 +170,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
             this.error = false;
             this.saving = true;
 
-            this.Notes.recordManualNote(this.comment)
+            this.Notes.recordManualNote(this.comment, this.transferred)
                 .pipe(take(1))
                 .pipe(finalize(() => {
                     this.saving = false;
