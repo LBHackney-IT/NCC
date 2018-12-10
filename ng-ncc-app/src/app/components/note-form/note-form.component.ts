@@ -170,7 +170,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
             this.error = false;
             this.saving = true;
 
-            this.Notes.recordManualNote(this.comment)
+            this.Notes.recordManualNote(this.comment, this.transferred)
                 .pipe(take(1))
                 .pipe(finalize(() => {
                     this.saving = false;

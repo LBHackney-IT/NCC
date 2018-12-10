@@ -38,14 +38,14 @@
             <div class="govuk-radios govuk-radios--inline">
                 <div class="govuk-radios__item small-radio">
                     <input class="govuk-radios__input" id="transfer-yes" name="transfer" type="radio" value="yes"
-                        [(ngModel)]="transferred" [value]="true">
+                        [(ngModel)]="transferred" [value]="true" [disabled]="saving">
                     <label class="govuk-label govuk-radios__label" for="transfer-yes">
                         Yes
                     </label>
                 </div>
                 <div class="govuk-radios__item small-radio">
                     <input class="govuk-radios__input" id="transfer-no" name="transfer" type="radio" value="no"
-                        [(ngModel)]="transferred" [value]="false">
+                        [(ngModel)]="transferred" [value]="false" [disabled]="saving">
                     <label class="govuk-label govuk-radios__label" for="transfer-no">
                         No
                     </label>

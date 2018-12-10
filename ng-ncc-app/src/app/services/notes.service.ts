@@ -122,7 +122,7 @@ export class NotesService {
      * Record a manual note.
      * A corresponding Action Diary note is also created.
      */
-    recordManualNote(note_content: string) {
+    recordManualNote(note_content: string, transferred: boolean = false) {
         return forkJoin(
 
             // Manual note...
@@ -131,7 +131,8 @@ export class NotesService {
                 ticket_number: this._settings.ticket_number,
                 call_reason_id: this._settings.call_reason_id,
                 crm_contact_id: this._settings.crm_contact_id,
-                content: this._formatNoteContent(note_content)
+                content: this._formatNoteContent(note_content),
+                calltransferred: transferred
             }),
 
             // Action Diary note...
