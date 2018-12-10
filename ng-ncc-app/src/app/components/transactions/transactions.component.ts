@@ -3,7 +3,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
+import { IAccountDetails } from '../../interfaces/account-details';
 import { ITransaction } from '../../interfaces/transaction';
+import { NextPaymentService } from '../../services/next-payment.service';
 
 @Component({
     selector: 'app-transactions',
@@ -11,7 +13,7 @@ import { ITransaction } from '../../interfaces/transaction';
     styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() tenancyRef: string;
+    @Input() account: IAccountDetails;
     @Input() currentBalance: number;
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
@@ -32,7 +34,10 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
         { key: '2016', label: '2016' }
     ];
 
-    constructor(private ManageATenancyAPI: ManageATenancyAPIService) { }
+    constructor(
+        private ManageATenancyAPI: ManageATenancyAPIService,
+        private NextPayment: NextPaymentService
+    ) { }
 
     /**
      *
@@ -45,7 +50,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        if (changes.tenancyRef) {
+        if (changes.account) {
             // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
             this._loadTransactions();
         } else {
@@ -75,11 +80,12 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
         this.error = false;
         this._loading = true;
         const subscription = this.ManageATenancyAPI
-            .getTransactions(this.tenancyRef)
+            .getTransactions(this.account.tagReferenceNumber)
             .pipe(takeUntil(this._destroyed$))
             .subscribe(
                 (rows) => {
-                    let balance = this.currentBalance;
+                    // let balance = this.currentBalance;
+                    let balance = this.NextPayment.calculate(this.account);
 
                     // We don't get the balance from the API for each transaction row, so we have to calculate it ourselves.
                     // NOTE: the values returned from the API are the reverse of what should be displayed.

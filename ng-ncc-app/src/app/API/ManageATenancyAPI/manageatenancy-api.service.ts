@@ -39,7 +39,7 @@ export class ManageATenancyAPIService {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
 
-                    data.results.currentBalance = -parseFloat(data.results.currentBalance);
+                    data.results.currentBalance = parseFloat(data.results.currentBalance);
                     data.results.benefit = parseFloat(data.results.benefit);
                     data.results.rent = parseFloat(data.results.rent);
                     const account: IAccountDetails = data.results;
