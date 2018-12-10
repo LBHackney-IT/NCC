@@ -108,6 +108,13 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Returns TRUE if the caller is a non-tenant.
+     */
+    isCallerNonTenant(): boolean {
+        return environment.nonTenantUserID === this.Notes.getSettings().crm_contact_id;
+    }
+
+    /**
      * Returns the caller's name.
      */
     getCallerName(): string {
@@ -141,6 +148,10 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      */
     canSaveNote(): boolean {
         return !this.saving && !!(this.comment) && !!(this.Notes.getSettings().call_id);
+    }
+
+    canViewNotes(): boolean {
+        return this.Call.hasCaller() && !(this.isCallerAnonymous() || this.isCallerNonTenant());
     }
 
     /**

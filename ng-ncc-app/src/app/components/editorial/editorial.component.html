@@ -18,4 +18,8 @@
     <button class="govuk-button govuk-!-margin-right-2" type="button" name="button" (click)="saveText()" [disabled]="saving">Update</button>
     <button class="govuk-button" type="button" name="button" (click)="resetText()">Cancel</button>
 
+    <app-error-panel *ngIf="error">
+        ...!
+    </app-error-panel>
+
 </form>

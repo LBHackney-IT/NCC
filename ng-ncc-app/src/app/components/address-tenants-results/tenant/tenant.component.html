@@ -1,6 +1,8 @@
 <!-- The contact's name. -->
 <span class="govuk-grid-column-full govuk-!-margin-bottom-5">
-    <span class="govuk-heading-m govuk-!-margin-bottom-1">{{ tenant.getName() }}</span>
+    <span class="govuk-heading-m govuk-!-margin-bottom-1">
+        {{ tenant.getName() }}
+    </span>
 </span>
 
 <!-- Contact details. -->
@@ -35,6 +37,9 @@
     <span class="govuk-heading-s govuk-!-margin-bottom-2">DPA</span>
     <app-value-list class="govuk-body-s">
         <app-value-list-label>Date of birth</app-value-list-label>
-        <app-value-list-value>{{ tenant.getDateOfBirth() }}</app-value-list-value>
+        <app-value-list-value>
+            {{ tenant.getDateOfBirth() }}
+            <em *ngIf="!tenant.getDateOfBirth()">none</em>
+        </app-value-list-value>
     </app-value-list>
 </span>

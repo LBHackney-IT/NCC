@@ -46,7 +46,6 @@ import { AddressSearchResultsComponent } from './components/address-search-resul
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
-import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
@@ -81,6 +80,11 @@ import { ValueListLabelComponent } from './components/value-list/value-list-labe
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
 import { AccountBalanceComponent } from './components/account-balance/account-balance.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 
 @NgModule({
     declarations: [
@@ -90,7 +94,6 @@ import { AccountBalanceComponent } from './components/account-balance/account-ba
         AgentComponent,
         AppComponent,
         BackLinkComponent,
-        BackLinkConfirmComponent,
         BoxPanelComponent,
         CallNatureComponent,
         CommsMethodSelectComponent,
@@ -148,6 +151,11 @@ import { AccountBalanceComponent } from './components/account-balance/account-ba
         ValueListValueComponent,
         WarningComponent,
         AccountBalanceComponent,
+        FooterComponent,
+        HeaderComponent,
+        TenancyTypeComponent,
+        NumbersOnlyDirective,
+        NextPaymentAmountComponent,
     ],
     imports: [
         BrowserModule,

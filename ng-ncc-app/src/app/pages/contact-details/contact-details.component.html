@@ -72,6 +72,10 @@
                             </label>
                         </div>
 
+                        <app-warning *ngIf="new_telephone.length">
+                            Check DPA before adding new details.
+                        </app-warning>
+
                         <!-- New home number(s). -->
                         <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_telephone; let i = index; trackBy: trackByIndex;">
                             <!-- See the component for trackByIndex(). -->
@@ -84,11 +88,12 @@
                             <!-- text field... -->
                             <div class="govuk-form-group govuk-!-margin-left-3">
                                 <label class="govuk-label govuk-visually-hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
-                                <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}" required
-                                [(ngModel)]="new_telephone[i]"
-                                (focus)="update.default.telephone = row;"
-                                (blur)="update.default.telephone = row;"
-                                [disabled]="saving">
+                                <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}"
+                                    required appNumbersOnly
+                                    [(ngModel)]="new_telephone[i]"
+                                    (focus)="update.default.telephone = row;"
+                                    (blur)="update.default.telephone = row;"
+                                    [disabled]="saving">
                             </div>
 
                         </div>
@@ -119,6 +124,10 @@
                             </label>
                         </div>
 
+                        <app-warning *ngIf="new_mobile.length">
+                            Check DPA before adding new details.
+                        </app-warning>
+
                         <!-- New mobile number(s). -->
                         <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_mobile; let i = index; trackBy: trackByIndex;">
 
@@ -130,7 +139,8 @@
                             <!-- text field... -->
                             <div class="govuk-form-group govuk-!-margin-left-3">
                                 <label class="govuk-label govuk-visually-hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
-                                <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}" required
+                                <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}"
+                                    required appNumbersOnly
                                     [(ngModel)]="new_mobile[i]" (focus)="update.default.mobile = row;"
                                     (blur)="update.default.mobile = row;"
                                     [disabled]="saving">
@@ -164,6 +174,10 @@
                                 {{ row }}
                             </label>
                         </div>
+
+                        <app-warning *ngIf="new_email.length">
+                            Check DPA before adding new details.
+                        </app-warning>
 
                         <!-- New email address(es). -->
                         <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_email; let i = index; trackBy: trackByIndex;">

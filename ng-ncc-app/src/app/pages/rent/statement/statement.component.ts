@@ -1,5 +1,6 @@
 import { environment } from '../../../../environments/environment';
-import { Component, Injector, OnInit } from '@angular/core';
+import { LOCALE_ID, Component, Inject, Injector, OnInit } from '@angular/core';
+import { formatCurrency } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
@@ -32,11 +33,12 @@ export class PageRentStatementComponent extends PageCommunications implements On
     private BackLink: BackLinkService;
     private sanitiser: DomSanitizer;
 
-    constructor(private injector: Injector) {
+    constructor(@Inject(LOCALE_ID) private locale: string, private injector: Injector) {
         super(injector);
-        this.BackLink = this.injector.get(BackLinkService);
+        this.BackLink = this.injector.get<BackLinkService>(BackLinkService);
         this.sanitiser = this.injector.get(DomSanitizer);
-        this.UHTrigger = this.injector.get(UHTriggerService);
+        this.UHTrigger = this.injector.get<UHTriggerService>(UHTriggerService);
+        // see https://stackoverflow.com/questions/49424837/lint-warning-get-is-deprecated-when-trying-to-manually-inject-ngcontrol
     }
 
     ngOnInit() {
@@ -57,13 +59,6 @@ export class PageRentStatementComponent extends PageCommunications implements On
 
         // Automatically generate a statement.
         this.refreshStatement();
-    }
-
-    /**
-     *
-     */
-    ngOnDestroy() {
-        this._destroyed$.next();
     }
 
     /**
@@ -137,8 +132,8 @@ export class PageRentStatementComponent extends PageCommunications implements On
                     EndDate: this.until_date,
                     TemplateId: environment.notifyTemplate.statement,
                     TemplateData: {
-                        'rent amount': this.account.rent,
-                        'rent balance': this.account.currentBalance
+                        'rent amount': formatCurrency(this.account.rent, this.locale, '£'),
+                        'rent balance': formatCurrency(this.account.currentBalance, this.locale, '£')
                     }
                 } as INotifyStatementParameters;
 

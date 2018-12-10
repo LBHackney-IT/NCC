@@ -16,7 +16,7 @@ export class CurrentCallerComponent {
      */
     getCallerName(): string | null {
         if (this.Call.hasCaller()) {
-            return this.Call.isCallerIdentified() ? this.Call.getCaller().getName() : 'anonymous';
+            return this.Call.getCaller().getName();
         }
         return null;
     }

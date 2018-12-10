@@ -50,7 +50,6 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
             this._loadTransactions();
         } else {
             // The filter or date settings have changed, so update what is displayed.
-            console.log('filter has changed.');
             this._filterTransactions();
         }
     }
@@ -70,22 +69,34 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     *
+     * Fetch a list of transactions for the tenancy reference defined in this component.
      */
     _loadTransactions() {
         this.error = false;
         this._loading = true;
         const subscription = this.ManageATenancyAPI
             .getTransactions(this.tenancyRef)
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
+            .pipe(takeUntil(this._destroyed$))
             .subscribe(
                 (rows) => {
                     let balance = this.currentBalance;
+
+                    // We don't get the balance from the API for each transaction row, so we have to calculate it ourselves.
+                    // NOTE: the values returned from the API are the reverse of what should be displayed.
+
                     this._rows = rows.map((row) => {
+                        // Set this row's balance to the current balance.
                         row.balance = balance;
-                        balance -= row.realValue;
+
+                        // Add the transaction amount to the balance, to determine what is displayed on the next row.
+                        balance += row.realValue;
+
+                        // Reverse the transaction amount that's displayed in the list.
+                        row.realValue = -row.realValue;
+
+                        // This was VERY confusing, but it probably helps to think of the transactions as belonging to the COUNCIL.
+                        // Negative transaction values (before reversing for display) would then represent money coming out of the account.
+
                         return row;
                     });
                     this._filterTransactions();

@@ -12,15 +12,20 @@ export const environment = {
         statement: 'http://lbhwebintd01:5050/CustomerTransactions'
     },
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
+    nonTenantUserID: '5A668C7E-4DF9-E811-A96F-002248072FE8',
     authenticationLink: 'http://lbhwebintd01:1010',
     disable: {
+        advanceSearch: true,
         authentication: false,
         consoleLogs: false,
         previousCalls: false,
         identifyCaller: false,
-        additionalCallReason: false
+        additionalCallReason: false,
+        commsTemplates: [
+            'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
+        ]
     },
-    previousCallCount: 10,
+    previousCallCount: 50,
     notifyTemplate: {
         statement: 'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
     }

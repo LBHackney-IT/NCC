@@ -38,10 +38,14 @@ export class ManageATenancyAPIService {
                 map((data: any) => {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
+
+                    data.results.currentBalance = -parseFloat(data.results.currentBalance);
+                    data.results.benefit = parseFloat(data.results.benefit);
+                    data.results.rent = parseFloat(data.results.rent);
                     const account: IAccountDetails = data.results;
 
                     // For consistency across the app, the current balance returned from the API has to be reversed.
-                    account.currentBalance = -account.currentBalance;
+                    // account.currentBalance = -account.currentBalance;
                     return account;
                 })
             );
@@ -77,12 +81,19 @@ export class ManageATenancyAPIService {
      */
     getTransactions(tenancy_reference: string) {
         // The tag reference parameter is the tenancy reference.
+
+        // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_sortby-and-_orderby
+        const sortBy = (key) => {
+            return (a, b) => (a[key] > b[key]) ? -1 : ((b[key] > a[key]) ? 1 : 0);
+        };
+
         return this.http
             // .get(`${this._url}/Transactions?tagReference=${tenancy_reference}`)
             .get(`https://api.hackney.gov.uk/manageatenancy/v1/Transactions?tagReference=${tenancy_reference}`)
             .pipe(
                 map((data: IJSONResponse) => {
                     const details: ITransaction[] = Array.from(data.results);
+                    details.sort(sortBy('postDate'));
 
                     return details;
                 })
@@ -92,7 +103,8 @@ export class ManageATenancyAPIService {
     /**
      * Searches for citizens and returns a list of results.
      */
-    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string):
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string,
+        advanceSearch: boolean = false):
         Observable<ICitizenIndexSearchResult[]> {
 
         // Build the query part of the URL.
@@ -101,7 +113,7 @@ export class ManageATenancyAPIService {
         if (last_name) { query += `surname=${last_name}`; }
         if (address) { query += `addressline12=${address}`; }
         if (postcode) { query += `postcode=${postcode}`; }
-        query += '&IsAdvanceSearch=false';
+        query += `&IsAdvanceSearch=${advanceSearch ? 'true' : 'false'}`;
         // very important to set IsAdvanceSearch to false.
 
         return this.http

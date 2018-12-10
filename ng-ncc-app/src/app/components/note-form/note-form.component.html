@@ -24,7 +24,7 @@
             [(ngModel)]="comment" [disabled]="saving" rows="4" aria-describedby="more-detail-hint"></textarea>
 
         <!-- View notes link. -->
-        <a class="govuk-body-s note-form__view-notes" [routerLink]="page_defs.VIEW_NOTES.route" *ngIf="!isCallerAnonymous()">
+        <a class="govuk-body-s note-form__view-notes" [routerLink]="page_defs.VIEW_NOTES.route" *ngIf="canViewNotes()">
             View notes
         </a>
     </div>
