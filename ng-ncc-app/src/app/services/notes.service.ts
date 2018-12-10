@@ -97,14 +97,14 @@ export class NotesService {
         return forkJoin(
 
             // Automatic note...
-            this.NCCAPI.createAutomaticNote(
-                this._settings.call_id,
-                this._settings.ticket_number,
-                this._settings.tenancy_reference,
-                this._settings.call_reason_id,
-                this._settings.crm_contact_id,
-                this._formatNoteContent(note_content)
-            ),
+            this.NCCAPI.createAutomaticNote({
+                call_id: this._settings.call_id,
+                ticket_number: this._settings.ticket_number,
+                tenancy_reference: this._settings.tenancy_reference,
+                call_reason_id: this._settings.call_reason_id,
+                crm_contact_id: this._settings.crm_contact_id,
+                content: this._formatNoteContent(note_content)
+            }),
 
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
@@ -126,13 +126,13 @@ export class NotesService {
         return forkJoin(
 
             // Manual note...
-            this.NCCAPI.createManualNote(
-                this._settings.call_id,
-                this._settings.ticket_number,
-                this._settings.call_reason_id,
-                this._settings.crm_contact_id,
-                this._formatNoteContent(note_content)
-            ),
+            this.NCCAPI.createManualNote({
+                call_id: this._settings.call_id,
+                ticket_number: this._settings.ticket_number,
+                call_reason_id: this._settings.call_reason_id,
+                crm_contact_id: this._settings.crm_contact_id,
+                content: this._formatNoteContent(note_content)
+            }),
 
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
@@ -180,18 +180,18 @@ export class NotesService {
         return forkJoin(
 
             // Automatic note...
-            this.NCCAPI.createAutomaticNote(
-                this._settings.call_id,
-                this._settings.ticket_number,
-                this._settings.tenancy_reference,
-                this._settings.call_reason_id,
-                this._settings.crm_contact_id,
-                note_content,
-                {
+            this.NCCAPI.createAutomaticNote({
+                call_id: this._settings.call_id,
+                ticket_number: this._settings.ticket_number,
+                tenancy_reference: this._settings.tenancy_reference,
+                call_reason_id: this._settings.call_reason_id,
+                crm_contact_id: this._settings.crm_contact_id,
+                content: note_content,
+                parameters: {
                     GovNotifyTemplateType: notify_template_name,
                     GovNotifyChannelType: notify_method
                 }
-            ),
+            }),
 
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
