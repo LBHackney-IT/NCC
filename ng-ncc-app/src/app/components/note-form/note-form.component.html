@@ -29,6 +29,31 @@
         </a>
     </div>
 
+    <!-- Was the call transferred? -->
+    <div class="govuk-form-group govuk-!-margin-bottom-3">
+        <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                <h3 class="govuk-fieldset__heading">Did you transfer the caller?</h3>
+            </legend>
+            <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item small-radio">
+                    <input class="govuk-radios__input" id="transfer-yes" name="transfer" type="radio" value="yes"
+                        [(ngModel)]="transferred" [value]="true" [disabled]="saving">
+                    <label class="govuk-label govuk-radios__label" for="transfer-yes">
+                        Yes
+                    </label>
+                </div>
+                <div class="govuk-radios__item small-radio">
+                    <input class="govuk-radios__input" id="transfer-no" name="transfer" type="radio" value="no"
+                        [(ngModel)]="transferred" [value]="false" [disabled]="saving">
+                    <label class="govuk-label govuk-radios__label" for="transfer-no">
+                        No
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
     <div class="govuk-form-group govuk-!-margin-bottom-2">
 
         <!-- Save button. -->
