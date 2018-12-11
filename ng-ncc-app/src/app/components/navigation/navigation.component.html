@@ -1,4 +1,10 @@
 <nav class="page__menu">
+
+    <div class="view-only-message govuk-!-margin-bottom-5" *ngIf="view_only">
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-3">View Only</h2>
+        <p class="govuk-body-s govuk-!-margin-bottom-0">Calls and notes will not be created.</p>
+    </div>
+
     <ul class="navigation__list">
 
         <!-- "Home" page. -->

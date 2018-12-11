@@ -2,11 +2,14 @@
 // <app-navigation></app-navigation>
 
 import { environment } from '../../../environments/environment';
-import { AfterViewChecked, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { CallService } from '../../services/call.service';
 import { NotesService } from '../../services/notes.service';
+import { ViewOnlyService } from '../../services/view-only.service';
 import { PAGES } from '../../constants/pages.constant';
 
 @Component({
@@ -14,14 +17,22 @@ import { PAGES } from '../../constants/pages.constant';
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements AfterViewChecked {
+export class NavigationComponent implements AfterViewChecked, OnDestroy {
 
-    constructor(private Call: CallService, private Notes: NotesService, private router: Router) { }
+    constructor(
+        private Call: CallService,
+        private Notes: NotesService,
+        private ViewOnly: ViewOnlyService,
+        private router: Router
+    ) { }
+
+    private _destroyed$ = new Subject();
 
     page_defs = PAGES;
     previous_call_count: number = environment.previousCallCount;
     disable_previous_calls: boolean = environment.disable.previousCalls;
     disable_additional_reasons: boolean = environment.disable.additionalCallReason;
+    view_only = false;
 
     @ViewChild('notesButton') notesButton: ElementRef;
 
@@ -31,11 +42,20 @@ export class NavigationComponent implements AfterViewChecked {
         this._positionNotesForm();
     }
 
+    ngOnInit() {
+        this.ViewOnly.updates()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((status: boolean) => this.view_only = status);
+    }
     /**
      *
      */
     ngAfterViewChecked() {
         this._positionNotesForm();
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
     }
 
     /**
