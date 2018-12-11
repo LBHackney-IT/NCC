@@ -357,7 +357,7 @@ export class CallService {
     /**
      * Record an automatic comms note against the call.
      */
-    recordCommsNote(notify_template_name: string, notify_method: string) {
+    recordCommsNote(notify_template_name: string, notify_method: string): Observable<any> {
         return this.Notes.recordCommsNote(notify_template_name, notify_method);
     }
 
