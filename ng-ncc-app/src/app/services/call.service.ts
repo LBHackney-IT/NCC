@@ -134,6 +134,14 @@ export class CallService {
                 console.log('View only status; do not create a call.');
                 this.call_id = 'debug';
                 this.ticket_number = 'debug';
+
+                // Fetch the account details.
+                this.ManageATenancyAPI.getAccountDetails(contact_id)
+                    .pipe(take(1))
+                    .subscribe((account) => {
+                        this.account = account;
+                        this.accountSubject.next(account);
+                    });
                 return;
             }
 
