@@ -123,6 +123,10 @@ export class NotesService {
      * A corresponding Action Diary note is also created.
      */
     recordManualNote(note_content: string, transferred: boolean = false) {
+        if (transferred) {
+            note_content = `${note_content}\n(Transferred)`;
+        }
+
         return forkJoin(
 
             // Manual note...
