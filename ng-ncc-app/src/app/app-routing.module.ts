@@ -50,10 +50,17 @@ export const AppRoutes: Routes = [
         component: PagePlaygroundComponent
     },
 
+    // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
+    // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
+    // Normally we would add child pages to this route, but we want to keep the existing route paths.
     {
-        // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
-        // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
-        // Normally we would add child pages to this route, but we want to keep the existing route paths.
+        // This URL works the same as the one below, except we use it to enable "view only" mode.
+        path: `${PAGES.AUTHENTICATION.route}/:code/:viewonly`,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+        children: []
+    },
+    {
         path: `${PAGES.AUTHENTICATION.route}/:code`,
         pathMatch: 'full',
         canActivate: [AuthGuard],

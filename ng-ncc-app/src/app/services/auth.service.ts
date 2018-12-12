@@ -49,7 +49,8 @@ export class AuthService {
                 message: null,
                 roles: [
                     AUTH.ROLE_ACCESS,
-                    AUTH.ROLE_AGENT
+                    AUTH.ROLE_AGENT,
+                    AUTH.ROLE_VIEW_ONLY
                 ]
             } as IAuthentication);
             return true;
@@ -122,10 +123,17 @@ export class AuthService {
     }
 
     /**
+     * Returns TRUE if there is a logged in user and they can use "view only" mode.
+     */
+    canViewOnly(): boolean {
+        return this._hasRole(AUTH.ROLE_VIEW_ONLY);
+    }
+
+    /**
      * Returns TRUE if there is a logged in user and they have the specified role.
      */
-    _hasRole(role: string): boolean {
-        return this.hasData() && -1 !== this._user.roles.indexOf(role);
+    private _hasRole(role: string): boolean {
+        return this.hasData() && this._user.roles && -1 !== this._user.roles.indexOf(role);
     }
 
 }

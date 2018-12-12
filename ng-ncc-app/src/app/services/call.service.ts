@@ -20,6 +20,7 @@ import { AuthService } from '../services/auth.service';
 import { LogCallType } from '../classes/log-call-type.class';
 import { LogCallReason } from '../classes/log-call-reason.class';
 import { NotesService } from '../services/notes.service';
+import { ViewOnlyService } from '../services/view-only.service';
 
 @Injectable({
     providedIn: 'root'
@@ -49,7 +50,8 @@ export class CallService {
         private HackneyAPI: HackneyAPIService,
         private ManageATenancyAPI: ManageATenancyAPIService,
         private NCCAPI: NCCAPIService,
-        private Notes: NotesService
+        private Notes: NotesService,
+        private ViewOnly: ViewOnlyService
     ) {
         this.reset();
     }
@@ -127,6 +129,21 @@ export class CallService {
     private _createNewCall() {
         if (this.caller) {
             const contact_id = this.caller.getContactID();
+
+            if (this.ViewOnly.status) {
+                // console.log('View only status; do not create a call.');
+                this.call_id = 'debug';
+                this.ticket_number = 'debug';
+
+                // Fetch the account details.
+                this.ManageATenancyAPI.getAccountDetails(contact_id)
+                    .pipe(take(1))
+                    .subscribe((account) => {
+                        this.account = account;
+                        this.accountSubject.next(account);
+                    });
+                return;
+            }
 
             // We're subscribing to two API endpoints, so we can use forkJoin here to ensure that both are successful.
             // If either one fails we will get an error.
@@ -340,7 +357,7 @@ export class CallService {
     /**
      * Record an automatic comms note against the call.
      */
-    recordCommsNote(notify_template_name: string, notify_method: string) {
+    recordCommsNote(notify_template_name: string, notify_method: string): Observable<any> {
         return this.Notes.recordCommsNote(notify_template_name, notify_method);
     }
 
