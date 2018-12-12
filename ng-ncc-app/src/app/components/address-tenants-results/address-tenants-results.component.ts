@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output, OnChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { AnonymousCaller } from '../../classes/anonymous-caller.class';
+import { NonTenantCaller } from '../../classes/non-tenant-caller.class';
 import { DPAService } from '../../services/dpa.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { DPAService } from '../../services/dpa.service';
     templateUrl: './address-tenants-results.component.html',
     styleUrls: ['./address-tenants-results.component.scss']
 })
-export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
+export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() address: IAddressSearchGroupedResult;
     @Input() showBackButton: boolean;
 
@@ -29,13 +30,21 @@ export class AddressTenantsResultsComponent implements OnChanges, OnDestroy {
 
     // A list of tenants under the address passed to this component.
     tenants: IdentifiedCaller[];
-    nonTenantCaller = new AnonymousCaller;
+    nonTenantCaller: NonTenantCaller;
 
     crm_contact_id: string;
 
     private _destroyed$ = new Subject();
 
     constructor(private DPA: DPAService) { }
+
+    ngOnInit() {
+        this.DPA.getUpdates()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                this.nonTenantCaller = new NonTenantCaller(this.DPA.getTenancyReference());
+            });
+    }
 
     ngOnChanges() {
         this._selected = null;

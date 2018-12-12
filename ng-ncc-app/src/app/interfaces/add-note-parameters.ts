@@ -4,6 +4,7 @@ export interface IAddNoteParameters {
     ticket_number: string;
     call_reason_id: string;
     other_reason: string;
-    crm_contact_id: string
+    crm_contact_id: string;
     tenancy_reference: string | null;
+    agent_name: string | null;
 }

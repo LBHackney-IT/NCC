@@ -14,16 +14,20 @@
     </app-warning>
 
     <!-- If we've found contact information... -->
-    <h2 class="govuk-heading-m">Tenancy details</h2>
 
     <!-- Display the address of the property. -->
-    <app-box-panel class="govuk-!-margin-bottom-3">
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
+    <app-panel class="govuk-!-margin-bottom-5">
+        <h2 class="govuk-heading-m property-heading">
+            Property details
+            <app-tenancy-type [crmContactID]="crm_contact_id"></app-tenancy-type>
+        </h2>
+
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h3>
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h2>
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h3>
         <app-dpa-tenancy [crmContactID]="crm_contact_id"></app-dpa-tenancy>
-    </app-box-panel>
+    </app-panel>
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">Tenant details</h2>

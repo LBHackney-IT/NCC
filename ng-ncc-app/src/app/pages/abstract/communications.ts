@@ -2,7 +2,7 @@ import { Injectable, Injector, OnInit, OnDestroy, ViewChild } from '@angular/cor
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { IAccountDetails } from '../../interfaces/account-details';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
@@ -22,11 +22,11 @@ import { CommsMethodSelectComponent } from '../../components/comms-method-select
 import { CommsTemplatesComponent } from '../../components/comms-templates/comms-templates.component';
 
 @Injectable()
-export class PageCommunications implements OnInit, OnDestroy {
+export abstract class PageCommunications implements OnInit, OnDestroy {
     @ViewChild(CommsMethodSelectComponent) commsMethodSelect: CommsMethodSelectComponent;
     @ViewChild(CommsTemplatesComponent) commsTemplates: CommsTemplatesComponent;
 
-    private _destroyed$ = new Subject();
+    protected _destroyed$ = new Subject();
 
     CONTACT_METHOD = CONTACT;
     _sending: boolean;
@@ -42,18 +42,26 @@ export class PageCommunications implements OnInit, OnDestroy {
     Call: CallService;
     NotifyAPI: NotifyAPIService;
     route: ActivatedRoute;
+    router: Router;
     UHTrigger: UHTriggerService;
     PageTitle: PageTitleService;
 
+    /**
+     * Component constructor.
+     */
     constructor(private injectorObj: Injector) {
         // See https://stackoverflow.com/a/48723478/4073160
         this.Call = this.injectorObj.get(CallService);
         this.NotifyAPI = this.injectorObj.get(NotifyAPIService);
         this.route = this.injectorObj.get(ActivatedRoute);
+        this.router = this.injectorObj.get(Router);
         this.UHTrigger = this.injectorObj.get(UHTriggerService);
         this.PageTitle = this.injectorObj.get(PageTitleService);
     }
 
+    /**
+     *
+     */
     ngOnInit() {
         this._sending = false;
         this.selected_option = null;
@@ -74,10 +82,16 @@ export class PageCommunications implements OnInit, OnDestroy {
             });
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
     }
 
+    /**
+     *
+     */
     resetComms() {
         this.commsMethodSelect.reset();
         this.commsTemplates.reset();
@@ -174,17 +188,19 @@ export class PageCommunications implements OnInit, OnDestroy {
             return;
         }
 
-        if (CONTACT.METHOD_POST === this.selected_details.method) {
-            // TODO Record that something is going to be sent by post.
-            this.modal.confirmed = true;
-            return;
-        }
-
         const template_id: string = this.selected_option.templates[this.selected_details.method].id;
         const template_name: string = this.selected_option.name;
         const method: string = this.selected_details.method;
         const address: string = this.selected_details.getDetail();
-        const parameters = this.preview.parameters;
+        const parameters = this.preview ? this.preview.parameters : {};
+
+        if (CONTACT.METHOD_POST === this.selected_details.method) {
+            // Record that something is going to be sent by post.
+            this.UHTrigger.sentComms(template_name, method, parameters);
+
+            this.modal.confirmed = true;
+            return;
+        }
 
         this._sending = true;
         let observe: Observable<any>;
@@ -192,13 +208,11 @@ export class PageCommunications implements OnInit, OnDestroy {
         switch (method) {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
-                // TODO Record that something was sent via email.
                 observe = this.NotifyAPI.sendEmail(address, template_id, parameters);
                 break;
 
             case CONTACT.METHOD_SMS:
                 // Send a text message.
-                // TODO Record that something was sent via SMS.
                 observe = this.NotifyAPI.sendSMS(address, template_id, parameters);
                 break;
 
@@ -207,19 +221,21 @@ export class PageCommunications implements OnInit, OnDestroy {
                 this._sending = false;
         }
 
+        // Send the communication.
         if (observe) {
-            const subscription = observe.subscribe(
-                (feedback) => {
-                    this.modal.confirmed = true;
-                    this.UHTrigger.sentComms(template_name, method, parameters);
-                },
-                (error) => {
-                    this.modal.error = true;
-                },
-                () => {
-                    subscription.unsubscribe();
-                    this._sending = false;
-                });
+            observe
+                .pipe(finalize(() => { this._sending = false; }))
+                .pipe(take(1))
+                .subscribe(
+                    (feedback) => {
+                        // It was sent successfully.
+                        this.modal.confirmed = true;
+                        this.UHTrigger.sentComms(template_name, method, parameters);
+                    },
+                    (error) => {
+                        // Something went wrong.
+                        this.modal.error = true;
+                    });
         }
     }
 

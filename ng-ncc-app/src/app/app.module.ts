@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
+import { WindowService } from './services/window.service';
+
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
@@ -29,7 +31,6 @@ import { PageRentCommunicationsComponent } from './pages/rent/communications/com
 import { PageRentComponent } from './pages/rent/rent.component';
 import { PageRentPaymentComponent } from './pages/rent/payment/payment.component';
 import { PageRentStatementComponent } from './pages/rent/statement/statement.component';
-import { PageRentSummaryComponent } from './pages/rent/summary/summary.component';
 import { PageRentTransactionsComponent } from './pages/rent/transactions/transactions.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionErrorComponent } from './pages/transaction/error/error.component';
@@ -45,7 +46,6 @@ import { AddressSearchResultsComponent } from './components/address-search-resul
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
-import { BackLinkConfirmComponent } from './components/back-link-confirm/back-link-confirm.component';
 import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
@@ -79,6 +79,12 @@ import { ValueListComponent } from './components/value-list/value-list.component
 import { ValueListLabelComponent } from './components/value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
+import { AccountBalanceComponent } from './components/account-balance/account-balance.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 
 @NgModule({
     declarations: [
@@ -88,7 +94,6 @@ import { WarningComponent } from './components/warning/warning.component';
         AgentComponent,
         AppComponent,
         BackLinkComponent,
-        BackLinkConfirmComponent,
         BoxPanelComponent,
         CallNatureComponent,
         CommsMethodSelectComponent,
@@ -128,7 +133,6 @@ import { WarningComponent } from './components/warning/warning.component';
         PageRentComponent,
         PageRentPaymentComponent,
         PageRentStatementComponent,
-        PageRentSummaryComponent,
         PageRentTransactionsComponent,
         PageTransactionComponent,
         PageTransactionErrorComponent,
@@ -146,6 +150,12 @@ import { WarningComponent } from './components/warning/warning.component';
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
+        AccountBalanceComponent,
+        FooterComponent,
+        HeaderComponent,
+        TenancyTypeComponent,
+        NumbersOnlyDirective,
+        NextPaymentAmountComponent,
     ],
     imports: [
         BrowserModule,
@@ -162,7 +172,8 @@ import { WarningComponent } from './components/warning/warning.component';
         CallerResolver,
         CallNatureResolver,
         ContactDetailsResolver,
-        IdentifiedCallerResolver
+        IdentifiedCallerResolver,
+        WindowService
     ],
     bootstrap: [AppComponent]
 })

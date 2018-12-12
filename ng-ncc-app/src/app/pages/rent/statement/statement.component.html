@@ -52,7 +52,7 @@
     </form>
 
     <!-- Confirmation modal. -->
-    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
         {{ success_message }}
     </app-dialogue>
 

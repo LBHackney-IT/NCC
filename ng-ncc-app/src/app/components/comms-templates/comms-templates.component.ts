@@ -1,7 +1,9 @@
+import { environment } from '../../../environments/environment';
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { CONTACT } from '../../constants/contact.constant';
 import { CommsOption } from '../../classes/comms-option.class';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
 
@@ -23,6 +25,7 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
     _options: CommsOption[];
     _selected: CommsOption = null;
     default_title = 'Select form to send:';
+    exclude = environment.disable.commsTemplates;
 
     constructor(private NotifyAPI: NotifyAPIService) { }
 
@@ -73,6 +76,17 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
             // Filter out sensitive options.
             options = options.filter((option: CommsOption) => !option.isSensitive());
         }
+
+        // Filter out excluded templates (defined above).
+        const excluded = this.exclude;
+        options = options.filter((option: CommsOption) => {
+            const match_email = option.templates[CONTACT.METHOD_EMAIL] &&
+                -1 !== excluded.indexOf(option.templates[CONTACT.METHOD_EMAIL].id);
+            const match_sms = option.templates[CONTACT.METHOD_SMS] && -1 !== excluded.indexOf(option.templates[CONTACT.METHOD_SMS].id);
+            const match_post = option.templates[CONTACT.METHOD_POST] && -1 !== excluded.indexOf(option.templates[CONTACT.METHOD_POST].id);
+
+            return !(match_email || match_sms || match_post);
+        });
 
         // Filter out receipt templates.
         options = options.filter((option: CommsOption) => !option.isReceipt());

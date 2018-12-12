@@ -1,9 +1,10 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable, of } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 
 
-import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
+import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { IAddressSearchGroupedResult } from '../interfaces/address-search-grouped-result';
 import { ICitizenIndexSearchResult } from '../interfaces/citizen-index-search-result';
 
@@ -26,7 +27,7 @@ export class AddressSearchService {
     // see http://reactivex.io/documentation/subject.html
     private _resultsSubject = new ReplaySubject();
 
-    constructor(private HackneyAPI: HackneyAPIService) { }
+    constructor(private ManageATenancyAPI: ManageATenancyAPIService) { }
 
     /**
      * Resets address search information.
@@ -70,11 +71,15 @@ export class AddressSearchService {
      * Performs an address search based on a set postcode.
      */
     performSearch() {
+        const isAdvanceSearch = !environment.disable.advanceSearch;
+        // (i.e. if environment.disable.advanceSearch is set to FALSE,
+        // TRUE will be passed to ManageATenancyAPI.getCitizenIndexSearch().)
+
         this._searching = true;
         this._addresses = null;
         this._error = false;
 
-        return this.HackneyAPI.getCitizenIndexSearch(null, null, null, this._postcode)
+        return this.ManageATenancyAPI.getCitizenIndexSearch(null, null, null, this._postcode, isAdvanceSearch)
             .pipe(finalize(() => {
                 // The finalize pipe is triggered when the Observable is completed,
                 // whether resolved or rejected. It's equivalent to finally() for Promises.

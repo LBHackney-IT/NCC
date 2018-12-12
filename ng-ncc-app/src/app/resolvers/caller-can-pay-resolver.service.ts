@@ -15,7 +15,7 @@ export class CallerCanPayResolver implements Resolve<any[]> {
         const outcome = this.Call.isCallerIdentified() || this.Call.isCallerNonTenant();
 
         if (!outcome) {
-            console.log('We must have an identified or non-tenant caller to access this page.');
+            // We must have an identified or non-tenant caller to access this page.
             this.router.navigateByUrl(PAGES.IDENTIFY.route);
             return of([]);
         }

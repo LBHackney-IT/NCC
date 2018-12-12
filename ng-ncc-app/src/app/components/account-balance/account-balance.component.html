@@ -1,0 +1,23 @@
+<app-panel class="govuk-!-margin-bottom-5">
+    <div class="govuk-grid-row">
+
+        <!-- Current balance. -->
+        <div class="govuk-grid-column-one-quarter">
+            <h3 class="govuk-!-font-weight-bold">Current balance</h3>
+            <p class="govuk-!-font-size-24 govuk-!-font-weight-bold" [class.inCredit]="isInCredit()" [class.inDebit]="isInDebit()">
+                <app-next-payment-amount *ngIf="account" [account]="account"></app-next-payment-amount>
+                <span *ngIf="!account">--</span>
+            </p>
+        </div>
+
+        <!-- Rent amount. -->
+        <div class="govuk-grid-column-one-quarter">
+            <h3 class="govuk-!-font-weight-bold">Rent amount</h3>
+            <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
+                <span *ngIf="account">{{ account.rent | currency:'GBP' }}</span>
+                <span *ngIf="!account">--</span>
+            </p>
+        </div>
+
+    </div>
+</app-panel>

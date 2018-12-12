@@ -5,9 +5,9 @@ import { take, map } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
-import { NotesService } from '../../services/notes.service';
 import { CallRevisionService } from '../../services/call-revision.service';
 import { PageNotes } from '../abstract/notes';
+import { AuthService } from '../../services/auth.service';
 import { BackLinkService } from '../../services/back-link.service';
 import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
 import { ILastCall } from '../../interfaces/last-call';
@@ -22,18 +22,18 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
 
     previous_call: ILastCall;
 
+    Auth: AuthService;
     BackLink: BackLinkService;
     CallRevision: CallRevisionService;
     ManageATenancyAPI: ManageATenancyAPIService;
-    Notes: NotesService;
     router: Router;
 
     constructor(private injectorObj: Injector) {
         super(injectorObj);
+        this.Auth = this.injectorObj.get(AuthService);
         this.BackLink = this.injectorObj.get(BackLinkService);
         this.CallRevision = this.injectorObj.get(CallRevisionService);
         this.ManageATenancyAPI = this.injectorObj.get(ManageATenancyAPIService);
-        this.Notes = this.injectorObj.get(NotesService);
         this.router = this.injectorObj.get(Router);
     }
 
@@ -54,6 +54,7 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
 
         // Display the add note form.
         const settings = {
+            agent_name: this.Auth.getFullName(),
             call_id: this.previous_call.servicerequestid,
             ticket_number: this.previous_call.ticketnumber,
             call_reason_id: this.previous_call.callreasonId,
@@ -61,7 +62,7 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
             crm_contact_id: this.previous_call.contactid,
             tenancy_reference: this.previous_call.housingref
         };
-        this.Notes.enable(this.previous_call.name, settings);
+        setTimeout(() => { this.Notes.enable(this.previous_call.name, settings); }, 10);
     }
 
     /**

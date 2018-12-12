@@ -15,7 +15,9 @@ export class IdentifiedCallerResolver implements Resolve<any[]> {
         const caller = this.Call.getCaller();
 
         if (!(caller && !caller.isAnonymous())) {
-            console.log('We must have an identified caller to access this page.');
+            // We must have an identified caller to access this page.
+            // Insetad, redirect to the Identify Caller page
+            // (assuming the agent has selected a call type and reason).
             this.router.navigateByUrl(PAGES.IDENTIFY.route);
             return of([]);
         }

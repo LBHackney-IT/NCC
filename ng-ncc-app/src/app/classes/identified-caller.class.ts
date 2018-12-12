@@ -106,6 +106,13 @@ export class IdentifiedCaller implements ICaller {
     }
 
     /**
+     * Returns the the CRM contact ID to use for recording notes.
+     */
+    getContactIDForNotes(): string | null {
+        return this._details.crmContactId;
+    }
+
+    /**
      * Returns TRUE if the caller has no email address[es].
      */
     hasNoEmailAddresses(): boolean {
