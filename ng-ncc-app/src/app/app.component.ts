@@ -22,7 +22,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    constructor(private router: Router, private Auth: AuthService, private BackLink: BackLinkService) {
+    constructor(
+        private router: Router,
+        private Auth: AuthService,
+        private BackLink: BackLinkService
+    ) {
         // This part handles the display of the route loading activity bar.
         this.router.events
             .pipe(

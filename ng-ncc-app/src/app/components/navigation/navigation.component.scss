@@ -1,5 +1,6 @@
 @import '../../../assets/scss/vars';
 @import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
 @import "~govuk-frontend/settings/media-queries";
 
 $navigation-border-colour: #BFC1C3 !default;
@@ -15,6 +16,10 @@ $navigation-button-bg-colour: govuk-colour('green') !default;
 $navigation-button-border: none !default;
 $navigation-button-text-colour: govuk-colour("white");
 $navigation-button-padding: .25rem 1rem !default;
+
+$navigation-viewonly-bg-colour: govuk-colour('yellow') !default;
+$navigation-viewonly-text-colour: $govuk-text-colour !default;
+$navigation-viewonly-padding: 1rem !default;
 
 ////////////////////
 
@@ -123,4 +128,15 @@ $navigation-button-padding: .25rem 1rem !default;
     right: 0;
     top: 50%;
     transform: translate(0,-50%);
+}
+
+.view-only-message {
+    background: $navigation-viewonly-bg-colour;
+    color: $navigation-viewonly-text-colour;
+    padding: $navigation-viewonly-padding;
+    text-align: center;
+
+    h2 {
+        text-transform: uppercase;
+    }
 }
