@@ -25,7 +25,6 @@ export class ViewOnlyService implements OnInit {
      */
     set status(status: boolean) {
         this._status = status;
-        console.log('view only status', this._status);
         this._update();
     }
 

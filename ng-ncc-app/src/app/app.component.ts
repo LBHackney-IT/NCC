@@ -9,7 +9,6 @@ import { initAll } from 'govuk-frontend';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { BackLinkService } from './services/back-link.service';
-import { ViewOnlyService } from './services/view-only.service';
 
 @Component({
     selector: 'app-root',
@@ -26,8 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
     constructor(
         private router: Router,
         private Auth: AuthService,
-        private BackLink: BackLinkService,
-        private ViewOnly: ViewOnlyService
+        private BackLink: BackLinkService
     ) {
         // This part handles the display of the route loading activity bar.
         this.router.events
@@ -58,8 +56,6 @@ export class AppComponent implements OnInit, OnDestroy {
                         break;
                 }
             });
-
-        this.ViewOnly.status = true;
     }
 
     ngOnInit() {
