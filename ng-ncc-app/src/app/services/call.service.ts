@@ -131,7 +131,7 @@ export class CallService {
             const contact_id = this.caller.getContactID();
 
             if (this.ViewOnly.status) {
-                console.log('View only status; do not create a call.');
+                // console.log('View only status; do not create a call.');
                 this.call_id = 'debug';
                 this.ticket_number = 'debug';
 
