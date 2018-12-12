@@ -30,7 +30,7 @@ export class NotesService {
      */
     enable(name: string, settings: IAddNoteParameters) {
         if (this.ViewOnly.status) {
-            console.log('View only status; do not enable the note form.');
+            // console.log('View only status; do not enable the note form.');
             this.disable();
             return;
         }
@@ -101,7 +101,7 @@ export class NotesService {
      */
     recordAutomaticNote(note_content: string): Observable<any> {
         if (this.ViewOnly.status) {
-            console.log('View only status; do not create an automatic note.');
+            // console.log('View only status; do not create an automatic note.');
             return of(true);
         }
 
@@ -135,8 +135,12 @@ export class NotesService {
      */
     recordManualNote(note_content: string, transferred: boolean = false) {
         if (this.ViewOnly.status) {
-            console.log('View only status; do not create a manual note.');
+            // console.log('View only status; do not create a manual note.');
             return of(true);
+        }
+
+        if (transferred) {
+            note_content = `${note_content}\n(Transferred)`;
         }
 
         return forkJoin(
@@ -167,7 +171,7 @@ export class NotesService {
      */
     recordActionDiaryNote(note_content: string) {
         if (this.ViewOnly.status) {
-            console.log('View only status; do not create an Action Diary note.');
+            // console.log('View only status; do not create an Action Diary note.');
             return of(true);
         }
 
@@ -198,7 +202,7 @@ export class NotesService {
      */
     recordCommsNote(notify_template_name: string, notify_method: string) {
         if (this.ViewOnly.status) {
-            console.log('View only status; do not create an automatic [comms] note.');
+            // console.log('View only status; do not create an automatic [comms] note.');
             return of(true);
         }
 
