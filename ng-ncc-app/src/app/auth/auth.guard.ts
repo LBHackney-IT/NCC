@@ -21,13 +21,12 @@ export class AuthGuard implements CanActivate {
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
         if (this.Auth.isLoggedIn()) {
-            this._setViewOnlyMode();
-
             // There's already a logged in user.
             return this.Auth.hasAccess();
         }
 
         const code = next.params.code;
+        const isViewOnly = !!(next.params.viewonly); // whether set or not.
 
         if (code) {
             // Attempt to confirm that a user is logged in. The Observable will return true or false based on success.
@@ -38,14 +37,14 @@ export class AuthGuard implements CanActivate {
                         // If unsuccessful, redirect to the "try again" page.
                         this.router.navigate([outcome ? `/${PAGES.PREVIOUS_CALLS.route}` : `/${PAGES.TRY_AGAIN.route}`]);
 
-                        this._setViewOnlyMode();
+                        this._setViewOnlyMode(isViewOnly);
 
                         return outcome;
                     }));
         } else if (environment.disable.authentication) {
             // Attempt to bypass authentication, which won't work if the respective environment variable isn't set.
             const outcome = this.Auth.bypass();
-            this._setViewOnlyMode();
+            this._setViewOnlyMode(isViewOnly);
             return outcome;
         }
 
@@ -57,8 +56,8 @@ export class AuthGuard implements CanActivate {
     /**
      * Enable or disable "view only" mode, based on the environment settings and whether the user can be in "view only" mode.
      */
-    private _setViewOnlyMode() {
-        this.ViewOnly.status = (!environment.disable.viewOnly && this.Auth.canViewOnly());
+    private _setViewOnlyMode(status: boolean) {
+        this.ViewOnly.status = status && (!environment.disable.viewOnly && this.Auth.canViewOnly());
     }
 
 }

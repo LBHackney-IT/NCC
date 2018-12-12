@@ -133,7 +133,7 @@ export class AuthService {
      * Returns TRUE if there is a logged in user and they have the specified role.
      */
     private _hasRole(role: string): boolean {
-        return this.hasData() && -1 !== this._user.roles.indexOf(role);
+        return this.hasData() && this._user.roles && -1 !== this._user.roles.indexOf(role);
     }
 
 }
