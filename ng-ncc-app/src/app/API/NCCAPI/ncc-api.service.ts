@@ -331,7 +331,7 @@ export class NCCAPIService {
                 return data.map((row: IRentBreakdown) => {
                     row.description = row.description.trim();
                     return row;
-                })
+                });
             }));
     }
 
