@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject, forkJoin, of } from 'rxjs';
-import { Observable } from 'rxjs';
+import { ReplaySubject, Subject, forkJoin, Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
 import { IJSONResponse } from '../interfaces/json-response';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
+import { ViewOnlyService } from '../services/view-only.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +21,7 @@ export class NotesService {
     _enabled: boolean;
     _visible: boolean;
 
-    constructor(private NCCAPI: NCCAPIService) { }
+    constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService) { }
 
     /**
      * Attempt to enable the add note form.
@@ -29,6 +29,12 @@ export class NotesService {
      * However, we still want to be able to record automatic notes for anonymous users.
      */
     enable(name: string, settings: IAddNoteParameters) {
+        if (this.ViewOnly.status) {
+            // console.log('View only status; do not enable the note form.');
+            this.disable();
+            return;
+        }
+
         if (settings.tenancy_reference) {
             this._enabled = true;
             this._name = name;
@@ -94,6 +100,11 @@ export class NotesService {
      * A corresponding Action Diary note is also created.
      */
     recordAutomaticNote(note_content: string): Observable<any> {
+        if (this.ViewOnly.status) {
+            // console.log('View only status; do not create an automatic note.');
+            return of(true);
+        }
+
         return forkJoin(
 
             // Automatic note...
@@ -123,6 +134,11 @@ export class NotesService {
      * A corresponding Action Diary note is also created.
      */
     recordManualNote(note_content: string, transferred: boolean = false) {
+        if (this.ViewOnly.status) {
+            // console.log('View only status; do not create a manual note.');
+            return of(true);
+        }
+
         if (transferred) {
             note_content = `${note_content}\n(Transferred)`;
         }
@@ -154,6 +170,11 @@ export class NotesService {
      * Record an Action Diary entry against the tenancy associated with the call (if present).
      */
     recordActionDiaryNote(note_content: string) {
+        if (this.ViewOnly.status) {
+            // console.log('View only status; do not create an Action Diary note.');
+            return of(true);
+        }
+
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
             const note = [];
@@ -180,6 +201,11 @@ export class NotesService {
      * A corresponding Action Diary note is also created.
      */
     recordCommsNote(notify_template_name: string, notify_method: string) {
+        if (this.ViewOnly.status) {
+            // console.log('View only status; do not create an automatic [comms] note.');
+            return of(true);
+        }
+
         const note_content = `${notify_template_name} comms sent by ${notify_method}.`;
 
         return forkJoin(

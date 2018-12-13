@@ -21,7 +21,8 @@ export const environment = {
         additionalCallReason: false,
         commsTemplates: [
             '77f78f80-7e23-4500-8aec-6ed1bc9f3276'
-        ]
+        ],
+        viewOnly: false
     },
     previousCallCount: 50,
     notifyTemplate: {

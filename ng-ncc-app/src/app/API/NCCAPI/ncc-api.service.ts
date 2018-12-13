@@ -14,6 +14,7 @@ import { INCCNote } from '../../interfaces/ncc-note';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { INCCInteraction } from '../../interfaces/ncc-interaction';
 import { INotesSettings } from '../../interfaces/notes-settings';
+import { IRentBreakdown } from '../../interfaces/rent-breakdown';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
 import { CALL_REASON } from '../../constants/call-reason.constant';
@@ -313,6 +314,25 @@ export class NCCAPIService {
         return this.http
             .get(`${this._url}Payment/GetPaymentInteractions?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: IJSONResponse) => data.response));
+    }
+
+    /**
+     *
+     */
+    getRentBreakdown(tenancy_reference: string) {
+        const parameters = {
+            tenancyAgreementId: tenancy_reference
+        };
+
+        return this.http
+            .get(`${this._url}UH/GetAllRentBreakdowns?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: IRentBreakdown[]) => {
+                // The descriptions are padded with spaces, so we want to trim them.
+                return data.map((row: IRentBreakdown) => {
+                    row.description = row.description.trim();
+                    return row;
+                });
+            }));
     }
 
 }
