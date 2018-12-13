@@ -85,6 +85,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
+import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
 
 @NgModule({
     declarations: [
@@ -156,6 +157,7 @@ import { NextPaymentAmountComponent } from './components/next-payment-amount/nex
         TenancyTypeComponent,
         NumbersOnlyDirective,
         NextPaymentAmountComponent,
+        RentBreakdownComponent,
     ],
     imports: [
         BrowserModule,

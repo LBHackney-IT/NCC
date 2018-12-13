@@ -14,6 +14,7 @@
 <!-- Rent balance. -->
 <app-account-balance [account]="account_details"></app-account-balance>
 
+
 <app-tabs>
     <app-tab routerLinkActive="active" *ngIf="isIdentifiedCaller()">
         <a [routerLink]="page_defs.RENT_TRANSACTIONS.route">{{ page_defs.RENT_TRANSACTIONS.label }}</a>
