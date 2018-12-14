@@ -110,6 +110,13 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     }
 
     /**
+     * Returns TRUE if the "see caller notes" link should be enabled.
+     */
+    canViewNotes(): boolean {
+        return this.Call.isCallerIdentified() || this.Call.isCallerNonTenant();
+    }
+
+    /**
      * Returns TRUE if a call is currently active and the caller is able to make a payment.
      */
     isCallerAbleToPay(): boolean {

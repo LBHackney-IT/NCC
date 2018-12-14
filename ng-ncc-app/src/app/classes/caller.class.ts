@@ -13,6 +13,13 @@ export abstract class Caller implements ICaller {
     }
 
     /**
+     *
+     */
+    isNonTenant(): boolean {
+        return false;
+    }
+
+    /**
      * Returns the caller's CRM contact ID.
      */
     getContactID(): string {
