@@ -12,6 +12,11 @@ export class NonTenantCaller extends AnonymousCaller {
         super();
     }
 
+    isNonTenant(): boolean {
+        return true;
+    }
+
+
     getName(): string {
         return 'Non-tenant';
     }

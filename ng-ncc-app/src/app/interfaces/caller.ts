@@ -6,6 +6,7 @@ import { ContactAddress } from '../classes/contact-address.class';
 
 export interface ICaller {
     isAnonymous(): boolean;
+    isNonTenant(): boolean;
     getName(): string;
     getTelephoneNumbers(): string[];
     getContactID(): string | null;
