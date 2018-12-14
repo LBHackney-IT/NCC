@@ -18,6 +18,10 @@ export class IdentifiedCaller extends Caller {
         return false;
     }
 
+    isNonTenant(): boolean {
+        return false;
+    }
+
     /**
      * Returns the caller's full name.
      */

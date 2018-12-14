@@ -7,7 +7,7 @@
             Here you can send non-sensitive emails and texts.
             <ng-container *ngIf="isRentLinkVisible()">
                 <br>
-                To send sensitive information visit the <a routerLink="getRentPageRoute()">'View/pay rent'</a> page after verifying Data Protection.
+                To send sensitive information visit the <a [routerLink]="getRentPageRoute()">'View/pay rent'</a> page after verifying Data Protection.
             </ng-container>
         </p>
 

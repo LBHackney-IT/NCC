@@ -12,6 +12,10 @@ export class AnonymousCaller extends Caller {
         return true;
     }
 
+    isNonTenant(): boolean {
+        return false;
+    }
+
     /**
      * Returns the caller's CRM contact ID.
      */

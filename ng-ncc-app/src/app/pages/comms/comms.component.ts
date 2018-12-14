@@ -30,9 +30,12 @@ export class PageCommsComponent extends PageCommunications implements OnInit {
      *
      */
     getRentPageRoute(): string {
-        return PAGES.RENT.route;
+        return `/${PAGES.RENT.route}`;
     }
 
+    /**
+     *
+     */
     isRentLinkVisible(): boolean {
         return this.Call.isCallerIdentified();
     }
