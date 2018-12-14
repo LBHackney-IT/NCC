@@ -48,6 +48,13 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
     /**
      *
      */
+    isTestPayment(): boolean {
+        return this.data && this.data.receiptnumber.match(/^NET2.*/);
+    }
+
+    /**
+     *
+     */
     updatePreview() {
         super.updatePreview();
         if (this.shouldShowPreview()) {
