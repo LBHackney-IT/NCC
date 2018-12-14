@@ -16,6 +16,10 @@ export class IdentifiedCaller implements ICaller {
         return false;
     }
 
+    isNonTenant(): boolean {
+        return false;
+    }
+
     /**
      * Returns the caller's full name.
      */
