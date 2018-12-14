@@ -10,6 +10,7 @@ import { INCCNote } from '../interfaces/ncc-note';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
+import { AccountService } from '../services/account.service';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { NonTenantCaller } from '../classes/non-tenant-caller.class';
 import { ICRMServiceRequest } from '../interfaces/crmservicerequest';
@@ -46,6 +47,7 @@ export class CallService {
     private ticket_number: string;
 
     constructor(
+        private Account: AccountService,
         private Auth: AuthService,
         private HackneyAPI: HackneyAPIService,
         private ManageATenancyAPI: ManageATenancyAPIService,
@@ -136,7 +138,7 @@ export class CallService {
                 this.ticket_number = 'debug';
 
                 // Fetch the account details.
-                this.ManageATenancyAPI.getAccountDetails(contact_id)
+                this.Account.getFor(this.caller)
                     .pipe(take(1))
                     .subscribe((account) => {
                         this.account = account;
@@ -153,7 +155,7 @@ export class CallService {
 
                 // We also fetch account details, in order to obtain the associated tenancy reference, via the Manage A Tenancy API.
                 // The tenancy reference is required to record Action Diary entries.
-                this.ManageATenancyAPI.getAccountDetails(contact_id)
+                this.Account.getFor(this.caller)
             )
                 .pipe(take(1))
                 .pipe(
@@ -183,7 +185,7 @@ export class CallService {
                             ticket_number: this.ticket_number,
                             call_reason_id: this.call_nature.call_reason.id,
                             other_reason: this.call_nature.other_reason,
-                            crm_contact_id: this.caller.getContactIDForNotes(),
+                            crm_contact_id: this.caller.getContactID(),
                             tenancy_reference: tenancy_reference
                         };
                         this.Notes.enable(this.caller.getName(), settings);

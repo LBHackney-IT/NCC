@@ -9,7 +9,6 @@ export interface ICaller {
     getName(): string;
     getTelephoneNumbers(): string[];
     getContactID(): string | null;
-    getContactIDForNotes(): string | null;
     getEmailAddresses(): string[];
     getPostalAddress(): ContactAddress;
     hasNoTelephoneNumbers(): boolean;
