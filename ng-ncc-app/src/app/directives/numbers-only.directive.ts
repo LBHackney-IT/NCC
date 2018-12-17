@@ -8,7 +8,7 @@ export class NumbersOnlyDirective implements OnInit {
     private regex: RegExp = new RegExp('[^0-9 ]', 'gm');
     // allow numbers and spaces only.
 
-    private element: HTMLElement;
+    private element: HTMLInputElement;
 
     @Output() ngModelChange = new EventEmitter();
 
