@@ -9,6 +9,7 @@ import { PageCommunications } from '../../abstract/communications';
 import { DPAService } from '../../../services/dpa.service';
 import { NextPaymentService } from '../../../services/next-payment.service';
 import { IAccountDetails } from '../../../interfaces/account-details';
+import { IAddressSearchGroupedResult } from '../../../interfaces/address-search-grouped-result';
 
 @Component({
     selector: 'app-rent-communications',
@@ -18,6 +19,9 @@ import { IAccountDetails } from '../../../interfaces/account-details';
 export class PageRentCommunicationsComponent extends PageCommunications implements OnInit {
 
     NextPayment: NextPaymentService;
+    tenancy: IAddressSearchGroupedResult;
+    is_non_tenant: boolean;
+    is_identified: boolean;
 
     constructor(@Inject(LOCALE_ID) private locale: string, private injector: Injector) {
         super(injector);
@@ -30,6 +34,9 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
     ngOnInit() {
         super.ngOnInit();
         this.PageTitle.set(PAGES.RENT_COMMS.label);
+        this.tenancy = this.Call.getTenancy();
+        this.is_non_tenant = this.Call.isCallerNonTenant();
+        this.is_identified = this.Call.isCallerIdentified();
         this.Call.getAccount()
             .pipe(takeUntil(this._destroyed$))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });
@@ -44,7 +51,13 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
         // This page will provide access to GOV.UK Notify templates that will require DPA answers from the caller.
         if (option) {
             if (option.isSensitive()) {
-                this.modal.dpa = true; // display the dialogue for prompting for DPA answers.
+                if (this.Call.isCallerNonTenant()) {
+                    // Display a DPA dialogue for non-tenant callers.
+                    this.modal.dpa_non_tenant = true;
+                } else {
+                    // Display a DPA dialogue for identified callers.
+                    this.modal.dpa_identified = true;
+                }
             } else {
                 this.updatePreview();
             }
@@ -79,6 +92,23 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
     commsSuccess() {
         // Reset the comms information.
         this.resetComms();
+    }
+
+    /**
+     *
+     */
+    getTenancyAddress(): string {
+        if (this.tenancy) {
+            return [
+                this.tenancy.addressLine1,
+                this.tenancy.addressLine2,
+                this.tenancy.addressLine3,
+                this.tenancy.addressCity,
+                this.tenancy.postCode
+            ]
+                .filter((row) => !!(row))
+                .join('<br>');
+        }
     }
 
 }

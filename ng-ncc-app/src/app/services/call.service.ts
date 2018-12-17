@@ -11,6 +11,7 @@ import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 import { AccountService } from '../services/account.service';
+import { AnonymousCaller } from '../classes/anonymous-caller.class';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { NonTenantCaller } from '../classes/non-tenant-caller.class';
 import { ICRMServiceRequest } from '../interfaces/crmservicerequest';
@@ -130,6 +131,9 @@ export class CallService {
      */
     private _createNewCall() {
         if (this.caller) {
+            if ((this.caller instanceof NonTenantCaller || this.caller instanceof IdentifiedCaller) && !this.tenancy) {
+                return;
+            }
             const contact_id = this.caller.getContactID();
 
             if (this.ViewOnly.status) {
@@ -138,7 +142,7 @@ export class CallService {
                 this.ticket_number = 'debug';
 
                 // Fetch the account details.
-                this.Account.getFor(this.caller)
+                this.Account.getFor(this.caller, this.tenancy)
                     .pipe(take(1))
                     .subscribe((account) => {
                         this.account = account;
@@ -155,7 +159,7 @@ export class CallService {
 
                 // We also fetch account details, in order to obtain the associated tenancy reference, via the Manage A Tenancy API.
                 // The tenancy reference is required to record Action Diary entries.
-                this.Account.getFor(this.caller)
+                this.Account.getFor(this.caller, this.tenancy)
             )
                 .pipe(take(1))
                 .pipe(
@@ -289,6 +293,7 @@ export class CallService {
     setTenancy(tenancy: IAddressSearchGroupedResult) {
         this.tenancy = tenancy;
         this._buildTenantsList();
+        this._createNewCall();
     }
 
     /**
