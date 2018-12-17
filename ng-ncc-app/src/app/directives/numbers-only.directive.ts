@@ -1,37 +1,45 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 
 @Directive({
     selector: '[appNumbersOnly]'
 })
-export class NumbersOnlyDirective {
+export class NumbersOnlyDirective implements OnInit {
 
     private regex: RegExp = new RegExp('[^0-9 ]', 'gm');
     // allow numbers and spaces only.
 
-    constructor(private el: ElementRef) { }
+    private element: HTMLInputElement;
 
-    @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-        const next: string = this.el.nativeElement.value.concat(event.key);
-        this._update(next);
+    @Output() ngModelChange = new EventEmitter();
+
+    constructor(private el: ElementRef) {
+        this.element = this.el.nativeElement;
+    }
+
+    ngOnInit() {
+        this.element.value = this.element.value.replace(this.regex, '');
+    }
+
+    @HostListener('keydown', ['$event.target.value'])
+    onKeyDown(value) {
+        this._update(value);
     }
 
     @HostListener('paste', ['$event'])
-    onChange(event: KeyboardEvent) {
-        const next: string = this.el.nativeElement.value;
-        this._update(next);
+    onPaste(event: ClipboardEvent) {
+        this._update(event.clipboardData.getData('text/plain'));
+    }
+
+    @HostListener('blur', ['$event.target.value'])
+    onBlur(value) {
+        this._update(value);
     }
 
     private _update(next: string) {
-        if (next) {
-            next = next.replace(this.regex, '');
-        }
-
         setTimeout(() => {
-            const current: string = this.el.nativeElement.value;
-            if (next !== current && current.match(this.regex)) {
-                this.el.nativeElement.value = String(next);
-            }
+            next = this.element.value.replace(this.regex, '').trim();
+            this.ngModelChange.emit(next);
         }, 1);
     }
+
 }

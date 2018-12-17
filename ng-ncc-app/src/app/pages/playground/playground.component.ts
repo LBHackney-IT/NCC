@@ -32,6 +32,7 @@ export class PagePlaygroundComponent implements OnInit {
     };
     show: boolean;
     amount = 10;
+    number_value: string;
 
     // Listen to the window's storage event.
     // This is fired whenever a localStorage property (it has access to?) is *changed*.
