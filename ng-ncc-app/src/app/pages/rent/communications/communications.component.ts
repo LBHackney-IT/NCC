@@ -99,15 +99,7 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
      */
     getTenancyAddress(): string {
         if (this.tenancy) {
-            return [
-                this.tenancy.addressLine1,
-                this.tenancy.addressLine2,
-                this.tenancy.addressLine3,
-                this.tenancy.addressCity,
-                this.tenancy.postCode
-            ]
-                .filter((row) => !!(row))
-                .join('<br>');
+            return this.tenancy.address;
         }
     }
 
