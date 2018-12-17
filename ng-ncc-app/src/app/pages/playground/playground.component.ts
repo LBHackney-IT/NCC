@@ -35,6 +35,7 @@ export class PagePlaygroundComponent implements OnInit {
     };
     show: boolean;
     amount = 10;
+    number_value: string;
     user = new AnonymousCaller;
     data: IAccountDetails;
 
