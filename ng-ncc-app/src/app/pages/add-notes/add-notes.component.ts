@@ -85,4 +85,11 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
             }));
     }
 
+    /**
+     *
+     */
+    isInCall(): boolean {
+        return false;
+    }
+
 }
