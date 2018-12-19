@@ -20,7 +20,7 @@ export class AccountService {
     /**
      *
      */
-    getFor(caller: ICaller, tenancy: IAddressSearchGroupedResult): Observable<IAccountDetails> {
+    getFor(caller: ICaller, tenancy: IAddressSearchGroupedResult = null): Observable<IAccountDetails> {
         if (caller instanceof NonTenantCaller) {
             // Non-tenant callers themselves don't have an associated account.
             // However, we can obtain a respective account for a tenant at the property.
@@ -29,7 +29,7 @@ export class AccountService {
                 .pipe(map((account: IAccountDetails) => Object.assign(
                     account, // the tenant's account information.
                     { accountid: environment.nonTenantUserID }, // use the non-tenant user ID.
-                ));
+                )));
         } else {
             return this.ManageATenancyAPI.getAccountDetails(caller.getContactID());
         }
