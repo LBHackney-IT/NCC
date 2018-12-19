@@ -95,7 +95,8 @@ export class NCCAPIService {
             'ServiceRequest.ContactId': settings.crm_contact_id,
             notestype: automatic ? this.NOTE_TYPE_AUTOMATIC : this.NOTE_TYPE_MANUAL,
             notes: settings.content,
-            callTransferred: settings.calltransferred
+            callTransferred: settings.calltransferred,
+            housingTagRef: settings.tenancy_reference
         }, settings.parameters);
 
         return this.http
