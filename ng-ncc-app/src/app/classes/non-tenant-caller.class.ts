@@ -28,11 +28,4 @@ export class NonTenantCaller extends AnonymousCaller {
         return environment.nonTenantUserID;
     }
 
-    /**
-     * Returns the the CRM contact ID to use for recording notes.
-     */
-    getContactIDForNotes(): string | null {
-        return environment.nonTenantUserID;
-    }
-
 }

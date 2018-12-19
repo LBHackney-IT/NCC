@@ -18,11 +18,13 @@ export class RentBreakdownComponent implements OnChanges {
     constructor(private NCCAPI: NCCAPIService) { }
 
     ngOnChanges() {
-        this.NCCAPI.getRentBreakdown(this.account.tagReferenceNumber)
-            .pipe(take(1))
-            .subscribe((data) => {
-                this.rows = data;
-            });
+        if (this.account) {
+            this.NCCAPI.getRentBreakdown(this.account.tagReferenceNumber)
+                .pipe(take(1))
+                .subscribe((data) => {
+                    this.rows = data;
+                });
+        }
     }
 
 }
