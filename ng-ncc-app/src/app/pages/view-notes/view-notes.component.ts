@@ -30,6 +30,10 @@ export class PageViewNotesComponent extends PageNotes implements OnInit {
         this.PageTitle.set(PAGES.VIEW_NOTES.label);
     }
 
+    isInCall(): boolean {
+        return this.Call.hasCaller();
+    }
+
     /**
      * Fetches a list of tenant names associated with the specified tenancy reference.
      */
