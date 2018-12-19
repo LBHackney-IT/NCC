@@ -15,6 +15,7 @@ import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
+import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-non-tenant-caller-resolver.service';
 
 import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 import { PageAuthComponent } from './pages/auth/auth.component';
@@ -175,6 +176,7 @@ import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdo
         CallNatureResolver,
         ContactDetailsResolver,
         IdentifiedCallerResolver,
+        IdentifiedOrNonTenantCallerResolver,
         WindowService
     ],
     bootstrap: [AppComponent]

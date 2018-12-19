@@ -1,9 +1,12 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { IAccountDetails } from '../../interfaces/account-details';
 import { PageTitleService } from '../../services/page-title.service';
+import { AccountService } from '../../services/account.service';
+import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 
 @Component({
     selector: 'app-playground',
@@ -33,6 +36,8 @@ export class PagePlaygroundComponent implements OnInit {
     show: boolean;
     amount = 10;
     number_value: string;
+    user = new AnonymousCaller;
+    data: IAccountDetails;
 
     // Listen to the window's storage event.
     // This is fired whenever a localStorage property (it has access to?) is *changed*.
@@ -53,7 +58,7 @@ export class PagePlaygroundComponent implements OnInit {
         }
     }
 
-    constructor(private router: Router, private PageTitle: PageTitleService) { }
+    constructor(private Account: AccountService, private router: Router, private PageTitle: PageTitleService) { }
 
     /**
      *
@@ -61,6 +66,12 @@ export class PagePlaygroundComponent implements OnInit {
     ngOnInit() {
         this.PageTitle.set(PAGES.PLAYGROUND.label);
         this.show = false;
+
+        this.Account.getFor(this.user)
+            .pipe(take(1))
+            .subscribe((account: IAccountDetails) => {
+                this.account = account;
+            });
     }
 
     /**

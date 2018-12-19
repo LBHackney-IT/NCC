@@ -24,6 +24,8 @@ export class PageIdentifyTenantsComponent implements OnInit {
 
     address: IAddressSearchGroupedResult;
     error: boolean;
+    confirm_non_tenant: boolean;
+    private _caller: ICaller;
 
     constructor(
         private route: ActivatedRoute,
@@ -61,19 +63,32 @@ export class PageIdentifyTenantsComponent implements OnInit {
      * Called when a tenant is selected from address results.
      */
     tenantSelected(caller: ICaller) {
-        // if (caller.isAnonymous()) {
-        //     // We've selected "Not a tenant" (a non-tenant caller).
-        //     this.Call.setCaller(new NonTenantCaller);
-        // } else {
-        //     // We've identified a tenant as the caller.
+        if (caller instanceof NonTenantCaller) {
+            this.confirm_non_tenant = true;
+            this._caller = caller;
+        } else {
+            this._confirmCaller(caller);
+        }
+    }
+
+    /**
+     *
+     */
+    confirmNewTenant() {
+        this._confirmCaller(this._caller);
+    }
+
+    /**
+     *
+     */
+    private _confirmCaller(caller: ICaller) {
         this.Call.setCaller(caller);
-        // }
         this.Call.setTenancy(this.address);
         this.nextStep();
     }
 
     /**
-     * Navigatw to the next step, having selected a tenant (or an anonymous caller).
+     * Navigate to the next step, having selected a tenant (or an anonymous caller).
      */
     nextStep() {
         if (this.Call.hasCaller()) {

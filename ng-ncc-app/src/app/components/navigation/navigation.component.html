@@ -43,7 +43,7 @@
 
         <!-- See caller notes. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!isCallerIdentified()">
+            <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!canViewNotes()">
                 {{ page_defs.VIEW_NOTES.label }}
             </a>
 
