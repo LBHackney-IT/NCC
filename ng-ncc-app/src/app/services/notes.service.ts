@@ -152,7 +152,8 @@ export class NotesService {
                 call_reason_id: this._settings.call_reason_id,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this._formatNoteContent(note_content),
-                calltransferred: transferred
+                calltransferred: transferred,
+                tenancy_reference: this._settings.tenancy_reference
             }),
 
             // Action Diary note...
