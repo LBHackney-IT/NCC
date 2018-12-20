@@ -58,4 +58,16 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
         return false;
     }
 
+    /**
+     * Returns text to display for a call's call reason.
+     */
+    getCallReason(row: ILastCall) {
+        if (row.callreason) {
+            return row.callreason;
+        } else {
+            // Other (including the custom call reason).
+            return row.otherreason ? `Other: ${row.otherreason}` : 'Other: not specified';
+        }
+    }
+
 }
