@@ -14,4 +14,5 @@ export interface ICaller {
     getPostalAddress(): ContactAddress;
     hasNoTelephoneNumbers(): boolean;
     hasNoEmailAddresses(): boolean;
+    tenancy_reference?: string | null; // for the benefit of NonTenantCaller.
 }
