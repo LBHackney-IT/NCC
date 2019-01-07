@@ -180,7 +180,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                         if (!environment.disable.noteCloseOnSave) {
                             // Automatically close the note form.
                             this.Notes.hide();
-                            //} else {
+                            // } else {
                             // Display a confirmation that the note was saved.
                         }
                     },
