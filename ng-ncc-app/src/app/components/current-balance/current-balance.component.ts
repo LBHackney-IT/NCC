@@ -12,7 +12,7 @@ import { ITenancyAgreementDetails } from '../../interfaces/tenancy-agreement-det
     templateUrl: './current-balance.component.html',
     styleUrls: ['./current-balance.component.scss']
 })
-export class CurrentBalanceComponent implements OnInit {
+export class CurrentBalanceComponent implements OnChanges {
 
     @Input() tenancyReference: string;
 
@@ -26,7 +26,6 @@ export class CurrentBalanceComponent implements OnInit {
                 .pipe(take(1))
                 .subscribe(
                     (details: ITenancyAgreementDetails) => {
-                        console.log(details);
                         this.details = details;
                     }
                 );

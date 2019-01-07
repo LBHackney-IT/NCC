@@ -85,7 +85,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
-import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
 import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
 
@@ -158,7 +157,6 @@ import { CurrentBalanceComponent } from './components/current-balance/current-ba
         HeaderComponent,
         TenancyTypeComponent,
         NumbersOnlyDirective,
-        NextPaymentAmountComponent,
         RentBreakdownComponent,
         CurrentBalanceComponent,
     ],
