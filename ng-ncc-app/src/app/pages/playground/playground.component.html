@@ -1,3 +1,5 @@
+{{ account | json }}
+
 <h2 class="govuk-heading-m">Next payment amount</h2>
 <p><app-next-payment-amount [account]="account"></app-next-payment-amount></p>
 
@@ -6,8 +8,9 @@
     <label class="govuk-label" for="number">
         Testing
     </label>
-    <input class="govuk-input" id="number" name="number" type="text" appNumbersOnly>
+    <input class="govuk-input" id="number" [(ngModel)]="number_value" name="number" type="text" appNumbersOnly>
 </div>
+<p>{{ number_value }}</p>
 
 <h2 class="govuk-heading-m">Test payment</h2>
 <div>

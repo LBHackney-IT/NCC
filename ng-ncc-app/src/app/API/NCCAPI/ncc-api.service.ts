@@ -90,12 +90,14 @@ export class NCCAPIService {
 
         const parameters = Object.assign({
             callReasonId: settings.call_reason_id,
+            otherReason: settings.other_reason,
             'ServiceRequest.Id': settings.call_id,
             'ServiceRequest.TicketNumber': settings.ticket_number,
             'ServiceRequest.ContactId': settings.crm_contact_id,
             notestype: automatic ? this.NOTE_TYPE_AUTOMATIC : this.NOTE_TYPE_MANUAL,
             notes: settings.content,
-            callTransferred: settings.calltransferred
+            callTransferred: settings.calltransferred,
+            housingTagRef: settings.tenancy_reference
         }, settings.parameters);
 
         return this.http

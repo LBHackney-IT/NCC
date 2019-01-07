@@ -37,7 +37,7 @@ export class PageCommsComponent extends PageCommunications implements OnInit {
      *
      */
     isRentLinkVisible(): boolean {
-        return this.Call.isCallerIdentified();
+        return this.Call.isCallerIdentified() || this.Call.isCallerNonTenant();
     }
 
 }

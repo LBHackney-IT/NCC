@@ -5,12 +5,12 @@
 import { ContactAddress } from '../classes/contact-address.class';
 
 export interface ICaller {
+    tenancy_reference?: string | null; // for the benefit of NonTenantCaller.
     isAnonymous(): boolean;
     isNonTenant(): boolean;
     getName(): string;
     getTelephoneNumbers(): string[];
     getContactID(): string | null;
-    getContactIDForNotes(): string | null;
     getEmailAddresses(): string[];
     getPostalAddress(): ContactAddress;
     hasNoTelephoneNumbers(): boolean;

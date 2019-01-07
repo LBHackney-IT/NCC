@@ -29,6 +29,7 @@ import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
+import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-non-tenant-caller-resolver.service';
 import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
@@ -126,7 +127,7 @@ export const AppRoutes: Routes = [
                 path: PAGES.RENT_TRANSACTIONS.route,
                 component: PageRentTransactionsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: IdentifiedOrNonTenantCallerResolver
                 }
             },
             {
@@ -142,7 +143,7 @@ export const AppRoutes: Routes = [
                 path: PAGES.RENT_COMMS.route,
                 component: PageRentCommunicationsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: IdentifiedOrNonTenantCallerResolver
                 }
             },
             {

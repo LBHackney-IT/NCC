@@ -113,6 +113,7 @@ export class NotesService {
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
                 call_reason_id: this._settings.call_reason_id,
+                other_reason: this._settings.other_reason,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this._formatNoteContent(note_content)
             }),
@@ -150,9 +151,11 @@ export class NotesService {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 call_reason_id: this._settings.call_reason_id,
+                other_reason: this._settings.other_reason,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this._formatNoteContent(note_content),
-                calltransferred: transferred
+                calltransferred: transferred,
+                tenancy_reference: this._settings.tenancy_reference
             }),
 
             // Action Diary note...
@@ -216,6 +219,7 @@ export class NotesService {
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
                 call_reason_id: this._settings.call_reason_id,
+                other_reason: this._settings.other_reason,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: note_content,
                 parameters: {
