@@ -10,7 +10,6 @@ import { IAccountDetailsByReference } from '../../interfaces/account-details-by-
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IContactDetails } from '../../interfaces/contact-details';
 import { IJSONResponse } from '../../interfaces/json-response';
-import { ITransaction } from '../../interfaces/transaction';
 
 @Injectable({
     providedIn: 'root'
@@ -72,30 +71,6 @@ export class ManageATenancyAPIService {
             .pipe(
                 map((data) => {
                     return data as IContactDetails;
-                })
-            );
-    }
-
-    /**
-     * Returns a list of transactions for the specified tenancy reference.
-     */
-    getTransactions(tenancy_reference: string) {
-        // The tag reference parameter is the tenancy reference.
-
-        // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_sortby-and-_orderby
-        const sortBy = (key) => {
-            return (a, b) => (a[key] > b[key]) ? -1 : ((b[key] > a[key]) ? 1 : 0);
-        };
-
-        return this.http
-            // .get(`${this._url}/Transactions?tagReference=${tenancy_reference}`)
-            .get(`https://api.hackney.gov.uk/manageatenancy/v1/Transactions?tagReference=${tenancy_reference}`)
-            .pipe(
-                map((data: IJSONResponse) => {
-                    const details: ITransaction[] = Array.from(data.results);
-                    details.sort(sortBy('postDate'));
-
-                    return details;
                 })
             );
     }

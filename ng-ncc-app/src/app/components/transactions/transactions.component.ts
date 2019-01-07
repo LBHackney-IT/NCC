@@ -5,7 +5,6 @@ import * as moment from 'moment';
 
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { IAccountDetails } from '../../interfaces/account-details';
-import { ITransaction } from '../../interfaces/transaction';
 import { ITenancyTransactionRow } from '../../interfaces/tenancy-transaction-row';
 
 @Component({
@@ -62,13 +61,6 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      */
     ngOnDestroy() {
         this._destroyed$.next();
-    }
-
-    /**
-     *
-     */
-    trackByMethod(index: number, item: ITransaction): string {
-        return item.transactionID;
     }
 
     /**
