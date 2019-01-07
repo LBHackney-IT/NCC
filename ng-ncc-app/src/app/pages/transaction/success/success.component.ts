@@ -39,21 +39,22 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
     }
 
     /**
-     *
+     * Returns the name of the current caller.
      */
     getCallerName(): string {
         return this.Call.isCallerIdentified() ? this.Call.getCaller().getName() : 'anonymous';
     }
 
     /**
-     *
+     * Returns TRUE if the successful transaction was made via the testing endpoint.
+     * We can tell if this is the case by the presence of "NET2" at the beginning of the receipt number.
      */
     isTestPayment(): boolean {
-        return this.data && this.data.receiptnumber.match(/^NET2.*/);
+        return this.data && this.data.receiptnumber.match(/^NET2.*/).length > 0;
     }
 
     /**
-     *
+     * Update the comms template preview with the transaction information.
      */
     updatePreview() {
         super.updatePreview();
@@ -67,10 +68,9 @@ export class PageTransactionSuccessComponent extends PageCommunications implemen
     }
 
     /**
-     *
+     * Go (back?) to the rent payment page.
      */
     returnToPayment() {
-        // Go (back?) to the rent payment page.
         this.router.navigate([`${PAGES.RENT.route}/${PAGES.RENT_PAYMENT.route}`]);
     }
 
