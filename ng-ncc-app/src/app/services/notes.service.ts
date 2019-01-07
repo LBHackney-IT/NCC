@@ -56,6 +56,14 @@ export class NotesService {
         this._visible = false;
     }
 
+    show() {
+        this._visible = true;
+    }
+
+    hide() {
+        this._visible = false;
+    }
+
     toggle() {
         this._visible = !this._visible;
     }
