@@ -81,7 +81,6 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         // - the caller is NOT anonymous.
         // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
         // However, it was mentioned that anonymous callers should only have "automatic" notes.
-
         return this.Notes.isVisible();
     }
 
@@ -176,7 +175,15 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                     this.saving = false;
                 }))
                 .subscribe(
-                    () => { this._resetComment(); },
+                    () => {
+                        this._resetComment();
+                        if (!environment.disable.noteCloseOnSave) {
+                            // Automatically close the note form.
+                            this.Notes.hide();
+                            //} else {
+                            // Display a confirmation that the note was saved.
+                        }
+                    },
                     () => { this.error = true; }
                 );
         }
