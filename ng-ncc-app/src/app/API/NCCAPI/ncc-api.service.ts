@@ -348,8 +348,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .get(`${this._url}UH/GetTenancyAgreementDetails?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: IJSONResponse) => data.response));
+            .get(`${this._url}UH/GetTenancyAgreementDetails?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
@@ -361,8 +360,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .get(`${this._url}UH/GetAllTenancyTransactionStatements?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((data: IJSONResponse) => data.response));
+            .get(`${this._url}UH/GetAllTenancyTransactionStatements?${this._buildQueryString(parameters)}`, {});
     }
 
 }

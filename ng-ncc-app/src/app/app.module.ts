@@ -87,6 +87,7 @@ import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.com
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
+import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
 
 @NgModule({
     declarations: [
@@ -159,6 +160,7 @@ import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdo
         NumbersOnlyDirective,
         NextPaymentAmountComponent,
         RentBreakdownComponent,
+        CurrentBalanceComponent,
     ],
     imports: [
         BrowserModule,
