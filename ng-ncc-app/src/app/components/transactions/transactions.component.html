@@ -15,16 +15,18 @@
                 <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="col">Date</th>
                     <th class="govuk-table__header" scope="col">Type</th>
-                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">Amount</th>
+                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">In</th>
+                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">Out</th>
                     <th class="govuk-table__header govuk-table__header--numeric" scope="col">Balance</th>
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row" *ngFor="let row of _filtered; trackBy: trackByMethod">
-                    <td class="govuk-table__cell" scope="row">{{ row.postDate | date:'dd/MM/yyyy HH:mm' }}</td>
-                    <td class="govuk-table__cell">{{ row.debDesc }}</td>
-                    <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.realValue | currency:'GBP' }}</td>
-                    <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.balance | currency:'GBP' }}</td>
+                    <td class="govuk-table__cell" scope="row">{{ row.date }}</td>
+                    <td class="govuk-table__cell">{{ row.description }}</td>
+                    <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.in | currency:'GBP' }}</td>
+                    <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.out | currency:'GBP' }}</td>
+                    <td class="govuk-table__cell govuk-table__cell--numeric">{{ row.balance }}</td>
                 </tr>
             </tbody>
         </table>

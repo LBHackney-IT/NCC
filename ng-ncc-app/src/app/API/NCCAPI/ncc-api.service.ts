@@ -356,8 +356,13 @@ export class NCCAPIService {
      *
      */
     getAllTenancyTransactionStatements(tenancy_reference: string, startDate: string, endDate: string): Observable<ITenancyTransactionRow[]> {
+
+        // Start and end date must be in the format DD/MM/YYYY.
+        // Both must be provided!
         const parameters = {
-            tenancyAgreementId: tenancy_reference
+            tenancyAgreementId: tenancy_reference,
+            startdate: startDate,
+            enddate: endDate
         };
 
         return this.http
