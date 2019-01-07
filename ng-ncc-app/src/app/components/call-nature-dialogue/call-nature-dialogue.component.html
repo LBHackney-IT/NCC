@@ -29,8 +29,8 @@
 
                 <div class="govuk-checkboxes" data-module="radios">
                     <ng-template ngFor let-reason [ngForOf]="getCallTypeReasons()" [ngForTrackBy]="trackByCallReason">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
+                        <div class="govuk-checkboxes__item small-checkbox">
+                            <input class="govuk-checkboxes__input" id="call-reason-{{ reason.id }}" name="call_reason" type="checkbox"
                                 [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="reason">
                             <label class="govuk-label govuk-checkboxes__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                         </div>
@@ -60,10 +60,10 @@
                     </ng-template>
 
                     <!-- Other (which should come last). -->
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="radio"
+                    <div class="govuk-checkboxes__item small-checkbox">
+                        <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="checkbox"
                             [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="OTHER">
-                        <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
+                        <label class="govuk-label govuk-checkboxes__label" for="call-reason-other">Other</label>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@
                     </label>
                     <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
                         placeholder="Specify the call reason" maxlength="50" #otherReasonField
-                        [(ngModel)]="selected.other_reason" (ngModelChange)="updateSelection()">
+                        [(ngModel)]="selectedReasonOther" (ngModelChange)="updateSelection()">
                 </div>
             </fieldset>
 

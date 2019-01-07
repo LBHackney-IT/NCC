@@ -12,7 +12,7 @@ import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 @Component({
     selector: 'app-call-nature-dialogue',
     templateUrl: './call-nature-dialogue.component.html',
-    styleUrls: ['../dialogue/confirm/confirm-dialogue.component.scss']
+    styleUrls: ['./call-nature-dialogue.component.scss']
 })
 export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit {
     @Input() show: boolean;
