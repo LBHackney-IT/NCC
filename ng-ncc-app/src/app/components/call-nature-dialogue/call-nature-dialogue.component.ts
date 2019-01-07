@@ -142,6 +142,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         // TODO disable the "save and end call" button.
         // TODO save the selected call type.
         // TODO save the selected call reasons.
+        console.log('Selected call type:', this.selectedType.label);
+        console.log('Selected call reason(s):', this.selectedReasons);
     }
 
     /**
@@ -150,6 +152,10 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     answerNo() {
         this.cancel.emit();
         this.closeDialogue();
+    }
+
+    canSave(): boolean {
+        return this.isCallTypeSelected();
     }
 
 }
