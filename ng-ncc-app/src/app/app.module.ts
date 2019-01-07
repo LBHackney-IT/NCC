@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+import { ChecklistModule } from 'angular-checklist';
+
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
@@ -87,6 +89,7 @@ import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.com
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
+import { CallNatureDialogueComponent } from './components/call-nature-dialogue/call-nature-dialogue.component';
 
 @NgModule({
     declarations: [
@@ -159,11 +162,14 @@ import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdo
         NumbersOnlyDirective,
         NextPaymentAmountComponent,
         RentBreakdownComponent,
+        CallNatureDialogueComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
+
+        ChecklistModule,
 
         // Set up routing.
         AppRoutingModule

@@ -1,0 +1,98 @@
+<dialog class="dialogue" role="dialog" aria-labelledby="dialogue-title" [open]="show" (keyup.esc)="closeDialogue()">
+    <div class="dialogue__box">
+
+        <!-- Dialogue text. -->
+        <div class="dialogue__text govuk-body govuk-!-margin-bottom-5">
+
+            <!-- The type of call. -->
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-!-font-weight-bold" for="call_type">
+                    What was the type of call?
+                </label>
+                <select class="govuk-select govuk-input--width-20" id="call_type" name="call_type" [(ngModel)]="selectedType"
+                    [disabled]="!this.callTypes" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
+                    <option [ngValue]="null" selected>- select a call type</option>
+                    <option *ngFor="let item of callTypes; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
+                </select>
+                <app-helper class="govuk-!-margin-left-3" title="">
+                    New call types or reasons may be added by Team Leaders via the Support Service.
+                </app-helper>
+            </div>
+
+            <!-- The reason for the call. -->
+            <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" *ngIf="isCallTypeSelected()">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    <h2 class="govuk-fieldset__heading">
+                        What was the reason(s) for the call?
+                    </h2>
+                </legend>
+
+                <div class="govuk-checkboxes" data-module="radios">
+                    <ng-template ngFor let-reason [ngForOf]="getCallTypeReasons()" [ngForTrackBy]="trackByCallReason">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
+                                [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="reason">
+                            <label class="govuk-label govuk-checkboxes__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
+                        </div>
+
+                        <!-- Secondary labels. -->
+
+                        <!-- Applying for a rent card... -->
+                        <div class="govuk-checkboxes__conditional" [class.govuk-radios__conditional--hidden]="!isReasonSelected(reason)"
+                            *ngIf="'Apply for a rent card' === reason.label">
+                            <p class="govuk-body">Do this on Universal Housing.</p>
+                        </div>
+
+                        <!-- Former tenancy arrears... -->
+                        <div class="govuk-checkboxes__conditional" [class.govuk-radios__conditional--hidden]="!isReasonSelected(reason)"
+                            *ngIf="'Check Former Tenancy Arrears' === reason.label">
+                            <p class="govuk-body">
+                                Do this on Universal Housing.<br>
+                                Do not add notes in CRM, add them in Universal Housing.
+                            </p>
+                        </div>
+
+                        <!-- Universal Credit... -->
+                        <div class="govuk-checkboxes__conditional" [class.govuk-radios__conditional--hidden]="!isReasonSelected(reason)"
+                            *ngIf="'Discuss Universal Credit' === reason.label">
+                            <p class="govuk-body">See Universal Housing for breakdown of charges.</p>
+                        </div>
+                    </ng-template>
+
+                    <!-- Other (which should come last). -->
+                    <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="radio"
+                            [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="OTHER">
+                        <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
+                    </div>
+                </div>
+
+                <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->
+                <div class="govuk-form-group govuk-!-margin-left-8 govuk-!-margin-top-1" *ngIf="isOtherReasonSelected()">
+                    <label class="govuk-label govuk-!-font-weight-bold govuk-visually-hidden" for="call_reason_other">
+                        Specify the call reason:
+                    </label>
+                    <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
+                        placeholder="Specify the call reason" maxlength="50" #otherReasonField
+                        [(ngModel)]="selected.other_reason" (ngModelChange)="updateSelection()">
+                </div>
+            </fieldset>
+
+        </div>
+
+        <div class="dialogue__buttons">
+
+            <!-- "Yes" button. -->
+            <button class="button dialogue__button dialogue__button--close govuk-button govuk-!-margin-bottom-0" type="button" (click)="answerYes()">
+                Save and end call
+            </button>
+
+            <!-- "No" button. -->
+            <button class="button dialogue__button dialogue__button--close link-button govuk-!-margin-bottom-0" type="button" (click)="answerNo()" #dialogueButton>
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+</dialog>

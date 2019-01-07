@@ -78,7 +78,8 @@
         <li class="navigation__spacer"></li>
 
         <!-- End call. -->
-        <li class="navigation__item" *ngIf="isCallActive()">
+        <!-- <li class="navigation__item" *ngIf="isCallActive()"> -->
+        <li class="navigation__item">
             <a (click)="endCall()">
                 End call
             </a>
@@ -95,4 +96,8 @@
 
     <!-- Editorial essage to go here. -->
     <app-editorial></app-editorial>
+
+    <!-- A dialogue for the call type and reason(s). -->
+    <app-call-nature-dialogue [(show)]="ending_call"></app-call-nature-dialogue>
+
 </nav>

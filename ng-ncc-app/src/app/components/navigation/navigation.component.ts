@@ -33,6 +33,7 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     disable_previous_calls: boolean = environment.disable.previousCalls;
     disable_additional_reasons: boolean = environment.disable.additionalCallReason;
     view_only = false;
+    ending_call = false;
 
     @ViewChild('notesButton') notesButton: ElementRef;
 
@@ -74,8 +75,9 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
      * "Ends" the current call and navigates to the log call page.
      */
     endCall() {
-        this.Call.reset();
-        this.router.navigateByUrl(PAGES.PREVIOUS_CALLS.route);
+        // this.Call.reset();
+        // this.router.navigateByUrl(PAGES.PREVIOUS_CALLS.route);
+        this.ending_call = true;
     }
 
     /**
