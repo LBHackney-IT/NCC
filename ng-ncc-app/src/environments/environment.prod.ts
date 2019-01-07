@@ -13,15 +13,16 @@ export const environment = {
     nonTenantUserID: '5A668C7E-4DF9-E811-A96F-002248072FE8',
     authenticationLink: 'http://lbhwsappp01:4040',
     disable: {
+        additionalCallReason: false,
         advanceSearch: true,
         authentication: false,
-        consoleLogs: true,
-        previousCalls: false,
-        identifyCaller: false,
-        additionalCallReason: false,
         commsTemplates: [
             '77f78f80-7e23-4500-8aec-6ed1bc9f3276'
         ],
+        consoleLogs: true,
+        identifyCaller: false,
+        noteCloseOnSave: false,
+        previousCalls: false,
         viewOnly: false
     },
     previousCallCount: 50,
