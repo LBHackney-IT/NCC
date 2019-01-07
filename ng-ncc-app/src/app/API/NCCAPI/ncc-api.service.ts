@@ -15,6 +15,8 @@ import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { INCCInteraction } from '../../interfaces/ncc-interaction';
 import { INotesSettings } from '../../interfaces/notes-settings';
 import { IRentBreakdown } from '../../interfaces/rent-breakdown';
+import { ITenancyAgreementDetails } from '../../interfaces/tenancy-agreement-details';
+import { ITenancyTransactionRow } from '../../interfaces/tenancy-transaction-row';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
 import { CALL_REASON } from '../../constants/call-reason.constant';
@@ -335,6 +337,32 @@ export class NCCAPIService {
                     return row;
                 });
             }));
+    }
+
+    /**
+     *
+     */
+    getTenancyAgreementDetails(tenancy_reference: string): Observable<ITenancyAgreementDetails> {
+        const parameters = {
+            tenancyAgreementId: tenancy_reference
+        };
+
+        return this.http
+            .get(`${this._url}UH/GetTenancyAgreementDetails?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: IJSONResponse) => data.response));
+    }
+
+    /**
+     *
+     */
+    getAllTenancyTransactionStatements(tenancy_reference: string, startDate: string, endDate: string): Observable<ITenancyTransactionRow[]> {
+        const parameters = {
+            tenancyAgreementId: tenancy_reference
+        };
+
+        return this.http
+            .get(`${this._url}UH/GetAllTenancyTransactionStatements?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: IJSONResponse) => data.response));
     }
 
 }
