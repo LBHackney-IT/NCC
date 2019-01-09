@@ -127,8 +127,7 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
      *
      */
     getIdentifyRoute(): string {
-        const page = this.Call.hasTenancy() ? `${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_TENANTS.route}` : PAGES.IDENTIFY.route;
-        return page;
+        return `${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_TENANTS.route}`;
     }
 
     /**

@@ -39,6 +39,11 @@ export class PageIdentifyTenantsComponent implements OnInit {
     ngOnInit() {
         this.address = this.AddressSearch.getAddress();
 
+        // If there hasn't been an address selected, go to the Identify page.
+        if (!this.address) {
+            this.router.navigateByUrl(PAGES.IDENTIFY.route);
+        }
+
         if (!this.Call.hasTenancy()) {
             // The Back link should go to the addresses subpage.
             this.BackLink.enable();
