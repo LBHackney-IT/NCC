@@ -1,7 +1,7 @@
 {{ account | json }}
 
-<h2 class="govuk-heading-m">Next payment amount</h2>
-<p><app-next-payment-amount [account]="account"></app-next-payment-amount></p>
+<h2 class="govuk-heading-m">Current balance</h2>
+<p><app-current-balance [tenancyReference]="account.tagReferenceNumber"></app-current-balance></p>
 
 <h2 class="govuk-heading-m">Numbers only</h2>
 <div class="govuk-form-group">
