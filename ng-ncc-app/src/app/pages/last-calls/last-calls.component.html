@@ -1,27 +1,8 @@
 <h1 class="govuk-heading-l">Welcome!</h1>
 
-<div *ngIf="isTeamLeader(); else prompt">
-    <p class="govuk-body">
-        To add or remove agents to the CRM you will need to raise a ticket with ICT.<br>
-        Please make sure that you remove any agents who no longer work in the Contact Centre.
-    </p>
-
-    <details class="govuk-details">
-        <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-                List of users
-            </span>
-        </summary>
-        <div class="govuk-details__text">
-            ...
-        </div>
-    </details>
-</div>
-
-<ng-template #prompt>
 <p class="govuk-body">
-    When you have a new incoming call select 'Start New Call' in the sidebar.
+    To add or remove agents to the CRM you will need to raise a ticket with ICT.<br>
+    Please make sure that you remove any agents who no longer work in the Contact Centre.
 </p>
-</ng-template>
 
 <app-last-calls-list [count]="call_count" (viewNote)="beginAddNotes($event)"></app-last-calls-list>
