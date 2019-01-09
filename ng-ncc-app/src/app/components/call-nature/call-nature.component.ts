@@ -37,7 +37,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
             this.HackneyAPI.getCallTypes(),
             this.HackneyAPI.getCallReasons()
         )
-            .pipe(]
+            .pipe(
                 takeUntil(this._destroyed$)
             )
             .subscribe(
