@@ -78,8 +78,9 @@ export class PageHistory {
      * Set the date filtering option for the list of transactions.
      */
     filterByDate() {
+        // Set both dates to today by default.
         let min_date = new Date();
-        let max_date = null;
+        let max_date = new Date();
 
         switch (this.period) {
             case this.PERIOD_SIX_MONTHS:
