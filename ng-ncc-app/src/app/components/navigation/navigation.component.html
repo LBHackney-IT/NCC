@@ -23,7 +23,7 @@
             </a>
         </li>
 
-        <!-- Identify caller. -->
+        <!-- Caller details (formerly Identify caller). -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="getIdentifyRoute()" [class.disabled]="!isCallNatureSelected()">
                 {{ page_defs.IDENTIFY.label }}
@@ -34,14 +34,7 @@
 
         <li class="navigation__heading">This call:</li>
 
-        <!-- Add another call reason. -->
-        <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.ADDITIONAL_REASON.route" [class.disabled]="!isCallActive() || disable_additional_reasons">
-                {{ page_defs.ADDITIONAL_REASON.label }}
-            </a>
-        </li>
-
-        <!-- See caller notes. -->
+        <!-- View caller notes. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!canViewNotes()">
                 {{ page_defs.VIEW_NOTES.label }}
