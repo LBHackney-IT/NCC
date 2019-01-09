@@ -350,7 +350,7 @@ export class CallService {
      * Record a manual note against the call.
      */
     recordManualNote(note_content: string): Observable<any> {
-        return this.Notes.recordManualNote(note_content);
+        return this.Notes.recordManualNote(this.call_nature, note_content);
     }
 
     /**

@@ -49,6 +49,7 @@ import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
 import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
+import { CallNatureDropdownComponent } from './components/call-nature-dropdown/call-nature-dropdown.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
@@ -98,6 +99,7 @@ import { CurrentBalanceComponent } from './components/current-balance/current-ba
         BackLinkComponent,
         BoxPanelComponent,
         CallNatureComponent,
+        CallNatureDropdownComponent,
         CommsMethodSelectComponent,
         CommsReceiptTemplatesComponent,
         CommsTemplatesComponent,
