@@ -17,15 +17,20 @@
         <li class="navigation__separator"></li>
 
         <!-- Start new call. -->
-        <li class="navigation__item" routerLinkActive="navigation__item--active">
+        <!-- <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.LOG_CALL.route" [class.disabled]="hasCallStarted()">
+                {{ page_defs.LOG_CALL.label }}
+            </a>
+        </li> -->
+        <li class="navigation__item">
+            <a [routerLink]="page_defs.IDENTIFY.route" [class.disabled]="hasCallStarted()">
                 {{ page_defs.LOG_CALL.label }}
             </a>
         </li>
 
         <!-- Caller details (formerly Identify caller). -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="getIdentifyRoute()" [class.disabled]="!isCallNatureSelected()">
+            <a [routerLink]="getIdentifyRoute()">
                 {{ page_defs.IDENTIFY.label }}
             </a>
         </li>
