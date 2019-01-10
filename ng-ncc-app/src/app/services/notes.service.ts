@@ -4,6 +4,10 @@ import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
 import { IJSONResponse } from '../interfaces/json-response';
+import { LogCallReason } from '../classes/log-call-reason.class';
+
+import { CALL_REASON } from '../constants/call-reason.constant';
+
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { ViewOnlyService } from '../services/view-only.service';
 
@@ -13,6 +17,8 @@ import { ViewOnlyService } from '../services/view-only.service';
 export class NotesService {
     // This service controls the visibility of the add note form.
     // TODO this service should probably also be used to create automatic notes.
+
+    CALL_REASON_IDENTIFIER = 'SUMMARY';
 
     _added$ = new ReplaySubject<void>();
     _position$ = new Subject<{ x: number, y: number }>();
@@ -231,6 +237,24 @@ export class NotesService {
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
         );
+    }
+
+    recordCallReasons(call_reasons: LogCallReason[], other_reason: string = null) {
+        // For each call reason passed to this method, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
+
+        const observables = call_reasons.map(
+            (reason) => this.NCCAPI.createAutomaticNote({
+                call_id: this._settings.call_id,
+                ticket_number: this._settings.ticket_number,
+                tenancy_reference: this._settings.tenancy_reference,
+                call_reason_id: reason.id,
+                other_reason: CALL_REASON.OTHER === reason.id ? other_reason : null,
+                crm_contact_id: this._settings.crm_contact_id,
+                content: this.CALL_REASON_IDENTIFIER
+            })
+        );
+
+        return forkJoin(observables);
     }
 
     /**

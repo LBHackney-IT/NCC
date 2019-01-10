@@ -72,12 +72,18 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     }
 
     /**
-     * "Ends" the current call and navigates to the log call page.
+     * Displays the call type/reason dialogue.
      */
     endCall() {
-        // this.Call.reset();
-        // this.router.navigateByUrl(PAGES.PREVIOUS_CALLS.route);
         this.ending_call = true;
+    }
+
+    /**
+     * "Ends" the current call and navigates to the log call page.
+     */
+    confirmEndCall() {
+        this.Call.reset();
+        this.router.navigateByUrl(PAGES.PREVIOUS_CALLS.route);
     }
 
     /**

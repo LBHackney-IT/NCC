@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
 import { Observable, forkJoin, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
@@ -8,6 +8,7 @@ import { CALL_REASON } from '../../constants/call-reason.constant';
 import { ConfirmDialogueComponent } from '../dialogue/confirm/confirm-dialogue.component';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
     selector: 'app-call-nature-dialogue',
@@ -24,6 +25,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
     OTHER = new LogCallReason(CALL_REASON.OTHER, 'Other');
 
+    saving: boolean;
     selectedType: LogCallType;
     selectedReasons: LogCallReason[];
     selectedReasonOther: string;
@@ -33,7 +35,11 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     error: boolean;
 
 
-    constructor(private HackneyAPI: HackneyAPIService, private cdRef: ChangeDetectorRef) {
+    constructor(
+        private HackneyAPI: HackneyAPIService,
+        private Notes: NotesService,
+        private cdRef: ChangeDetectorRef
+    ) {
         super();
     }
 
@@ -139,11 +145,30 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     answerYes() {
-        // TODO disable the "save and end call" button.
-        // TODO save the selected call type.
-        // TODO save the selected call reasons.
+        if (this.saving) {
+            return;
+        }
+
         console.log('Selected call type:', this.selectedType.label);
         console.log('Selected call reason(s):', this.selectedReasons);
+
+        this.saving = true;
+
+        // Attempt to save the selected call reasons as notes.
+        this.Notes.recordCallReasons(this.selectedReasons, this.selectedReasonOther)
+            .pipe(take(1))
+            .pipe(finalize(() => {
+                this.saving = false;
+            }))
+            .subscribe(
+                () => {
+                    this.confirmed.emit();
+                    this.closeDialogue();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
     }
 
     /**
@@ -155,7 +180,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     canSave(): boolean {
-        return this.isCallTypeSelected();
+        return !this.saving && this.isCallTypeSelected();
     }
 
 }
