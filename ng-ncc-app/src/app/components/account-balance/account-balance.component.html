@@ -5,7 +5,7 @@
         <div class="govuk-grid-column-one-quarter">
             <h3 class="govuk-!-font-weight-bold">Current balance</h3>
             <p class="govuk-!-font-size-24 govuk-!-font-weight-bold" [class.inCredit]="isInCredit()" [class.inDebit]="isInDebit()">
-                <app-current-balance *ngIf="account" [tenancyReference]="account.tagReferenceNumber"></app-current-balance>
+                <app-display-balance *ngIf="account" [tenancyReference]="account.tagReferenceNumber"></app-display-balance>
                 <span *ngIf="!account">--</span>
             </p>
         </div>
