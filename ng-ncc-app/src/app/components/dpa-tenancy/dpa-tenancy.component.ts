@@ -7,8 +7,8 @@ import { IAccountDetails } from '../../interfaces/account-details';
 
 @Component({
     selector: 'app-dpa-tenancy',
-    templateUrl: './dpatenancy.component.html',
-    styleUrls: ['./dpatenancy.component.scss']
+    templateUrl: './dpa-tenancy.component.html',
+    styleUrls: ['./dpa-tenancy.component.scss']
 })
 export class DPATenancyComponent implements OnInit, OnDestroy {
     @Input() crmContactID: string;
