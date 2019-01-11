@@ -54,11 +54,12 @@ export class PageRentStatementComponent extends PageCommunications implements On
         // Obtain account details.
         this.Call.getAccount()
             .pipe(takeUntil(this._destroyed$))
-            .subscribe((account) => { this.account = account; });
+            .subscribe((account) => {
+                this.account = account;
 
-
-        // Automatically generate a statement.
-        this.refreshStatement();
+                // Automatically generate a statement.
+                this.refreshStatement();
+            });
     }
 
     /**
@@ -81,7 +82,10 @@ export class PageRentStatementComponent extends PageCommunications implements On
     refreshStatement() {
         if (this.canRefresh()) {
             const url = `${environment.api.statement}?contactid=${this.getContactID()}` +
-                `&startdate=${this.from_date}&enddate=${this.until_date}`;
+                `&tenagreementref=${this.account.tagReferenceNumber}` +
+                `&startdate=${this.from_date}` +
+                `&enddate=${this.until_date}`;
+            console.log(url);
             this.statement_url = this.sanitiser.bypassSecurityTrustResourceUrl(url);
         }
     }
