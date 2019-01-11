@@ -59,7 +59,7 @@ import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
-import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
+import { DPATenancyComponent } from './components/dpa-tenancy/dpa-tenancy.component';
 import { DateFieldComponent } from './components/date-field/date-field.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
