@@ -4,11 +4,12 @@ import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
 import { IJSONResponse } from '../interfaces/json-response';
-import { LogCallReason } from '../classes/log-call-reason.class';
+import { ILogCallSelection } from '../interfaces/log-call-selection';
 
 import { CALL_REASON } from '../constants/call-reason.constant';
 
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
+import { LogCallReason } from '../classes/log-call-reason.class';
 import { ViewOnlyService } from '../services/view-only.service';
 
 @Injectable({
@@ -59,6 +60,14 @@ export class NotesService {
         this._enabled = false;
         this._name = null;
         this._settings = null;
+        this._visible = false;
+    }
+
+    show() {
+        this._visible = true;
+    }
+
+    hide() {
         this._visible = false;
     }
 
@@ -140,7 +149,7 @@ export class NotesService {
      * Record a manual note.
      * A corresponding Action Diary note is also created.
      */
-    recordManualNote(note_content: string, transferred: boolean = false) {
+    recordManualNote(call_nature: ILogCallSelection, note_content: string, transferred: boolean = false) {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create a manual note.');
             return of(true);
@@ -156,8 +165,8 @@ export class NotesService {
             this.NCCAPI.createManualNote({
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
-                call_reason_id: this._settings.call_reason_id,
-                other_reason: this._settings.other_reason,
+                call_reason_id: call_nature.call_reason.id,
+                other_reason: call_nature.other_reason,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this._formatNoteContent(note_content),
                 calltransferred: transferred,

@@ -51,6 +51,7 @@ import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
 import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
+import { CallNatureDropdownComponent } from './components/call-nature-dropdown/call-nature-dropdown.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
@@ -87,9 +88,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
-import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
 import { CallNatureDialogueComponent } from './components/call-nature-dialogue/call-nature-dialogue.component';
+import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
+import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
 
 @NgModule({
     declarations: [
@@ -101,6 +103,7 @@ import { CallNatureDialogueComponent } from './components/call-nature-dialogue/c
         BackLinkComponent,
         BoxPanelComponent,
         CallNatureComponent,
+        CallNatureDropdownComponent,
         CommsMethodSelectComponent,
         CommsReceiptTemplatesComponent,
         CommsTemplatesComponent,
@@ -160,9 +163,10 @@ import { CallNatureDialogueComponent } from './components/call-nature-dialogue/c
         HeaderComponent,
         TenancyTypeComponent,
         NumbersOnlyDirective,
-        NextPaymentAmountComponent,
         RentBreakdownComponent,
         CallNatureDialogueComponent,
+        CurrentBalanceComponent,
+        DisplayBalanceComponent,
     ],
     imports: [
         BrowserModule,
