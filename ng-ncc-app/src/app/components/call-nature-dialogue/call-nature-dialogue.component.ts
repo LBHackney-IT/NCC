@@ -145,8 +145,18 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         return this.selectedType instanceof LogCallType;
     }
 
+    /**
+     * Returns TRUE if the specific call reason has been selected.
+     */
     isReasonSelected(reason: LogCallReason) {
         return this.selectedReasons && this.selectedReasons.indexOf(reason.id) > -1;
+    }
+
+    /**
+     * Returns TRUE if a call type has been selected.
+     */
+    isAtLeastOneReasonSelected() {
+        return this.selectedReasons && this.selectedReasons.length > 0;
     }
 
     /**
@@ -188,6 +198,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                 () => {
                     this.confirmed.emit();
                     this.closeDialogue();
+                    this.selectedType = null;
                 },
                 (error) => {
                     console.log(error);
@@ -207,7 +218,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      *
      */
     canSave(): boolean {
-        return !this.saving && this.isCallTypeSelected();
+        return !this.saving && this.isCallTypeSelected() && this.isAtLeastOneReasonSelected();
     }
 
 }
