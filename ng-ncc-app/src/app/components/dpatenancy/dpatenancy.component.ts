@@ -56,6 +56,13 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     /**
      *
      */
+    getTenancyDPAStartDate(): string {
+        return this.DPA.getTenancyStartDate();
+    }
+
+    /**
+     *
+     */
     getTenancyDPAPaymentReference(): string {
         return this.DPA.getPaymentReference();
     }
