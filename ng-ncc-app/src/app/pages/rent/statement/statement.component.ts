@@ -85,7 +85,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
                 `&tenagreementref=${this.account.tagReferenceNumber}` +
                 `&startdate=${this.from_date}` +
                 `&enddate=${this.until_date}`;
-            console.log(url);
+            // console.log(url);
             this.statement_url = this.sanitiser.bypassSecurityTrustResourceUrl(url);
         }
     }

@@ -203,7 +203,7 @@ export class CallService {
         this.account = account;
         this.accountSubject.next(this.account);
         // Anything subscribed to getAccountDetails() will receive updated account information.
-        console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
+        // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
     }
 
     /**
