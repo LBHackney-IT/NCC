@@ -207,7 +207,6 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                     },
                     (error) => {
                         this.error = true;
-                        console.error(error);
                     }
                 );
         }

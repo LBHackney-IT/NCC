@@ -89,7 +89,6 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
             (nature: ILogCallSelection) => nature.call_reason.id
         );
         const unique_natures = [..new Set(natures)];
-        console.log(unique_natures);
         this.selectedReasons = natures;
     }
 
@@ -183,9 +182,6 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
             return;
         }
 
-        console.log('Selected call type:', this.selectedType.label);
-        console.log('Selected call reason(s):', this.selectedReasons);
-
         this.saving = true;
 
         // Attempt to save the selected call reasons as notes.
@@ -199,9 +195,6 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                     this.confirmed.emit();
                     this.closeDialogue();
                     this.selectedType = null;
-                },
-                (error) => {
-                    console.log(error);
                 }
             );
     }
