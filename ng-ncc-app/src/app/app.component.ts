@@ -76,7 +76,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     jumpToContent(event) {
-        console.log('JUMP!', event);
         this.contentArea.nativeElement.scrollIntoView();
         this.contentArea.nativeElement.focus();
         return false;
