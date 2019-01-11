@@ -200,9 +200,15 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                             this.Notes.hide();
                             // } else {
                             // Display a confirmation that the note was saved.
+
+                            // Reset the comment.
+                            this.comment = null;
                         }
                     },
-                    () => { this.error = true; }
+                    (error) => {
+                        this.error = true;
+                        console.error(error);
+                    }
                 );
         }
     }

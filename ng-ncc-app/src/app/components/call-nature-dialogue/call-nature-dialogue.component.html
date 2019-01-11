@@ -10,7 +10,7 @@
                     What was the type of call?
                 </label>
                 <select class="govuk-select govuk-input--width-20" id="call_type" name="call_type" [(ngModel)]="selectedType"
-                    [disabled]="!this.callTypes" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
+                    [disabled]="!this.callTypes" (ngModelChange)="updateSelection()">
                     <option [ngValue]="null" selected>- select a call type</option>
                     <option *ngFor="let item of callTypes; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
                 </select>
@@ -31,7 +31,7 @@
                     <ng-template ngFor let-reason [ngForOf]="getCallTypeReasons()" [ngForTrackBy]="trackByCallReason">
                         <div class="govuk-checkboxes__item small-checkbox">
                             <input class="govuk-checkboxes__input" id="call-reason-{{ reason.id }}" name="call_reason" type="checkbox"
-                                [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="reason">
+                                [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="reason.id">
                             <label class="govuk-label govuk-checkboxes__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                         </div>
 
@@ -62,7 +62,7 @@
                     <!-- Other (which should come last). -->
                     <div class="govuk-checkboxes__item small-checkbox">
                         <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="checkbox"
-                            [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="OTHER">
+                            [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="OTHER.id">
                         <label class="govuk-label govuk-checkboxes__label" for="call-reason-other">Other</label>
                     </div>
                 </div>

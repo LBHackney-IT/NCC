@@ -1,11 +1,13 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, forkJoin, Subject } from 'rxjs';
-import { finalize, take } from 'rxjs/operators';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { LogCallReason } from '../../classes/log-call-reason.class';
 import { LogCallType } from '../../classes/log-call-type.class';
 import { CALL_REASON } from '../../constants/call-reason.constant';
 import { ConfirmDialogueComponent } from '../dialogue/confirm/confirm-dialogue.component';
+
+import { ILogCallSelection } from '../../interfaces/log-call-selection';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { NotesService } from '../../services/notes.service';
@@ -15,7 +17,7 @@ import { NotesService } from '../../services/notes.service';
     templateUrl: './call-nature-dialogue.component.html',
     styleUrls: ['./call-nature-dialogue.component.scss']
 })
-export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit {
+export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit, OnDestroy {
     @Input() show: boolean;
     @Output() showChange = new EventEmitter<boolean>();
     @Output() confirmed = new EventEmitter<void>();
@@ -25,9 +27,11 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
     OTHER = new LogCallReason(CALL_REASON.OTHER, 'Other');
 
+    private _destroyed$ = new Subject<void>();
+
     saving: boolean;
     selectedType: LogCallType;
-    selectedReasons: LogCallReason[];
+    selectedReasons: string[];  // a list of call reason IDs.
     selectedReasonOther: string;
 
     callTypes: LogCallType[];
@@ -63,6 +67,30 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                     this.error = true;
                 }
             );
+
+        // Subscribe to note addition events.
+        this.Notes.noteWasAdded()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                // Preselect call reasons.
+                this._preselectCallReasons();
+            });
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    private _preselectCallReasons() {
+        const natures = this.Notes.getUsedCallNatures().map(
+            (nature: ILogCallSelection) => nature.call_reason.id
+        );
+        const unique_natures = [..new Set(natures)];
+        console.log(unique_natures);
+        this.selectedReasons = natures;
     }
 
     /**
@@ -98,13 +126,6 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     * This is called when the call type is set/changed, and resets the selected call reason.
-     */
-    resetCallReason() {
-        this.selectedReasons = [];
-    }
-
-    /**
      * Fires the changed event for this component.
      */
     updateSelection() {
@@ -125,7 +146,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     isReasonSelected(reason: LogCallReason) {
-        return this.selectedReasons && this.selectedReasons.indexOf(reason) > -1;
+        return this.selectedReasons && this.selectedReasons.indexOf(reason.id) > -1;
     }
 
     /**
@@ -144,6 +165,9 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         }
     }
 
+    /**
+     *
+     */
     answerYes() {
         if (this.saving) {
             return;
@@ -179,6 +203,9 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         this.closeDialogue();
     }
 
+    /**
+     *
+     */
     canSave(): boolean {
         return !this.saving && this.isCallTypeSelected();
     }

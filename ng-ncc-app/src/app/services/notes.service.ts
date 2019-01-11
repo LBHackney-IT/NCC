@@ -27,6 +27,7 @@ export class NotesService {
     _settings: IAddNoteParameters = null;
     _enabled: boolean;
     _visible: boolean;
+    _usedNatures: ILogCallSelection[]; // previously used call natures.
 
     constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService) { }
 
@@ -50,6 +51,7 @@ export class NotesService {
             this.disable();
         }
 
+        this._usedNatures = [];
         this._settings = settings;
     }
 
@@ -59,6 +61,7 @@ export class NotesService {
     disable() {
         this._enabled = false;
         this._name = null;
+        this._usedNatures = [];
         this._settings = null;
         this._visible = false;
     }
@@ -177,6 +180,9 @@ export class NotesService {
             this.recordActionDiaryNote(note_content)
         )
             .pipe(map((data: IJSONResponse[]) => {
+                // Add the call nature to the list.
+                this._addCallNatureToList(call_nature);
+
                 // Inform anything subscribed to note addition events that a note was added.
                 this._added$.next();
 
@@ -248,16 +254,16 @@ export class NotesService {
         );
     }
 
-    recordCallReasons(call_reasons: LogCallReason[], other_reason: string = null) {
+    recordCallReasons(call_reason_ids: string[], other_reason: string = null) {
         // For each call reason passed to this method, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
 
-        const observables = call_reasons.map(
-            (reason) => this.NCCAPI.createAutomaticNote({
+        const observables = call_reason_ids.map(
+            (reason_id) => this.NCCAPI.createAutomaticNote({
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: reason.id,
-                other_reason: CALL_REASON.OTHER === reason.id ? other_reason : null,
+                call_reason_id: reason_id,
+                other_reason: CALL_REASON.OTHER === reason_id ? other_reason : null,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this.CALL_REASON_IDENTIFIER
             })
@@ -296,6 +302,21 @@ export class NotesService {
         }
 
         return note_content;
+    }
+
+    /**
+     *
+     */
+    private _addCallNatureToList(call_nature: ILogCallSelection) {
+        this._usedNatures.push(call_nature);
+        console.log(this._usedNatures);
+    }
+
+    /**
+     *
+     */
+    getUsedCallNatures() {
+        return this._usedNatures;
     }
 
 }
