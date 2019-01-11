@@ -1,0 +1,16 @@
+@import "../dialogue/dialogue.component";
+
+.dialogue__box {
+    min-width: 600px;
+    padding: 0;
+}
+
+.dialogue__buttons {
+    padding: 0 $dialogue-padding $dialogue-padding;
+}
+
+.dialogue__text {
+    max-height: 60vh;
+    overflow: auto;
+    padding: ($dialogue-padding / 2) $dialogue-padding 0;
+}

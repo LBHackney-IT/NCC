@@ -93,4 +93,8 @@
 
     <!-- Editorial essage to go here. -->
     <app-editorial></app-editorial>
+
+    <!-- A dialogue for the call type and reason(s). -->
+    <app-call-nature-dialogue [(show)]="ending_call" (confirmed)="confirmEndCall()"></app-call-nature-dialogue>
+
 </nav>
