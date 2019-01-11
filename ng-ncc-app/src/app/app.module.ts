@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+import { ChecklistModule } from 'angular-checklist';
+
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
@@ -87,6 +89,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
+import { CallNatureDialogueComponent } from './components/call-nature-dialogue/call-nature-dialogue.component';
 import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
 import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
 
@@ -161,6 +164,7 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         TenancyTypeComponent,
         NumbersOnlyDirective,
         RentBreakdownComponent,
+        CallNatureDialogueComponent,
         CurrentBalanceComponent,
         DisplayBalanceComponent,
     ],
@@ -168,6 +172,8 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         BrowserModule,
         FormsModule,
         HttpClientModule,
+
+        ChecklistModule,
 
         // Set up routing.
         AppRoutingModule
