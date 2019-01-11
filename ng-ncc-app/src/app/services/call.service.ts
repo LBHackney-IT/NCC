@@ -131,7 +131,7 @@ export class CallService {
      */
     private _createNewCall() {
         if (this.caller) {
-            if ((this.caller instanceof NonTenantCaller || this.caller instanceof IdentifiedCaller) && !this.tenancy) {
+            if ((this.caller.isNonTenant() || !this.caller.isAnonymous()) && !this.tenancy) {
                 return;
             }
             const contact_id = this.caller.getContactID();
@@ -145,8 +145,7 @@ export class CallService {
                 this.Account.getFor(this.caller, this.tenancy)
                     .pipe(take(1))
                     .subscribe((account) => {
-                        this.account = account;
-                        this.accountSubject.next(account);
+                        this._setAccountDetails(account);
                     });
                 return;
             }
@@ -175,10 +174,7 @@ export class CallService {
                         // console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
 
                         // Handle the tenant's account data.
-                        // Anything subscribed to getAccountDetails() will receive updated account information.
-                        this.account = response.account;
-                        this.accountSubject.next(response.account);
-                        // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
+                        this._setAccountDetails(response.account);
 
                         // Enable the add note form.
                         const tenancy_reference = this.caller.isNonTenant() ?
@@ -198,6 +194,16 @@ export class CallService {
                         this.createCallerNote();
                     });
         }
+    }
+
+    /**
+     *
+     */
+    private _setAccountDetails(account: IAccountDetails) {
+        this.account = account;
+        this.accountSubject.next(this.account);
+        // Anything subscribed to getAccountDetails() will receive updated account information.
+        // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
     }
 
     /**
@@ -245,7 +251,11 @@ export class CallService {
     /**
      * Returns the account details associated with the caller.
      */
-    getAccount(): ReplaySubject<IAccountDetails> {
+    getAccount() {
+        if (this.account) {
+            // Handling an unusual problem on the statement page, where the accountSubject returns null.
+            return of(this.account);
+        }
         return this.accountSubject;
     }
 
