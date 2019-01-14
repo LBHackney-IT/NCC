@@ -1,6 +1,6 @@
 <h1 class="govuk-heading-l">Callback</h1>
 
-<div class="govuk-form-group">
+<div class="govuk-form-group govuk-!-margin-bottom-5">
     <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 class="govuk-label govuk-!-font-weight-bold">Who should make a callback?</h2>
@@ -23,7 +23,7 @@
     </fieldset>
 </div>
 
-<div class="govuk-form-group">
+<div class="govuk-form-group govuk-!-margin-bottom-5">
     <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 class="govuk-label govuk-!-font-weight-bold">Who should they call?</h2>
@@ -33,10 +33,18 @@
             This caller: <app-current-caller class="govuk-!-font-weight-bold"></app-current-caller>
         </p>
 
-        <app-comms-telephone></app-comms-telephone>
+        <app-comms-telephone (selectedChange)="numberSelected($event)"></app-comms-telephone>
     </fieldset>
 </div>
 
-<app-call-nature-dropdown></app-call-nature-dropdown>
+<div class="govuk-form-group govuk-!-margin-bottom-5">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-label govuk-!-font-weight-bold">What is the call about?</h2>
+        </legend>
 
-<button class="govuk-button" type="button" name="button">Send</button>
+        <app-call-nature-dropdown (changed)="natureSelected($event)"></app-call-nature-dropdown>
+    </fieldset>
+</div>
+
+<button class="govuk-button" type="button" name="button" [disabled]="!canSave()">Send</button>
