@@ -94,7 +94,7 @@ export class DPAService {
     /**
      *
      */
-    getTenancyStartDate(): number {
+    getTenancyStartDate(): string {
         return this._tenancy ? this._tenancy.tenancy_start_date : null;
     }
 

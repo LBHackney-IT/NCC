@@ -1,3 +1,6 @@
+<!-- Accessibility link to skip to the main content. -->
+<a (click)="jumpToContent($event)" href="" class="govuk-skip-link">Skip to main content</ a>
+
 <!-- PAGE HEADER. -->
 <app-header></app-header>
 
@@ -13,7 +16,7 @@
         <!-- General back link. -->
         <app-back-link></app-back-link>
 
-        <div class="govuk-main-wrapper">
+        <div class="govuk-main-wrapper" #content tabindex="-1">
             <router-outlet></router-outlet>
         </div>
 

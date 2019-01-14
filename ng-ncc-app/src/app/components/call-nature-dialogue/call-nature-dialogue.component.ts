@@ -88,7 +88,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         const natures = this.Notes.getUsedCallNatures().map(
             (nature: ILogCallSelection) => nature.call_reason.id
         );
-        const unique_natures = [..new Set(natures)];
+        const unique_natures = new Set(natures).values();
         this.selectedReasons = natures;
     }
 
