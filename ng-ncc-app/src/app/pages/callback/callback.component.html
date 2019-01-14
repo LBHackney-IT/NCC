@@ -1,26 +1,41 @@
 <h1 class="govuk-heading-l">Callback</h1>
 
-<p class="govuk-body-l">Who should make a callback?</p>
-
 <div class="govuk-form-group">
-  <label class="govuk-label govuk-!-width-one-half" for="recipient">
-    Recipient or Officer email address
-  </label>
-  <input class="govuk-input govuk-!-width-one-half" id="recipient" name="recipient" type="email" [(ngModel)]="recipient">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-label govuk-!-font-weight-bold">Who should make a callback?</h2>
+        </legend>
+
+        <div class="govuk-form-group">
+            <label class="govuk-label govuk-!-width-one-half" for="recipient">
+                Recipient or Officer email address
+            </label>
+            <input class="govuk-input govuk-!-width-one-half" id="recipient" name="recipient" type="email" [(ngModel)]="recipient">
+        </div>
+
+        <div class="govuk-form-group">
+            <label class="govuk-label govuk-!-width-one-half" for="team-leader">
+                Their Team leader or Manager email address (optional)
+            </label>
+            <input class="govuk-input govuk-!-width-one-half" id="team-leader" name="team_leader" [(ngModel)]="teamLeader" type="email">
+        </div>
+
+    </fieldset>
 </div>
 
 <div class="govuk-form-group">
-  <label class="govuk-label govuk-!-width-one-half" for="team-leader">
-    Their Team leader or Manager email address (optional)
-  </label>
-  <input class="govuk-input govuk-!-width-one-half" id="team-leader" name="team_leader" [(ngModel)]="teamLeader" type="email">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-label govuk-!-font-weight-bold">Who should they call?</h2>
+        </legend>
+
+        <p class="govuk-body">
+            This caller: <app-current-caller class="govuk-!-font-weight-bold"></app-current-caller>
+        </p>
+
+        <app-comms-telephone></app-comms-telephone>
+    </fieldset>
 </div>
-
-<p class="govuk-body-l">Who should they call?</p>
-
-<p class="govuk-body">
-    This caller: <app-current-caller class="govuk-!-font-weight-bold"></app-current-caller>
-</p>
 
 <app-call-nature-dropdown></app-call-nature-dropdown>
 

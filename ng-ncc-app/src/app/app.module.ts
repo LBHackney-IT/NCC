@@ -93,6 +93,7 @@ import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdo
 import { CallNatureDialogueComponent } from './components/call-nature-dialogue/call-nature-dialogue.component';
 import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
 import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
+import { CommsTelephoneComponent } from './components/comms-telephone/comms-telephone.component';
 
 @NgModule({
     declarations: [
@@ -169,6 +170,7 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         CallNatureDialogueComponent,
         CurrentBalanceComponent,
         DisplayBalanceComponent,
+        CommsTelephoneComponent,
     ],
     imports: [
         BrowserModule,

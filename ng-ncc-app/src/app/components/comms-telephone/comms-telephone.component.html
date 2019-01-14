@@ -1,0 +1,28 @@
+<div class="govuk-radios">
+
+    <!-- Existing telephone numbers. -->
+    <div class="govuk-radios__item" *ngFor="let number of telephoneNumbers; let i = index; trackBy: trackByFn">
+        <input class="govuk-radios__input" id="phone-{{ i }}" name="telephone" type="radio" [(ngModel)]="selected" [value]="number">
+        <label class="govuk-label govuk-radios__label" for="phone-{{ i }}">
+            {{ number }}
+        </label>
+    </div>
+
+    <!-- Some other number. -->
+    <div class="govuk-radios__item govuk-!-width-one-half">
+
+        <!-- radio button. -->
+        <input class="govuk-radios__input" id="phone-other" name="telephone" type="radio" [(ngModel)]="selected" [value]="null">
+        <label class="govuk-label govuk-radios__label" for="phone-other">
+            Other number
+        </label>
+
+        <!-- text field. -->
+        <label class="govuk-label govuk-visually-hidden" for="phone-other-number">Enter an alternative number</label>
+        <input id="phone-other-number" class="govuk-input govuk-!-margin-left-3" type="tel" name="telephone_other"
+            appNumbersOnly
+            (focus)="setSelectedAsOther()"
+            [(ngModel)]="otherNumber">
+
+    </div>
+</div>
