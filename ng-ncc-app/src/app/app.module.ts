@@ -21,6 +21,7 @@ import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-n
 
 import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 import { PageAuthComponent } from './pages/auth/auth.component';
+import { PageCallbackComponent } from './pages/callback/callback.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
@@ -128,6 +129,7 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         OrComponent,
         PageAddNotesComponent,
         PageAuthComponent,
+        PageCallbackComponent,
         PageCommsComponent,
         PageContactDetailsComponent,
         PageIdentifyAddressesComponent,
