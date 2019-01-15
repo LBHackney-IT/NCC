@@ -21,7 +21,7 @@
                     {
                         "outputPath": "dist/ng-ncc-app",
                         "index": "src/index.html",
-                        "main": "src/main.ts",
+                        "main": "src/main-app.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": [
@@ -98,6 +98,135 @@
                     "options":
                     {
                         "browserTarget": "ng-ncc-app:build"
+                    }
+                },
+                "test":
+                {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options":
+                    {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.spec.json",
+                        "karmaConfig": "src/karma.conf.js",
+                        "styles": [
+                            "src/styles.css"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ]
+                    }
+                },
+                "lint":
+                {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options":
+                    {
+                        "tsConfig": [
+                            "src/tsconfig.app.json",
+                            "src/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "ng-ncc-callback":
+        {
+            "root": "",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "callback",
+            "schematics":
+            {},
+            "architect":
+            {
+                "build":
+                {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options":
+                    {
+                        "outputPath": "dist/ng-ncc-callback",
+                        "index": "src/callback/index.html",
+                        "main": "src/main-callback.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.app.json",
+                        "assets": [
+                            "src/browserconfig.xml",
+                            "src/manifest.json",
+                            "src/favicon.ico",
+                            "src/assets",
+                            "src/favicon"
+                        ],
+                        "styles": [
+                            "src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations":
+                    {
+                        "dev-test":
+                        {
+                            "fileReplacements": [
+                            {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.dev-test.ts"
+                            }],
+                            "outputPath": "dist/dev-test/callback"
+                        },
+                        "live-test":
+                        {
+                            "fileReplacements": [
+                            {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.live-test.ts"
+                            }],
+                            "outputPath": "dist/live-test/callback"
+                        },
+                        "production":
+                        {
+                            "fileReplacements": [
+                            {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
+                        }
+                    }
+                },
+                "serve":
+                {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options":
+                    {
+                        "browserTarget": "ng-ncc-callback:build"
+                    },
+                    "configurations":
+                    {
+                        "production":
+                        {
+                            "browserTarget": "ng-ncc-callback:build:production"
+                        }
+                    }
+                },
+                "extract-i18n":
+                {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options":
+                    {
+                        "browserTarget": "ng-ncc-callback:build"
                     }
                 },
                 "test":
