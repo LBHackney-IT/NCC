@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
-import { ContentAreaComponent } from '../content-area/content-area.component';
+import { ContentAreaComponent } from '../../../common/layout/content-area/content-area.component';
 
 import { CallService } from '../../services/call.service';
 import { WindowService } from '../../services/window.service';

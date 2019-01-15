@@ -9,6 +9,7 @@ import { ChecklistModule } from 'angular-checklist';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { LayoutModule } from '../common/layout/layout.module';
+import { ComponentModule } from '../common/component/component.module';
 
 import { WindowService } from './services/window.service';
 
@@ -50,7 +51,6 @@ import { AddressSearchResultsComponent } from './components/address-search-resul
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
 import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
-import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CallNatureDropdownComponent } from './components/call-nature-dropdown/call-nature-dropdown.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
@@ -65,13 +65,12 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
-import { ErrorPanelComponent } from './components/panel/error-panel/error-panel.component';
+import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { NoteFormComponent } from './components/note-form/note-form.component';
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { OrComponent } from './components/or/or.component';
-import { PanelComponent } from './components/panel/panel.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
@@ -81,8 +80,6 @@ import { ValueListLabelComponent } from './components/value-list/value-list-labe
 import { ValueListValueComponent } from './components/value-list/value-list-value/value-list-value.component';
 import { WarningComponent } from './components/warning/warning.component';
 import { AccountBalanceComponent } from './components/account-balance/account-balance.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
 import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
@@ -98,7 +95,6 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         AgentComponent,
         AppComponent,
         BackLinkComponent,
-        BoxPanelComponent,
         CallNatureComponent,
         CallNatureDropdownComponent,
         CommsMethodSelectComponent,
@@ -113,8 +109,6 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         DialogueTitleComponent,
         EditorialComponent,
         EnvNameComponent,
-        ErrorPanelComponent,
-        HeadingComponent,
         HelperComponent,
         LastCallsListComponent,
         NavigationComponent,
@@ -144,7 +138,6 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         PageTransactionSuccessComponent,
         PageTryAgainComponent,
         PageViewNotesComponent,
-        PanelComponent,
         TabComponent,
         TabsComponent,
         TransactionsComponent,
@@ -169,6 +162,7 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         ChecklistModule,
 
         LayoutModule,
+        ComponentModule,
 
         // Set up routing.
         AppRoutingModule
