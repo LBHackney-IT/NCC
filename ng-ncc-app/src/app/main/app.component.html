@@ -2,7 +2,23 @@
 <a (click)="jumpToContent($event)" href="" class="govuk-skip-link">Skip to main content</ a>
 
 <!-- PAGE HEADER. -->
-<app-header></app-header>
+<app-header>
+    <div class="page__header__column page__header__column--title">
+        <p class="govuk-!-font-size-24 govuk-!-margin-bottom-1">NCC - CRM</p>
+        <app-env-name class="govuk-body-s"></app-env-name>
+    </div>
+
+    <div class="page__header__column page__header__column--id">
+        <!-- Display the current caller's name (if present) -->
+        <app-current-caller></app-current-caller>
+
+        <!-- Display the logged in agent's name and avatar. -->
+        <app-agent></app-agent>
+    </div>
+
+    <!-- The Add Note form. -->
+    <app-note-form></app-note-form>
+</app-header>
 
 <div class="container">
     <app-route-loading *ngIf="loading"></app-route-loading>

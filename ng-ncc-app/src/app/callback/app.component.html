@@ -1,4 +1,22 @@
 <!-- Accessibility link to skip to the main content. -->
 <a (click)="jumpToContent($event)" href="" class="govuk-skip-link">Skip to main content</a>
 
-Howdy!
+<!-- PAGE HEADER. -->
+<app-header></app-header>
+
+<div class="container">
+    <app-route-loading *ngIf="loading"></app-route-loading>
+
+    <!-- MAIN CONTENT AREA. -->
+    <app-content-area>
+
+        <div class="govuk-main-wrapper" #content tabindex="-1">
+            <router-outlet></router-outlet>
+        </div>
+
+    </app-content-area>
+</div>
+
+
+<!-- PAGE FOOTER. -->
+<app-footer></app-footer>

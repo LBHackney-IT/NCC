@@ -8,6 +8,7 @@ import { ChecklistModule } from 'angular-checklist';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { LayoutModule } from '../common/layout/layout.module';
 
 import { WindowService } from './services/window.service';
 
@@ -56,7 +57,6 @@ import { CommsMethodSelectComponent } from './components/comms-method-select/com
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
-import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
 import { DPATenancyComponent } from './components/dpa-tenancy/dpa-tenancy.component';
@@ -66,15 +66,12 @@ import { DialogueTitleComponent } from './components/dialogue/title/dialogue-tit
 import { EditorialComponent } from './components/editorial/editorial.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
 import { ErrorPanelComponent } from './components/panel/error-panel/error-panel.component';
-import { HeadingComponent } from './components/panel/heading/heading.component';
-import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { NoteFormComponent } from './components/note-form/note-form.component';
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { OrComponent } from './components/or/or.component';
 import { PanelComponent } from './components/panel/panel.component';
-import { RouteLoadingComponent } from './components/route-loading/route-loading.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
@@ -108,7 +105,6 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         CommsReceiptTemplatesComponent,
         CommsTemplatesComponent,
         ConfirmDialogueComponent,
-        ContentAreaComponent,
         CurrentCallerComponent,
         DPADialogueComponent,
         DPATenancyComponent,
@@ -149,7 +145,6 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         PageTryAgainComponent,
         PageViewNotesComponent,
         PanelComponent,
-        RouteLoadingComponent,
         TabComponent,
         TabsComponent,
         TransactionsComponent,
@@ -159,8 +154,6 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         ValueListValueComponent,
         WarningComponent,
         AccountBalanceComponent,
-        FooterComponent,
-        HeaderComponent,
         TenancyTypeComponent,
         NumbersOnlyDirective,
         RentBreakdownComponent,
@@ -174,6 +167,8 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         HttpClientModule,
 
         ChecklistModule,
+
+        LayoutModule,
 
         // Set up routing.
         AppRoutingModule

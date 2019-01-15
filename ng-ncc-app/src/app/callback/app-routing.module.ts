@@ -2,7 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from '../../environments/environment';
 
-export const AppRoutes: Routes = [];
+import { PageRespondComponent } from './pages/respond/respond.component';
+
+export const AppRoutes: Routes = [
+    {
+        path: '',
+        component: PageRespondComponent
+    },
+];
 
 @NgModule({
     exports: [

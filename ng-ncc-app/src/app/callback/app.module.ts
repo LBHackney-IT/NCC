@@ -7,10 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import { LayoutModule } from '../common/layout/layout.module';
+import { PageRespondComponent } from './pages/respond/respond.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        PageRespondComponent,
     ],
     imports: [
         BrowserModule,
@@ -18,7 +21,9 @@ import { AppRoutingModule } from './app-routing.module';
         HttpClientModule,
 
         // Set up routing.
-        AppRoutingModule
+        AppRoutingModule,
+
+        LayoutModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
