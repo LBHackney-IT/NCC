@@ -79,15 +79,17 @@ export class PageHistory {
      */
     filterByDate() {
         // Set both dates to today by default.
-        let min_date = new Date();
-        let max_date = new Date();
+        let min_date = null; // new Date();
+        let max_date = null; // new Date();
 
         switch (this.period) {
             case this.PERIOD_SIX_MONTHS:
+                min_date = new Date();
                 min_date.setMonth(min_date.getMonth() - 6);
                 break;
 
             case this.PERIOD_TWELVE_MONTHS:
+                min_date = new Date();
                 min_date.setFullYear(min_date.getFullYear() - 1);
                 break;
 

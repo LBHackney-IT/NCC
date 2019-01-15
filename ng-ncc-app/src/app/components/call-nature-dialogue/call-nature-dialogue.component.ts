@@ -214,4 +214,18 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         return !this.saving && this.isCallTypeSelected() && this.isAtLeastOneReasonSelected();
     }
 
+    /**
+     * An iterator for the list of call types.
+     */
+    trackByCallType(index: number, item: string): number {
+        return index;
+    }
+
+    /**
+     * An iterator for the list of call reasons.
+     */
+    trackByCallReason(index: number, item: LogCallReason): string {
+        return item.id;
+    }
+
 }
