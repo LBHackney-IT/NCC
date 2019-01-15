@@ -15,8 +15,8 @@ export abstract class PageNotes extends PageHistory implements OnInit {
     tenants_list: string[];
 
     filter: {
-        min_date: Date,
-        max_date: Date,
+        min_date: Date | null,
+        max_date: Date | null,
         manual: { [propKey: string]: string }
     };
     filter_tenant: string;

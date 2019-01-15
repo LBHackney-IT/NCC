@@ -18,8 +18,8 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     @Input() tenancyReference: string;
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
-    @Input() minDate?: Date;
-    @Input() maxDate?: Date;
+    @Input() minDate?: Date | null;
+    @Input() maxDate?: Date | null;
 
     private _destroyed$ = new Subject();
 
