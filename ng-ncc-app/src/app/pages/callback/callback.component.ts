@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CALL_REASON } from '../../constants/call-reason.constant';
 import { ILogCallSelection } from '../../interfaces/log-call-selection';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
     selector: 'app-page-callback',
@@ -15,10 +16,9 @@ export class PageCallbackComponent implements OnInit {
     contactNumber: string = null;
     callNature: ILogCallSelection = null;
 
-    constructor() { }
+    constructor(private Helper: HelperService) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 
     numberSelected(number: string) {
         console.log('Selected number:', number);
@@ -31,8 +31,8 @@ export class PageCallbackComponent implements OnInit {
     }
 
     canSave(): boolean {
-        return (this.contactNumber) && (this.callNature &&
-            (CALL_REASON.OTHER !== this.callNature.call_reason.id || this.callNature.other_reason));
+        return this.Helper.isDefined(this.contactNumber) && (this.Helper.isDefined(this.callNature) &&
+            (CALL_REASON.OTHER !== this.callNature.call_reason.id || this.Helper.isPopulated(this.callNature.other_reason)));
     }
 
 }

@@ -17,6 +17,7 @@ export class CommsTelephoneComponent implements OnInit {
 
     private _destroyed$ = new Subject();
 
+    caller: ICaller;
     selected: string; // the selected or entered telephone number.
     otherNumber: string;
     telephoneNumbers: string[]; // all available telephone numbers.

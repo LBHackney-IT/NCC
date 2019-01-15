@@ -9,6 +9,7 @@ import { ChecklistModule } from 'angular-checklist';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
+import { HelperService } from './services/helper.service';
 import { WindowService } from './services/window.service';
 
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
@@ -191,7 +192,8 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         ContactDetailsResolver,
         IdentifiedCallerResolver,
         IdentifiedOrNonTenantCallerResolver,
-        WindowService
+        WindowService,
+        HelperService
     ],
     bootstrap: [AppComponent]
 })
