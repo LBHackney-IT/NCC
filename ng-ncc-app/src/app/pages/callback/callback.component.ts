@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CALL_REASON } from '../../constants/call-reason.constant';
 import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { HelperService } from '../../services/helper.service';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
     selector: 'app-page-callback',
@@ -13,26 +14,56 @@ export class PageCallbackComponent implements OnInit {
 
     recipient: string;  // Recipient or Officer email address.
     teamLeader: string; // Team leader or Manager email address.
-    contactNumber: string = null;
-    callNature: ILogCallSelection = null;
+    contactNumber: string;
+    callNature: ILogCallSelection;
+    message: string;
 
-    constructor(private Helper: HelperService) { }
+    constructor(private Helper: HelperService, private Notes: NotesService) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this._reset();
+    }
 
+    /**
+     *
+     */
     numberSelected(number: string) {
-        console.log('Selected number:', number);
         this.contactNumber = number;
     }
 
+    /**
+     *
+     */
     natureSelected(call_nature: ILogCallSelection) {
-        console.log('Selected call nature:', call_nature);
         this.callNature = call_nature;
     }
 
+    /**
+     *
+     */
     canSave(): boolean {
-        return this.Helper.isDefined(this.contactNumber) && (this.Helper.isDefined(this.callNature) &&
-            (CALL_REASON.OTHER !== this.callNature.call_reason.id || this.Helper.isPopulated(this.callNature.other_reason)));
+        return this.Helper.isDefined(this.contactNumber) &&
+            (this.Helper.isDefined(this.callNature.call_reason) &&
+                (CALL_REASON.OTHER !== this.callNature.call_reason.id || this.Helper.isPopulated(this.callNature.other_reason))) &&
+            this.Helper.isPopulated(this.message);
+    }
+
+    /**
+     *
+     */
+    saveCallbackRequest() {
+
+    }
+
+    /**
+     *
+     */
+    _reset() {
+        this.recipient = null;
+        this.teamLeader = null;
+        this.contactNumber = null;
+        this.callNature = null;
+        this.message = null;
     }
 
 }
