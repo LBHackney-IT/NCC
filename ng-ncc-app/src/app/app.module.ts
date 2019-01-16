@@ -73,6 +73,7 @@ import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { NoteFormComponent } from './components/note-form/note-form.component';
+import { NoteTypeComponent } from './components/note-type/note-type.component';
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { OrComponent } from './components/or/or.component';
 import { PanelComponent } from './components/panel/panel.component';
@@ -127,6 +128,7 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         NavigationComponent,
         NoResultsComponent,
         NoteFormComponent,
+        NoteTypeComponent,
         NotifyTemplatePreviewComponent,
         OrComponent,
         PageAddNotesComponent,
