@@ -15,5 +15,5 @@ describe('NCCAPIService', () => {
 
     it('should be created', () => {
         expect(NCCAPI).toBeTruthy();
-    }));
+    });
 });

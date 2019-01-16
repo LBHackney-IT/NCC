@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { DPATenancyComponent } from './dpa-tenancy.component';
 
@@ -8,7 +9,8 @@ describe('DPATenancyComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [DPATenancyComponent]
+            declarations: [DPATenancyComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));

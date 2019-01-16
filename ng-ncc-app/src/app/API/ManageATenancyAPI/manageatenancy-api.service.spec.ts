@@ -16,5 +16,5 @@ describe('ManageATenancyAPIService', () => {
 
     it('should be created', () => {
         expect(ManageATenancyAPI).toBeTruthy();
-    }));
+    });
 });

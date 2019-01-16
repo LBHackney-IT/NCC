@@ -15,5 +15,5 @@ describe('NotifyAPIService', () => {
 
     it('should be created', () => {
         expect(NotifyAPI).toBeTruthy();
-    }));
+    });
 });
