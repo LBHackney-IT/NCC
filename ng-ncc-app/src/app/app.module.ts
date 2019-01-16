@@ -66,7 +66,7 @@ import { DialogueTitleComponent } from './components/dialogue/title/dialogue-tit
 import { EditorialComponent } from './components/editorial/editorial.component';
 import { EnvNameComponent } from './components/env-name/env-name.component';
 import { ErrorPanelComponent } from './components/panel/error-panel/error-panel.component';
-import { HeadingComponent } from './components/panel/heading/heading.component';
+import { HeaderComponent } from './components/panel/header/header.component';
 import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
@@ -118,7 +118,7 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         EditorialComponent,
         EnvNameComponent,
         ErrorPanelComponent,
-        HeadingComponent,
+        HeaderComponent,
         HelperComponent,
         LastCallsListComponent,
         NavigationComponent,

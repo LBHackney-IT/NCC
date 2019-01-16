@@ -15,5 +15,5 @@ describe('CallRevisionService', () => {
 
     it('should be created', () => {
         expect(CallRevision).toBeTruthy();
-    }));
+    });
 });

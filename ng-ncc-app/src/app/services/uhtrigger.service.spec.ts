@@ -15,5 +15,5 @@ describe('UHTriggerService', () => {
 
     it('should be created', () => {
         expect(UHTrigger).toBeTruthy();
-    }));
+    });
 });

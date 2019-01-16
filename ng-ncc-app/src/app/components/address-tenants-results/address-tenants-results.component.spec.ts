@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AddressTenantsResultsComponent } from './address-tenants-results.component';
 
@@ -8,7 +10,9 @@ describe('AddressTenantsResultsComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [AddressTenantsResultsComponent]
+            imports: [FormsModule],
+            declarations: [AddressTenantsResultsComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));

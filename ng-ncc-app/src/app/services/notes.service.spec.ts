@@ -15,5 +15,5 @@ describe('NotesService', () => {
 
     it('should be created', () => {
         expect(Notes).toBeTruthy();
-    }));
+    });
 });

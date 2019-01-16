@@ -15,5 +15,5 @@ describe('DPAService', () => {
 
     it('should be created', () => {
         expect(DPA).toBeTruthy();
-    }));
+    });
 });

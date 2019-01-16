@@ -15,5 +15,5 @@ describe('AddressSearchService', () => {
 
     it('should be created', () => {
         expect(AddressSearch).toBeTruthy();
-    }));
+    });
 });

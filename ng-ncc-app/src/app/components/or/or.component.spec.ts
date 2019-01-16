@@ -30,7 +30,7 @@ describe('OrComponent', () => {
     });
 
     it('should ONLY display the word "OR"', () => {
-        expect(el.textContent).toBe('OR');
+        expect(el.textContent.toUpperCase()).toBe('OR');
     });
 
 });

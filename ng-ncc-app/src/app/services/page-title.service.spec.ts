@@ -15,5 +15,5 @@ describe('PageTitleService', () => {
 
     it('should be created', () => {
         expect(PageTitle).toBeTruthy();
-    }));
+    });
 });

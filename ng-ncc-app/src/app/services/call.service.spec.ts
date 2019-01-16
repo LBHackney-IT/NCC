@@ -38,5 +38,5 @@ describe('CallService', () => {
 
     it('should be created', () => {
         expect(Call).toBeTruthy();
-    }));
+    });
 });

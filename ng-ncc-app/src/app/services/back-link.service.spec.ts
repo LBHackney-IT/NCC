@@ -15,5 +15,5 @@ describe('BackLinkService', () => {
 
     it('should be created', () => {
         expect(BackLink).toBeTruthy();
-    }));
+    });
 });
