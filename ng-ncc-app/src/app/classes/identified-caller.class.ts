@@ -1,4 +1,4 @@
-import { ICaller } from '../interfaces/caller';
+import { Caller } from '../classes/caller.class';
 import { ICitizenIndexSearchResult } from '../interfaces/citizen-index-search-result';
 import { ContactAddress } from '../classes/contact-address.class';
 import * as moment from 'moment';
@@ -6,13 +6,19 @@ import * as moment from 'moment';
 /**
  * This class represents an identified caller, as selected from the Identify page.
  */
-export class IdentifiedCaller implements ICaller {
+export class IdentifiedCaller extends Caller {
 
     error: boolean; // for the benefit of the identify tenant page.
 
-    constructor(private _details: ICitizenIndexSearchResult) { }
+    constructor(private _details: ICitizenIndexSearchResult) {
+        super();
+    }
 
     isAnonymous(): boolean {
+        return false;
+    }
+
+    isNonTenant(): boolean {
         return false;
     }
 
@@ -110,20 +116,6 @@ export class IdentifiedCaller implements ICaller {
      */
     getContactIDForNotes(): string | null {
         return this._details.crmContactId;
-    }
-
-    /**
-     * Returns TRUE if the caller has no email address[es].
-     */
-    hasNoEmailAddresses(): boolean {
-        return 0 === this.getEmailAddresses().length;
-    }
-
-    /**
-     * Returns TRUE if the caller has no telephone numbers.
-     */
-    hasNoTelephoneNumbers(): boolean {
-        return 0 === this.getTelephoneNumbers().length;
     }
 
 }

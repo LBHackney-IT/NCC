@@ -44,10 +44,10 @@ export class PageIdentifyComponent implements OnInit {
 
         if (this.Call.hasTenancy()) {
             this.existing_call = true;
-        } else if (!this.Call.hasCaller()) {
-            // Enable the app's back link if there's no current caller.
-            this.BackLink.enable();
-            this.BackLink.setTarget(`/${PAGES.LOG_CALL.route}`);
+            // } else if (!this.Call.hasCaller()) {
+            //     // Enable the app's back link if there's no current caller.
+            //     this.BackLink.enable();
+            //     this.BackLink.setTarget(`/${PAGES.LOG_CALL.route}`);
         }
     }
 
@@ -95,14 +95,13 @@ export class PageIdentifyComponent implements OnInit {
     }
 
     /**
-     * Navigatw to the next step, having selected a tenant (or an anonymous caller).
+     * Navigate to the next step, having selected a tenant (or an anonymous caller).
      */
     nextStep() {
         if (this.Call.hasCaller()) {
             // If caller is identified the ‘continue' button should take you to ’Caller Notes'.
             // If caller is anonymous the ‘caller is anonymous’ button should take you to ‘General Communications’.
             // Decided in isolation.
-            // TODO determine which page (comms or payment) to go to, based on the call type and reason.
             this.router.navigateByUrl(this.Call.isCallerIdentified() ? PAGES.VIEW_NOTES.route : PAGES.COMMS.route);
         }
     }

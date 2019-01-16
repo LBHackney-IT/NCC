@@ -11,7 +11,7 @@
             <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col">Tenancy ref.</th>
                 <th class="govuk-table__header" scope="col">Name</th>
-                <th class="govuk-table__header" scope="col">Call reason</th>
+                <!-- <th class="govuk-table__header" scope="col">Call reason</th> -->
                 <th class="govuk-table__header" scope="col">Time</th>
                 <th class="govuk-table__header" scope="col">&nbsp;</th>
             </tr>
@@ -22,7 +22,7 @@
                     <b>{{ row.housingref }}</b>
                 </th>
                 <td class="govuk-table__cell">{{ row.name }}</td>
-                <td class="govuk-table__cell">{{ row.callreason || 'Other' }}</td>
+                <!-- <td class="govuk-table__cell">{{ getCallReason(row) }}</td> -->
                 <td class="govuk-table__cell">{{ row.createdon | date: "dd/MM/yyyy HH:mm" }}</td>
                 <td class="govuk-table__cell">
                     <a href="" *ngIf="row.housingref" (click)="beginAddNotes(row)">View</a>

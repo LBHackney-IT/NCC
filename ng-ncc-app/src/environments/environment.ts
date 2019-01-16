@@ -17,15 +17,17 @@ export const environment = {
     nonTenantUserID: '5A668C7E-4DF9-E811-A96F-002248072FE8',
     authenticationLink: 'http://localhost:4200',
     disable: {
+        additionalCallReason: false,
         advanceSearch: true,
         authentication: true,
-        consoleLogs: false,
-        previousCalls: false,
-        identifyCaller: false,
-        additionalCallReason: false,
         commsTemplates: [
             'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
-        ]
+        ],
+        consoleLogs: false,
+        identifyCaller: false,
+        noteCloseOnSave: false,
+        previousCalls: false,
+        viewOnly: false
     },
     previousCallCount: 50,
     notifyTemplate: {

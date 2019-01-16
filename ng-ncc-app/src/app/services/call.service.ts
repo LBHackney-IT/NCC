@@ -10,6 +10,8 @@ import { INCCNote } from '../interfaces/ncc-note';
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { HackneyAPIService } from '../API/HackneyAPI/hackney-api.service';
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
+import { AccountService } from '../services/account.service';
+import { AnonymousCaller } from '../classes/anonymous-caller.class';
 import { IdentifiedCaller } from '../classes/identified-caller.class';
 import { NonTenantCaller } from '../classes/non-tenant-caller.class';
 import { ICRMServiceRequest } from '../interfaces/crmservicerequest';
@@ -20,6 +22,7 @@ import { AuthService } from '../services/auth.service';
 import { LogCallType } from '../classes/log-call-type.class';
 import { LogCallReason } from '../classes/log-call-reason.class';
 import { NotesService } from '../services/notes.service';
+import { ViewOnlyService } from '../services/view-only.service';
 
 @Injectable({
     providedIn: 'root'
@@ -45,11 +48,13 @@ export class CallService {
     private ticket_number: string;
 
     constructor(
+        private Account: AccountService,
         private Auth: AuthService,
         private HackneyAPI: HackneyAPIService,
         private ManageATenancyAPI: ManageATenancyAPIService,
         private NCCAPI: NCCAPIService,
-        private Notes: NotesService
+        private Notes: NotesService,
+        private ViewOnly: ViewOnlyService
     ) {
         this.reset();
     }
@@ -126,7 +131,24 @@ export class CallService {
      */
     private _createNewCall() {
         if (this.caller) {
+            if ((this.caller.isNonTenant() || !this.caller.isAnonymous()) && !this.tenancy) {
+                return;
+            }
             const contact_id = this.caller.getContactID();
+
+            if (this.ViewOnly.status) {
+                // console.log('View only status; do not create a call.');
+                this.call_id = 'debug';
+                this.ticket_number = 'debug';
+
+                // Fetch the account details.
+                this.Account.getFor(this.caller, this.tenancy)
+                    .pipe(take(1))
+                    .subscribe((account) => {
+                        this._setAccountDetails(account);
+                    });
+                return;
+            }
 
             // We're subscribing to two API endpoints, so we can use forkJoin here to ensure that both are successful.
             // If either one fails we will get an error.
@@ -136,7 +158,7 @@ export class CallService {
 
                 // We also fetch account details, in order to obtain the associated tenancy reference, via the Manage A Tenancy API.
                 // The tenancy reference is required to record Action Diary entries.
-                this.ManageATenancyAPI.getAccountDetails(contact_id)
+                this.Account.getFor(this.caller, this.tenancy)
             )
                 .pipe(take(1))
                 .pipe(
@@ -152,21 +174,18 @@ export class CallService {
                         // console.log(`Call ${this.call_id} was created (ticket #${this.ticket_number}).`);
 
                         // Handle the tenant's account data.
-                        // Anything subscribed to getAccountDetails() will receive updated account information.
-                        this.account = response.account;
-                        this.accountSubject.next(response.account);
-                        // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
+                        this._setAccountDetails(response.account);
 
                         // Enable the add note form.
-                        const tenancy_reference = this.caller instanceof NonTenantCaller ?
+                        const tenancy_reference = this.caller.isNonTenant() ?
                             this.caller.tenancy_reference : this.account.tagReferenceNumber;
                         const settings = {
                             agent_name: this.Auth.getFullName(),
                             call_id: this.call_id,
                             ticket_number: this.ticket_number,
-                            call_reason_id: this.call_nature.call_reason.id,
-                            other_reason: this.call_nature.other_reason,
-                            crm_contact_id: this.caller.getContactIDForNotes(),
+                            call_reason_id: null, // TODO this.call_nature.call_reason.id,
+                            other_reason: null, // TODO this.call_nature.other_reason,
+                            crm_contact_id: this.caller.getContactID(),
                             tenancy_reference: tenancy_reference
                         };
                         this.Notes.enable(this.caller.getName(), settings);
@@ -178,14 +197,24 @@ export class CallService {
     }
 
     /**
+     *
+     */
+    private _setAccountDetails(account: IAccountDetails) {
+        this.account = account;
+        this.accountSubject.next(this.account);
+        // Anything subscribed to getAccountDetails() will receive updated account information.
+        // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
+    }
+
+    /**
      * Creates an automatic note about the caller being identified.
      */
     createCallerNote() {
         if (this.call_id) {
-            const name = this.caller.isAnonymous() ? 'anonymous' : this.caller.getName();
-            const call_type = this.call_nature.call_type.label;
-            const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
-                this.call_nature.call_reason.label;
+            const name = (this.caller.isAnonymous() && !this.caller.isNonTenant()) ? 'anonymous' : this.caller.getName();
+            const call_type = null; // TODO this.call_nature.call_type.label;
+            const call_reason = null; // TODO this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
+            // this.call_nature.call_reason.label;
 
             forkJoin(
                 // Record an automatic note.
@@ -222,7 +251,11 @@ export class CallService {
     /**
      * Returns the account details associated with the caller.
      */
-    getAccount(): ReplaySubject<IAccountDetails> {
+    getAccount() {
+        if (this.account) {
+            // Handling an unusual problem on the statement page, where the accountSubject returns null.
+            return of(this.account);
+        }
         return this.accountSubject;
     }
 
@@ -270,6 +303,7 @@ export class CallService {
     setTenancy(tenancy: IAddressSearchGroupedResult) {
         this.tenancy = tenancy;
         this._buildTenantsList();
+        this._createNewCall();
     }
 
     /**
@@ -326,7 +360,7 @@ export class CallService {
      * Record a manual note against the call.
      */
     recordManualNote(note_content: string): Observable<any> {
-        return this.Notes.recordManualNote(note_content);
+        return this.Notes.recordManualNote(this.call_nature, note_content);
     }
 
     /**
@@ -340,7 +374,7 @@ export class CallService {
     /**
      * Record an automatic comms note against the call.
      */
-    recordCommsNote(notify_template_name: string, notify_method: string) {
+    recordCommsNote(notify_template_name: string, notify_method: string): Observable<any> {
         return this.Notes.recordCommsNote(notify_template_name, notify_method);
     }
 

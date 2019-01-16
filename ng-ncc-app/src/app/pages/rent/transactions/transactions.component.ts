@@ -75,7 +75,7 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
      */
     filterTransactions() {
         this.filter.manual = {
-            debDesc: this.filter_type
+            description: this.filter_type
         };
     }
 

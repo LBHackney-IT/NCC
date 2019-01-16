@@ -34,14 +34,14 @@
         </app-warning>
     </app-dialogue>
 
-    <!-- Data protection Act (DPA) questions prompt. -->
-    <app-dpa-dialogue [(show)]="modal.dpa" buttonText="Close">
+    <!-- Data protection Act (DPA) questions prompt - for a tenant. -->
+    <app-dpa-dialogue [(show)]="modal.dpa_identified" buttonText="Close" *ngIf="is_identified">
         <app-dialogue-title>Data Protection Act questions</app-dialogue-title>
 
         <div class="govuk-grid-row govuk-!-margin-bottom-5">
 
             <!-- The tenancy address. -->
-            <div class="govuk-grid-column-one-third" [innerHtml]="caller.getPostalAddressHTML()"></div>
+            <div class="govuk-grid-column-one-third" [innerHtml]="getTenancyAddress()"></div>
 
             <!-- DPA questions relating to the tenancy address(?). -->
             <div class="govuk-grid-column-two-thirds">
@@ -88,6 +88,44 @@
             </div>
 
         </div>
+    </app-dpa-dialogue>
+
+    <!-- Data protection Act (DPA) questions prompt - for a non-tenant. -->
+    <app-dpa-dialogue [(show)]="modal.dpa_non_tenant" buttonText="Continue" *ngIf="is_non_tenant">
+        <app-warning>
+            You must not give out sensitive information to people who shouldn't see it.
+            If the non-tenant has the correct contact available then verify Data Protection.
+        </app-warning>
+
+        <app-panel>
+            <h3 class="govuk-heading-m">Property details</h3>
+
+            <h4 class="govuk-heading-s">ADDRESS</h4>
+            <p [innerHtml]="getTenancyAddress()"></p>
+
+            <h4 class="govuk-heading-s">Data Protection Act questions</h4>
+            <div class="govuk-body-s">
+                <app-value-list>
+                    <app-value-list-label>Tenancy reference number</app-value-list-label>
+                    <app-value-list-value>{{ account_details.tagReferenceNumber }}</app-value-list-value>
+
+                    <app-value-list-label>Payment reference</app-value-list-label>
+                    <app-value-list-value>{{ account_details.paymentReferenceNumber }}</app-value-list-value>
+
+                    <app-value-list-label>Current balance</app-value-list-label>
+                    <app-value-list-value>
+                        <app-current-balance [account]="account_details.tagReferenceNumber"></app-current-balance>
+                    </app-value-list-value>
+
+                    <app-value-list-label>Payment amount</app-value-list-label>
+                    <app-value-list-value>{{ account_details.rent | currency : 'GBP' }}</app-value-list-value>
+
+                    <!-- <app-value-list-label>Most recent payment</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value> -->
+                </app-value-list>
+            </div>
+
+        </app-panel>
     </app-dpa-dialogue>
 
 </form>

@@ -29,6 +29,7 @@ import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
+import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-non-tenant-caller-resolver.service';
 import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
@@ -50,10 +51,17 @@ export const AppRoutes: Routes = [
         component: PagePlaygroundComponent
     },
 
+    // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
+    // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
+    // Normally we would add child pages to this route, but we want to keep the existing route paths.
     {
-        // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
-        // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
-        // Normally we would add child pages to this route, but we want to keep the existing route paths.
+        // This URL works the same as the one below, except we use it to enable "view only" mode.
+        path: `${PAGES.AUTHENTICATION.route}/:code/:viewonly`,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+        children: []
+    },
+    {
         path: `${PAGES.AUTHENTICATION.route}/:code`,
         pathMatch: 'full',
         canActivate: [AuthGuard],
@@ -69,12 +77,12 @@ export const AppRoutes: Routes = [
         component: PageLastCallsComponent,
         canActivate: [AuthGuard]
     },
-    {
-        // Log Call page.
-        path: PAGES.LOG_CALL.route,
-        component: PageLogCallComponent,
-        canActivate: [AuthGuard]
-    },
+    // {
+    //     // Log Call page.
+    //     path: PAGES.LOG_CALL.route,
+    //     component: PageLogCallComponent,
+    //     canActivate: [AuthGuard]
+    // },
     {
         // Add Notes page.
         path: PAGES.ADD_NOTES.route,
@@ -119,7 +127,7 @@ export const AppRoutes: Routes = [
                 path: PAGES.RENT_TRANSACTIONS.route,
                 component: PageRentTransactionsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: IdentifiedOrNonTenantCallerResolver
                 }
             },
             {
@@ -135,7 +143,7 @@ export const AppRoutes: Routes = [
                 path: PAGES.RENT_COMMS.route,
                 component: PageRentCommunicationsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: IdentifiedOrNonTenantCallerResolver
                 }
             },
             {
@@ -160,9 +168,9 @@ export const AppRoutes: Routes = [
         path: PAGES.IDENTIFY.route,
         component: PageIdentifyComponent,
         canActivate: [AuthGuard],
-        resolve: {
-            call_nature: CallNatureResolver
-        },
+        // resolve: {
+        //     call_nature: CallNatureResolver
+        // },
         children: [
             {
                 path: PAGES.IDENTIFY_ADDRESSES.route,
@@ -191,7 +199,7 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver,
-            call_nature: CallNatureResolver
+            // call_nature: CallNatureResolver
         }
     },
     {

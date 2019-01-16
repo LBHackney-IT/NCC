@@ -12,6 +12,11 @@ export class NonTenantCaller extends AnonymousCaller {
         super();
     }
 
+    isNonTenant(): boolean {
+        return true;
+    }
+
+
     getName(): string {
         return 'Non-tenant';
     }
@@ -20,13 +25,6 @@ export class NonTenantCaller extends AnonymousCaller {
      * Returns the caller's CRM contact ID.
      */
     getContactID(): string | null {
-        return environment.nonTenantUserID;
-    }
-
-    /**
-     * Returns the the CRM contact ID to use for recording notes.
-     */
-    getContactIDForNotes(): string | null {
         return environment.nonTenantUserID;
     }
 

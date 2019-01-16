@@ -1,4 +1,10 @@
 <nav class="page__menu">
+
+    <div class="view-only-message govuk-!-margin-bottom-5" *ngIf="view_only">
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-3">View Only</h2>
+        <p class="govuk-body-s govuk-!-margin-bottom-0">Calls and notes will not be created.</p>
+    </div>
+
     <ul class="navigation__list">
 
         <!-- "Home" page. -->
@@ -11,15 +17,20 @@
         <li class="navigation__separator"></li>
 
         <!-- Start new call. -->
-        <li class="navigation__item" routerLinkActive="navigation__item--active">
+        <!-- <li class="navigation__item" routerLinkActive="navigation__item--active">
             <a [routerLink]="page_defs.LOG_CALL.route" [class.disabled]="hasCallStarted()">
+                {{ page_defs.LOG_CALL.label }}
+            </a>
+        </li> -->
+        <li class="navigation__item">
+            <a [routerLink]="page_defs.IDENTIFY.route" [class.disabled]="hasCallStarted()">
                 {{ page_defs.LOG_CALL.label }}
             </a>
         </li>
 
-        <!-- Identify caller. -->
+        <!-- Caller details (formerly Identify caller). -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="getIdentifyRoute()" [class.disabled]="!isCallNatureSelected()">
+            <a [routerLink]="getIdentifyRoute()">
                 {{ page_defs.IDENTIFY.label }}
             </a>
         </li>
@@ -28,16 +39,9 @@
 
         <li class="navigation__heading">This call:</li>
 
-        <!-- Add another call reason. -->
+        <!-- View caller notes. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.ADDITIONAL_REASON.route" [class.disabled]="!isCallActive() || disable_additional_reasons">
-                {{ page_defs.ADDITIONAL_REASON.label }}
-            </a>
-        </li>
-
-        <!-- See caller notes. -->
-        <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!isCallerIdentified()">
+            <a [routerLink]="page_defs.VIEW_NOTES.route" [class.disabled]="!canViewNotes()">
                 {{ page_defs.VIEW_NOTES.label }}
             </a>
 
@@ -89,4 +93,8 @@
 
     <!-- Editorial essage to go here. -->
     <app-editorial></app-editorial>
+
+    <!-- A dialogue for the call type and reason(s). -->
+    <app-call-nature-dialogue [(show)]="ending_call" (confirmed)="confirmEndCall()"></app-call-nature-dialogue>
+
 </nav>

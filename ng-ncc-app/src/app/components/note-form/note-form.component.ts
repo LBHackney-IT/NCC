@@ -6,11 +6,18 @@ import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { ContentAreaComponent } from '../content-area/content-area.component';
+
 import { CallService } from '../../services/call.service';
 import { WindowService } from '../../services/window.service';
 import { NotesService } from '../../services/notes.service';
+
+import { CALL_REASON } from '../../constants/call-reason.constant';
 import { PAGES } from '../../constants/pages.constant';
+
 import { IAddNoteParameters } from '../../interfaces/add-note-parameters';
+import { ILogCallSelection } from '../../interfaces/log-call-selection';
+import { LogCallReason } from '../../classes/log-call-reason.class';
+import { LogCallType } from '../../classes/log-call-type.class';
 
 
 @Component({
@@ -27,16 +34,19 @@ export class NoteFormComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    page_defs = PAGES;
     TOP_MARGIN = 20;        // gap (in pixels) between the top of the content area and the toggle button.
     FORM_GAP = 20;
+
+    page_defs = PAGES;
+
     containerStyle: Object; // used to control the inline style of .note-form__container.
     comment: string = null;
-    transferred = false;
-    show: boolean;          // whether the note component is visible on the page.
     saving: boolean;        // set to TRUE when saving a note.
+    call_nature: ILogCallSelection;  // the selected call type and reason.
+    show: boolean;          // whether the note component is visible on the page.
     error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
+    transferred = false;
 
     constructor(
         private element: ElementRef,
@@ -81,7 +91,6 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         // - the caller is NOT anonymous.
         // Because we have a CRM contact ID representing an anonymous caller, it's possible to record notes for them.
         // However, it was mentioned that anonymous callers should only have "automatic" notes.
-
         return this.Notes.isVisible();
     }
 
@@ -147,9 +156,17 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      * Returns TRUE if we have enough information to save a note.
      */
     canSaveNote(): boolean {
-        return !this.saving && !!(this.comment) && !!(this.Notes.getSettings().call_id);
+        const is_saving = this.saving;
+        const has_comment = this.comment && this.comment.trim().length > 0;
+        const has_call_id = !!(this.Notes.getSettings().call_id);
+        const has_call_nature = this.isCallNatureSelected();
+
+        return !is_saving && (has_comment && has_call_id && has_call_nature);
     }
 
+    /**
+     * Returns TRUE if we can view the current caller's notes.
+     */
     canViewNotes(): boolean {
         return this.Call.hasCaller() && !(this.isCallerAnonymous() || this.isCallerNonTenant());
     }
@@ -170,14 +187,27 @@ export class NoteFormComponent implements OnInit, OnDestroy {
             this.error = false;
             this.saving = true;
 
-            this.Notes.recordManualNote(this.comment, this.transferred)
+            this.Notes.recordManualNote(this.call_nature, this.comment, this.transferred)
                 .pipe(take(1))
                 .pipe(finalize(() => {
                     this.saving = false;
                 }))
                 .subscribe(
-                    () => { this._resetComment(); },
-                    () => { this.error = true; }
+                    () => {
+                        this._resetComment();
+                        if (!environment.disable.noteCloseOnSave) {
+                            // Automatically close the note form.
+                            this.Notes.hide();
+                            // } else {
+                            // Display a confirmation that the note was saved.
+
+                            // Reset the comment.
+                            this.comment = null;
+                        }
+                    },
+                    (error) => {
+                        this.error = true;
+                    }
                 );
         }
     }
@@ -187,6 +217,20 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      */
     _resetComment() {
         this.comment = null;
+    }
+
+    /**
+     *
+     */
+    selectedCallNature(selection: ILogCallSelection) {
+        this.call_nature = selection;
+    }
+
+    /**
+     *
+     */
+    isCallNatureSelected(): boolean {
+        return this.call_nature instanceof ILogCallSelection;
     }
 
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NextPaymentAmountComponent } from './next-payment-amount.component';
+import { CallNatureDialogueComponent } from './call-nature-dialogue.component';
 
-describe('NextPaymentAmountComponent', () => {
-  let component: NextPaymentAmountComponent;
-  let fixture: ComponentFixture<NextPaymentAmountComponent>;
+describe('CallNatureDialogueComponent', () => {
+  let component: CallNatureDialogueComponent;
+  let fixture: ComponentFixture<CallNatureDialogueComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NextPaymentAmountComponent ]
+      declarations: [ CallNatureDialogueComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NextPaymentAmountComponent);
+    fixture = TestBed.createComponent(CallNatureDialogueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
