@@ -200,7 +200,7 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver,
-            call_nature: CallNatureResolver
+            // call_nature: CallNatureResolver
         }
     },
     {
