@@ -164,7 +164,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      */
     private _getOtherReason(note: INCCUHNote): string {
         if (NOTES.TYPE_MANUAL === note.notesType) {
-            return "Other";
+            return 'Other';
         }
     }
 
