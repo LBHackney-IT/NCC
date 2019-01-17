@@ -117,7 +117,7 @@ export class NotesService {
      * Record an automatic note against the call.
      * A corresponding Action Diary note is also created.
      */
-    recordAutomaticNote(note_content: string): Observable<any> {
+    recordAutomaticNote(note_content: string, call_nature: ILogCallSelection = null): Observable<any> {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an automatic note.');
             return of(true);
@@ -130,10 +130,10 @@ export class NotesService {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: this._settings.call_reason_id,
-                other_reason: this._settings.other_reason,
+                call_reason_id: null,
+                other_reason: null,
                 crm_contact_id: this._settings.crm_contact_id,
-                content: this._formatNoteContent(note_content)
+                content: this._formatNoteContent(note_content, call_nature)
             }),
 
             // Action Diary note...
@@ -171,7 +171,7 @@ export class NotesService {
                 call_reason_id: call_nature.call_reason.id,
                 other_reason: call_nature.other_reason,
                 crm_contact_id: this._settings.crm_contact_id,
-                content: this._formatNoteContent(note_content),
+                content: this._formatNoteContent(note_content, call_nature),
                 calltransferred: transferred,
                 tenancy_reference: this._settings.tenancy_reference
             }),
@@ -193,7 +193,7 @@ export class NotesService {
     /**
      * Record an Action Diary entry against the tenancy associated with the call (if present).
      */
-    recordActionDiaryNote(note_content: string) {
+    recordActionDiaryNote(note_content: string, call_nature: ILogCallSelection = null) {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an Action Diary note.');
             return of(true);
@@ -202,7 +202,7 @@ export class NotesService {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
             const note = [];
-            const reason = this._settings.other_reason ? this._settings.other_reason : 'none';
+            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : 'none';
 
             // Add the agent's name.
             note.push(`Logged by: ${this._settings.agent_name}`);
@@ -224,7 +224,7 @@ export class NotesService {
      * Record an automatic note about communications being sent.
      * A corresponding Action Diary note is also created.
      */
-    recordCommsNote(notify_template_name: string, notify_method: string) {
+    recordCommsNote(notify_template_name: string, notify_method: string, call_nature: ILogCallSelection = null) {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an automatic [comms] note.');
             return of(true);
@@ -239,8 +239,8 @@ export class NotesService {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: this._settings.call_reason_id,
-                other_reason: this._settings.other_reason,
+                call_reason_id: null,
+                other_reason: null,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: note_content,
                 parameters: {
@@ -296,9 +296,9 @@ export class NotesService {
     /**
      * Formats note content to include a custom call reason, if present.
      */
-    private _formatNoteContent(note_content: string): string {
-        if (this._settings.other_reason) {
-            note_content = `Other: ${this._settings.other_reason}\n${note_content}`;
+    private _formatNoteContent(note_content: string, call_nature: ILogCallSelection = null): string {
+        if (call_nature && call_nature.other_reason) {
+            note_content = `Other: ${call_nature.other_reason}\n${note_content}`;
         }
 
         return note_content;
