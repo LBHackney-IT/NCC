@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
+// NOTE: Statements are now referred to as Rent Transactions in the front end.
+
 import { PAGES } from '../../../constants/pages.constant';
 import { CONTACT } from '../../../constants/contact.constant';
 import { PageCommunications } from '../../abstract/communications';
@@ -70,10 +72,23 @@ export class PageRentStatementComponent extends PageCommunications implements On
     }
 
     /**
-     *
+    * Returns TRUE if we should be able to refresh the rent transactions preview.
      */
     canRefresh(): boolean {
         return !!(this.from_date && this.until_date);
+    }
+
+    /**
+     * Returns TRUE if we should be able to send the rent transactions.
+     */
+    canSend(): boolean {
+        if (this.sending) {
+            return false;
+        }
+        if (CONTACT.METHOD_POST === this.selected_details.method) {
+            return true;
+        }
+        return this.selected_details.isComplete();
     }
 
     /**
@@ -108,12 +123,12 @@ export class PageRentStatementComponent extends PageCommunications implements On
      *
      */
     getButtonText(): string {
-        switch (this.selected_details.method) {
-            case CONTACT.METHOD_EMAIL:
-                return 'Send';
-            default:
-                return 'Print';
-        }
+        // switch (this.selected_details.method) {
+        //     case CONTACT.METHOD_EMAIL:
+        return 'Send';
+        //     default:
+        //         return 'Print';
+        // }
     }
 
 
@@ -150,7 +165,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
                     .subscribe(
                         (json: INotifyAPIJSONResult) => {
                             if (1 === json.response) {
-                                this.success_message = 'Statement sent successfully.';
+                                this.success_message = 'Rent transactions sent successfully.';
                                 this.modal.confirmed = true;
 
                                 // Create an automatic note.
