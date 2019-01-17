@@ -230,7 +230,12 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      *
      */
     isCallNatureSelected(): boolean {
-        return this.call_nature instanceof ILogCallSelection;
+        if (this.call_nature) {
+            if (this.call_nature.call_reason) {
+                return (CALL_REASON.OTHER !== this.call_nature.call_reason.id || !!(this.call_nature.other_reason));
+            }
+        }
+        return false;
     }
 
 }
