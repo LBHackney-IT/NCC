@@ -24,7 +24,7 @@ export class UHTriggerService {
     /**
      * Called when a comms template has been sent to the caller.
      */
-    sentComms(template: string, method: string, data: { [propKey: string]: string }) {
+    sentComms(template: string, method: string) {
         // const call_type = this.Call.getCallNature().call_type.label;
         // const call_reason = this.Call.getCallNature().call_reason.label;
         let notify_method: string;
@@ -41,7 +41,7 @@ export class UHTriggerService {
                 break;
         }
 
-        this.Call.recordCommsNote(template, notify_method, data)
+        this.Call.recordCommsNote(template, notify_method)
             .pipe(take(1))
             .subscribe();
     }
