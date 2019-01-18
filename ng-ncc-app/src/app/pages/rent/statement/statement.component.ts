@@ -146,6 +146,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
                 // Build a set of parameters for sending the statement.
                 const parameters = {
                     EmailTo: this.selected_details.getDetail(),
+                    TenancyReference: this.account.tagReferenceNumber,
                     ContactId: this.getContactID(),
                     StartDate: this.from_date,
                     EndDate: this.until_date,
