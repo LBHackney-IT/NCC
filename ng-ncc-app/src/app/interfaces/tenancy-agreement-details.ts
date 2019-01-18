@@ -4,5 +4,6 @@ export interface ITenancyAgreementDetails {
     propertyReferenceNumber: string;
     paymentReferenceNumber: string;
     isAgreementTerminated: boolean;
+    rent: number;
     tenureType: string;
 }
