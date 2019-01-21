@@ -60,6 +60,13 @@ export class CallService {
     }
 
     /**
+     * Returns TRUE if we are currently on a call, determined by the presence of a call ID.
+     */
+    isActive(): boolean {
+        return null !== this.call_id;
+    }
+
+    /**
      * Returns TRUE if a caller has been defined.
      */
     hasCaller(): boolean {
