@@ -30,7 +30,7 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
             this.NCCAPI.getLastCalls(this.count)
                 .pipe(takeUntil(this._destroyed$))
                 .subscribe(
-                    (rows: ILastCall[]) => { this.calls = rows; },
+                    (rows: ILastCall[]) => { this.calls = this._filterLastCalls(rows); },
                     () => { this.error = true; }
                 );
         }
@@ -41,6 +41,15 @@ export class LastCallsListComponent implements OnInit, OnDestroy {
      */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     * Returns a filtered list of previous calls.
+     */
+    private _filterLastCalls(calls: ILastCall[]): ILastCall[] {
+        // We don't want to display calls that have no call reason ID or other reason text.
+        // (These are most likely a byproduct of the caller identification note.)
+        return calls.filter((call: ILastCall) => !(null === call.callreasonId && null === call.otherreason));
     }
 
     /**
