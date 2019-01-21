@@ -258,7 +258,7 @@ export class NotesService {
         // Make sure we have a unique list of call reason IDs.
         const unique_call_reasons = Array.from(new Set(call_reason_ids));
 
-        // For each call reason passed to this method, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
+        // For each call reason, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
         const observables = unique_call_reasons.map(
             (reason_id) => this.NCCAPI.createAutomaticNote({
                 call_id: this._settings.call_id,
