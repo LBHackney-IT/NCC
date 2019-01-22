@@ -35,7 +35,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     error: boolean;
     saving_error: boolean;
     update: ContactDetailsUpdate;
-    view_only: false;
+    view_only: boolean;
 
     constructor(
         private route: ActivatedRoute,
