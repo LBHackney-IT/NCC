@@ -20,6 +20,10 @@
 
             <h1 class="govuk-heading-l">Edit tenant details</h1>
 
+            <app-warning *ngIf="view_only">
+                Contact details will not be saved.
+            </app-warning>
+
             <!-- Title. -->
             <div class="govuk-grid-row">
                 <label class="govuk-grid-column-one-third govuk-body govuk-!-font-weight-bold" for="title">
