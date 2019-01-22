@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { finalize, take } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
 import { IContactDetails } from '../../interfaces/contact-details';
@@ -10,6 +10,7 @@ import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 import { BackLinkService } from '../../services/back-link.service';
+import { ViewOnlyService } from '../../services/view-only.service';
 import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
@@ -34,9 +35,15 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
     error: boolean;
     saving_error: boolean;
     update: ContactDetailsUpdate;
+    view_only: false;
 
-    constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService, private Call: CallService,
-        private BackLink: BackLinkService, private PageTitle: PageTitleService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private NCCAPI: NCCAPIService,
+        private Call: CallService,
+        private BackLink: BackLinkService,
+        private ViewOnly: ViewOnlyService,
+        private PageTitle: PageTitleService) { }
 
     ngOnInit() {
         this.PageTitle.set(PAGES.EDIT_CONTACT_DETAILS.label);
@@ -55,6 +62,8 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         // Enable the app's back link.
         this.BackLink.enable();
         this.BackLink.setTarget(`/${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_TENANTS.route}`);
+
+        this.view_only = this.ViewOnly.status;
     }
 
     ngOnDestroy() {
@@ -207,7 +216,17 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         this.saving = true;
         this.saving_error = false;
 
-        const subscription = this.NCCAPI.saveContactDetails(caller.getContactID(), new_details)
+        let observe;
+        if (this.ViewOnly.status) {
+            observe = of([]);
+        } else {
+            observe = this.NCCAPI.saveContactDetails(caller.getContactID(), new_details);
+        }
+        observe
+            .pipe(take(1))
+            .pipe(finalize(() => {
+                this.saving = false;
+            }))
             .subscribe(
                 () => {
                     this.update = new_details;
@@ -215,11 +234,7 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
                     this.new_mobile = [];
                     this.new_email = [];
                 },
-                () => { this.saving_error = true; },
-                () => {
-                    subscription.unsubscribe();
-                    this.saving = false;
-                }
+                () => { this.saving_error = true; }
             );
     }
 
