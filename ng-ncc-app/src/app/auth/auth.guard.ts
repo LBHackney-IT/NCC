@@ -44,7 +44,8 @@ export class AuthGuard implements CanActivate {
         } else if (environment.disable.authentication) {
             // Attempt to bypass authentication, which won't work if the respective environment variable isn't set.
             const outcome = this.Auth.bypass();
-            this._setViewOnlyMode(isViewOnly);
+            // this._setViewOnlyMode(isViewOnly);
+            this._setViewOnlyMode(true);
             return outcome;
         }
 

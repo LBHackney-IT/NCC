@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, forkJoin, Subject } from 'rxjs';
+import { Observable, of, forkJoin, Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { LogCallReason } from '../../classes/log-call-reason.class';
@@ -11,6 +11,7 @@ import { ILogCallSelection } from '../../interfaces/log-call-selection';
 
 import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
 import { NotesService } from '../../services/notes.service';
+import { ViewOnlyService } from '../../services/view-only.service';
 
 @Component({
     selector: 'app-call-nature-dialogue',
@@ -42,7 +43,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     constructor(
         private HackneyAPI: HackneyAPIService,
         private Notes: NotesService,
-        private cdRef: ChangeDetectorRef
+        private cdRef: ChangeDetectorRef,
+        private ViewOnly: ViewOnlyService
     ) {
         super();
     }
@@ -189,8 +191,15 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
         this.saving = true;
 
+        let observe;
+        if (this.ViewOnly.status) {
+            observe = of([]);
+        } else {
+            observe = this.Notes.recordCallReasons(this.selectedReasons, this.selectedReasonOther);
+        }
+
         // Attempt to save the selected call reasons as notes.
-        this.Notes.recordCallReasons(this.selectedReasons, this.selectedReasonOther)
+        observe
             .pipe(take(1))
             .pipe(finalize(() => {
                 this.saving = false;
