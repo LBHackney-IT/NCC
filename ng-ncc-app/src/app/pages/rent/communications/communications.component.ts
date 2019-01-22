@@ -44,14 +44,10 @@ export class PageRentCommunicationsComponent extends PageCommunications implemen
             .subscribe((account: IAccountDetails) => { this.account_details = account; });
 
         // Obtain tenancy agreeement details.
-        this.tenancyReference = this.Call.getTenancyReference();
-        this.NCCAPI.getTenancyAgreementDetails(this.tenancyReference)
+        this.NCCAPI.getTenancyAgreementDetails(this.account_details.tagReferenceNumber)
             .pipe(takeUntil(this._destroyed$))
             .subscribe((details: ITenancyAgreementDetails) => {
                 this.tenancyDetails = details;
-
-                // Automatically generate a statement.
-                this.refreshStatement();
             });
     }
 
