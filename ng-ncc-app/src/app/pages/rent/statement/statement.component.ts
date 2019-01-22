@@ -159,7 +159,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
                     TemplateId: environment.notifyTemplate.statement,
                     TemplateData: {
                         'rent amount': formatCurrency(this.tenancyDetails.rent, this.locale, '£'),
-                        'rent balance': formatCurrency(this.tenancyDetails.currentBalance, this.locale, '£')
+                        'rent balance': formatCurrency(this.tenancyDetails.displayBalance, this.locale, '£')
                     }
                 } as INotifyStatementParameters;
 
