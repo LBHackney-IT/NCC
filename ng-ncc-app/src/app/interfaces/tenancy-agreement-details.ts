@@ -1,5 +1,6 @@
 export interface ITenancyAgreementDetails {
     currentBalance: number;
+    displayBalance: number;
     housingReferenceNumber: string;
     propertyReferenceNumber: string;
     paymentReferenceNumber: string;
