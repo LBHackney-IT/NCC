@@ -218,6 +218,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      */
     _resetComment() {
         this.comment = null;
+        this.transferred = false;
     }
 
     /**
