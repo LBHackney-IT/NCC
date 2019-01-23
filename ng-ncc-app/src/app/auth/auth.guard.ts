@@ -41,14 +41,20 @@ export class AuthGuard implements CanActivate {
 
                         return outcome;
                     }));
-        } else if (environment.disable.authentication) {
-            // Attempt to bypass authentication, which won't work if the respective environment variable isn't set.
-            const outcome = this.Auth.bypass();
-            this._setViewOnlyMode(isViewOnly);
-            return outcome;
+        } else {
+            if (environment.disable.authentication) {
+                // Attempt to bypass authentication, which won't work if the respective environment variable isn't set.
+                const outcome = this.Auth.bypass();
+                this._setViewOnlyMode(isViewOnly);
+                return outcome;
+            } else {
+                // No authentication code: try redirecting to the authentication URL.
+                window.location.href = environment.authenticationLink;
+                return;
+            }
         }
 
-        // No code or logged in user.
+        // No logged in user.
         this.router.navigate([`/${PAGES.TRY_AGAIN.route}`]);
         return false;
     }
