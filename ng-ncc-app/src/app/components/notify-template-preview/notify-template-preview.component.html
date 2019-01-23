@@ -1,24 +1,43 @@
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
+<app-error-panel *ngIf="error; else displayPreview">
+    <p class="govuk-heading-m govuk-!-margin-bottom-3">
+        Preview unavailable
+    </p>
+    <p class="govuk-body govuk-!-margin-0">
+        The preview for this template is not loading. If it persists you will need to contact ICT.
+    </p>
+</app-error-panel>
 
-        <!-- Preview of the template. -->
-        <app-panel class="govuk-form-group govuk-body">
-            <span *ngIf="_loading">loading...</span>
-            <span *ngIf="!_loading" [innerHTML]="getCustomisedPreview()"></span>
-        </app-panel>
+<ng-template #displayPreview>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
 
-    </div>
+            <!-- Preview of the template. -->
+            <app-panel class="govuk-form-group govuk-body" *ngIf="preview">
+                <ng-container *ngIf="!loading; else loadingText">
+                    <h2 class="govuk-label govuk-!-font-weight-bold">Message preview</h2>
+                    <span [innerHTML]="getCustomisedPreview()"></span>
+                </ng-container>
+                <ng-template #loadingtext>loading...</ng-template>
+            </app-panel>
 
-    <div class="govuk-grid-column-one-half">
-
-        <!-- Fields for any customisable text. -->
-        <div class="govuk-form-group" *ngFor="let label of getPlaceholders()">
-            <label class="govuk-label" for="preview-ph-{{ label }}">
-                {{ label }}
-            </label>
-            <input class="govuk-input" id="preview-ph-{{ label }}" [name]="label" type="text" [(ngModel)]="settings.parameters[label]">
         </div>
 
-    </div>
+        <div class="govuk-grid-column-one-half" *ngIf="editPlaceholders">
 
-</div>
+            <!-- A warning for agents not to enter any sensitive data. -->
+            <app-warning *ngIf="hasPlaceholders()">
+                Don't put sensitive or personal information here without passing DPA questions,
+                or you may breach GDPR.
+            </app-warning>
+
+            <!-- Fields for any customisable text. -->
+            <div class="govuk-form-group" *ngFor="let label of placeholders; trackBy: trackByMethod">
+                <label class="govuk-label" for="preview-ph-{{ label }}">
+                    {{ sanitiseLabel(label) }}
+                </label>
+                <input class="govuk-input" id="preview-ph-{{ label }}" [name]="label" type="text" [(ngModel)]="settings.parameters[label]">
+            </div>
+
+        </div>
+    </div>
+</ng-template>

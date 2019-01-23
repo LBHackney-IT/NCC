@@ -1,79 +1,77 @@
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+<h1 class="govuk-heading-l">Caller notes</h1>
 
-        <h1 class="govuk-heading-l">View notes</h1>
+<p class="govuk-body" *ngIf="isInCall()">
+    <app-current-caller></app-current-caller>
+</p>
 
-        <!-- Transaction filter. -->
-        <form class="govuk-!-margin-bottom-5" (submit)="filterHistory()">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
+<!-- Notes filter. -->
+<form class="govuk-!-margin-bottom-5" (submit)="filterNotes()">
+    <app-panel>
 
-                    <!-- Transaction filter. -->
-                    <form class="govuk-!-margin-bottom-5" (submit)="filterTransactions()">
-                        <app-panel class="govuk-!-margin-top-0">
+        <div class="govuk-grid-row govuk-!-margin-bottom-5">
+            <div class="govuk-grid-column-two-thirds">
 
-                            <!-- Search by the call reason. -->
-                            <div class="govuk-form-group govuk-!-margin-bottom-2">
-                                <label class="hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-reason">
-                                    Search by call reason
-                                </label>
-                                <input class="govuk-input govuk-!-margin-right-1" id="filter-manual-reason" name="filter-manual-reason" type="search"
-                                    placeholder="Search by reason"
-                                    [(ngModel)]="filter_reason">
-                            </div>
+                <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Filter notes on this table</h2>
 
-                            <!-- Search by the caller. -->
-                            <div class="govuk-form-group govuk-!-margin-bottom-2">
-                                <label class="hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-caller">
-                                    Search by caller
-                                </label>
-                                <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_caller">
-                                    <option [value]="null">All tenants</option>
-                                    <option *ngFor="let row of tenants" [value]="row.contact_id">{{ row.full_name }}</option>
-                                </select>
-                            </div>
-
-                            <!-- Buttons. -->
-                            <div class="govuk-form-group govuk-!-margin-bottom-2">
-                                <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1">
-                                    Search
-                                </button>
-                                <button type="button" class="link-button govuk-!-margin-bottom-0" (click)="clearFilter()">
-                                    Reset
-                                </button>
-                            </div>
-
-                        </app-panel>
-                    </form>
-
+                <!-- Search by the call reason. -->
+                <div class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="govuk-visually-hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-reason">
+                        Search by call reason
+                    </label>
+                    <input class="govuk-input govuk-!-margin-right-1" id="filter-manual-reason" name="filter-manual-reason"
+                        type="search"
+                        placeholder="Search by reason"
+                        [(ngModel)]="filter_reason">
                 </div>
 
-                <div class="govuk-grid-column-one-third">
-
-                    <!-- Limit displayed transactions to the specified dates. -->
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="period">
-                            Show transactions for:
-                        </label>
-                        <select class="govuk-select govuk-input--width-20" id="period" name="period" [(ngModel)]="period" (ngModelChange)="filterByDate()">
-                            <option *ngFor="let row of period_options" [value]="row.key">{{ row.label }}</option>
-                        </select>
-                    </div>
+                <!-- Filter by the caller's name. -->
+                <div class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="govuk-visually-hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-caller">
+                        Search by caller
+                    </label>
+                    <select class="govuk-select" name="filter-manual-caller" [(ngModel)]="filter_tenant">
+                        <option [value]="null">All tenants</option>
+                        <option *ngFor="let name of tenants_list" [value]="name">
+                            {{ name }}
+                        </option>
+                    </select>
                 </div>
+
             </div>
-        </form>
 
-        <!-- A list of notes. -->
-        <app-uh-notes [crmContactID]="caller.getContactID()"
-            [tenants]="tenants"
-            [filter]="filter.manual"
-            [minDate]="filter.min_date"
-            [maxDate]="filter.max_date"></app-uh-notes>
-        <!-- <app-notes [crmContactID]="caller.getContactID()"
-            [tenants]="tenants"
-            [filter]="filter.manual"
-            [minDate]="filter.min_date"
-            [maxDate]="filter.max_date"></app-notes> -->
+            <div class="govuk-grid-column-one-third govuk-!-margin-top-2">
 
-    </div>
-</div>
+                <!-- Limit displayed notes to the specified dates. -->
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="period">
+                        Show notes for:
+                    </label>
+                    <select class="govuk-select govuk-input--width-20" id="period" name="period"
+                        [(ngModel)]="period" (ngModelChange)="filterByDate()">
+                        <option *ngFor="let row of period_options; trackBy: trackByIndex" [value]="row.key">{{ row.label }}</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Buttons. -->
+        <div class="govuk-form-group govuk-!-margin-bottom-2">
+            <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1">
+                Filter
+            </button>
+            <button type="button" class="link-button govuk-!-margin-bottom-0" (click)="clearFilter()">
+                Reset
+            </button>
+        </div>
+
+    </app-panel>
+</form>
+
+<!-- A list of notes. -->
+<app-uh-notes
+    [tenancyReference]="getTenancyReference()"
+    [filter]="filter.manual"
+    [minDate]="filter.min_date"
+    [maxDate]="filter.max_date"></app-uh-notes>

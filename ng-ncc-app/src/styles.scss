@@ -1,14 +1,60 @@
 @import "assets/scss/reset.scss";
 @import "assets/scss/vars.scss";
-@import "~govuk-frontend/all";
-@import "assets/scss/unorganised.scss";
-// TODO only import the GOV.UK Frontend components we are using.
-// TODO divide unorganised CSS into separate SCSS files.
 
+// -------------------------------------------------------------------------------
+// GOV.UK FRONTEND
+// -------------------------------------------------------------------------------
+// Uncomment the following line to include EVERYTHING in GOV.UK Frontend.
+// @import "~govuk-frontend/all";
+
+// Otherwise...
+// Only import the GOV.UK Frontend components we are using.
+@import "~govuk-frontend/settings/all";
+@import "~govuk-frontend/tools/all";
+@import "~govuk-frontend/helpers/all";
+@import "~govuk-frontend/core/all";
+@import "~govuk-frontend/objects/all";
+
+@import "~govuk-frontend/components/back-link/back-link";
+// @import "~govuk-frontend/components/breadcrumbs/breadcrumbs";
+@import "~govuk-frontend/components/button/button";
+@import "~govuk-frontend/components/checkboxes/checkboxes";
+// @import "~govuk-frontend/components/date-input/date-input";
+@import "~govuk-frontend/components/details/details";
+// @import "~govuk-frontend/components/error-message/error-message";
+// @import "~govuk-frontend/components/error-summary/error-summary";
+@import "~govuk-frontend/components/fieldset/fieldset";
+// @import "~govuk-frontend/components/file-upload/file-upload";
+// @import "~govuk-frontend/components/footer/footer";
+// @import "~govuk-frontend/components/hint/hint";
+// @import "~govuk-frontend/components/header/header";
+@import "~govuk-frontend/components/input/input";
+@import "~govuk-frontend/components/inset-text/inset-text";
+@import "~govuk-frontend/components/label/label";
+// @import "~govuk-frontend/components/panel/panel";
+// @import "~govuk-frontend/components/phase-banner/phase-banner";
+// @import "~govuk-frontend/components/tabs/tabs";
+// @import "~govuk-frontend/components/tag/tag";
+@import "~govuk-frontend/components/radios/radios";
+@import "~govuk-frontend/components/select/select";
+@import "~govuk-frontend/components/skip-link/skip-link";
+@import "~govuk-frontend/components/table/table";
+@import "~govuk-frontend/components/textarea/textarea";
+@import "~govuk-frontend/components/warning-text/warning-text";
+
+@import "~govuk-frontend/utilities/all";
+@import "~govuk-frontend/overrides/all";
+// -------------------------------------------------------------------------------
+
+@import "assets/scss/unorganised.scss";
+
+// -------------------------------------------------------------------------------
+// CUSTOM COMPONENTS
+// -------------------------------------------------------------------------------
 @import "assets/scss/components/checkbox";
+@import "assets/scss/components/disabled";
 @import "assets/scss/components/flex-columns";
-@import "assets/scss/components/hidden";
+// @import "assets/scss/components/hidden";
 @import "assets/scss/components/link-button";
 @import "assets/scss/components/page";
-@import "assets/scss/components/page-header";
-@import "assets/scss/components/page-footer";
+// -------------------------------------------------------------------------------

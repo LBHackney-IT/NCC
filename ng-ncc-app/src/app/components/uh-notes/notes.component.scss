@@ -1,6 +1,7 @@
 @import "../../../assets/scss/vars.scss";
 @import "../helper/helper.component.scss";
-@import "~govuk-frontend/all";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
 
 $call-type-automatic-bg-colour: $govuk-border-colour !default;
 $call-type-automatic-text-colour: $govuk-text-colour !default;
@@ -60,4 +61,8 @@ $call-type-helper-text-width: 140px !default;
         color: $call-type-diary-text-colour;
         content: "D";
     }
+}
+
+.column__notes {
+    white-space: pre-line;
 }

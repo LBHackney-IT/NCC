@@ -6,16 +6,16 @@ export class ContactDetailsUpdate {
     // first_name: string;
     // last_name: string;
     // telephone: string;
-    telephone: string[];
-    mobile: string[];
-    email: string[];
+    telephone: string[] = [];
+    mobile: string[] = [];
+    email: string[] = [];
     default: {
         email: string;
         mobile: string;
         telephone: string;
     };
 
-    // TODO construct from a Caller?
+    // TODO construct from an ICaller?
     constructor() {
         this.default = {
             email: null,

@@ -1,4 +1,6 @@
-@import "~govuk-frontend/all";
+:host {
+    display: block;
+}
 
 p {
     text-transform: uppercase;

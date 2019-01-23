@@ -3,49 +3,38 @@
 <div class="govuk-body" *ngIf="hasResults()">
 
     <!-- Go back to the address results. -->
-    <button type="button" class="link-button" (click)="goBack()">
+    <button type="button" class="link-button" (click)="goBack()" *ngIf="showBackButton">
         Back to address results
     </button>
 
     <h2 class="govuk-heading-m">Results</h2>
 
-    <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            DPA: Callers have to answer two DPA questions to access account information.
-        </strong>
-    </div>
+    <app-warning>
+        DPA: Callers have to answer two DPA questions to access account information.
+    </app-warning>
 
     <!-- If we've found contact information... -->
-    <h2 class="govuk-heading-m">Tenancy details</h2>
 
     <!-- Display the address of the property. -->
-    <app-panel boxStyle="true" class="govuk-!-margin-bottom-3">
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h2>
+    <app-panel class="govuk-!-margin-bottom-5">
+        <h2 class="govuk-heading-m property-heading">
+            Property details
+            <app-tenancy-type [crmContactID]="crm_contact_id"></app-tenancy-type>
+        </h2>
+
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h3>
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h2>
-        <app-value-list class="govuk-body-s">
-            <app-value-list-label>Payment reference number</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Date of last payment and amount</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Amount last paid</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Month and year their tenancy began</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-            <app-value-list-label>Preferred payment method</app-value-list-label>
-            <app-value-list-value>...</app-value-list-value>
-        </app-value-list>
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h3>
+        <app-dpa-tenancy [crmContactID]="crm_contact_id"></app-dpa-tenancy>
     </app-panel>
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">Tenant details</h2>
 
-    <app-panel boxStyle="true" class="tenant-list govuk-!-margin-bottom-3">
+    <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios govuk-radios--inline">
-            <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index">
+            <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index; trackBy: trackByMethod">
                 <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
                 <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-{{i}}">
                     <!--
@@ -55,57 +44,43 @@
                     https://stackoverflow.com/questions/6061869/are-block-level-elements-allowed-inside-inline-level-elements-in-html5
                     -->
 
-                    <!-- The contact's name. -->
-                    <span class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                        <span class="govuk-heading-m govuk-!-margin-bottom-1">{{ row.getName() }}</span>
-                        <!--<p class="govuk-body-s govuk-!-margin-bottom-0">
-                            <b>Ms J Bell</b> &ndash; <span>Advocate/Secondary contact</span>
-                        </p>-->
-                    </span>
+                    <app-address-tenant [tenant]="row"></app-address-tenant>
 
-                    <!-- Contact details. -->
-                    <span class="govuk-grid-column-one-half">
-                        <span class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</span>
-
-                        <app-value-list class="govuk-body-s">
-                            <app-value-list-label>Telephone</app-value-list-label>
-                            <app-value-list-value>
-                                <div *ngFor="let number of row.getTelephoneNumbers()">
-                                    {{ number }}
-                                </div>
-                                <em *ngIf="row.hasNoTelephoneNumbers()">none</em>
-                            </app-value-list-value>
-
-                            <app-value-list-label>Email</app-value-list-label>
-                            <app-value-list-value>
-                                <div *ngFor="let email of row.getEmailAddresses()">
-                                    {{ email }}
-                                </div>
-                                <em *ngIf="row.hasNoEmailAddresses()">none</em>
-                            </app-value-list-value>
-                        </app-value-list>
-                    </span>
-
-                    <!-- DPA. -->
-                    <span class="govuk-grid-column-one-half">
-                        <span class="govuk-heading-s govuk-!-margin-bottom-2">DPA</span>
-                        <app-value-list class="govuk-body-s">
-                            <app-value-list-label>NI number</app-value-list-label>
-                            <app-value-list-value>AB 12 34 56 C</app-value-list-value>
-
-                            <app-value-list-label>Date of birth</app-value-list-label>
-                            <app-value-list-value>09/09/1999</app-value-list-value>
-                        </app-value-list>
-                    </span>
                 </label>
 
                 <button class="link-button govuk-!-margin-bottom-3" type="button" name="button" (click)="editContactDetails(row)">
                     Edit tenant details
                 </button>
+
+                <app-error-panel *ngIf="row.error">
+                    <app-panel-header>Tenant details load failure</app-panel-header>
+                    <p class="govuk-body">There was a problem loading the details for this tenant. Click 'Back' above and try again.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+                </app-error-panel>
             </div>
         </div>
 
-    </app-panel>
+    </app-box-panel>
+
+    <app-or></app-or>
+
+    <!-- An option to select a "non-tenant" caller. -->
+    <!-- Non-tenant callers can make payments toward a tenancy, but can't have access to sensitive information. -->
+    <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
+        <div class="govuk-radios govuk-radios--inline">
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="changed-name-non-tenant" name="changed-name" type="radio"
+                     [(ngModel)]="_selected" [value]="nonTenantCaller">
+                <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-non-tenant">
+                    <span class="govuk-grid-column-full">
+                        <span class="govuk-body govuk-!-margin-bottom-1">
+                            Not a tenant
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </app-box-panel>
 
     <!-- Select this information. -->
     <button class="govuk-button govuk-!-margin-bottom-0" [disabled]="!hasSelection()" (click)="confirmSelection()">

@@ -1,15 +1,20 @@
-import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { CitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result.interface';
-import { AddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result.interface';
+import { Component, EventEmitter, Input, Output, OnChanges, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
+import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
+import { NonTenantCaller } from '../../classes/non-tenant-caller.class';
+import { DPAService } from '../../services/dpa.service';
 
 @Component({
     selector: 'app-address-tenants-results',
     templateUrl: './address-tenants-results.component.html',
     styleUrls: ['./address-tenants-results.component.scss']
 })
-export class AddressTenantsResultsComponent implements OnChanges {
-    @Input() address: AddressSearchGroupedResult;
+export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDestroy {
+    @Input() address: IAddressSearchGroupedResult;
+    @Input() showBackButton: boolean;
 
     // When a tenant is selected and the Continue button is hit.
     @Output() selected = new EventEmitter<IdentifiedCaller>();
@@ -25,6 +30,21 @@ export class AddressTenantsResultsComponent implements OnChanges {
 
     // A list of tenants under the address passed to this component.
     tenants: IdentifiedCaller[];
+    nonTenantCaller: NonTenantCaller;
+
+    crm_contact_id: string;
+
+    private _destroyed$ = new Subject();
+
+    constructor(private DPA: DPAService) { }
+
+    ngOnInit() {
+        this.DPA.getUpdates()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                this.nonTenantCaller = new NonTenantCaller(this.DPA.getTenancyReference());
+            });
+    }
 
     ngOnChanges() {
         this._selected = null;
@@ -38,7 +58,50 @@ export class AddressTenantsResultsComponent implements OnChanges {
             if (1 === this.tenants.length) {
                 this._selected = this.tenants[0];
             }
+
+            this.getDPAAnswers();
         }
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    getDPAAnswers() {
+        this.crm_contact_id = this.tenants[0].getContactID();
+    }
+
+    /**
+     *
+     */
+    getTenancyDPAReference(): string {
+        return this.DPA.getTenancyReference();
+    }
+
+    /**
+     *
+     */
+    getTenancyDPABalance(): string {
+        const result = this.DPA.getTenancyRentBalance();
+        return result ? result.toString() : null;
+    }
+
+    /**
+     *
+     */
+    getTenancyDPARent(): string {
+        const result = this.DPA.getTenancyRentAmount();
+        return result ? result.toString() : null;
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: IdentifiedCaller): number {
+        return index;
     }
 
     /**

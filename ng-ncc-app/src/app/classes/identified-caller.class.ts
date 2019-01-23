@@ -1,15 +1,24 @@
-import { Caller } from '../interfaces/caller.interface';
-import { CitizenIndexSearchResult } from '../interfaces/citizen-index-search-result.interface';
+import { Caller } from '../classes/caller.class';
+import { ICitizenIndexSearchResult } from '../interfaces/citizen-index-search-result';
 import { ContactAddress } from '../classes/contact-address.class';
+import * as moment from 'moment';
 
 /**
  * This class represents an identified caller, as selected from the Identify page.
  */
-export class IdentifiedCaller implements Caller {
+export class IdentifiedCaller extends Caller {
 
-    constructor(private _details: CitizenIndexSearchResult) { }
+    error: boolean; // for the benefit of the identify tenant page.
+
+    constructor(private _details: ICitizenIndexSearchResult) {
+        super();
+    }
 
     isAnonymous(): boolean {
+        return false;
+    }
+
+    isNonTenant(): boolean {
         return false;
     }
 
@@ -61,6 +70,14 @@ export class IdentifiedCaller implements Caller {
         return [this._details.emailAddress].filter((n) => null !== n);
     }
 
+    getDateOfBirth(): string | null {
+        if (this._details.dateOfBirth) {
+            const date = moment(this._details.dateOfBirth, 'YYYY-MM-DD');
+            return date.format('DD/MM/YYYY');
+        }
+        return null;
+    }
+
     /**
      * Returns the caller's postal address.
      */
@@ -95,17 +112,10 @@ export class IdentifiedCaller implements Caller {
     }
 
     /**
-     * Returns TRUE if the caller has no email address[es].
+     * Returns the the CRM contact ID to use for recording notes.
      */
-    hasNoEmailAddresses(): boolean {
-        return 0 === this.getEmailAddresses().length;
-    }
-
-    /**
-     * Returns TRUE if the caller has no telephone numbers.
-     */
-    hasNoTelephoneNumbers(): boolean {
-        return 0 === this.getTelephoneNumbers().length;
+    getContactIDForNotes(): string | null {
+        return this._details.crmContactId;
     }
 
 }

@@ -3,6 +3,8 @@ $hackney-light-green: #9BCF7F;
 $dark-grey: #252525;
 $white: #FFF;
 
+$disabled-opacity: .5;
+
 // GOV.UK customisation.
 $govuk-global-styles: true;
 $govuk-font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -18,7 +20,6 @@ $page-footer-link-colour: $white;
 
 $value-list-label-width: 50%;
 $value-list-value-width: 50%;
-
 
 // Z-index settings.
 // Set as multiples of 10, old school like BASIC lines.

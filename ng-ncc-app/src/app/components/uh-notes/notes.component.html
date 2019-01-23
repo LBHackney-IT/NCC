@@ -1,36 +1,50 @@
 <div class="notes govuk-!-margin-bottom-2">
 
+    <app-error-panel *ngIf="error; else displayNotes">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Table load failure</h2>
+        <p class="govuk-body">
+            There was a problem loading the list notes for this tenancy. You will need to use Universal Housing until it is resolved.
+        </p>
+        <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+    </app-error-panel>
+
     <!-- Table of notes. -->
-    <table class="govuk-table govuk-!-margin-bottom-1">
-        <colgroup>
-            <col width="180">
-            <col width="40">
-        </colgroup>
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Date</th>
-                <th class="govuk-table__header" scope="col"></th>
-                <th class="govuk-table__header" scope="col">Caller</th>
-                <th class="govuk-table__header" scope="col">Type</th>
-                <th class="govuk-table__header" scope="col">Reason</th>
-                <th class="govuk-table__header" scope="col">Note</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let row of _filtered">
-                <td class="govuk-table__cell" scope="row">{{ row.createdOn }}</td>
-                <td class="govuk-table__cell">
-                    <span class="call-type" [ngClass]="getNoteTypeBadgeClass(row)">
-                        <span class="text govuk-body-s">{{ row.notesType }}</span>
-                    </span>
-                </td>
-                <td class="govuk-table__cell">{{ getTenantName(row.contactId) }}</td>
-                <td class="govuk-table__cell">{{ row.callType }}</td>
-                <td class="govuk-table__cell">{{ row.callReasonType }}</td>
-                <td class="govuk-table__cell">{{ row.notes }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <ng-template #displayNotes>
+        <table class="govuk-table govuk-!-margin-bottom-1">
+            <colgroup>
+                <col width="180">
+                <col width="40">
+            </colgroup>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="col">Date</th>
+                    <th class="govuk-table__header" scope="col"></th>
+                    <th class="govuk-table__header" scope="col">Caller</th>
+                    <th class="govuk-table__header" scope="col">Type</th>
+                    <th class="govuk-table__header" scope="col">Reason</th>
+                    <th class="govuk-table__header" scope="col">Comms</th>
+                    <th class="govuk-table__header" scope="col">Method</th>
+                    <th class="govuk-table__header" scope="col">Note</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row" *ngFor="let row of _filtered; trackBy: trackByMethod">
+                    <td class="govuk-table__cell" scope="row">{{ row.createdOn }}</td>
+                    <td class="govuk-table__cell">
+                        <span class="call-type" [ngClass]="getNoteTypeBadgeClass(row)">
+                            <span class="text govuk-body-s">{{ row.notesType }}</span>
+                        </span>
+                    </td>
+                    <td class="govuk-table__cell">{{ getTenantName(row) }}</td>
+                    <td class="govuk-table__cell" [innerHtml]="getCallType(row)"></td>
+                    <td class="govuk-table__cell" [innerHtml]="getCallReason(row)"></td>
+                    <td class="govuk-table__cell">{{ row.templatename }}</td>
+                    <td class="govuk-table__cell">{{ row.channeltype }}</td>
+                    <td class="govuk-table__cell column__notes">{{ row.notes }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-template>
 
     <!-- Loading prompt. -->
     <div *ngIf="_loading" class="loading">

@@ -1,6 +1,9 @@
-$tabs-content-bg-colour: #FFF !default;
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
+
+$tabs-content-bg-colour: govuk-colour('white') !default;
 $tabs-content-border-width: 3px !default;
-$tabs-content-border-colour: #111 !default;
+$tabs-content-border-colour: $govuk-text-colour !default;
 $tabs-content-padding: 1em !default;
 $tabs-bottom-margin: 2rem !default;
 

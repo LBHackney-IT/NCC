@@ -1,0 +1,28 @@
+<app-error-panel *ngIf="error; else dpaInformation">
+    <app-panel-heading>Tenancy loading error</app-panel-heading>
+    <p class="govuk-body">There was a problem loading the tenancy details for this address.</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">If the problem continues you will need to contact ICT to resolve the issue.</p>
+</app-error-panel>
+
+<ng-template #dpaInformation>
+    <app-value-list class="govuk-body-s">
+
+        <app-value-list-label>Tenancy reference number</app-value-list-label>
+        <app-value-list-value>{{ getTenancyDPAReference() }}</app-value-list-value>
+
+        <app-value-list-label>Tenancy start date</app-value-list-label>
+        <app-value-list-value>{{ getTenancyDPAStartDate() }}</app-value-list-value>
+
+        <app-value-list-label>Payment reference number</app-value-list-label>
+        <app-value-list-value>{{ getTenancyDPAPaymentReference() }}</app-value-list-value>
+
+        <app-value-list-label>Current balance</app-value-list-label>
+        <app-value-list-value>
+            <app-display-balance [tenancyReference]="getTenancyDPAReference()"></app-display-balance>
+        </app-value-list-value>
+
+        <app-value-list-label>Rent amount</app-value-list-label>
+        <app-value-list-value>{{ getTenancyDPARent() | currency:'GBP' }}</app-value-list-value>
+
+    </app-value-list>
+</ng-template>

@@ -1,24 +1,33 @@
-import { Component, EventEmitter, Input, Output, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
-import { TemplatePreviewSettings } from '../../interfaces/template-preview-settings.interface';
+import { ITemplatePreviewSettings } from '../../interfaces/template-preview-settings';
+import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
 
 @Component({
     selector: 'app-notify-template-preview',
     templateUrl: './notify-template-preview.component.html',
     styleUrls: ['./notify-template-preview.component.scss']
 })
-export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
-    @Input() settings: TemplatePreviewSettings;
-    @Output() settingsChange = new EventEmitter<TemplatePreviewSettings>();
+export class NotifyTemplatePreviewComponent implements OnInit, OnChanges, OnDestroy {
+    @Input() editPlaceholders = true;
+    @Input() settings: ITemplatePreviewSettings;
+    @Output() settingsChange = new EventEmitter<ITemplatePreviewSettings>();
 
-    _loading: boolean;
-    preview: string;
+    private _destroyed$ = new Subject();
+
+    error: boolean;
+    loading: boolean;
+    placeholders: string[];
+    preview: INotifyAPITemplate;
 
     constructor(private NotifyAPI: NotifyAPIService) { }
 
     ngOnInit() {
-        this._loading = false;
-        this.preview = 'testing';
+        this.loading = false;
+
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -40,15 +49,49 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
     /**
      *
      */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    trackByMethod(index: number, item: string): number {
+        return index;
+    }
+
+    /**
+     * Sanitise the label used for customisation fields.
+     * This was added for the benefit of fields such as "2Free Type" as defined on GOV.UK Notify.
+     */
+    sanitiseLabel(label: string): string {
+        const result = label.match(/^[0-9]*(.*)/); // Does the label begin with a number?
+        if (result.length) {
+            return result[1];
+        }
+        return label;
+    }
+
+    /**
+     *
+     */
     updatePreview() {
-        if (!this._loading) {
-            this._loading = true;
+        if (!this.loading) {
+            this.loading = true;
+            this.error = false;
             this.NotifyAPI.getTemplatePreview(this.settings.template_id, this.settings.version)
-                .subscribe(preview => {
-                    this.preview = preview;
-                    this.settings.parameters = {};
-                    this._loading = false;
-                });
+                .pipe(
+                    takeUntil(this._destroyed$)
+                )
+                .subscribe(
+                    preview => {
+                        this.preview = preview;
+                        // this.settings.parameters = preview.parameters;
+                        this.loading = false;
+                        this.getPlaceholders();
+                    },
+                    () => { this.error = true; }
+                );
         }
     }
 
@@ -56,22 +99,42 @@ export class NotifyTemplatePreviewComponent implements OnInit, OnChanges {
      * Returns a list of labels representing placeholders.
      */
     getPlaceholders(): string[] {
+        // Make sure we have a preview before continuing!
+        if (!this.preview) {
+            return;
+        }
+
         // const regex = new RegExp('\(\(([A-za-z0-9 ]+)\)\)', 'gm');
         const regex = /\(\(([A-za-z0-9 ]+)\)\)/gm;
-        const matches = regex.exec(this.preview);
-        let placeholders: string[];
-        placeholders = [];
-        if (matches) {
-            placeholders.push(matches[1]);
+        const placeholders: string[] = [];
+
+        // Placeholders in the subject.
+        const subject_matches = regex.exec(this.preview.subject);
+        if (subject_matches) {
+            placeholders.push(subject_matches[1]);
         }
-        return placeholders;
+
+        // Placeholders in the body.
+        const body_matches = regex.exec(this.preview.body);
+        if (body_matches) {
+            placeholders.push(body_matches[1]);
+        }
+
+        this.placeholders = placeholders;
+    }
+
+    /**
+     *
+     */
+    hasPlaceholders(): boolean {
+        return this.placeholders && (0 < this.placeholders.length);
     }
 
     /**
      *
      */
     getCustomisedPreview(): string {
-        let preview = this.preview;
+        let preview = this.preview.body;
         if (this.settings && this.settings.parameters) {
             // Replace any placeholders in the template with our custom values.
             const values: { placeholder: string, value: string }[] = Object.keys(this.settings.parameters)

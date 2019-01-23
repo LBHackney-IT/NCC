@@ -1,69 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { PageHistory } from '../abstract/history';
+import { PAGES } from '../../constants/pages.constant';
+import { PageNotes } from '../abstract/notes';
 import { IdentifiedCaller } from '../../classes/identified-caller.class';
 import { CallService } from '../../services/call.service';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
     selector: 'app-view-notes',
     templateUrl: './view-notes.component.html',
     styleUrls: ['./view-notes.component.scss']
 })
-export class PageViewNotesComponent extends PageHistory implements OnInit {
+export class PageViewNotesComponent extends PageNotes implements OnInit {
 
     caller: IdentifiedCaller;
-    tenants: { [propKey: string]: string }[];
 
-    filter_settings: {
-        min_date: Date,
-        max_date: Date,
-        manual: { [propKey: string]: string }
-    };
-
-    filter_reason: string;
-    filter_caller: string;
-
-    constructor(private route: ActivatedRoute, private Call: CallService) {
-        super();
+    constructor(private injectorObj: Injector, private Call: CallService) {
+        super(injectorObj);
     }
 
     /**
      *
      */
     ngOnInit() {
-        // Set up the filter.
-        this.filter = {
-            min_date: null,
-            max_date: null,
-            manual: {}
-        };
-        this.clearFilter();
+        super.ngOnInit();
+        this.PageTitle.set(PAGES.VIEW_NOTES.label);
+    }
 
-        this.route.data
-            .subscribe((data) => {
-                this.caller = data.caller;
-                this.tenants = this.Call.getTenants();
-            });
+    isInCall(): boolean {
+        return this.Call.hasCaller();
     }
 
     /**
-     * Set the manual filtering options for the list of transactions.
+     * Fetches a list of tenant names associated with the specified tenancy reference.
      */
-    filterTransactions() {
-        this.filter.manual = {
-            callReasonType: this.filter_reason,
-            contactId: this.filter_caller
-        };
+    getTenants(): Observable<string[]> {
+        const tenants = this.Call.getTenants();
+        const tenant_names = tenants.map((tenant) => tenant.full_name);
+
+        return of(tenant_names);
     }
 
     /**
-     *
+     * Returns the tenancy reference to fetch notes for.
      */
-    clearFilter() {
-        this.filter_reason = null;
-        this.filter_caller = null;
-        this.filterTransactions();
+    getTenancyReference(): string {
+        return this.Call.getTenancyReference();
     }
 
 }

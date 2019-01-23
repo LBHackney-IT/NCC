@@ -1,19 +1,28 @@
-<app-route-loading *ngIf="loading"></app-route-loading>
+<!-- Accessibility link to skip to the main content. -->
+<a (click)="jumpToContent($event)" href="" class="govuk-skip-link">Skip to main content</ a>
 
-<!-- Navigation menu. -->
-<app-navigation></app-navigation>
+<!-- PAGE HEADER. -->
+<app-header></app-header>
 
-<!-- MAIN CONTENT AREA. -->
-<app-content-area>
+<div class="container">
+    <app-route-loading *ngIf="loading"></app-route-loading>
 
-    <!-- General back link. -->
-    <app-back-link-confirm></app-back-link-confirm>
+    <!-- Navigation menu. -->
+    <app-navigation *ngIf="loggedIn()"></app-navigation>
 
-    <div class="govuk-main-wrapper">
-        <router-outlet></router-outlet>
-    </div>
+    <!-- MAIN CONTENT AREA. -->
+    <app-content-area>
 
-    <!-- For for taking notes. -->
-    <app-note-form></app-note-form>
+        <!-- General back link. -->
+        <app-back-link></app-back-link>
 
-</app-content-area>
+        <div class="govuk-main-wrapper" #content tabindex="-1">
+            <router-outlet></router-outlet>
+        </div>
+
+    </app-content-area>
+</div>
+
+
+<!-- PAGE FOOTER. -->
+<app-footer></app-footer>

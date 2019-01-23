@@ -1,12 +1,15 @@
+import { environment } from '../../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { Observable, forkJoin, of, from } from 'rxjs';
 
-import { NotifyAPIJSONResult } from '../../interfaces/notify-api-json-result.interface';
+import { INotifyAPIJSONResult } from '../../interfaces/notify-api-json-result';
+import { INotifyStatementParameters } from '../../interfaces/notify-statement-parameters';
 import { CommsOption } from '../../classes/comms-option.class';
 import { CommsTemplate } from '../../classes/comms-template.class';
-import { NotifyAPITemplate } from '../../interfaces/notify-api-template.interface';
+import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
 import { CONTACT } from '../../constants/contact.constant';
 
 @Injectable({
@@ -19,7 +22,7 @@ import { CONTACT } from '../../constants/contact.constant';
  */
 export class NotifyAPIService {
 
-    _url = 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier';
+    _url = environment.api.notify;
 
     constructor(private http: HttpClient) { }
 
@@ -31,15 +34,12 @@ export class NotifyAPIService {
         return this.http
             .get(`${this._url}/GetAllTemplates?TemplateType=${ofType}`)
             .pipe(
-                map((data: NotifyAPIJSONResult) => {
+                map((data: INotifyAPIJSONResult) => {
                     // Prepare the data returned from the microservice as a list of templates.
                     const templates: Array<object> = Array.from(data.response.templates);
 
                     return templates;
-                },
-                    (error) => {
-                        console.log('Error fetching templates:', error);
-                    })
+                })
             );
     }
 
@@ -56,10 +56,7 @@ export class NotifyAPIService {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_flatten
                     return results;
                 },
-                (error) => {
-                    console.log('Error fetching templates:', error);
-                    return of([]);
-                }
+                () => of([]) // equivalent to function() { return of([]); }.
             )
         );
     }
@@ -67,11 +64,11 @@ export class NotifyAPIService {
     /**
      * Returns a preview of a specified GOV.UK Notify template.
      */
-    getTemplatePreview(template_id: string, version: number = 1) {
+    getTemplatePreview(template_id: string, version: number = 1): Observable<INotifyAPITemplate> {
         return this.http
             .get(`${this._url}/GetTemplateByIdAndVersion?TemplateId=${template_id}&Version=${version}`)
             .pipe(
-                map((data: NotifyAPIJSONResult) => data.response.body)
+                map((data: INotifyAPIJSONResult) => data.response)
             );
     }
 
@@ -101,13 +98,31 @@ export class NotifyAPIService {
     }
 
     /**
+     * Send a statement via email through GOV.UK Notify.
+     */
+    sendEmailStatement(parameters: INotifyStatementParameters) {
+        const template_data = JSON.stringify(parameters.TemplateData);
+
+        return this.http
+            .post(`${this._url}/SendEmailPdfStatements` +
+                `?EmailTo=${parameters.EmailTo}` +
+                `&TenancyAgreementRef=${parameters.TenancyReference}` +
+                `&TemplateId=${parameters.TemplateId}` +
+                `&ContactId=${parameters.ContactId}` +
+                `&StartDate=${parameters.StartDate}` +
+                `&EndDate=${parameters.EndDate}` +
+                `&TemplateData=${template_data}`, {});
+    }
+
+
+    /**
      * Organise the templates obtained from GOV.UK Notify into a grouped list.
      */
     _organiseTemplates(templates): CommsOption[] {
         const options: CommsOption[] = new Array<CommsOption>();
 
         // Group the templates by their name.
-        templates.forEach(function(template: NotifyAPITemplate) {
+        templates.forEach(function(template: INotifyAPITemplate) {
             let option: CommsOption;
             const index = options.findIndex(function(existing_option: CommsOption) {
                 // Do a case insensitive comparison.

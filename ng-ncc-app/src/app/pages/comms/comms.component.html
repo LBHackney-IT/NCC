@@ -1,21 +1,44 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-l">Communications</h1>
+        <h1 class="govuk-heading-l">Non-sensitive communications</h1>
+
+        <p class="govuk-body">
+            Here you can send non-sensitive emails and texts.
+            <ng-container *ngIf="isRentLinkVisible()">
+                <br>
+                To send sensitive information visit the <a [routerLink]="getRentPageRoute()">'View/pay rent'</a> page after verifying Data Protection.
+            </ng-container>
+        </p>
+
+        <p class="govuk-body">
+            If the caller would like to set up a Standing Order for rent payments they will need to tell their bank the details below.
+        </p>
 
         <div class="govuk-inset-text">
             <p>
-                <b>Standing order details</b><br>
+                <b>Standing Order details for rent payments</b><br>
                 Bank name: Lloyds<br>
                 Account number: 00641877<br>
                 Sort code: 30-00-02
             </p>
         </div>
 
-        <form (submit)="sendMessage($event)">
+        <app-error-panel *ngIf="_error">
+            <app-panel-heading>Communications unavailable</app-panel-heading>
+            <p class="govuk-body">
+                The 3rd party system Gov Notify that sends texts (SMS) and emails is currently not working. They will be working to fix the problem.
+            </p>
+            <p class="govuk-body govuk-!-margin-0">
+                If it persists you will need to contact ICT.
+            </p>
+        </app-error-panel>
+
+        <form (submit)="sendMessage($event)" *ngIf="!_error">
 
             <!-- Select the form to send. -->
-            <app-comms-templates title="Select an item to send:" (selected)="selectedOption($event)"></app-comms-templates>
+            <app-comms-templates title="Select an item to send:" (selected)="selectedOption($event)"
+                (error)="commsError()"></app-comms-templates>
 
             <!-- Select the communications method. -->
             <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
@@ -28,27 +51,23 @@
 
             <!-- Previewing the message to be sent. -->
             <div *ngIf="shouldShowPreview()">
-                <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
                 <app-notify-template-preview [(settings)]="preview"></app-notify-template-preview>
             </div>
 
             <!-- Send the message to the caller. -->
             <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
-                Send
+                {{ getSendButtonText() }}
             </button>
 
             <!-- Confirmation modal. -->
-            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
                 Message sent successfully.
             </app-dialogue>
 
             <app-dialogue [(show)]="modal.error">
-                <div class="govuk-warning-text">
-                    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <span class="govuk-warning-text__text govuk-!-font-size-24 govuk-!-font-weight-bold">
-                        There was a problem with sending the message.
-                    </span>
-                </div>
+                <app-warning>
+                    There was a problem with sending the message.
+                </app-warning>
             </app-dialogue>
 
         </form>
