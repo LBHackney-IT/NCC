@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, of, from, ReplaySubject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import * as moment from 'moment';
 
 import { ManageATenancyAPIService } from '../API/ManageATenancyAPI/manageatenancy-api.service';
 
@@ -40,6 +41,7 @@ export class DPAService {
                             rent_balance: data.currentBalance,
                             rent_amount: data.rent,
                             tenancy_reference: data.tagReferenceNumber,
+                            tenancy_start_date: moment(data.tenancyStartDate).format('DD/MM/YYYY'),
                             payment_reference: data.paymentReferenceNumber
                         };
                         this._crm_contact_id = crm_contact_id;
@@ -87,6 +89,13 @@ export class DPAService {
      */
     getTenancyRentAmount(): number {
         return this._tenancy ? this._tenancy.rent_amount : null;
+    }
+
+    /**
+     *
+     */
+    getTenancyStartDate(): string {
+        return this._tenancy ? this._tenancy.tenancy_start_date : null;
     }
 
 }

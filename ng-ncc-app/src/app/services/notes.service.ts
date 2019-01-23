@@ -4,7 +4,12 @@ import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
 import { IJSONResponse } from '../interfaces/json-response';
+import { ILogCallSelection } from '../interfaces/log-call-selection';
+
+import { CALL_REASON } from '../constants/call-reason.constant';
+
 import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
+import { LogCallReason } from '../classes/log-call-reason.class';
 import { ViewOnlyService } from '../services/view-only.service';
 
 @Injectable({
@@ -14,12 +19,15 @@ export class NotesService {
     // This service controls the visibility of the add note form.
     // TODO this service should probably also be used to create automatic notes.
 
+    CALL_REASON_IDENTIFIER = 'SUMMARY';
+
     _added$ = new ReplaySubject<void>();
     _position$ = new Subject<{ x: number, y: number }>();
     _name: string | null = null;
     _settings: IAddNoteParameters = null;
     _enabled: boolean;
     _visible: boolean;
+    _usedNatures: ILogCallSelection[]; // previously used call natures.
 
     constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService) { }
 
@@ -43,6 +51,7 @@ export class NotesService {
             this.disable();
         }
 
+        this._usedNatures = [];
         this._settings = settings;
     }
 
@@ -52,7 +61,16 @@ export class NotesService {
     disable() {
         this._enabled = false;
         this._name = null;
+        this._usedNatures = [];
         this._settings = null;
+        this._visible = false;
+    }
+
+    show() {
+        this._visible = true;
+    }
+
+    hide() {
         this._visible = false;
     }
 
@@ -99,7 +117,7 @@ export class NotesService {
      * Record an automatic note against the call.
      * A corresponding Action Diary note is also created.
      */
-    recordAutomaticNote(note_content: string): Observable<any> {
+    recordAutomaticNote(note_content: string, call_nature: ILogCallSelection = null): Observable<any> {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an automatic note.');
             return of(true);
@@ -112,10 +130,10 @@ export class NotesService {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: this._settings.call_reason_id,
-                other_reason: this._settings.other_reason,
+                call_reason_id: null,
+                other_reason: null,
                 crm_contact_id: this._settings.crm_contact_id,
-                content: this._formatNoteContent(note_content)
+                content: this._formatNoteContent(note_content, call_nature)
             }),
 
             // Action Diary note...
@@ -134,7 +152,7 @@ export class NotesService {
      * Record a manual note.
      * A corresponding Action Diary note is also created.
      */
-    recordManualNote(note_content: string, transferred: boolean = false) {
+    recordManualNote(call_nature: ILogCallSelection, note_content: string, transferred: boolean = false) {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create a manual note.');
             return of(true);
@@ -150,10 +168,10 @@ export class NotesService {
             this.NCCAPI.createManualNote({
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
-                call_reason_id: this._settings.call_reason_id,
-                other_reason: this._settings.other_reason,
+                call_reason_id: call_nature.call_reason.id,
+                other_reason: call_nature.other_reason,
                 crm_contact_id: this._settings.crm_contact_id,
-                content: this._formatNoteContent(note_content),
+                content: this._formatNoteContent(note_content, call_nature),
                 calltransferred: transferred,
                 tenancy_reference: this._settings.tenancy_reference
             }),
@@ -162,6 +180,9 @@ export class NotesService {
             this.recordActionDiaryNote(note_content)
         )
             .pipe(map((data: IJSONResponse[]) => {
+                // Add the call nature to the list.
+                this._addCallNatureToList(call_nature);
+
                 // Inform anything subscribed to note addition events that a note was added.
                 this._added$.next();
 
@@ -172,7 +193,7 @@ export class NotesService {
     /**
      * Record an Action Diary entry against the tenancy associated with the call (if present).
      */
-    recordActionDiaryNote(note_content: string) {
+    recordActionDiaryNote(note_content: string, call_nature: ILogCallSelection = null) {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an Action Diary note.');
             return of(true);
@@ -181,7 +202,7 @@ export class NotesService {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
             const note = [];
-            const reason = this._settings.other_reason ? this._settings.other_reason : 'none';
+            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : 'none';
 
             // Add the agent's name.
             note.push(`Logged by: ${this._settings.agent_name}`);
@@ -203,7 +224,7 @@ export class NotesService {
      * Record an automatic note about communications being sent.
      * A corresponding Action Diary note is also created.
      */
-    recordCommsNote(notify_template_name: string, notify_method: string) {
+    recordCommsNote(notify_template_name: string, notify_method: string, call_nature: ILogCallSelection = null) {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an automatic [comms] note.');
             return of(true);
@@ -218,8 +239,8 @@ export class NotesService {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: this._settings.call_reason_id,
-                other_reason: this._settings.other_reason,
+                call_reason_id: null,
+                other_reason: null,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: note_content,
                 parameters: {
@@ -231,6 +252,26 @@ export class NotesService {
             // Action Diary note...
             this.recordActionDiaryNote(note_content)
         );
+    }
+
+    recordCallReasons(call_reason_ids: string[], other_reason: string = null) {
+        // Make sure we have a unique list of call reason IDs.
+        const unique_call_reasons = Array.from(new Set(call_reason_ids));
+
+        // For each call reason, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
+        const observables = unique_call_reasons.map(
+            (reason_id) => this.NCCAPI.createAutomaticNote({
+                call_id: this._settings.call_id,
+                ticket_number: this._settings.ticket_number,
+                tenancy_reference: this._settings.tenancy_reference,
+                call_reason_id: reason_id,
+                other_reason: CALL_REASON.OTHER === reason_id ? other_reason : null,
+                crm_contact_id: this._settings.crm_contact_id,
+                content: this.CALL_REASON_IDENTIFIER
+            })
+        );
+
+        return forkJoin(observables);
     }
 
     /**
@@ -257,12 +298,26 @@ export class NotesService {
     /**
      * Formats note content to include a custom call reason, if present.
      */
-    private _formatNoteContent(note_content: string): string {
-        if (this._settings.other_reason) {
-            note_content = `Other: ${this._settings.other_reason}\n${note_content}`;
+    private _formatNoteContent(note_content: string, call_nature: ILogCallSelection = null): string {
+        if (call_nature && call_nature.other_reason) {
+            note_content = `Other: ${call_nature.other_reason}\n${note_content}`;
         }
 
         return note_content;
+    }
+
+    /**
+     *
+     */
+    private _addCallNatureToList(call_nature: ILogCallSelection) {
+        this._usedNatures.push(call_nature);
+    }
+
+    /**
+     *
+     */
+    getUsedCallNatures() {
+        return this._usedNatures;
     }
 
 }

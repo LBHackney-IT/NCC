@@ -6,14 +6,18 @@ import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
+// NOTE: Statements are now referred to as Rent Transactions in the front end.
+
 import { PAGES } from '../../../constants/pages.constant';
 import { CONTACT } from '../../../constants/contact.constant';
 import { PageCommunications } from '../../abstract/communications';
 import { BackLinkService } from '../../../services/back-link.service';
+import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
 import { CommsSelection } from '../../../classes/comms-selection.class';
 import { IAccountDetails } from '../../../interfaces/account-details';
 import { INotifyAPIJSONResult } from '../../../interfaces/notify-api-json-result';
 import { INotifyStatementParameters } from '../../../interfaces/notify-statement-parameters';
+import { ITenancyAgreementDetails } from '../../../interfaces/tenancy-agreement-details';
 import { UHTriggerService } from '../../../services/uhtrigger.service';
 
 @Component({
@@ -23,7 +27,8 @@ import { UHTriggerService } from '../../../services/uhtrigger.service';
 })
 export class PageRentStatementComponent extends PageCommunications implements OnInit {
 
-    account: IAccountDetails;
+    tenancyDetails: ITenancyAgreementDetails;
+    tenancyReference: string;
     from_date: string;
     until_date: string;
     statement_url: SafeResourceUrl;
@@ -31,6 +36,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
     success_message: string;
 
     private BackLink: BackLinkService;
+    private NCCAPI: NCCAPIService;
     private sanitiser: DomSanitizer;
 
     constructor(@Inject(LOCALE_ID) private locale: string, private injector: Injector) {
@@ -38,6 +44,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
         this.BackLink = this.injector.get<BackLinkService>(BackLinkService);
         this.sanitiser = this.injector.get(DomSanitizer);
         this.UHTrigger = this.injector.get<UHTriggerService>(UHTriggerService);
+        this.NCCAPI = this.injector.get<NCCAPIService>(NCCAPIService);
         // see https://stackoverflow.com/questions/49424837/lint-warning-get-is-deprecated-when-trying-to-manually-inject-ngcontrol
     }
 
@@ -51,14 +58,16 @@ export class PageRentStatementComponent extends PageCommunications implements On
         this.until_date = moment().format('DD/MM/YYYY');
         this.from_date = moment().subtract(30, 'days').format('DD/MM/YYYY');
 
-        // Obtain account details.
-        this.Call.getAccount()
+        // Obtain tenancy agreeement details.
+        this.tenancyReference = this.Call.getTenancyReference();
+        this.NCCAPI.getTenancyAgreementDetails(this.tenancyReference)
             .pipe(takeUntil(this._destroyed$))
-            .subscribe((account) => { this.account = account; });
+            .subscribe((details: ITenancyAgreementDetails) => {
+                this.tenancyDetails = details;
 
-
-        // Automatically generate a statement.
-        this.refreshStatement();
+                // Automatically generate a statement.
+                this.refreshStatement();
+            });
     }
 
     /**
@@ -69,10 +78,23 @@ export class PageRentStatementComponent extends PageCommunications implements On
     }
 
     /**
-     *
+    * Returns TRUE if we should be able to refresh the rent transactions preview.
      */
     canRefresh(): boolean {
         return !!(this.from_date && this.until_date);
+    }
+
+    /**
+     * Returns TRUE if we should be able to send the rent transactions.
+     */
+    canSend(): boolean {
+        if (this.sending) {
+            return false;
+        }
+        if (CONTACT.METHOD_POST === this.selected_details.method) {
+            return true;
+        }
+        return this.selected_details.isComplete();
     }
 
     /**
@@ -81,7 +103,10 @@ export class PageRentStatementComponent extends PageCommunications implements On
     refreshStatement() {
         if (this.canRefresh()) {
             const url = `${environment.api.statement}?contactid=${this.getContactID()}` +
-                `&startdate=${this.from_date}&enddate=${this.until_date}`;
+                `&tenagreementref=${this.tenancyReference}` +
+                `&startdate=${this.from_date}` +
+                `&enddate=${this.until_date}`;
+            // console.log(url);
             this.statement_url = this.sanitiser.bypassSecurityTrustResourceUrl(url);
         }
     }
@@ -104,12 +129,12 @@ export class PageRentStatementComponent extends PageCommunications implements On
      *
      */
     getButtonText(): string {
-        switch (this.selected_details.method) {
-            case CONTACT.METHOD_EMAIL:
-                return 'Send';
-            default:
-                return 'Print';
-        }
+        // switch (this.selected_details.method) {
+        //     case CONTACT.METHOD_EMAIL:
+        return 'Send';
+        //     default:
+        //         return 'Print';
+        // }
     }
 
 
@@ -127,13 +152,14 @@ export class PageRentStatementComponent extends PageCommunications implements On
                 // Build a set of parameters for sending the statement.
                 const parameters = {
                     EmailTo: this.selected_details.getDetail(),
+                    TenancyReference: this.tenancyReference,
                     ContactId: this.getContactID(),
                     StartDate: this.from_date,
                     EndDate: this.until_date,
                     TemplateId: environment.notifyTemplate.statement,
                     TemplateData: {
-                        'rent amount': formatCurrency(this.account.rent, this.locale, '£'),
-                        'rent balance': formatCurrency(this.account.currentBalance, this.locale, '£')
+                        'rent amount': formatCurrency(this.tenancyDetails.rent, this.locale, '£'),
+                        'rent balance': formatCurrency(this.tenancyDetails.displayBalance, this.locale, '£')
                     }
                 } as INotifyStatementParameters;
 
@@ -146,7 +172,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
                     .subscribe(
                         (json: INotifyAPIJSONResult) => {
                             if (1 === json.response) {
-                                this.success_message = 'Statement sent successfully.';
+                                this.success_message = 'Rent transactions sent successfully.';
                                 this.modal.confirmed = true;
 
                                 // Create an automatic note.

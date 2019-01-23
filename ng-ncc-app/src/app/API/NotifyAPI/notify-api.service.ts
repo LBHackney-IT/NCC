@@ -106,6 +106,7 @@ export class NotifyAPIService {
         return this.http
             .post(`${this._url}/SendEmailPdfStatements` +
                 `?EmailTo=${parameters.EmailTo}` +
+                `&TenancyAgreementRef=${parameters.TenancyReference}` +
                 `&TemplateId=${parameters.TemplateId}` +
                 `&ContactId=${parameters.ContactId}` +
                 `&StartDate=${parameters.StartDate}` +

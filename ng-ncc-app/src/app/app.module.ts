@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+import { ChecklistModule } from 'angular-checklist';
+
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 
@@ -49,6 +51,7 @@ import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
 import { BoxPanelComponent } from './components/panel/box-panel/box-panel.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
+import { CallNatureDropdownComponent } from './components/call-nature-dropdown/call-nature-dropdown.component';
 import { CommsMethodSelectComponent } from './components/comms-method-select/comms-method-select.component';
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
@@ -56,7 +59,7 @@ import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-
 import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
-import { DPATenancyComponent } from './components/dpatenancy/dpatenancy.component';
+import { DPATenancyComponent } from './components/dpa-tenancy/dpa-tenancy.component';
 import { DateFieldComponent } from './components/date-field/date-field.component';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
@@ -85,8 +88,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TenancyTypeComponent } from './components/tenancy-type/tenancy-type.component';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
-import { NextPaymentAmountComponent } from './components/next-payment-amount/next-payment-amount.component';
 import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdown.component';
+import { CallNatureDialogueComponent } from './components/call-nature-dialogue/call-nature-dialogue.component';
+import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
+import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
 
 @NgModule({
     declarations: [
@@ -98,6 +103,7 @@ import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdo
         BackLinkComponent,
         BoxPanelComponent,
         CallNatureComponent,
+        CallNatureDropdownComponent,
         CommsMethodSelectComponent,
         CommsReceiptTemplatesComponent,
         CommsTemplatesComponent,
@@ -157,13 +163,17 @@ import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdo
         HeaderComponent,
         TenancyTypeComponent,
         NumbersOnlyDirective,
-        NextPaymentAmountComponent,
         RentBreakdownComponent,
+        CallNatureDialogueComponent,
+        CurrentBalanceComponent,
+        DisplayBalanceComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
+
+        ChecklistModule,
 
         // Set up routing.
         AppRoutingModule

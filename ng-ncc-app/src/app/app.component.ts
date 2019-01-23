@@ -1,7 +1,7 @@
 // APP component.
 // <app-root></app-root>
 
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -17,6 +17,8 @@ import { BackLinkService } from './services/back-link.service';
 })
 
 export class AppComponent implements OnInit, OnDestroy {
+
+    @ViewChild('content') contentArea: ElementRef;
 
     loading = false;
 
@@ -71,6 +73,12 @@ export class AppComponent implements OnInit, OnDestroy {
      */
     loggedIn(): boolean {
         return this.Auth.isLoggedIn();
+    }
+
+    jumpToContent(event) {
+        this.contentArea.nativeElement.scrollIntoView();
+        this.contentArea.nativeElement.focus();
+        return false;
     }
 
 }

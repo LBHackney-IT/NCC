@@ -18,8 +18,8 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     @Input() tenancyReference: string;
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
-    @Input() minDate?: Date;
-    @Input() maxDate?: Date;
+    @Input() minDate?: Date | null;
+    @Input() maxDate?: Date | null;
 
     private _destroyed$ = new Subject();
 
@@ -146,10 +146,26 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
+     * Returns the call type for a note.
+     */
+    getCallType(note: INCCUHNote): string {
+        return note.callType;
+    }
+
+    /**
      * Returns the call reason for a note, or "Other" if unspecified.
      */
     getCallReason(note: INCCUHNote): string {
-        return note.callReasonType ? note.callReasonType : 'Other';
+        return note.callReasonType ? note.callReasonType : this._getOtherReason(note);
+    }
+
+    /**
+     *
+     */
+    private _getOtherReason(note: INCCUHNote): string {
+        if (NOTES.TYPE_MANUAL === note.notesType) {
+            return 'Other';
+        }
     }
 
 }

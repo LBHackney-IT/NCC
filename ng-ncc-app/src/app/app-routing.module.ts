@@ -77,12 +77,12 @@ export const AppRoutes: Routes = [
         component: PageLastCallsComponent,
         canActivate: [AuthGuard]
     },
-    {
-        // Log Call page.
-        path: PAGES.LOG_CALL.route,
-        component: PageLogCallComponent,
-        canActivate: [AuthGuard]
-    },
+    // {
+    //     // Log Call page.
+    //     path: PAGES.LOG_CALL.route,
+    //     component: PageLogCallComponent,
+    //     canActivate: [AuthGuard]
+    // },
     {
         // Add Notes page.
         path: PAGES.ADD_NOTES.route,
@@ -168,9 +168,9 @@ export const AppRoutes: Routes = [
         path: PAGES.IDENTIFY.route,
         component: PageIdentifyComponent,
         canActivate: [AuthGuard],
-        resolve: {
-            call_nature: CallNatureResolver
-        },
+        // resolve: {
+        //     call_nature: CallNatureResolver
+        // },
         children: [
             {
                 path: PAGES.IDENTIFY_ADDRESSES.route,
@@ -199,7 +199,7 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver,
-            call_nature: CallNatureResolver
+            // call_nature: CallNatureResolver
         }
     },
     {

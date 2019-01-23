@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DPATenancyComponent } from './dpatenancy.component';
+import { CurrentBalanceComponent } from './current-balance.component';
 
-describe('DPATenancyComponent', () => {
-  let component: DPATenancyComponent;
-  let fixture: ComponentFixture<DPATenancyComponent>;
+describe('CurrentBalanceComponent', () => {
+  let component: CurrentBalanceComponent;
+  let fixture: ComponentFixture<CurrentBalanceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DPATenancyComponent ]
+      declarations: [ CurrentBalanceComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DPATenancyComponent);
+    fixture = TestBed.createComponent(CurrentBalanceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

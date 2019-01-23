@@ -50,7 +50,8 @@ export class AuthService {
                 roles: [
                     AUTH.ROLE_ACCESS,
                     AUTH.ROLE_AGENT,
-                    AUTH.ROLE_VIEW_ONLY
+                    AUTH.ROLE_VIEW_ONLY,
+                    // AUTH.ROLE_TEAM_LEADER
                 ]
             } as IAuthentication);
             return true;

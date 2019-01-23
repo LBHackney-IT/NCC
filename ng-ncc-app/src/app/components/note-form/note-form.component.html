@@ -17,16 +17,13 @@
 
     </app-value-list>
 
+    <app-call-nature-dropdown (changed)="selectedCallNature($event)"></app-call-nature-dropdown>
+
     <!-- Comment field. -->
     <div class="govuk-form-group">
         <label class="govuk-label" for="more-detail">Comments</label>
-        <textarea #commentField class="govuk-textarea note-form__field" id="more-detail" name="comment" required tabindex="1"
-            [(ngModel)]="comment" [disabled]="saving" rows="4" aria-describedby="more-detail-hint"></textarea>
-
-        <!-- View notes link. -->
-        <a class="govuk-body-s note-form__view-notes" [routerLink]="page_defs.VIEW_NOTES.route" *ngIf="canViewNotes()">
-            View notes
-        </a>
+        <textarea #commentField class="govuk-textarea note-form__field" id="more-detail" name="comment" required rows="4"
+            [(ngModel)]="comment" [disabled]="saving" aria-describedby="more-detail-hint"></textarea>
     </div>
 
     <!-- Was the call transferred? -->

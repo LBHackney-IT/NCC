@@ -11,6 +11,7 @@ import { IAddressSearchGroupedResult } from '../../interfaces/address-search-gro
 import { CallService } from '../../services/call.service';
 import { AddressSearchService } from '../../services/address-search.service';
 import { BackLinkService } from '../../services/back-link.service';
+import { NotesService } from '../../services/notes.service';
 import { PageTitleService } from '../../services/page-title.service';
 import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 
@@ -32,6 +33,7 @@ export class PageIdentifyComponent implements OnInit {
         private Call: CallService,
         private AddressSearch: AddressSearchService,
         private BackLink: BackLinkService,
+        private Notes: NotesService,
         private PageTitle: PageTitleService,
         private route: ActivatedRoute
     ) { }
@@ -42,13 +44,16 @@ export class PageIdentifyComponent implements OnInit {
 
         this.existing_call = false;
 
-        if (this.Call.hasTenancy()) {
-            this.existing_call = true;
-        } else if (!this.Call.hasCaller()) {
-            // Enable the app's back link if there's no current caller.
-            this.BackLink.enable();
-            this.BackLink.setTarget(`/${PAGES.LOG_CALL.route}`);
+        if (this.Call.isActive()) {
+            if (this.Call.hasTenancy()) {
+                this.existing_call = true;
+            }
+        } else {
+            // We might be coming to this page from the View Notes page, so disable notes.
+            this.Call.reset();
+            this.Notes.disable();
         }
+
     }
 
     /**
@@ -95,14 +100,13 @@ export class PageIdentifyComponent implements OnInit {
     }
 
     /**
-     * Navigatw to the next step, having selected a tenant (or an anonymous caller).
+     * Navigate to the next step, having selected a tenant (or an anonymous caller).
      */
     nextStep() {
         if (this.Call.hasCaller()) {
             // If caller is identified the ‘continue' button should take you to ’Caller Notes'.
             // If caller is anonymous the ‘caller is anonymous’ button should take you to ‘General Communications’.
             // Decided in isolation.
-            // TODO determine which page (comms or payment) to go to, based on the call type and reason.
             this.router.navigateByUrl(this.Call.isCallerIdentified() ? PAGES.VIEW_NOTES.route : PAGES.COMMS.route);
         }
     }
