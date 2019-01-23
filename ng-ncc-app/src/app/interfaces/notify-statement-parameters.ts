@@ -1,5 +1,6 @@
 export interface INotifyStatementParameters {
     ContactId: string;
+    TenancyReference: string;
     StartDate: string;
     EndDate: string;
     EmailTo: string;

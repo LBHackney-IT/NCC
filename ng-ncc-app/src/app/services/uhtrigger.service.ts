@@ -24,9 +24,9 @@ export class UHTriggerService {
     /**
      * Called when a comms template has been sent to the caller.
      */
-    sentComms(template: string, method: string, data: { [propKey: string]: string }) {
-        const call_type = this.Call.getCallNature().call_type.label;
-        const call_reason = this.Call.getCallNature().call_reason.label;
+    sentComms(template: string, method: string) {
+        // const call_type = this.Call.getCallNature().call_type.label;
+        // const call_reason = this.Call.getCallNature().call_reason.label;
         let notify_method: string;
 
         switch (method) {
@@ -41,11 +41,9 @@ export class UHTriggerService {
                 break;
         }
 
-        switch (call_type) {
-            case 'Rent':
-                this._sentRentComms(template, notify_method, data);
-                break;
-        }
+        this.Call.recordCommsNote(template, notify_method)
+            .pipe(take(1))
+            .subscribe();
     }
 
     /**
@@ -71,13 +69,5 @@ export class UHTriggerService {
         }
     }
 
-    /**
-     * Handle a comms template sent as a result of the Rent call type.
-     */
-    _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {
-        this.Call.recordCommsNote(template, method)
-            .pipe(take(1))
-            .subscribe();
-    }
 
 }
