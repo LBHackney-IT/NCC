@@ -1,5 +1,9 @@
 <h1 class="govuk-heading-l">Transaction complete</h1>
 
+<app-warning *ngIf="isTestPayment()">
+    This is a TEST payment.
+</app-warning>
+
 <app-value-list emphasise="value">
 
     <app-value-list-label>Authorisation code</app-value-list-label>
@@ -7,6 +11,9 @@
 
     <app-value-list-label>Receipt number</app-value-list-label>
     <app-value-list-value>{{ data.receiptnumber }}</app-value-list-value>
+
+    <app-value-list-label>Is a test payment?</app-value-list-label>
+    <app-value-list-value>{{ isTestPayment() ? 'Yes' : 'No' }}</app-value-list-value>
 
     <app-value-list-label>Transaction type</app-value-list-label>
     <app-value-list-value>{{ data.transactiontype }}</app-value-list-value>
