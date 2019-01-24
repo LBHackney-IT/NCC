@@ -55,6 +55,7 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
         // Display the add note form.
         const settings = {
             agent_name: this.Auth.getFullName(),
+            agent_crm_id: this.Auth.getUserID(),
             call_id: this.previous_call.servicerequestid,
             ticket_number: this.previous_call.ticketnumber,
             call_reason_id: this.previous_call.callreasonId,

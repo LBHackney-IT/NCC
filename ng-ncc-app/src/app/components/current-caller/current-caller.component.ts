@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { CallService } from '../../services/call.service';
 
@@ -8,6 +8,8 @@ import { CallService } from '../../services/call.service';
     styleUrls: ['./current-caller.component.scss']
 })
 export class CurrentCallerComponent {
+    @Input() withPrefix: boolean;
+    @Input() allowAnonymous: boolean;
 
     constructor(private Call: CallService) { }
 
