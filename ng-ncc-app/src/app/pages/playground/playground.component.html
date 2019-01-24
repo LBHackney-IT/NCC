@@ -1,4 +1,10 @@
-{{ account | json }}
+<h2 class="govuk-heading-m">Note types</h2>
+<div class="govuk-!-margin-bottom-5">
+    <app-note-type [type]="noteTypes.TYPE_MANUAL"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_AUTOMATIC"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_ACTION_DIARY"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_CALLBACK"></app-note-type>
+</div>
 
 <h2 class="govuk-heading-m">Current balance</h2>
 <p><app-current-balance [tenancyReference]="account.tagReferenceNumber"></app-current-balance></p>

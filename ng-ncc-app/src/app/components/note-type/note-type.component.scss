@@ -1,0 +1,76 @@
+@import "../../../assets/scss/vars.scss";
+@import "../helper/helper.component.scss";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
+
+$note-type-automatic-bg-colour: $govuk-border-colour !default;
+$note-type-automatic-text-colour: $govuk-text-colour !default;
+
+$note-type-manual-bg-colour: $govuk-text-colour !default;
+$note-type-manual-text-colour: govuk-colour("white") !default;
+
+$note-type-diary-bg-colour: govuk-colour("light-green") !default;
+$note-type-diary-text-colour: govuk-colour("white") !default;
+
+$note-type-callback-bg-colour: govuk-colour("yellow") !default;
+$note-type-callback-text-colour: $govuk-text-colour !default;
+
+$note-type-helper-text-padding: .5rem !default;
+$note-type-helper-text-width: 140px !default;
+
+////////////////////
+
+:host {
+    position: relative;
+}
+.note-type {
+    &:before {
+        @include helper-icon;
+        line-height: $helper-icon-height;
+        min-width: $helper-icon-height;
+        padding: 0;
+        text-transform: uppercase;
+    }
+    &:hover {
+        > .text {
+            display: block;
+        }
+    }
+
+    .text {
+        @include helper-text($note-type-helper-text-width, $note-type-helper-text-padding);
+        text-align: center;
+    }
+
+    &.note-type--automatic {
+        &:before {
+            background: $note-type-automatic-bg-colour;
+            color: $note-type-automatic-text-colour;
+            content: "A";
+        }
+    }
+
+    &.note-type--manual {
+        &:before {
+            background: $note-type-manual-bg-colour;
+            color: $note-type-manual-text-colour;
+            content: "M";
+        }
+    }
+
+    &.note-type--diary {
+        &:before {
+            background: $note-type-diary-bg-colour;
+            color: $note-type-diary-text-colour;
+            content: "D";
+        }
+    }
+
+    &.note-type--callback {
+        &:before {
+            background: $note-type-callback-bg-colour;
+            color: $note-type-callback-text-colour;
+            content: "C";
+        }
+    }
+}

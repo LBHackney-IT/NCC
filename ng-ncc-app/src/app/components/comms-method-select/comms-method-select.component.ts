@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsSelection } from '../../classes/comms-selection.class';
@@ -42,9 +42,10 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
         this.caller = this.Call.getCaller();
         this.selection = new CommsSelection;
         this.NCCAPI.getContactDetails(this.caller.getContactID())
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
+            .pipe(takeUntil(this._destroyed$))
+            .pipe(finalize(() => {
+                this._setDefaults();
+            }))
             .subscribe(
                 (data: ContactDetailsUpdate) => {
                     if (null === data) {
@@ -57,9 +58,6 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
                     // No contact details (with defaults) were available for this caller, so we will use
                     // available information from the caller.
                     this._useCallerInformation();
-                },
-                () => {
-                    this._setDefaults();
                 });
 
     }

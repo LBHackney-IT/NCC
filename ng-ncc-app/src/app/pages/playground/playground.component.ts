@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
+import { NOTES } from '../../constants/notes.constant';
 import { IAccountDetails } from '../../interfaces/account-details';
 import { PageTitleService } from '../../services/page-title.service';
 import { AccountService } from '../../services/account.service';
@@ -16,6 +17,8 @@ import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 export class PagePlaygroundComponent implements OnInit {
 
     private _w: Window;
+
+    noteTypes = NOTES;
 
     account: IAccountDetails = {
         propertyReferenceNumber: '00013513',

@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
+import { NOTES } from '../../constants/notes.constant';
 import { NotesService } from '../../services/notes.service';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
-import { NOTES } from '../../constants/notes.constant';
 
 // TODO along with transactions, extend a component providing basic functionality.
 
@@ -125,17 +125,6 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                 }
                 return outcome;
             });
-    }
-
-    /**
-     *
-     */
-    getNoteTypeBadgeClass(note: INCCUHNote) {
-        return {
-            'call-type--automatic': NOTES.TYPE_AUTOMATIC === note.notesType,
-            'call-type--manual': NOTES.TYPE_MANUAL === note.notesType,
-            'call-type--diary': NOTES.TYPE_ACTION_DIARY === note.notesType
-        };
     }
 
     /**
