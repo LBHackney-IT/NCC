@@ -33,7 +33,12 @@
 
         <!-- The caller's name. -->
         <p class="govuk-body">
-            This caller: <app-current-caller class="govuk-!-font-weight-bold"></app-current-caller>
+            This caller: <app-current-caller class="govuk-!-font-weight-bold" allowAnonymous="true"></app-current-caller>
+        </p>
+
+        <!-- The associated tenancy reference. -->
+        <p class="govuk-body" *ngIf="tenancyReference">
+            Tenancy reference: <b>{{ tenancyReference }}</b>
         </p>
 
         <!-- Select from a list of the caller's telephone numbers. -->

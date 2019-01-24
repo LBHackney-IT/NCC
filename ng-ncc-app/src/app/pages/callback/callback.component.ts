@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { mergeMap, finalize, take } from 'rxjs/operators';
 
 import { CALL_REASON } from '../../constants/call-reason.constant';
+import { CallService } from '../../services/call.service';
 import { HelperService } from '../../services/helper.service';
 import { ICallbackNoteParameters } from '../../interfaces/callback-note-parameters';
 import { ILogCallSelection } from '../../interfaces/log-call-selection';
@@ -23,8 +24,10 @@ export class PageCallbackComponent implements OnInit {
     contactNumber: string;
     callNature: ILogCallSelection;
     message: string;
+    tenancyReference: string;
 
     constructor(
+        private Call: CallService,
         private Helper: HelperService,
         private NCCAPI: NCCAPIService,
         private Notes: NotesService
@@ -32,6 +35,7 @@ export class PageCallbackComponent implements OnInit {
 
     ngOnInit() {
         this._reset();
+        this.tenancyReference = this.Call.getTenancyReference();
     }
 
     /**

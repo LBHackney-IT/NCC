@@ -9,6 +9,7 @@ import { CallService } from '../../services/call.service';
 })
 export class CurrentCallerComponent {
     @Input() withPrefix: boolean;
+    @Input() allowAnonymous: boolean;
 
     constructor(private Call: CallService) { }
 
