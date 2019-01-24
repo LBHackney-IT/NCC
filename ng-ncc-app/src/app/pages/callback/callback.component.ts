@@ -101,7 +101,9 @@ export class PageCallbackComponent implements OnInit {
                 return this.NCCAPI.sendCallbackEmail(callbackDetails);
             }))
             .subscribe(
-                (response) => { console.log(response) },
+                (response) => {
+                    // TODO what happens next?
+                },
                 (error) => { this.error = true; }
             );
     }
