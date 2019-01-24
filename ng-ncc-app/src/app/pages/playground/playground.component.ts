@@ -1,8 +1,13 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../constants/pages.constant';
+import { NOTES } from '../../constants/notes.constant';
+import { IAccountDetails } from '../../interfaces/account-details';
 import { PageTitleService } from '../../services/page-title.service';
+import { AccountService } from '../../services/account.service';
+import { AnonymousCaller } from '../../classes/anonymous-caller.class';
 
 @Component({
     selector: 'app-playground',
@@ -13,8 +18,29 @@ export class PagePlaygroundComponent implements OnInit {
 
     private _w: Window;
 
+    noteTypes = NOTES;
+
+    account: IAccountDetails = {
+        propertyReferenceNumber: '00013513',
+        benefit: 118.75,
+        tagReferenceNumber: '000015/01',
+        paymentReferenceNumber: '1003001502',
+        accountid: 'e3d050d8-169f-e711-8100-70106faa4841',
+        currentBalance: 760.19,
+        rent: 129.98,
+        housingReferenceNumber: '000015',
+        directdebit: null,
+        tenancyStartDate: '1970-07-06',
+        agreementType: 'M',
+        isAgreementTerminated: false,
+        tenuretype: 'Secure',
+        accountType: '1'
+    };
     show: boolean;
     amount = 10;
+    number_value: string;
+    user = new AnonymousCaller;
+    data: IAccountDetails;
 
     // Listen to the window's storage event.
     // This is fired whenever a localStorage property (it has access to?) is *changed*.
@@ -35,7 +61,7 @@ export class PagePlaygroundComponent implements OnInit {
         }
     }
 
-    constructor(private router: Router, private PageTitle: PageTitleService) { }
+    constructor(private Account: AccountService, private router: Router, private PageTitle: PageTitleService) { }
 
     /**
      *
@@ -43,6 +69,12 @@ export class PagePlaygroundComponent implements OnInit {
     ngOnInit() {
         this.PageTitle.set(PAGES.PLAYGROUND.label);
         this.show = false;
+
+        this.Account.getFor(this.user)
+            .pipe(take(1))
+            .subscribe((account: IAccountDetails) => {
+                this.account = account;
+            });
     }
 
     /**
@@ -56,14 +88,16 @@ export class PagePlaygroundComponent implements OnInit {
      *
      */
     handleClose() {
-        console.log('Modal was closed.');
+        // console.log('Modal was closed.');
     }
 
     /**
      *
      */
     selectedTemplate(option: any) {
-        console.log(option.name, option.isSensitive());
+        if (option) {
+            // console.log(option.name, option.isSensitive());
+        }
     }
 
     /**

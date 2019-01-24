@@ -4,7 +4,10 @@
 // -------------------------------------------------------------------------------
 // GOV.UK FRONTEND
 // -------------------------------------------------------------------------------
+// Uncomment the following line to include EVERYTHING in GOV.UK Frontend.
 // @import "~govuk-frontend/all";
+
+// Otherwise...
 // Only import the GOV.UK Frontend components we are using.
 @import "~govuk-frontend/settings/all";
 @import "~govuk-frontend/tools/all";
@@ -17,7 +20,7 @@
 @import "~govuk-frontend/components/button/button";
 @import "~govuk-frontend/components/checkboxes/checkboxes";
 // @import "~govuk-frontend/components/date-input/date-input";
-// @import "~govuk-frontend/components/details/details";
+@import "~govuk-frontend/components/details/details";
 // @import "~govuk-frontend/components/error-message/error-message";
 // @import "~govuk-frontend/components/error-summary/error-summary";
 @import "~govuk-frontend/components/fieldset/fieldset";
@@ -54,6 +57,4 @@
 // @import "assets/scss/components/hidden";
 @import "assets/scss/components/link-button";
 @import "assets/scss/components/page";
-@import "assets/scss/components/page-header";
-@import "assets/scss/components/page-footer";
 // -------------------------------------------------------------------------------

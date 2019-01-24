@@ -1,3 +1,8 @@
+@import '../../../assets/scss/vars';
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
+@import "~govuk-frontend/settings/media-queries";
+
 $navigation-border-colour: #BFC1C3 !default;
 $navigation-border-width: 1px !default;
 $navigation-max-width: 360px !default;
@@ -7,11 +12,20 @@ $navigation-menu-item-active-bg-colour: #F8F8F8 !default;
 $navigation-menu-item-active-line-colour: #005EA5 !default;
 $navigation-menu-separator-colour: #CCC !default;
 
+$navigation-button-bg-colour: govuk-colour('green') !default;
+$navigation-button-border: none !default;
+$navigation-button-text-colour: govuk-colour("white");
+$navigation-button-padding: .25rem 1rem !default;
+
+$navigation-viewonly-bg-colour: govuk-colour('yellow') !default;
+$navigation-viewonly-text-colour: $govuk-text-colour !default;
+$navigation-viewonly-padding: 1rem !default;
+
 ////////////////////
 
-@import "~govuk-frontend/settings/media-queries";
-
 // The "navigation" sidebar is set to be hidden if the screen is narrower than a typical tablet device.
+
+// TODO detect the position of the button, tell the Notes service to reposition the note form based on its coordinates.
 
 :host {
     // This selector targets the host (i.e. <app-navigation/>).
@@ -33,6 +47,8 @@ $navigation-menu-separator-colour: #CCC !default;
 }
 
 .navigation__item {
+    position: relative;
+
     // Regular item state.
     a,
     a:link,
@@ -72,13 +88,55 @@ $navigation-menu-separator-colour: #CCC !default;
     }
 }
 
-.navigation__separator {
+.navigation__separator,
+.navigation__spacer {
     margin: 1rem 0;
     &:before {
         content: "";
         display: block;
+    }
+}
+.navigation__separator {
+    &:before {
         height: 2px;
         width: 50%;
         background-color: $navigation-menu-separator-colour;
+    }
+}
+
+.navigation__spacer {
+    height: 1rem;
+}
+
+.navigation__heading {
+    display: block;
+    font-family: $govuk-font-family;
+    padding: 8px 30px 8px 14px;
+}
+
+// The "Add note" button.
+.navigation__notes {
+    background: $navigation-button-bg-colour;
+    border: $navigation-button-border;
+    color: $navigation-button-text-colour;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    margin: 0;
+    padding: $navigation-button-padding;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0,-50%);
+}
+
+.view-only-message {
+    background: $navigation-viewonly-bg-colour;
+    color: $navigation-viewonly-text-colour;
+    padding: $navigation-viewonly-padding;
+    text-align: center;
+
+    h2 {
+        text-transform: uppercase;
     }
 }

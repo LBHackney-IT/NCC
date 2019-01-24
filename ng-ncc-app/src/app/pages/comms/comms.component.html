@@ -1,28 +1,38 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-l">Communications</h1>
+        <h1 class="govuk-heading-l">Non-sensitive communications</h1>
+
+        <p class="govuk-body">
+            Here you can send non-sensitive emails and texts.
+            <ng-container *ngIf="isRentLinkVisible()">
+                <br>
+                To send sensitive information visit the <a [routerLink]="getRentPageRoute()">'View/pay rent'</a> page after verifying Data Protection.
+            </ng-container>
+        </p>
+
+        <p class="govuk-body">
+            If the caller would like to set up a Standing Order for rent payments they will need to tell their bank the details below.
+        </p>
 
         <div class="govuk-inset-text">
             <p>
-                <b>Standing order details</b><br>
+                <b>Standing Order details for rent payments</b><br>
                 Bank name: Lloyds<br>
                 Account number: 00641877<br>
                 Sort code: 30-00-02
             </p>
         </div>
 
-        <app-panel errorStyle="true" *ngIf="_error">
-            <p class="govuk-heading-m govuk-!-margin-bottom-2">
-                Communications unavailable
+        <app-error-panel *ngIf="_error">
+            <app-panel-heading>Communications unavailable</app-panel-heading>
+            <p class="govuk-body">
+                The 3rd party system Gov Notify that sends texts (SMS) and emails is currently not working. They will be working to fix the problem.
             </p>
-            <p class="govuk-heading-s govuk-!-margin-bottom-2">
-                The 3rd party system Gov Notify that send texts (SMS) and emails is currently not working. They will be working to fix the problem.
+            <p class="govuk-body govuk-!-margin-0">
+                If it persists you will need to contact ICT.
             </p>
-            <p class="govuk-heading-s govuk-!-margin-0">
-                If it persists then contact ICT.
-            </p>
-        </app-panel>
+        </app-error-panel>
 
         <form (submit)="sendMessage($event)" *ngIf="!_error">
 
@@ -41,7 +51,6 @@
 
             <!-- Previewing the message to be sent. -->
             <div *ngIf="shouldShowPreview()">
-                <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
                 <app-notify-template-preview [(settings)]="preview"></app-notify-template-preview>
             </div>
 
@@ -51,7 +60,7 @@
             </button>
 
             <!-- Confirmation modal. -->
-            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
                 Message sent successfully.
             </app-dialogue>
 

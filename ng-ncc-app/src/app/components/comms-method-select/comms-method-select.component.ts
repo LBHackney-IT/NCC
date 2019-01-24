@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 import { CONTACT } from '../../constants/contact.constant';
 import { CommsSelection } from '../../classes/comms-selection.class';
@@ -21,6 +21,7 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
     @Input() disableEmail?: boolean;
     @Input() disablePost?: boolean;
     @Input() disableSMS?: boolean;
+    @Input() postText?: string;
 
     // Pass the selected comms method and details through an [Observable] event.
     @Output() selected = new EventEmitter<CommsSelection>();
@@ -41,9 +42,10 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
         this.caller = this.Call.getCaller();
         this.selection = new CommsSelection;
         this.NCCAPI.getContactDetails(this.caller.getContactID())
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
+            .pipe(takeUntil(this._destroyed$))
+            .pipe(finalize(() => {
+                this._setDefaults();
+            }))
             .subscribe(
                 (data: ContactDetailsUpdate) => {
                     if (null === data) {
@@ -56,9 +58,6 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
                     // No contact details (with defaults) were available for this caller, so we will use
                     // available information from the caller.
                     this._useCallerInformation();
-                },
-                () => {
-                    this._setDefaults();
                 });
 
     }
@@ -66,8 +65,15 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
     /**
      *
      */
+    reset() {
+        this.selection = new CommsSelection;
+        this.postText = null;
+    }
+
+    /**
+     *
+     */
     _useCallerInformation() {
-        console.log('No contact details found, using caller information.');
         const details = new ContactDetailsUpdate;
         details.mobile = this.caller.getTelephoneNumbers();
         details.email = this.caller.getEmailAddresses();
@@ -76,7 +82,6 @@ export class CommsMethodSelectComponent implements OnInit, OnChanges, OnDestroy 
 
     _setDefaults() {
         if (this.details) {
-            console.log('Setting defaults...');
             this.selection.existing[CONTACT.METHOD_EMAIL] = this.details.default.email || [].concat(this.details.email).pop();
             this.selection.existing[CONTACT.METHOD_SMS] = this.details.default.mobile || [].concat(this.details.mobile).pop();
         }

@@ -1,15 +1,10 @@
 @import "../../../assets/scss/vars.scss";
-@import "~govuk-frontend/all";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/typography-font";
 
 $panel-bg-colour: govuk-colour("grey-3") !default;
 $panel-margin: 1rem 0 !default;
 $panel-padding: 1rem !default;
-
-$panel-box-border-width: 2px !default;
-$panel-box-border-colour: govuk-colour("grey-3") !default;
-
-$panel-error-border-width: 4px !default;
-$panel-error-border-colour: $govuk-error-colour !default;
 
 ////////////////////
 
@@ -20,14 +15,4 @@ $panel-error-border-colour: $govuk-error-colour !default;
     margin: $panel-margin;
     padding: 1rem;
     word-break: break-word;
-
-    &.panel--box {
-        background: transparent;
-        border: $panel-box-border-width solid $panel-box-border-colour;
-    }
-
-    &.panel--error {
-        background: transparent;
-        border: $panel-error-border-width solid $panel-error-border-colour;
-    }
 }

@@ -6,9 +6,9 @@ export class ContactDetailsUpdate {
     // first_name: string;
     // last_name: string;
     // telephone: string;
-    telephone: string[];
-    mobile: string[];
-    email: string[];
+    telephone: string[] = [];
+    mobile: string[] = [];
+    email: string[] = [];
     default: {
         email: string;
         mobile: string;

@@ -2,10 +2,14 @@
 // <app-navigation></app-navigation>
 
 import { environment } from '../../../environments/environment';
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { CallService } from '../../services/call.service';
+import { NotesService } from '../../services/notes.service';
+import { ViewOnlyService } from '../../services/view-only.service';
 import { PAGES } from '../../constants/pages.constant';
 
 @Component({
@@ -13,19 +17,71 @@ import { PAGES } from '../../constants/pages.constant';
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent {
+export class NavigationComponent implements AfterViewChecked, OnDestroy {
 
-    constructor(private Call: CallService, private router: Router) { }
+    constructor(
+        private Call: CallService,
+        private Notes: NotesService,
+        private ViewOnly: ViewOnlyService,
+        private router: Router
+    ) { }
+
+    private _destroyed$ = new Subject();
 
     page_defs = PAGES;
     previous_call_count: number = environment.previousCallCount;
     disable_previous_calls: boolean = environment.disable.previousCalls;
     disable_additional_reasons: boolean = environment.disable.additionalCallReason;
+    view_only = false;
+    ending_call = false;
+
+    @ViewChild('notesButton') notesButton: ElementRef;
+
+    // Listen to the scroll event on this component.
+    @HostListener('scroll', ['$event'])
+    onScrollEvent(event: UIEvent): void {
+        this._positionNotesForm();
+    }
+
+    ngOnInit() {
+        this.ViewOnly.updates()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((status: boolean) => this.view_only = status);
+    }
+    /**
+     *
+     */
+    ngAfterViewChecked() {
+        this._positionNotesForm();
+    }
+
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    private _positionNotesForm() {
+        if (this.notesButton) {
+            const el = this.notesButton.nativeElement;
+            const rect = el.getBoundingClientRect();
+
+            this.Notes.positionForm(rect.right, rect.top);
+        }
+    }
+
+    /**
+     * Displays the call type/reason dialogue.
+     */
+    endCall() {
+        this.ending_call = true;
+    }
 
     /**
      * "Ends" the current call and navigates to the log call page.
      */
-    endCall() {
+    confirmEndCall() {
         this.Call.reset();
         this.router.navigateByUrl(PAGES.PREVIOUS_CALLS.route);
     }
@@ -62,6 +118,13 @@ export class NavigationComponent {
     }
 
     /**
+     * Returns TRUE if the "see caller notes" link should be enabled.
+     */
+    canViewNotes(): boolean {
+        return this.Call.isCallerIdentified() || this.Call.isCallerNonTenant();
+    }
+
+    /**
      * Returns TRUE if a call is currently active and the caller is able to make a payment.
      */
     isCallerAbleToPay(): boolean {
@@ -71,9 +134,29 @@ export class NavigationComponent {
     /**
      *
      */
+    getIdentifyRoute(): string {
+        return `${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_TENANTS.route}`;
+    }
+
+    /**
+     *
+     */
     getRentRoute(): string {
-        const page = this.Call.isCallerNonTenant() ? PAGES.RENT_PAYMENT.route : PAGES.RENT_SUMMARY.route;
-        return `${PAGES.RENT.route}/${page}`;
+        return `/${PAGES.RENT.route}/${PAGES.RENT_TRANSACTIONS.route}`;
+    }
+
+    /**
+     *
+     */
+    areNotesEnabled(): boolean {
+        return this.Notes.isEnabled();
+    }
+
+    /**
+     *
+     */
+    toggleAddNote() {
+        this.Notes.toggle();
     }
 
 }

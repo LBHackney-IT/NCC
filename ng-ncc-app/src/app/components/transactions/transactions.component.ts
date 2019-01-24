@@ -1,9 +1,11 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChange } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, finalize } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
-import { ITransaction } from '../../interfaces/transaction';
+import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { IAccountDetails } from '../../interfaces/account-details';
+import { ITenancyTransactionRow } from '../../interfaces/tenancy-transaction-row';
 
 @Component({
     selector: 'app-transactions',
@@ -11,7 +13,7 @@ import { ITransaction } from '../../interfaces/transaction';
     styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() tenancyRef: string;
+    @Input() account: IAccountDetails;
     @Input() currentBalance: number;
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
@@ -20,9 +22,10 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
 
     private _destroyed$ = new Subject();
 
+    error: boolean;
     _loading: boolean;
-    _rows: ITransaction[];
-    _filtered: ITransaction[];
+    _rows: ITenancyTransactionRow[];
+    _filtered: ITenancyTransactionRow[];
     _period = 'six-months';
     _period_options = [
         { key: 'six-months', label: 'Last 6 months' },
@@ -31,7 +34,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
         { key: '2016', label: '2016' }
     ];
 
-    constructor(private ManageATenancyAPI: ManageATenancyAPIService) { }
+    constructor(private NCCAPI: NCCAPIService) { }
 
     /**
      *
@@ -44,12 +47,11 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        if (changes.tenancyRef) {
+        if (changes.account) {
             // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
             this._loadTransactions();
         } else {
             // The filter or date settings have changed, so update what is displayed.
-            console.log('filter has changed.');
             this._filterTransactions();
         }
     }
@@ -62,59 +64,42 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     *
+     * Fetch a list of transactions for the tenancy reference defined in this component.
      */
-    trackByMethod(index: number, item: ITransaction): string {
-        return item.transactionID;
+    _loadTransactions() {
+        this.error = false;
+        this._loading = true;
+
+        this.NCCAPI
+            .getAllTenancyTransactionStatements(
+                this.account.tagReferenceNumber,
+                moment(this.minDate).format('DD/MM/YYYY'),
+                moment(this.maxDate).format('DD/MM/YYYY')
+            )
+            .pipe(take(1))
+            .pipe(finalize(() => {
+                this._loading = false;
+            }))
+            .subscribe(
+                (rows: ITenancyTransactionRow[]) => {
+                    this._rows = rows;
+                    this._filterTransactions();
+                },
+                (error) => {
+                    this.error = true;
+                }
+            );
     }
 
     /**
      *
      */
-    _loadTransactions() {
-        this._loading = true;
-        const subscription = this.ManageATenancyAPI
-            .getTransactions(this.tenancyRef)
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
-            .subscribe(
-                (rows) => {
-                    let balance = this.currentBalance;
-                    this._rows = rows.map((row) => {
-                        row.balance = balance;
-                        balance -= row.realValue;
-                        return row;
-                    });
-                    this._filterTransactions();
-                },
-                (error) => {
-                    console.error(error);
-                },
-                () => {
-                    subscription.unsubscribe();
-                    this._loading = false;
-                }
-            );
-    }
-
     _filterTransactions() {
-        const min_date = this.minDate ? this.minDate.toISOString() : null;
-        const max_date = this.maxDate ? this.maxDate.toISOString() : null;
-
         this._filtered = this._rows.filter(
             item => {
                 let outcome = true;
 
-                // Check against the provided dates (if set).
-                if (outcome && min_date) {
-                    outcome = item.postDate >= min_date;
-                }
-                if (outcome && max_date) {
-                    outcome = item.postDate < max_date;
-                }
-
-                if (outcome && this.filter) {
+                if (this.filter) {
                     // Put the item through the filter.
                     Object.keys(this.filter).forEach(
                         key => {

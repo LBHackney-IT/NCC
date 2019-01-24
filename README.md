@@ -43,19 +43,23 @@ ng build -c dev-test
 ```
 Resulting project will be placed in the `dist/dev-test` folder.
 
+## *DEVELOPMENT* test site
+
 Single Sign On (SSO): http://lbhwebintd01:1010
+
 Front end: http://lbhwebintd01:2020
 
-**TEST Live site**
+## *LIVE* test site
+
 ```
 ng build -c live-test
 ```
 Resulting project will be placed in the `dist/live-test` folder.
 
 Single Sign On (SSO): http://lbhwebintd01:3030
+
 Front end: http://lbhwebintd01:4040
 
-**Live site**
 ```
 ng build --prod
 ```

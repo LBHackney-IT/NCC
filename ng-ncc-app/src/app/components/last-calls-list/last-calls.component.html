@@ -1,23 +1,33 @@
-<table class="govuk-table">
-    <caption class="govuk-table__caption govuk-heading-m">Last {{ count | number }} calls</caption>
-    <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="col">Tenancy ref.</th>
-            <th class="govuk-table__header" scope="col">Name</th>
-            <th class="govuk-table__header" scope="col">Date</th>
-            <th class="govuk-table__header" scope="col">Time</th>
-            <th class="govuk-table__header" scope="col">Reason for call</th>
-        </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-        <tr class="govuk-table__row" *ngFor="let row of calls; trackBy: trackByIndex">
-            <th class="govuk-table__header" scope="row">
-                <b>{{ row.housingref }}</b>
-            </th>
-            <td class="govuk-table__cell">{{ row.name }}</td>
-            <td class="govuk-table__cell">{{ row.createdon | date: "dd/MM/yyyy" }}</td>
-            <td class="govuk-table__cell">{{ row.createdon | date: "HH:mm" }}</td>
-            <td class="govuk-table__cell">{{ row.callreason }}</td>
-        </tr>
-    </tbody>
-</table>
+<app-error-panel *ngIf="error; else lastCalls">
+    <app-panel-heading>Table load failure</app-panel-heading>
+    <p class="govuk-body govuk-!-margin-bottom-0">There was a problem loading the list of your previous calls. If this continues you will need to contact ICT.</p>
+</app-error-panel>
+
+<ng-template #lastCalls>
+    <table class="govuk-table govuk-!-margin-top-9">
+        <caption class="govuk-table__caption govuk-heading-l">Previous calls</caption>
+        <!-- <caption class="govuk-table__caption govuk-heading-m">Last {{ count | number }} calls</caption> -->
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">Tenancy ref.</th>
+                <th class="govuk-table__header" scope="col">Name</th>
+                <th class="govuk-table__header" scope="col">Call reason</th>
+                <th class="govuk-table__header" scope="col">Time</th>
+                <th class="govuk-table__header" scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row" *ngFor="let row of calls; trackBy: trackByIndex">
+                <th class="govuk-table__header" scope="row">
+                    <b>{{ row.housingref }}</b>
+                </th>
+                <td class="govuk-table__cell">{{ row.name }}</td>
+                <td class="govuk-table__cell">{{ getCallReason(row) }}</td>
+                <td class="govuk-table__cell">{{ row.createdon | date: "dd/MM/yyyy HH:mm" }}</td>
+                <td class="govuk-table__cell">
+                    <a href="" *ngIf="row.housingref" (click)="beginAddNotes(row)">View</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ng-template>

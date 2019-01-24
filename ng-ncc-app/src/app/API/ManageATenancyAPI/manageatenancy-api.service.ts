@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, of, from } from 'rxjs';
 
-import { IJSONResponse } from '../../interfaces/json-response';
 import { IAccountDetails } from '../../interfaces/account-details';
+import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
+import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IContactDetails } from '../../interfaces/contact-details';
-import { ITransaction } from '../../interfaces/transaction';
+import { IJSONResponse } from '../../interfaces/json-response';
 
 @Injectable({
     providedIn: 'root'
@@ -36,12 +37,27 @@ export class ManageATenancyAPIService {
                 map((data: any) => {
                     // We should have just one result, containing a bunch of information.
                     // TODO how do we handle having no information?
-                    return data.results as IAccountDetails;
-                },
-                    (error) => {
-                        console.log('Error fetching account details:', error);
-                    })
+
+                    data.results.currentBalance = parseFloat(data.results.currentBalance);
+                    data.results.benefit = parseFloat(data.results.benefit);
+                    data.results.rent = parseFloat(data.results.rent);
+                    const account: IAccountDetails = data.results;
+
+                    // For consistency across the app, the current balance returned from the API has to be reversed.
+                    // account.currentBalance = -account.currentBalance;
+                    return account;
+                })
             );
+    }
+
+    /**
+     * Get account details for a tenancy by a reference.
+     * The reference can be either the tenancy (tag) reference or a Paris payment reference.
+     */
+    getAccountDetailsByReference(reference: string): Observable<IAccountDetailsByReference> {
+        return this.http
+            .get(`${this._url}/Accounts/AccountDetailsByPaymentorTagReference?referencenumber=${reference}`, {})
+            .pipe(map((data: IJSONResponse) => data.results[0]));
     }
 
     /**
@@ -55,29 +71,33 @@ export class ManageATenancyAPIService {
             .pipe(
                 map((data) => {
                     return data as IContactDetails;
-                },
-                    (error) => {
-                        console.log('Error fetching account details:', error);
-                    })
+                })
             );
     }
 
     /**
-     * Returns a list of transactions for the specified tenancy reference.
+     * Searches for citizens and returns a list of results.
      */
-    getTransactions(tenancy_reference: string) {
-        // The tag reference parameter is the tenancy reference.
-        return this.http
-            .get(`${this._url}/Transactions?tagReference=${tenancy_reference}`)
-            .pipe(
-                map((data: IJSONResponse) => {
-                    const details: ITransaction[] = Array.from(data.results);
+    getCitizenIndexSearch(first_name: string, last_name: string, address: string, postcode: string,
+        advanceSearch: boolean = false):
+        Observable<ICitizenIndexSearchResult[]> {
 
-                    return details;
-                },
-                    (error) => {
-                        console.log('Error fetching transactions:', error);
-                    })
+        // Build the query part of the URL.
+        let query = '';
+        if (first_name) { query += `firstname=${first_name}`; }
+        if (last_name) { query += `surname=${last_name}`; }
+        if (address) { query += `addressline12=${address}`; }
+        if (postcode) { query += `postcode=${postcode}`; }
+        query += `&IsAdvanceSearch=${advanceSearch ? 'true' : 'false'}`;
+        // very important to set IsAdvanceSearch to false.
+
+        return this.http
+            .get(`${this._url}/CitizenIndexSearch?${query}`)
+            .pipe(
+                map((response: IJSONResponse) => {
+                    // TODO perhaps filter out any unwanted/unnecessary information.
+                    return response.results;
+                })
             );
     }
 

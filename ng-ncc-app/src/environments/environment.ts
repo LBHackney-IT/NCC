@@ -10,18 +10,29 @@ export const environment = {
         hackney: 'https://sandboxapi.hackney.gov.uk/hackneyapi',
         manageATenancy: 'https://sandboxapi.hackney.gov.uk/manageatenancy/v1',
         ncc: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/',
-        notify: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier'
+        notify: 'https://sandboxapi.hackney.gov.uk/lbhnccapi/api/GovNotifier',
+        statement: 'http://lbhwebintd01:5050/CustomerTransactions'
     },
     anonymousUserID: '9078B253-15C3-E811-A96B-002248072FE8',
+    nonTenantUserID: '5A668C7E-4DF9-E811-A96F-002248072FE8',
     authenticationLink: 'http://localhost:4200',
     disable: {
+        additionalCallReason: false,
+        advanceSearch: true,
         authentication: true,
+        commsTemplates: [
+            'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
+        ],
         consoleLogs: false,
-        previousCalls: false,
         identifyCaller: false,
-        additionalCallReason: false
+        noteCloseOnSave: false,
+        previousCalls: false,
+        viewOnly: false
     },
-    previousCallCount: 10
+    previousCallCount: 50,
+    notifyTemplate: {
+        statement: 'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
+    }
 };
 
 /*

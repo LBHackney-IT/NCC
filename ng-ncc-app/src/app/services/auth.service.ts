@@ -23,9 +23,9 @@ export class AuthService {
         return this.NCCAPI.authenticate(code)
             .pipe(
                 map((data: IAuthentication) => {
-                    if (data.success) {
-                        console.log('Successfully logged in as', data.username);
-                    }
+                    // if (data.success) {
+                    //     console.log('Successfully logged in as', data.username);
+                    // }
 
                     // Whatever the outcome of the authentication attempt, we store the data locally.
                     this._user = data;
@@ -42,14 +42,16 @@ export class AuthService {
             // Create a dummy agent.
             this.set({
                 fullname: 'Unknown NCC Agent',
-                userid: '123456',
+                userid: null,
                 username: 'unknown.nccagent',
                 useremail: 'unknown@localhost',
                 success: true,
                 message: null,
                 roles: [
                     AUTH.ROLE_ACCESS,
-                    AUTH.ROLE_AGENT
+                    AUTH.ROLE_AGENT,
+                    AUTH.ROLE_VIEW_ONLY,
+                    // AUTH.ROLE_TEAM_LEADER
                 ]
             } as IAuthentication);
             return true;
@@ -100,6 +102,10 @@ export class AuthService {
         return this.hasData() ? this._user.message : null;
     }
 
+    getUserID(): string {
+        return this.hasData() ? this._user.userid : null;
+    }
+
     /**
      * Returns TRUE if there is a logged in user and they have access to the app.
      */
@@ -122,10 +128,17 @@ export class AuthService {
     }
 
     /**
+     * Returns TRUE if there is a logged in user and they can use "view only" mode.
+     */
+    canViewOnly(): boolean {
+        return this._hasRole(AUTH.ROLE_VIEW_ONLY);
+    }
+
+    /**
      * Returns TRUE if there is a logged in user and they have the specified role.
      */
-    _hasRole(role: string): boolean {
-        return this.hasData() && -1 !== this._user.roles.indexOf(role);
+    private _hasRole(role: string): boolean {
+        return this.hasData() && this._user.roles && -1 !== this._user.roles.indexOf(role);
     }
 
 }

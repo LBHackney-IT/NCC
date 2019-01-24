@@ -1,66 +1,92 @@
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
+<app-error-panel *ngIf="error; else interface">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Types and reasons aren't loading</h2>
+    <p class="govuk-body govuk-!-margin-bottom-0">
+        There was a problem loading the call types and reasons. You will need to contact ICT to resolve this.
+    </p>
+</app-error-panel>
 
-        <!-- The type of call. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label govuk-!-font-weight-bold" for="call_type">
-                Select call type
-            </label>
-            <select class="govuk-select govuk-input--width-20" id="call_type" name="call_type" [(ngModel)]="selected.call_type"
-                [disabled]="!this.call_types" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
-                <option [ngValue]="null" selected>- select a call type</option>
-                <option *ngFor="let item of call_types; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
-            </select>
-            <app-helper class="govuk-!-margin-left-3" title="">
-                New call types or reasons may be added by Team Leaders via the Support Service.
-            </app-helper>
+<ng-template #interface>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+
+            <!-- The type of call. -->
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-!-font-weight-bold" for="call_type">
+                    Select call type
+                </label>
+                <select class="govuk-select govuk-input--width-20" id="call_type" name="call_type" [(ngModel)]="selected.call_type"
+                    [disabled]="!this.call_types" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
+                    <option [ngValue]="null" selected>- select a call type</option>
+                    <option *ngFor="let item of call_types; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
+                </select>
+                <app-helper class="govuk-!-margin-left-3" title="">
+                    New call types or reasons may be added by Team Leaders via the Support Service.
+                </app-helper>
+            </div>
+
         </div>
 
-    </div>
+        <div class="govuk-grid-column-one-half">
 
-    <div class="govuk-grid-column-one-half">
+            <!-- The reason for the call. -->
+            <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" *ngIf="isCallTypeSelected()">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    <h2 class="govuk-fieldset__heading">
+                        Select reason for call
+                    </h2>
+                </legend>
 
-        <!-- The reason for the call. -->
-        <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" *ngIf="isCallTypeSelected()">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <h2 class="govuk-fieldset__heading">
-                    Select reason for call
-                </h2>
-            </legend>
+                <div class="govuk-radios" data-module="radios">
+                    <ng-template ngFor let-reason [ngForOf]="getCallTypeReasons()" [ngForTrackBy]="trackByCallReason">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
+                                [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="reason">
+                            <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
+                        </div>
 
-            <div class="govuk-radios" data-module="radios">
-                <ng-template ngFor let-reason [ngForOf]="getCallTypeReasons()" [ngForTrackBy]="trackByCallReason">
+                        <!-- Secondary labels. -->
+
+                        <!-- Applying for a rent card... -->
+                        <div class="govuk-radios__conditional" [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
+                            *ngIf="'Apply for a rent card' === reason.label">
+                            <p class="govuk-body">Do this on Universal Housing.</p>
+                        </div>
+
+                        <!-- Former tenancy arrears... -->
+                        <div class="govuk-radios__conditional" [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
+                            *ngIf="'Check Former Tenancy Arrears' === reason.label">
+                            <p class="govuk-body">
+                                Do this on Universal Housing.<br>
+                                Do not add notes in CRM, add them in Universal Housing.
+                            </p>
+                        </div>
+
+                        <!-- Universal Credit... -->
+                        <div class="govuk-radios__conditional" [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
+                            *ngIf="'Discuss Universal Credit' === reason.label">
+                            <p class="govuk-body">See Universal Housing for breakdown of charges.</p>
+                        </div>
+                    </ng-template>
+
+                    <!-- Other (which should come last). -->
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="call-reason-{{ reason.id }}" name="call_reason" type="radio"
-                            [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="reason">
-                        <label class="govuk-label govuk-radios__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
+                        <input class="govuk-radios__input" id="call-reason-other" name="call_reason" type="radio"
+                            [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="OTHER">
+                        <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
                     </div>
-                    <div class="govuk-radios__conditional" id="conditional-how-contacted-conditional-3"
-                        [class.govuk-radios__conditional--hidden]="selected.call_reason !== reason"
-                        *ngIf="'Rent card' === reason.label">
-                        <p class="govuk-body">You will need to submit a request for a Rent Card in UHT.</p>
-                    </div>
-                </ng-template>
-
-                <!-- Other (which should come last). -->
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="call-reason-other" name="call_reason" type="radio"
-                        [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="OTHER">
-                    <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
                 </div>
-            </div>
 
-            <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->
-            <div class="govuk-form-group govuk-!-margin-left-8 govuk-!-margin-top-1" *ngIf="isOtherReasonSelected()">
-                <label class="govuk-label govuk-!-font-weight-bold govuk-visually-hidden" for="call_reason_other">
-                    Specify the call reason:
-                </label>
-                <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
-                    #otherReasonField
-                    placeholder="Specify the call reason"
-                    [(ngModel)]="selected.other_reason" (ngModelChange)="updateSelection()">
-            </div>
-        </fieldset>
+                <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->
+                <div class="govuk-form-group govuk-!-margin-left-8 govuk-!-margin-top-1" *ngIf="isOtherReasonSelected()">
+                    <label class="govuk-label govuk-!-font-weight-bold govuk-visually-hidden" for="call_reason_other">
+                        Specify the call reason:
+                    </label>
+                    <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
+                        placeholder="Specify the call reason" maxlength="50" #otherReasonField
+                        [(ngModel)]="selected.other_reason" (ngModelChange)="updateSelection()">
+                </div>
+            </fieldset>
 
+        </div>
     </div>
-</div>
+</ng-template>

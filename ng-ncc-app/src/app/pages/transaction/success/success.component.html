@@ -1,5 +1,9 @@
 <h1 class="govuk-heading-l">Transaction complete</h1>
 
+<app-warning *ngIf="isTestPayment()">
+    This is a TEST payment.
+</app-warning>
+
 <app-value-list emphasise="value">
 
     <app-value-list-label>Authorisation code</app-value-list-label>
@@ -7,6 +11,9 @@
 
     <app-value-list-label>Receipt number</app-value-list-label>
     <app-value-list-value>{{ data.receiptnumber }}</app-value-list-value>
+
+    <app-value-list-label>Is a test payment?</app-value-list-label>
+    <app-value-list-value>{{ isTestPayment() ? 'Yes' : 'No' }}</app-value-list-value>
 
     <app-value-list-label>Transaction type</app-value-list-label>
     <app-value-list-value>{{ data.transactiontype }}</app-value-list-value>
@@ -28,12 +35,6 @@
 
     <app-value-list-label>Administration charge</app-value-list-label>
     <app-value-list-value>{{ data.administrationcharge | currency:'GBP' }}</app-value-list-value>
-
-    <app-value-list-label>Processed?</app-value-list-label>
-    <app-value-list-value>{{ wasSuccessful() ? 'Yes' : 'No' }}</app-value-list-value>
-
-    <app-value-list-label>Error message</app-value-list-label>
-    <app-value-list-value>{{ data.error }}</app-value-list-value>
 
 </app-value-list>
 
@@ -60,7 +61,6 @@
 
     <!-- Previewing the message to be sent. -->
     <div *ngIf="shouldShowPreview()">
-        <h2 class="govuk-label govuk-!-font-weight-bold">Preview message</h2>
         <app-notify-template-preview [(settings)]="preview" [editPlaceholders]="false"></app-notify-template-preview>
     </div>
 
@@ -71,7 +71,7 @@
 </form>
 
 <!-- Confirmation modal. -->
-<app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'">
+<app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="returnToPayment()">
     Message sent successfully.
 </app-dialogue>
 

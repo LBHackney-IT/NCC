@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { CONTACT } from '../constants/contact.constant';
 import { COMMS } from '../constants/comms.constant';
@@ -23,16 +24,9 @@ export class UHTriggerService {
     /**
      * Called when a comms template has been sent to the caller.
      */
-    sentComms(template: string, method: string, data: { [propKey: string]: string }) {
-        console.log(template, method, data);
-
-        // Only continue if there is an identified caller.
-        // if (!this.Call.isCallerIdentified()) {
-        //     return;
-        // }
-
-        const call_type = this.Call.getCallNature().call_type.label;
-        const call_reason = this.Call.getCallNature().call_reason.label;
+    sentComms(template: string, method: string) {
+        // const call_type = this.Call.getCallNature().call_type.label;
+        // const call_reason = this.Call.getCallNature().call_reason.label;
         let notify_method: string;
 
         switch (method) {
@@ -47,11 +41,9 @@ export class UHTriggerService {
                 break;
         }
 
-        switch (call_type) {
-            case 'Rent':
-                this._sentRentComms(template, notify_method, data);
-                break;
-        }
+        this.Call.recordCommsNote(template, notify_method)
+            .pipe(take(1))
+            .subscribe();
     }
 
     /**
@@ -59,17 +51,23 @@ export class UHTriggerService {
      */
     madePayment(amount: number, payment_reference: string) {
         // Only continue if there is an identified caller.
-        if (this.Call.isCallerIdentified()) {
-            console.log('Recording payment:', payment_reference, amount);
-            this.Call.recordAutomaticNote(`Rent payment taken: £${amount} (ref: ${payment_reference})`);
+        if (this.Call.isCallerIdentified() || this.Call.isCallerNonTenant()) {
+            this.Call.recordAutomaticNote(`Rent payment taken: £${amount} (ref: ${payment_reference})`)
+                .pipe(take(1))
+                .subscribe();
         }
     }
 
     /**
-     * Handle a comms template sent as a result of the Rent call type.
+     * Called when a statement was sent.
      */
-    _sentRentComms(template: string, method: string, data: { [propKey: string]: string }) {
-        this.Call.recordCommsNote(template, method);
+    sentStatement(method: string) {
+        if (this.Call.isCallerIdentified()) {
+            this.Call.recordAutomaticNote(`Statement sent by ${method}.`)
+                .pipe(take(1))
+                .subscribe();
+        }
     }
+
 
 }

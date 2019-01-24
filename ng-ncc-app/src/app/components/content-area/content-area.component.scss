@@ -5,3 +5,9 @@
     padding: 2rem;
     position: relative;
 }
+
+::ng-deep {
+    .govuk-main-wrapper {
+        outline: none !important;
+    }
+}

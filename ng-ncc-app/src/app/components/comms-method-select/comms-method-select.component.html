@@ -20,8 +20,10 @@
                 <div class="govuk-form-group">
 
                     <!-- Existing email addresses (from the caller). -->
-                    <div class="govuk-radios__item" *ngFor="let email_address of existingEmailAddresses(); let i = index; trackBy: trackByMethod">
-                        <input class="govuk-radios__input" id="method-email-{{ i }}" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="email_address">
+                    <div class="govuk-radios__item"
+                        *ngFor="let email_address of existingEmailAddresses(); let i = index; trackBy: trackByMethod">
+                        <input class="govuk-radios__input" id="method-email-{{ i }}" name="detail" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="email_address">
                         <label class="govuk-label govuk-radios__label" for="method-email-{{ i }}">
                             {{ email_address }}
                         </label>
@@ -31,12 +33,16 @@
                     <div class="govuk-radios__item govuk-!-width-one-half">
 
                         <!-- radio button. -->
-                        <input class="govuk-radios__input" id="method-email-new" name="detail" type="radio" [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="null">
+                        <input class="govuk-radios__input" id="method-email-new" name="detail" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="null">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="method-email-new"></label>
 
                         <!-- text field. -->
                         <label class="govuk-label govuk-visually-hidden" for="method-email-new-value">Use a different email address</label>
-                        <input id="method-email-new-value" class="govuk-input govuk-!-margin-left-3" type="email" name="new_email" [(ngModel)]="selection.create[methods.METHOD_EMAIL]" (focus)="prepareNewDetail(methods.METHOD_EMAIL)" (ngModelChange)="checkDetails()">
+                        <input id="method-email-new-value" class="govuk-input govuk-!-margin-left-3" type="email" name="new_email"
+                            [(ngModel)]="selection.create[methods.METHOD_EMAIL]"
+                            (focus)="prepareNewDetail(methods.METHOD_EMAIL)"
+                            (ngModelChange)="checkDetails()">
 
                     </div>
                 </div>
@@ -55,8 +61,10 @@
                 <div class="govuk-form-group">
 
                     <!-- Existing telephone numbers (from the caller). -->
-                    <div class="govuk-radios__item" *ngFor="let telephone_number of existingTelephoneNumbers(); let i = index; trackBy: trackByMethod">
-                        <input class="govuk-radios__input" id="method-mobile-{{ i }}" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="telephone_number">
+                    <div class="govuk-radios__item"
+                        *ngFor="let telephone_number of existingTelephoneNumbers(); let i = index; trackBy: trackByMethod">
+                        <input class="govuk-radios__input" id="method-mobile-{{ i }}" name="detail-mobile" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="telephone_number">
                         <label class="govuk-label govuk-radios__label" for="method-mobile-{{ i }}">
                             {{ telephone_number }}
                         </label>
@@ -66,12 +74,17 @@
                     <div class="govuk-radios__item govuk-!-width-one-half">
 
                         <!-- radio button. -->
-                        <input class="govuk-radios__input" id="method-mobile-new" name="detail-mobile" type="radio" [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="null">
+                        <input class="govuk-radios__input" id="method-mobile-new" name="detail-mobile" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="null">
                         <label class="govuk-label govuk-radios__label radio-text-field" for="method-mobile-new"></label>
 
                         <!-- text field. -->
                         <label class="govuk-label govuk-visually-hidden" for="method-mobile-new-value">Use a different mobile number</label>
-                        <input id="method-mobile-new-value" class="govuk-input govuk-!-margin-left-3" type="tel" name="new_mobile" [(ngModel)]="selection.create[methods.METHOD_SMS]" (focus)="prepareNewDetail(methods.METHOD_SMS)" (ngModelChange)="checkDetails()">
+                        <input id="method-mobile-new-value" class="govuk-input govuk-!-margin-left-3" type="tel" name="new_mobile"
+                            appNumbersOnly
+                            [(ngModel)]="selection.create[methods.METHOD_SMS]"
+                            (focus)="prepareNewDetail(methods.METHOD_SMS)"
+                            (ngModelChange)="checkDetails()">
 
                     </div>
                 </div>
@@ -88,10 +101,15 @@
             </div>
             <div class="govuk-radios__conditional" id="method-by-post" *ngIf="isPostSelected()">
 
-                <p class="govuk-body">
-                    This letter won’t be sent out automatically. You will need to write down the address and send this yourself.<br>
-                    Click ‘Send’ to capture that you are sending a letter yourself.
+                <p class="govuk-body" *ngIf="postText; else defaultPostText">
+                    {{ postText }}
                 </p>
+                <ng-template #defaultPostText>
+                    <p class="govuk-body">
+                        This letter won’t be sent out automatically. You will need to write down the address and send this yourself.<br>
+                        Click ‘Send’ to capture that you are sending a letter yourself.
+                    </p>
+                </ng-template>
 
             </div>
         </div>

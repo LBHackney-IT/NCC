@@ -1,8 +1,8 @@
-import { Injectable, Injector, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, Injector, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { initAll } from 'govuk-frontend';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { IAccountDetails } from '../../interfaces/account-details';
 import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
@@ -18,11 +18,15 @@ import { CONTACT } from '../../constants/contact.constant';
 import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
 import { UHTriggerService } from '../../services/uhtrigger.service';
 import { PageTitleService } from '../../services/page-title.service';
+import { CommsMethodSelectComponent } from '../../components/comms-method-select/comms-method-select.component';
+import { CommsTemplatesComponent } from '../../components/comms-templates/comms-templates.component';
 
 @Injectable()
-export class PageCommunications implements OnInit, OnDestroy {
+export abstract class PageCommunications implements OnInit, OnDestroy {
+    @ViewChild(CommsMethodSelectComponent) commsMethodSelect: CommsMethodSelectComponent;
+    @ViewChild(CommsTemplatesComponent) commsTemplates: CommsTemplatesComponent;
 
-    private _destroyed$ = new Subject();
+    protected _destroyed$ = new Subject();
 
     CONTACT_METHOD = CONTACT;
     _sending: boolean;
@@ -38,18 +42,26 @@ export class PageCommunications implements OnInit, OnDestroy {
     Call: CallService;
     NotifyAPI: NotifyAPIService;
     route: ActivatedRoute;
+    router: Router;
     UHTrigger: UHTriggerService;
     PageTitle: PageTitleService;
 
+    /**
+     * Component constructor.
+     */
     constructor(private injectorObj: Injector) {
         // See https://stackoverflow.com/a/48723478/4073160
         this.Call = this.injectorObj.get(CallService);
         this.NotifyAPI = this.injectorObj.get(NotifyAPIService);
         this.route = this.injectorObj.get(ActivatedRoute);
+        this.router = this.injectorObj.get(Router);
         this.UHTrigger = this.injectorObj.get(UHTriggerService);
         this.PageTitle = this.injectorObj.get(PageTitleService);
     }
 
+    /**
+     *
+     */
     ngOnInit() {
         this._sending = false;
         this.selected_option = null;
@@ -70,8 +82,19 @@ export class PageCommunications implements OnInit, OnDestroy {
             });
     }
 
+    /**
+     *
+     */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    resetComms() {
+        this.commsMethodSelect.reset();
+        this.commsTemplates.reset();
     }
 
     /**
@@ -104,7 +127,6 @@ export class PageCommunications implements OnInit, OnDestroy {
      */
     selectedOption(option: CommsOption) {
         this.selected_option = option;
-        console.log('selected comms template:', this.selected_option);
         this.updatePreview();
     }
 
@@ -166,18 +188,19 @@ export class PageCommunications implements OnInit, OnDestroy {
             return;
         }
 
-        if (CONTACT.METHOD_POST === this.selected_details.method) {
-            console.log('Sending something by post, nothing more to do.');
-            // TODO Record that something is going to be sent by post.
-            this.modal.confirmed = true;
-            return;
-        }
-
         const template_id: string = this.selected_option.templates[this.selected_details.method].id;
         const template_name: string = this.selected_option.name;
         const method: string = this.selected_details.method;
         const address: string = this.selected_details.getDetail();
-        const parameters = this.preview.parameters;
+        const parameters = this.preview ? this.preview.parameters : {};
+
+        if (CONTACT.METHOD_POST === this.selected_details.method) {
+            // Record that something is going to be sent by post.
+            this.UHTrigger.sentComms(template_name, method);
+
+            this.modal.confirmed = true;
+            return;
+        }
 
         this._sending = true;
         let observe: Observable<any>;
@@ -185,56 +208,34 @@ export class PageCommunications implements OnInit, OnDestroy {
         switch (method) {
             case CONTACT.METHOD_EMAIL:
                 // Send an email.
-                // TODO Record that something was sent via email.
-                console.log('send email', address, template_id);
                 observe = this.NotifyAPI.sendEmail(address, template_id, parameters);
                 break;
 
             case CONTACT.METHOD_SMS:
                 // Send a text message.
-                // TODO Record that something was sent via SMS.
-                console.log('send sms', address, template_id);
                 observe = this.NotifyAPI.sendSMS(address, template_id, parameters);
                 break;
 
             default:
-                console.log('Unsupported method:', method);
+                // console.log('Unsupported method:', method);
                 this._sending = false;
         }
 
+        // Send the communication.
         if (observe) {
-            const subscription = observe.subscribe(
-                (feedback) => {
-                    /*
-                    {
-                      "response": {
-                        "content": {
-                          "from_email": "hackney.council.housing.contact@notifications.service.gov.uk",
-                          "body": "...",
-                          "subject": "Your Call With Us"
-                        },
-                        "id": "3151d743-c118-42a7-bad6-85c57c8c1555",
-                        "reference": null,
-                        "uri": "https://api.notifications.service.gov.uk/v2/notifications/...",
-                        "template": {
-                          "id": "6dc4b959-62e1-4c28-abef-faf67376b372",
-                          "uri": "https://api.notifications.service.gov.uk/services/...",
-                          "version": 2
-                        }
-                      }
-                    }
-                    */
-                    this.modal.confirmed = true;
-
-                    this.UHTrigger.sentComms(template_name, method, parameters);
-                },
-                (error) => {
-                    this.modal.error = true;
-                },
-                () => {
-                    subscription.unsubscribe();
-                    this._sending = false;
-                });
+            observe
+                .pipe(finalize(() => { this._sending = false; }))
+                .pipe(take(1))
+                .subscribe(
+                    (feedback) => {
+                        // It was sent successfully.
+                        this.modal.confirmed = true;
+                        this.UHTrigger.sentComms(template_name, method);
+                    },
+                    (error) => {
+                        // Something went wrong.
+                        this.modal.error = true;
+                    });
         }
     }
 
@@ -245,6 +246,14 @@ export class PageCommunications implements OnInit, OnDestroy {
         return index;
     }
 
+    /**
+     *
+     */
+    commsSuccess() { }
+
+    /**
+     *
+     */
     commsError() {
         this._error = true;
     }

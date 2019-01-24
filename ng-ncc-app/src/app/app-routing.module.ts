@@ -6,27 +6,31 @@ import { PAGES } from './constants/pages.constant';
 import { AuthGuard } from './auth/auth.guard';
 
 import { PageAuthComponent } from './pages/auth/auth.component';
+import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
+import { PageCallbackComponent } from './pages/callback/callback.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
-import { PageHomeComponent } from './pages/home/home.component';
+import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
 import { PageIdentifyComponent } from './pages/identify/identify.component';
+import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
 import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
 import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
 import { PageLogCallComponent } from './pages/log-call/log-call.component';
-import { PagePaymentComponent } from './pages/payment/payment.component';
-import { PagePaymentMakeComponent } from './pages/payment/make/payment-make.component';
-import { PagePaymentSummaryComponent } from './pages/payment/summary/payment-summary.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
-import { PageRentCommunicationsComponent } from './pages/payment/communications/communications.component';
+import { PageRentCommunicationsComponent } from './pages/rent/communications/communications.component';
+import { PageRentComponent } from './pages/rent/rent.component';
+import { PageRentPaymentComponent } from './pages/rent/payment/payment.component';
+import { PageRentStatementComponent } from './pages/rent/statement/statement.component';
+import { PageRentTransactionsComponent } from './pages/rent/transactions/transactions.component';
 import { PageTransactionComponent } from './pages/transaction/transaction.component';
 import { PageTransactionErrorComponent } from './pages/transaction/error/error.component';
 import { PageTransactionFailedComponent } from './pages/transaction/failed/failed.component';
 import { PageTransactionSuccessComponent } from './pages/transaction/success/success.component';
-import { PageTransactionHistoryComponent } from './pages/payment/transactions/transaction-history.component';
 import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
 import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
+import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-non-tenant-caller-resolver.service';
 import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
@@ -48,10 +52,17 @@ export const AppRoutes: Routes = [
         component: PagePlaygroundComponent
     },
 
+    // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
+    // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
+    // Normally we would add child pages to this route, but we want to keep the existing route paths.
     {
-        // An authentication route for single sign on (SSO), which takes a userdata code to identify the logged in user.
-        // This route doesn't have its own page, but the AuthGuard is used to authenticate the user.
-        // Normally we would add child pages to this route, but we want to keep the existing route paths.
+        // This URL works the same as the one below, except we use it to enable "view only" mode.
+        path: `${PAGES.AUTHENTICATION.route}/:code/:viewonly`,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+        children: []
+    },
+    {
         path: `${PAGES.AUTHENTICATION.route}/:code`,
         pathMatch: 'full',
         canActivate: [AuthGuard],
@@ -67,10 +78,16 @@ export const AppRoutes: Routes = [
         component: PageLastCallsComponent,
         canActivate: [AuthGuard]
     },
+    // {
+    //     // Log Call page.
+    //     path: PAGES.LOG_CALL.route,
+    //     component: PageLogCallComponent,
+    //     canActivate: [AuthGuard]
+    // },
     {
-        // Log Call page.
-        path: PAGES.LOG_CALL.route,
-        component: PageLogCallComponent,
+        // Add Notes page.
+        path: PAGES.ADD_NOTES.route,
+        component: PageAddNotesComponent,
         canActivate: [AuthGuard]
     },
     {
@@ -103,29 +120,21 @@ export const AppRoutes: Routes = [
     {
         // Rent page.
         path: PAGES.RENT.route,
-        component: PagePaymentComponent,
+        component: PageRentComponent,
         canActivate: [AuthGuard],
         children: [
             {
-                // Rent > Summary.
-                path: PAGES.RENT_SUMMARY.route,
-                component: PagePaymentSummaryComponent,
-                resolve: {
-                    caller: IdentifiedCallerResolver
-                }
-            },
-            {
                 // Rent > Transactions.
                 path: PAGES.RENT_TRANSACTIONS.route,
-                component: PageTransactionHistoryComponent,
+                component: PageRentTransactionsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: IdentifiedOrNonTenantCallerResolver
                 }
             },
             {
                 // Rent > Make (Payment).
                 path: PAGES.RENT_PAYMENT.route,
-                component: PagePaymentMakeComponent,
+                component: PageRentPaymentComponent,
                 resolve: {
                     caller: CallerCanPayResolver
                 }
@@ -135,25 +144,44 @@ export const AppRoutes: Routes = [
                 path: PAGES.RENT_COMMS.route,
                 component: PageRentCommunicationsComponent,
                 resolve: {
-                    caller: IdentifiedCallerResolver
+                    caller: IdentifiedOrNonTenantCallerResolver
                 }
             },
             {
                 // Catch-all (which should go to the summary child page).
                 path: '',
                 pathMatch: 'full',
-                redirectTo: PAGES.RENT_SUMMARY.route
+                redirectTo: PAGES.RENT_TRANSACTIONS.route
             }
         ]
+    },
+    {
+        // Statement page.
+        path: PAGES.RENT_STATEMENT.route,
+        component: PageRentStatementComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+            caller: IdentifiedCallerResolver
+        }
     },
     {
         // Identify page.
         path: PAGES.IDENTIFY.route,
         component: PageIdentifyComponent,
         canActivate: [AuthGuard],
-        resolve: {
-            call_nature: CallNatureResolver
-        }
+        // resolve: {
+        //     call_nature: CallNatureResolver
+        // },
+        children: [
+            {
+                path: PAGES.IDENTIFY_ADDRESSES.route,
+                component: PageIdentifyAddressesComponent
+            },
+            {
+                path: PAGES.IDENTIFY_TENANTS.route,
+                component: PageIdentifyTenantsComponent
+            }
+        ]
     },
     {
         // [Edit] Contact Details page.
@@ -172,7 +200,7 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver,
-            call_nature: CallNatureResolver
+            // call_nature: CallNatureResolver
         }
     },
     {
@@ -186,10 +214,10 @@ export const AppRoutes: Routes = [
         }
     },
     {
-        // Log Additional Request page.
-        path: PAGES.ADDITIONAL_REASON.route,
+        // Request a Callback page.
+        path: PAGES.REQUEST_CALLBACK.route,
         canActivate: [AuthGuard],
-        component: PageLogAdditionalComponent,
+        component: PageCallbackComponent,
         resolve: {
             caller: CallerResolver
         }

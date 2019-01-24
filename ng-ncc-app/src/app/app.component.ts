@@ -1,13 +1,12 @@
 // APP component.
 // <app-root></app-root>
 
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { initAll } from 'govuk-frontend';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
-import { ContentAreaComponent } from './components/content-area/content-area.component';
 import { AuthService } from './services/auth.service';
 import { BackLinkService } from './services/back-link.service';
 
@@ -18,14 +17,19 @@ import { BackLinkService } from './services/back-link.service';
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-    @ViewChild(ContentAreaComponent) private contentArea: ContentAreaComponent;
-    // This is a reference to an <app-content-area> component within this component.
+
+    @ViewChild('content') contentArea: ElementRef;
 
     loading = false;
 
     private _destroyed$ = new Subject();
 
-    constructor(private router: Router, private Auth: AuthService, private BackLink: BackLinkService) {
+    constructor(
+        private router: Router,
+        private Auth: AuthService,
+        private BackLink: BackLinkService
+    ) {
+        // This part handles the display of the route loading activity bar.
         this.router.events
             .pipe(
                 takeUntil(this._destroyed$)
@@ -41,7 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
                     case event instanceof NavigationEnd:
                         // Scroll the content area to the top of its content.
-                        this.contentArea.scrollToTop();
                         this.loading = false;
 
                         // By default disable (or hide) the back link.
@@ -57,25 +60,25 @@ export class AppComponent implements OnInit, OnDestroy {
             });
     }
 
-    /**
-     *
-     */
     ngOnInit() {
         // initAll(); // initialise GOV.UK Frontend components.
     }
 
-    /**
-     *
-     */
     ngOnDestroy() {
         this._destroyed$.next();
     }
 
     /**
-     *
+     * Returns TRUE if there is a logged in user.
      */
     loggedIn(): boolean {
         return this.Auth.isLoggedIn();
+    }
+
+    jumpToContent(event) {
+        this.contentArea.nativeElement.scrollIntoView();
+        this.contentArea.nativeElement.focus();
+        return false;
     }
 
 }
