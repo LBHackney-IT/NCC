@@ -1,82 +1,76 @@
-# NCC CRM Front End
+# Hackney Neighbourhood Contact Centre (NCC) CRM project.
 
 [![Known Vulnerabilities](https://snyk.io/test/github/LBHackney-IT/NCC/badge.svg?targetFile=ng-ncc-app%2Fpackage.json)](https://snyk.io/test/github/LBHackney-IT/NCC?targetFile=ng-ncc-app%2Fpackage.json)
-[![GitHub license](https://img.shields.io/github/license/LBHackney-IT/NCC.svg)](https://github.com/LBHackney-IT/NCC/blob/master/LICENSE)
-[![GitHub forks](https://img.shields.io/github/forks/LBHackney-IT/NCC.svg)](https://github.com/LBHackney-IT/NCC/network)
-[![CodeFactor](https://www.codefactor.io/repository/github/lbhackney-it/ncc/badge)](https://www.codefactor.io/repository/github/lbhackney-it/ncc)
 
-A modern JavaScript front end for Hackney Council's Neighbourhood Contact Centre (NCC) CRM.
+Making use of:
 
-https://sites.google.com/hackney.gov.uk/ncccrm/home
+- Angular 6 (via Angular CLI)
+- [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend).
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-[Node Package Manager (npm)](https://npmjs.com) is required to run this project.
-
-### Installing
-
-Install this project's dependencies:
+## Angular app
+The Angular app is currently stored in the `ng-ncc-app` subfolder.
 
 ```
-# using npm
-npm install
-
-# using yarn
-yarn install
+cd ng-ncc-app
+npm install (or yarn install)
+ng serve
 ```
 
-Run the app locally:
+## App version number
 
+### What's the current version number?
 ```
-ng serve --open
+npm version
 ```
 
-## Deployment
-
-**TEST Dev site**
+### Update the current version number...
 ```
-ng build -c dev-test
+npm version major # increment the version major number
+npm version minor # increment the version minor number
+npm version patch # increment the version patch number
 ```
-Resulting project will be placed in the `dist/dev-test` folder.
 
-## *DEVELOPMENT* test site
+### If building the app throws an error with a missing `versioning.js` file:
+```
+cd ng-ncc-app
+node src/versioning.js
+```
+This creates a `versioning.js` file used by the app to obtain the current version number.
+
+## BUILDING site versions
+When copying files over to the host folders, **be careful not to remove the `web.config` file** Everything else should be safe to delete or replace.
+
+### *DEVELOPMENT* test site
+This is no longer used, but while available it might be useful for testing scenarios that require non-*localhost* URLs.
 
 Single Sign On (SSO): http://lbhwebintd01:1010
 
+View Only mode: http://lbhwebintd01:1010/default.aspx?viewonly
+
 Front end: http://lbhwebintd01:2020
 
-## *LIVE* test site
-
 ```
-ng build -c live-test
+npm build -c dev-site
 ```
-Resulting project will be placed in the `dist/live-test` folder.
 
+### *LIVE* test site
 Single Sign On (SSO): http://lbhwebintd01:3030
+
+View Only mode: http://lbhwebintd01:3030/default.aspx?viewonly
 
 Front end: http://lbhwebintd01:4040
 
 ```
-ng build --prod
+npm build -c live-site
 ```
-Resulting project will be placed in the `dist/ng-ncc-app` folder.
 
-Single Sign On (SSO): http://ncc.hackney.gov.uk
-Front end: http://lbhwsappp01:3030
+### *PRODUCTION/LIVE* site
+Single Sign On (SSO): http://lbhwsappp01:3030
 
-## Built With
+View Only mode: http://lbhwsappp01:3030/default.aspx?viewonly
 
-* [Angular](https://angular.io) - modern JavaScript framework
-* [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend) - CSS framework
+Front end: http://secure.ncc.hackney.gov.uk:4040
 
-## Authors
-
-* **Drew Maughan** - *Front End Developer*
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+```
+npm build --prod
+```
