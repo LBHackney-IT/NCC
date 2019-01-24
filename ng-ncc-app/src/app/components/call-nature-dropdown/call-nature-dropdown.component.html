@@ -13,7 +13,7 @@
             Select call type
         </label>
         <select class="govuk-select govuk-input--width-20" id="call_type" name="call_type" [(ngModel)]="selected.call_type"
-            [disabled]="!this.call_types" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
+            [disabled]="disabled || !this.call_types" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
             <option [ngValue]="null" selected>- select a call type</option>
             <option *ngFor="let item of call_types; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
         </select>
@@ -48,6 +48,7 @@
             </label>
             <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
                 placeholder="Specify the call reason" maxlength="50" #otherReasonField
+                [disabled]="disabled"
                 [(ngModel)]="selected.other_reason" (ngModelChange)="updateSelection()">
         </div>
     </div>

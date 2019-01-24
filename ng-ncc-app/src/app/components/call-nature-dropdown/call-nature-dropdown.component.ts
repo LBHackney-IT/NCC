@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -16,11 +16,13 @@ import { CALL_REASON } from '../../constants/call-reason.constant';
 })
 export class CallNatureDropdownComponent extends CallNatureComponent {
 
+    @Input() disabled: boolean;
+
     /**
      *
      */
     canSelectCallReason(): boolean {
-        return this.isCallTypeSelected() && undefined !== this.call_reasons;
+        return !this.disabled && this.isCallTypeSelected() && undefined !== this.call_reasons;
     }
 
 }

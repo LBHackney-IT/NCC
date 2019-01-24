@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,6 +13,7 @@ import { ContactDetailsUpdate } from '../../classes/contact-details-update.class
     styleUrls: ['./comms-telephone.component.scss']
 })
 export class CommsTelephoneComponent implements OnInit {
+    @Input() disabled: boolean;
     @Output() selectedChange = new EventEmitter<string>();
 
     private _destroyed$ = new Subject();
