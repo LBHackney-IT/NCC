@@ -100,11 +100,12 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     toggle() {
         this.Notes.toggle();
 
-        // Set the focus on the comment field if the form is visible.
-        // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
         if (this.Notes.isVisible()) {
+            // Set the focus on the comment field if the form is visible.
+            // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
             setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
         } else {
+            this._resetComment();
             this.error = false;
         }
     }
@@ -217,6 +218,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      */
     _resetComment() {
         this.comment = null;
+        this.transferred = false;
     }
 
     /**
@@ -230,7 +232,12 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      *
      */
     isCallNatureSelected(): boolean {
-        return this.call_nature instanceof ILogCallSelection;
+        if (this.call_nature) {
+            if (this.call_nature.call_reason) {
+                return (CALL_REASON.OTHER !== this.call_nature.call_reason.id || !!(this.call_nature.other_reason));
+            }
+        }
+        return false;
     }
 
 }

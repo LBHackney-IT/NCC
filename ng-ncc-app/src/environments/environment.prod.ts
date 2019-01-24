@@ -27,6 +27,6 @@ export const environment = {
     },
     previousCallCount: 50,
     notifyTemplate: {
-        statement: 'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
+        statement: '77f78f80-7e23-4500-8aec-6ed1bc9f3276'
     }
 };

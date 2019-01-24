@@ -31,7 +31,7 @@
 
     <form (submit)="sendStatement($event)" *ngIf="statement_url">
 
-        <!-- An IFRAME displaying the statement. -->
+        <!-- An IFRAME displaying the rent transactions. -->
         <iframe [src]="statement_url" width="100%" height="500"></iframe>
 
         <!-- Select the communications method. -->
@@ -39,13 +39,13 @@
         <div class="govuk-!-margin-top-5 govuk-!-margin-bottom-5">
             <app-comms-method-select
                 [disableSMS]="true"
-                [postText]="'Print the statement by clicking the \'print\' button in the window above.'"
+                [postText]="'Print the Rent Transactions by clicking the \'print\' button in the window above.'"
                 (selected)="onSelectCommsMethod($event)"
                 (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
         </div>
 
         <!-- Send the message to the caller. -->
-        <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()" [disabled]="sending">
+        <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()" [disabled]="!canSend()">
             {{ getButtonText() }}
         </button>
 
@@ -58,7 +58,7 @@
 
     <app-dialogue [(show)]="modal.error">
         <app-warning>
-            There was a problem with sending the statement.
+            There was a problem with sending the rent transactions.
         </app-warning>
     </app-dialogue>
 

@@ -34,7 +34,7 @@
                         <app-note-type [type]="row.notesType"></app-note-type>
                     </td>
                     <td class="govuk-table__cell">{{ getTenantName(row) }}</td>
-                    <td class="govuk-table__cell" [innerHtml]="row.callType || 'Rent'"></td>
+                    <td class="govuk-table__cell" [innerHtml]="getCallType(row)"></td>
                     <td class="govuk-table__cell" [innerHtml]="getCallReason(row)"></td>
                     <td class="govuk-table__cell">{{ row.templatename }}</td>
                     <td class="govuk-table__cell">{{ row.channeltype }}</td>

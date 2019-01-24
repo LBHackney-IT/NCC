@@ -91,7 +91,7 @@ export class NCCAPIService {
         }
 
         const parameters = Object.assign({
-            callReasonId: settings.call_reason_id,
+            callReasonId: settings.call_reason_id || '',
             otherReason: settings.other_reason,
             'ServiceRequest.Id': settings.call_id,
             'ServiceRequest.TicketNumber': settings.ticket_number,
