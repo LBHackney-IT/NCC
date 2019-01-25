@@ -1,4 +1,4 @@
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -372,6 +372,22 @@ export class NCCAPIService {
         return this.http
             .get(`${this._url}UH/GetAllTenancyTransactionStatements?${this._buildQueryString(parameters)}`, {})
             .pipe(map((response) => <ITenancyTransactionRow[]>response));
+
+    }
+
+    /**
+     *
+     */
+    getCallbackDetails(
+        callbackID: string
+    ): Observable<ITenancyTransactionRow[]> {
+
+        const parameters = {
+            CallbackId: callbackID
+        };
+
+        return this.http
+            .get(`${this._url}Callback/GetCallbackDetails?${this._buildQueryString(parameters)}`, {});
 
     }
 

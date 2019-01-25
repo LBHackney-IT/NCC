@@ -6,17 +6,19 @@ import { PageRespondComponent } from './pages/respond/respond.component';
 
 export const AppRoutes: Routes = [
     {
+        // Accessing this app with no parameters.
         path: '',
+        component: PageRespondComponent
+    },
+    {
+        // Accessing this app with a callback ID and email address.
+        path: ':callbackID/:email',
         component: PageRespondComponent
     },
 ];
 
 @NgModule({
-    exports: [
-        RouterModule
-    ],
-    imports: [
-        RouterModule.forRoot(AppRoutes)
-    ]
+    exports: [RouterModule],
+    imports: [RouterModule.forRoot(AppRoutes)]
 })
 export class AppRoutingModule { }
