@@ -16,6 +16,7 @@
         <app-value-list-value>
             <div *ngFor="let number of getTelephoneNumbers(); trackBy: trackByMethod">
                 {{ number }}
+                <b *ngIf="isDefaultTelephone(number)">[default]</b>
             </div>
             <em *ngIf="hasNoTelephoneNumbers()">none</em>
         </app-value-list-value>
@@ -25,6 +26,7 @@
         <app-value-list-value>
             <div *ngFor="let email of getEmailAddresses(); trackBy: trackByMethod">
                 {{ email }}
+                <b *ngIf="isDefaultEmail(email)">[default]</b>
             </div>
             <em *ngIf="hasNoEmailAddresses()">none</em>
         </app-value-list-value>
