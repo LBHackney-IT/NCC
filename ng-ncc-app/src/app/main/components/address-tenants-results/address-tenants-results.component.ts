@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output, OnChanges, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
-import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
-import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { NonTenantCaller } from '../../classes/non-tenant-caller.class';
-import { DPAService } from '../../services/dpa.service';
+import { ICitizenIndexSearchResult } from '../../../common/interfaces/citizen-index-search-result';
+import { IAddressSearchGroupedResult } from '../../../common/interfaces/address-search-grouped-result';
+import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
+import { NonTenantCaller } from '../../../common/classes/non-tenant-caller.class';
+import { DPAService } from '../../../common/services/dpa.service';
 
 @Component({
     selector: 'app-address-tenants-results',

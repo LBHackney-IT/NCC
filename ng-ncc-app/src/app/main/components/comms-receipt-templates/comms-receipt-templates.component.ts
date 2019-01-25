@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CommsTemplatesComponent } from '../comms-templates/comms-templates.component';
-import { CommsOption } from '../../classes/comms-option.class';
+import { CommsOption } from '../../../common/classes/comms-option.class';
 
 @Component({
     selector: 'app-comms-receipt-templates',

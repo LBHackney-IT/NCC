@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 
-import { IAccountDetails } from '../../../interfaces/account-details';
-import { ContactDetailsUpdate } from '../../../classes/contact-details-update.class';
-import { IdentifiedCaller } from '../../../classes/identified-caller.class';
-import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
-import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
+import { IAccountDetails } from '../../../../common/interfaces/account-details';
+import { ContactDetailsUpdate } from '../../../../common/classes/contact-details-update.class';
+import { IdentifiedCaller } from '../../../../common/classes/identified-caller.class';
+import { NCCAPIService } from '../../../../common/API/NCCAPI/ncc-api.service';
+import { ManageATenancyAPIService } from '../../../../common/API/ManageATenancyAPI/manageatenancy-api.service';
 
 @Component({
     selector: 'app-address-tenant',

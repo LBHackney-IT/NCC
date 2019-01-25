@@ -9,10 +9,10 @@ import { ChecklistModule } from 'angular-checklist';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { LayoutModule } from '../common/layout/layout.module';
-import { ComponentModule } from '../common/component/component.module';
+import { ComponentsModule } from '../common/components/components.module';
 
-import { HelperService } from './services/helper.service';
-import { WindowService } from './services/window.service';
+import { HelperService } from '../common/services/helper.service';
+import { WindowService } from '../common/services/window.service';
 
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
@@ -51,7 +51,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AddressResultTenantComponent } from './components/address-tenants-results/tenant/tenant.component';
 import { AddressSearchResultsComponent } from './components/address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './components/address-tenants-results/address-tenants-results.component';
-import { AgentComponent } from './components/agent/agent.component';
 import { BackLinkComponent } from './components/back-link/back-link.component';
 import { CallNatureComponent } from './components/call-nature/call-nature.component';
 import { CallNatureDropdownComponent } from './components/call-nature-dropdown/call-nature-dropdown.component';
@@ -59,7 +58,6 @@ import { CommsMethodSelectComponent } from './components/comms-method-select/com
 import { CommsReceiptTemplatesComponent } from './components/comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './components/comms-templates/comms-templates.component';
 import { ConfirmDialogueComponent } from './components/dialogue/confirm/confirm-dialogue.component';
-import { CurrentCallerComponent } from './components/current-caller/current-caller.component';
 import { DPADialogueComponent } from './components/dialogue/dpa/dpa-dialogue.component';
 import { DPATenancyComponent } from './components/dpa-tenancy/dpa-tenancy.component';
 import { DateFieldComponent } from './components/date-field/date-field.component';
@@ -96,7 +94,6 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         AddressResultTenantComponent,
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
-        AgentComponent,
         AppComponent,
         BackLinkComponent,
         CallNatureComponent,
@@ -105,7 +102,6 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         CommsReceiptTemplatesComponent,
         CommsTemplatesComponent,
         ConfirmDialogueComponent,
-        CurrentCallerComponent,
         DPADialogueComponent,
         DPATenancyComponent,
         DateFieldComponent,
@@ -169,7 +165,7 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         ChecklistModule,
 
         LayoutModule,
-        ComponentModule,
+        ComponentsModule,
 
         // Set up routing.
         AppRoutingModule

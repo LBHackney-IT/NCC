@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ComponentModule } from '../common/component/component.module';
+import { ComponentsModule } from '../common/components/components.module';
 import { LayoutModule } from '../common/layout/layout.module';
 import { PageRespondComponent } from './pages/respond/respond.component';
 
@@ -25,7 +25,7 @@ import { PageRespondComponent } from './pages/respond/respond.component';
         AppRoutingModule,
 
         LayoutModule,
-        ComponentModule
+        ComponentsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

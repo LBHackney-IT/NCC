@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { PAGES } from '../../../constants/pages.constant';
-import { IAccountDetails } from '../../../interfaces/account-details';
-import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/manageatenancy-api.service';
+import { PAGES } from '../../../../common/constants/pages.constant';
+import { IAccountDetails } from '../../../../common/interfaces/account-details';
+import { ManageATenancyAPIService } from '../../../../common/API/ManageATenancyAPI/manageatenancy-api.service';
 import { PageHistory } from '../../abstract/history';
-import { CallService } from '../../../services/call.service';
-import { PageTitleService } from '../../../services/page-title.service';
+import { CallService } from '../../../../common/services/call.service';
+import { PageTitleService } from '../../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-rent-transactions',

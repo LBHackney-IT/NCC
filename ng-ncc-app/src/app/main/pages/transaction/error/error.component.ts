@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PAGES } from '../../../constants/pages.constant';
-import { PageTitleService } from '../../../services/page-title.service';
-import { TransactionService } from '../../../services/transaction.service';
+import { PAGES } from '../../../../common/constants/pages.constant';
+import { PageTitleService } from '../../../../common/services/page-title.service';
+import { TransactionService } from '../../../../common/services/transaction.service';
 
 @Component({
     selector: 'app-error',

@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output } 
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 
-import { CONTACT } from '../../constants/contact.constant';
-import { CommsSelection } from '../../classes/comms-selection.class';
-import { ICommsMethodDetails } from '../../interfaces/comms-method-details';
-import { CallService } from '../../services/call.service';
-import { ICaller } from '../../interfaces/caller';
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
+import { CONTACT } from '../../../common/constants/contact.constant';
+import { CommsSelection } from '../../../common/classes/comms-selection.class';
+import { ICommsMethodDetails } from '../../../common/interfaces/comms-method-details';
+import { CallService } from '../../../common/services/call.service';
+import { ICaller } from '../../../common/interfaces/caller';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { ContactDetailsUpdate } from '../../../common/classes/contact-details-update.class';
 
 @Component({
     selector: 'app-comms-method-select',

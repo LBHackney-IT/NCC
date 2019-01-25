@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from '../../environments/environment';
 
-import { PAGES } from './constants/pages.constant';
+import { PAGES } from '../common/constants/pages.constant';
 import { AuthGuard } from './auth/auth.guard';
 
 import { PageAuthComponent } from './pages/auth/auth.component';

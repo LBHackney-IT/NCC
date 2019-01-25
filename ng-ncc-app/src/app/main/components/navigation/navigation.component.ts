@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { CallService } from '../../services/call.service';
-import { NotesService } from '../../services/notes.service';
-import { ViewOnlyService } from '../../services/view-only.service';
-import { PAGES } from '../../constants/pages.constant';
+import { CallService } from '../../../common/services/call.service';
+import { NotesService } from '../../../common/services/notes.service';
+import { ViewOnlyService } from '../../../common/services/view-only.service';
+import { PAGES } from '../../../common/constants/pages.constant';
 
 @Component({
     selector: 'app-navigation',

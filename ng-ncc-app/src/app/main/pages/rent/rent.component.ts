@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, of } from 'rxjs';
 import { take, takeUntil, catchError } from 'rxjs/operators';
 
-import { PAGES } from '../../constants/pages.constant';
-import { CallService } from '../../services/call.service';
-import { IAccountDetails } from '../../interfaces/account-details';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { CallService } from '../../../common/services/call.service';
+import { IAccountDetails } from '../../../common/interfaces/account-details';
 
 @Component({
     selector: 'app-rent',

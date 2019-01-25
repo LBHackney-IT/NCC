@@ -8,17 +8,17 @@ import * as moment from 'moment';
 
 // NOTE: Statements are now referred to as Rent Transactions in the front end.
 
-import { PAGES } from '../../../constants/pages.constant';
-import { CONTACT } from '../../../constants/contact.constant';
+import { PAGES } from '../../../../common/constants/pages.constant';
+import { CONTACT } from '../../../../common/constants/contact.constant';
 import { PageCommunications } from '../../abstract/communications';
-import { BackLinkService } from '../../../services/back-link.service';
-import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
-import { CommsSelection } from '../../../classes/comms-selection.class';
-import { IAccountDetails } from '../../../interfaces/account-details';
-import { INotifyAPIJSONResult } from '../../../interfaces/notify-api-json-result';
-import { INotifyStatementParameters } from '../../../interfaces/notify-statement-parameters';
-import { ITenancyAgreementDetails } from '../../../interfaces/tenancy-agreement-details';
-import { UHTriggerService } from '../../../services/uhtrigger.service';
+import { BackLinkService } from '../../../../common/services/back-link.service';
+import { NCCAPIService } from '../../../../common/API/NCCAPI/ncc-api.service';
+import { CommsSelection } from '../../../../common/classes/comms-selection.class';
+import { IAccountDetails } from '../../../../common/interfaces/account-details';
+import { INotifyAPIJSONResult } from '../../../../common/interfaces/notify-api-json-result';
+import { INotifyStatementParameters } from '../../../../common/interfaces/notify-statement-parameters';
+import { ITenancyAgreementDetails } from '../../../../common/interfaces/tenancy-agreement-details';
+import { UHTriggerService } from '../../../../common/services/uhtrigger.service';
 
 @Component({
     selector: 'app-rent-statement',

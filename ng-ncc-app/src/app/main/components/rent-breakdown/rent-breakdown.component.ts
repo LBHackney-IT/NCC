@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { take } from 'rxjs/operators';
 
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { IAccountDetails } from '../../interfaces/account-details';
-import { IRentBreakdown } from '../../interfaces/rent-breakdown';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { IAccountDetails } from '../../../common/interfaces/account-details';
+import { IRentBreakdown } from '../../../common/interfaces/rent-breakdown';
 
 @Component({
     selector: 'app-rent-breakdown',

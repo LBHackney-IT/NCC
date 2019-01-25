@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output, OnChanges, OnInit, OnDestroy, S
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
-import { ITemplatePreviewSettings } from '../../interfaces/template-preview-settings';
-import { INotifyAPITemplate } from '../../interfaces/notify-api-template';
+import { NotifyAPIService } from '../../../common/API/NotifyAPI/notify-api.service';
+import { ITemplatePreviewSettings } from '../../../common/interfaces/template-preview-settings';
+import { INotifyAPITemplate } from '../../../common/interfaces/notify-api-template';
 
 @Component({
     selector: 'app-notify-template-preview',

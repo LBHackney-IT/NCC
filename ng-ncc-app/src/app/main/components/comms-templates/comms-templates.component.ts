@@ -3,9 +3,9 @@ import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angu
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { CONTACT } from '../../constants/contact.constant';
-import { CommsOption } from '../../classes/comms-option.class';
-import { NotifyAPIService } from '../../API/NotifyAPI/notify-api.service';
+import { CONTACT } from '../../../common/constants/contact.constant';
+import { CommsOption } from '../../../common/classes/comms-option.class';
+import { NotifyAPIService } from '../../../common/API/NotifyAPI/notify-api.service';
 
 @Component({
     selector: 'app-comms-templates',

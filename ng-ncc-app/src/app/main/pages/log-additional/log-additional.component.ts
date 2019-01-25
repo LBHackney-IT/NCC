@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PAGES } from '../../constants/pages.constant';
-import { CallService } from '../../services/call.service';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { CallService } from '../../../common/services/call.service';
 import { PageLogCallNature } from '../abstract/log-call-nature';
-import { PageTitleService } from '../../services/page-title.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-log-additional',

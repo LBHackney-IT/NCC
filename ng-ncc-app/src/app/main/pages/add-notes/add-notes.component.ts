@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 
-import { PAGES } from '../../constants/pages.constant';
-import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
-import { CallRevisionService } from '../../services/call-revision.service';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { ManageATenancyAPIService } from '../../../common/API/ManageATenancyAPI/manageatenancy-api.service';
+import { CallRevisionService } from '../../../common/services/call-revision.service';
 import { PageNotes } from '../abstract/notes';
-import { AuthService } from '../../services/auth.service';
-import { BackLinkService } from '../../services/back-link.service';
-import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
-import { ILastCall } from '../../interfaces/last-call';
+import { AuthService } from '../../../common/services/auth.service';
+import { BackLinkService } from '../../../common/services/back-link.service';
+import { IAccountDetailsByReference } from '../../../common/interfaces/account-details-by-reference';
+import { ILastCall } from '../../../common/interfaces/last-call';
 
 @Component({
     selector: 'app-add-notes',

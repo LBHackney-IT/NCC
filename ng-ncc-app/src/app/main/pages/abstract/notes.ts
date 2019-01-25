@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { PAGES } from '../../constants/pages.constant';
+import { PAGES } from '../../../common/constants/pages.constant';
 import { PageHistory } from '../abstract/history';
-import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { CallService } from '../../services/call.service';
-import { NotesService } from '../../services/notes.service';
-import { PageTitleService } from '../../services/page-title.service';
+import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
+import { CallService } from '../../../common/services/call.service';
+import { NotesService } from '../../../common/services/notes.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
 
 export abstract class PageNotes extends PageHistory implements OnInit {
 

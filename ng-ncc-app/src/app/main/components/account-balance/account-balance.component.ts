@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { IAccountDetails } from '../../interfaces/account-details';
-import { NextPaymentService } from '../../services/next-payment.service';
+import { IAccountDetails } from '../../../common/interfaces/account-details';
+import { NextPaymentService } from '../../../common/services/next-payment.service';
 
 @Component({
     selector: 'app-account-balance',

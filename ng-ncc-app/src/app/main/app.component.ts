@@ -1,14 +1,15 @@
 // APP component.
 // <app-root></app-root>
 
+import { VERSION } from '../../environments/version';
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { initAll } from 'govuk-frontend';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
-import { BackLinkService } from './services/back-link.service';
+import { AuthService } from '../common/services/auth.service';
+import { BackLinkService } from '../common/services/back-link.service';
 
 @Component({
     selector: 'app-root',
@@ -79,6 +80,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.contentArea.nativeElement.scrollIntoView();
         this.contentArea.nativeElement.focus();
         return false;
+    }
+
+    /**
+     * Returns the current version number.
+     */
+    getVersion(): string {
+        const tag_string = VERSION.tag ? ` (${VERSION.tag})` : '';
+        return `version ${VERSION.version}${tag_string}`;
     }
 
 }

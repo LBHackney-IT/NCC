@@ -2,11 +2,11 @@ import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnIn
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
-import { ILogCallSelection } from '../../interfaces/log-call-selection';
-import { LogCallReason } from '../../classes/log-call-reason.class';
-import { LogCallType } from '../../classes/log-call-type.class';
-import { CALL_REASON } from '../../constants/call-reason.constant';
+import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
+import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
+import { LogCallReason } from '../../../common/classes/log-call-reason.class';
+import { LogCallType } from '../../../common/classes/log-call-type.class';
+import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 
 @Component({
     selector: 'app-call-nature',

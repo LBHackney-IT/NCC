@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PAGES } from '../../constants/pages.constant';
+import { PAGES } from '../../../common/constants/pages.constant';
 import { PageCommunications } from '../abstract/communications';
-import { PageTitleService } from '../../services/page-title.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-page-comms',

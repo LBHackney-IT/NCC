@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 
-import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
-import { HelperService } from '../../../services/helper.service';
-import { ICallbackDetails } from '../../../interfaces/callback-details';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { HelperService } from '../../../common/services/helper.service';
+import { ICallbackDetails } from '../../../common/interfaces/callback-details';
 
 @Component({
     selector: 'app-page-respond',

@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { AuthService } from '../../services/auth.service';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { AuthService } from '../../../common/services/auth.service';
 
 @Component({
     selector: 'app-editorial',

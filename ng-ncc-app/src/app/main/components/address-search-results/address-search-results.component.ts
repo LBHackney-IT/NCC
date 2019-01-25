@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
-import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
+import { ICitizenIndexSearchResult } from '../../../common/interfaces/citizen-index-search-result';
+import { IAddressSearchGroupedResult } from '../../../common/interfaces/address-search-grouped-result';
 
 @Component({
     selector: 'app-address-search-results',

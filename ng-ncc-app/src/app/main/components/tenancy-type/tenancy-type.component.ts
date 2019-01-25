@@ -1,8 +1,8 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 
-import { IAccountDetails } from '../../interfaces/account-details';
-import { ManageATenancyAPIService } from '../../API/ManageATenancyAPI/manageatenancy-api.service';
+import { IAccountDetails } from '../../../common/interfaces/account-details';
+import { ManageATenancyAPIService } from '../../../common/API/ManageATenancyAPI/manageatenancy-api.service';
 
 @Component({
     selector: 'app-tenancy-type',

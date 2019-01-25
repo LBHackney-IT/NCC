@@ -3,10 +3,10 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
-import { PAGES } from '../../../constants/pages.constant';
-import { AddressSearchService } from '../../../services/address-search.service';
-import { IAddressSearchGroupedResult } from '../../../interfaces/address-search-grouped-result';
-import { ICitizenIndexSearchResult } from '../../../interfaces/citizen-index-search-result';
+import { PAGES } from '../../../../common/constants/pages.constant';
+import { AddressSearchService } from '../../../../common/services/address-search.service';
+import { IAddressSearchGroupedResult } from '../../../../common/interfaces/address-search-grouped-result';
+import { ICitizenIndexSearchResult } from '../../../../common/interfaces/citizen-index-search-result';
 
 @Component({
     selector: 'app-addresses',

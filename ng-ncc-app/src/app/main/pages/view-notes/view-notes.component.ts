@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { PAGES } from '../../constants/pages.constant';
+import { PAGES } from '../../../common/constants/pages.constant';
 import { PageNotes } from '../abstract/notes';
-import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { CallService } from '../../services/call.service';
-import { PageTitleService } from '../../services/page-title.service';
+import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
+import { CallService } from '../../../common/services/call.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-view-notes',

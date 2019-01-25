@@ -4,9 +4,9 @@ import { Route, Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { PAGES } from '../constants/pages.constant';
-import { AuthService } from '../services/auth.service';
-import { ViewOnlyService } from '../services/view-only.service';
+import { PAGES } from '../../common/constants/pages.constant';
+import { AuthService } from '../../common/services/auth.service';
+import { ViewOnlyService } from '../../common/services/view-only.service';
 
 @Injectable({
     providedIn: 'root'

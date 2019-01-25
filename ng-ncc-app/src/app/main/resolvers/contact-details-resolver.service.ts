@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { CallService } from '../services/call.service';
-import { IContactDetails } from '../interfaces/contact-details';
-import { IdentifiedCaller } from '../classes/identified-caller.class';
-import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
+import { CallService } from '../../common/services/call.service';
+import { IContactDetails } from '../../common/interfaces/contact-details';
+import { IdentifiedCaller } from '../../common/classes/identified-caller.class';
+import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
 
 @Injectable()
 export class ContactDetailsResolver implements Resolve<any[]> {

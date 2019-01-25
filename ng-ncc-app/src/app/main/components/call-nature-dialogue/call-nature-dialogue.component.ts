@@ -2,16 +2,16 @@ import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, 
 import { Observable, of, forkJoin, Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
-import { LogCallReason } from '../../classes/log-call-reason.class';
-import { LogCallType } from '../../classes/log-call-type.class';
-import { CALL_REASON } from '../../constants/call-reason.constant';
+import { LogCallReason } from '../../../common/classes/log-call-reason.class';
+import { LogCallType } from '../../../common/classes/log-call-type.class';
+import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 import { ConfirmDialogueComponent } from '../dialogue/confirm/confirm-dialogue.component';
 
-import { ILogCallSelection } from '../../interfaces/log-call-selection';
+import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
 
-import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
-import { NotesService } from '../../services/notes.service';
-import { ViewOnlyService } from '../../services/view-only.service';
+import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
+import { NotesService } from '../../../common/services/notes.service';
+import { ViewOnlyService } from '../../../common/services/view-only.service';
 
 @Component({
     selector: 'app-call-nature-dialogue',

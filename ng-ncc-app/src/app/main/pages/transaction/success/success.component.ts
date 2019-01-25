@@ -1,12 +1,12 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PAGES } from '../../../constants/pages.constant';
-import { IParisResponse } from '../../../interfaces/paris-response';
-import { CallService } from '../../../services/call.service';
-import { TransactionService } from '../../../services/transaction.service';
+import { PAGES } from '../../../../common/constants/pages.constant';
+import { IParisResponse } from '../../../../common/interfaces/paris-response';
+import { CallService } from '../../../../common/services/call.service';
+import { TransactionService } from '../../../../common/services/transaction.service';
 import { PageCommunications } from '../../abstract/communications';
-import { PageTitleService } from '../../../services/page-title.service';
+import { PageTitleService } from '../../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-success',

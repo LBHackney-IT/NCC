@@ -1,9 +1,9 @@
 import { Component, Injector, OnInit } from '@angular/core';
 
-import { PAGES } from '../../../constants/pages.constant';
+import { PAGES } from '../../../../common/constants/pages.constant';
 import { PageRentPaymentComponent } from '../../rent/payment/payment.component';
-import { PageTitleService } from '../../../services/page-title.service';
-import { TransactionService } from '../../../services/transaction.service';
+import { PageTitleService } from '../../../../common/services/page-title.service';
+import { TransactionService } from '../../../../common/services/transaction.service';
 
 @Component({
     selector: 'app-failed',

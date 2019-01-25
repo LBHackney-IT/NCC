@@ -4,8 +4,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { take } from 'rxjs/operators';
 
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { ITenancyAgreementDetails } from '../../interfaces/tenancy-agreement-details';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { ITenancyAgreementDetails } from '../../../common/interfaces/tenancy-agreement-details';
 
 @Component({
     selector: 'app-current-balance',

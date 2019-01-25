@@ -4,16 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { PAGES } from '../../constants/pages.constant';
-import { HackneyAPIService } from '../../API/HackneyAPI/hackney-api.service';
-import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
-import { IAddressSearchGroupedResult } from '../../interfaces/address-search-grouped-result';
-import { CallService } from '../../services/call.service';
-import { AddressSearchService } from '../../services/address-search.service';
-import { BackLinkService } from '../../services/back-link.service';
-import { NotesService } from '../../services/notes.service';
-import { PageTitleService } from '../../services/page-title.service';
-import { AnonymousCaller } from '../../classes/anonymous-caller.class';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
+import { ICitizenIndexSearchResult } from '../../../common/interfaces/citizen-index-search-result';
+import { IAddressSearchGroupedResult } from '../../../common/interfaces/address-search-grouped-result';
+import { CallService } from '../../../common/services/call.service';
+import { AddressSearchService } from '../../../common/services/address-search.service';
+import { BackLinkService } from '../../../common/services/back-link.service';
+import { NotesService } from '../../../common/services/notes.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
+import { AnonymousCaller } from '../../../common/classes/anonymous-caller.class';
 
 @Component({
     selector: 'app-page-identify',

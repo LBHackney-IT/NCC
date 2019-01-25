@@ -3,14 +3,14 @@ import { formatCurrency } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { PAGES } from '../../../constants/pages.constant';
-import { CommsOption } from '../../../classes/comms-option.class';
+import { PAGES } from '../../../../common/constants/pages.constant';
+import { CommsOption } from '../../../../common/classes/comms-option.class';
 import { PageCommunications } from '../../abstract/communications';
-import { DPAService } from '../../../services/dpa.service';
-import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
-import { IAccountDetails } from '../../../interfaces/account-details';
-import { IAddressSearchGroupedResult } from '../../../interfaces/address-search-grouped-result';
-import { ITenancyAgreementDetails } from '../../../interfaces/tenancy-agreement-details';
+import { DPAService } from '../../../../common/services/dpa.service';
+import { NCCAPIService } from '../../../../common/API/NCCAPI/ncc-api.service';
+import { IAccountDetails } from '../../../../common/interfaces/account-details';
+import { IAddressSearchGroupedResult } from '../../../../common/interfaces/address-search-grouped-result';
+import { ITenancyAgreementDetails } from '../../../../common/interfaces/tenancy-agreement-details';
 
 @Component({
     selector: 'app-rent-communications',

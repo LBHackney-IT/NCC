@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angu
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { ILastCall } from '../../interfaces/last-call';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { ILastCall } from '../../../common/interfaces/last-call';
 
 @Component({
     selector: 'app-last-calls-list',

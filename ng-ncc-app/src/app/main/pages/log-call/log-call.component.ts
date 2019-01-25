@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PAGES } from '../../constants/pages.constant';
-import { ILogCallSelection } from '../../interfaces/log-call-selection';
-import { LogCallReason } from '../../classes/log-call-reason.class';
-import { LogCallType } from '../../classes/log-call-type.class';
-import { CallService } from '../../services/call.service';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
+import { LogCallReason } from '../../../common/classes/log-call-reason.class';
+import { LogCallType } from '../../../common/classes/log-call-type.class';
+import { CallService } from '../../../common/services/call.service';
 import { PageLogCallNature } from '../abstract/log-call-nature';
-import { PageTitleService } from '../../services/page-title.service';
-import { NotesService } from '../../services/notes.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
+import { NotesService } from '../../../common/services/notes.service';
 
 @Component({
     selector: 'app-page-log-call',

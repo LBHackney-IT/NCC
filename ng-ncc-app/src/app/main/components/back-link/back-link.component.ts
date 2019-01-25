@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { BackLinkService } from '../../services/back-link.service';
+import { BackLinkService } from '../../../common/services/back-link.service';
 
 @Component({
     selector: 'app-back-link',

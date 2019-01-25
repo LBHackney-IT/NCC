@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { PAGES } from '../../../constants/pages.constant';
-import { IAccountDetails } from '../../../interfaces/account-details';
-import { CallService } from '../../../services/call.service';
-import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
-import { PageTitleService } from '../../../services/page-title.service';
+import { PAGES } from '../../../../common/constants/pages.constant';
+import { IAccountDetails } from '../../../../common/interfaces/account-details';
+import { CallService } from '../../../../common/services/call.service';
+import { NCCAPIService } from '../../../../common/API/NCCAPI/ncc-api.service';
+import { PageTitleService } from '../../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-rent-payment',

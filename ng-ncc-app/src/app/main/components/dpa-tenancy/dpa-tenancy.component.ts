@@ -2,8 +2,8 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subject, of } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { DPAService } from '../../services/dpa.service';
-import { IAccountDetails } from '../../interfaces/account-details';
+import { DPAService } from '../../../common/services/dpa.service';
+import { IAccountDetails } from '../../../common/interfaces/account-details';
 
 @Component({
     selector: 'app-dpa-tenancy',

@@ -1,9 +1,9 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
-import { PAGES } from '../../constants/pages.constant';
-import { PAYMENT_STATUS } from '../../constants/payment-status.constant';
-import { TransactionService } from '../../services/transaction.service';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { PAYMENT_STATUS } from '../../../common/constants/payment-status.constant';
+import { TransactionService } from '../../../common/services/transaction.service';
 
 @Component({
     selector: 'app-transaction',

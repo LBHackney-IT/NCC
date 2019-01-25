@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { NOTES } from '../../constants/notes.constant';
-import { NotesService } from '../../services/notes.service';
-import { INCCUHNote } from '../../interfaces/ncc-uh-note';
+import { NOTES } from '../../../common/constants/notes.constant';
+import { NotesService } from '../../../common/services/notes.service';
+import { INCCUHNote } from '../../../common/interfaces/ncc-uh-note';
 
 // TODO along with transactions, extend a component providing basic functionality.
 

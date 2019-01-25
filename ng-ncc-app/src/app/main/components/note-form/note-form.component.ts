@@ -7,17 +7,17 @@ import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { ContentAreaComponent } from '../../../common/layout/content-area/content-area.component';
 
-import { CallService } from '../../services/call.service';
-import { WindowService } from '../../services/window.service';
-import { NotesService } from '../../services/notes.service';
+import { CallService } from '../../../common/services/call.service';
+import { WindowService } from '../../../common/services/window.service';
+import { NotesService } from '../../../common/services/notes.service';
 
-import { CALL_REASON } from '../../constants/call-reason.constant';
-import { PAGES } from '../../constants/pages.constant';
+import { CALL_REASON } from '../../../common/constants/call-reason.constant';
+import { PAGES } from '../../../common/constants/pages.constant';
 
-import { IAddNoteParameters } from '../../interfaces/add-note-parameters';
-import { ILogCallSelection } from '../../interfaces/log-call-selection';
-import { LogCallReason } from '../../classes/log-call-reason.class';
-import { LogCallType } from '../../classes/log-call-type.class';
+import { IAddNoteParameters } from '../../../common/interfaces/add-note-parameters';
+import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
+import { LogCallReason } from '../../../common/classes/log-call-reason.class';
+import { LogCallType } from '../../../common/classes/log-call-type.class';
 
 
 @Component({

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
-import { PAGES } from '../constants/pages.constant';
-import { CallService } from '../services/call.service';
+import { PAGES } from '../../common/constants/pages.constant';
+import { CallService } from '../../common/services/call.service';
 
 @Injectable()
 export class CallNatureResolver implements Resolve<any[]> {

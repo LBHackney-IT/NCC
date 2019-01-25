@@ -1,7 +1,7 @@
-import { ILogCallSelection } from '../../interfaces/log-call-selection';
-import { LogCallReason } from '../../classes/log-call-reason.class';
-import { LogCallType } from '../../classes/log-call-type.class';
-import { CALL_REASON } from '../../constants/call-reason.constant';
+import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
+import { LogCallReason } from '../../../common/classes/log-call-reason.class';
+import { LogCallType } from '../../../common/classes/log-call-type.class';
+import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 
 export class PageLogCallNature {
 

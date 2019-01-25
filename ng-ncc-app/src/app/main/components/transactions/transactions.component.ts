@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { take, finalize } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { IAccountDetails } from '../../interfaces/account-details';
-import { ITenancyTransactionRow } from '../../interfaces/tenancy-transaction-row';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { IAccountDetails } from '../../../common/interfaces/account-details';
+import { ITenancyTransactionRow } from '../../../common/interfaces/tenancy-transaction-row';
 
 @Component({
     selector: 'app-transactions',

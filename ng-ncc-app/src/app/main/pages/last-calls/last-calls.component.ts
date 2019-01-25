@@ -2,12 +2,12 @@ import { environment } from '../../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PAGES } from '../../constants/pages.constant';
-import { ILastCall } from '../../interfaces/last-call';
-import { AuthService } from '../../services/auth.service';
-import { PageTitleService } from '../../services/page-title.service';
-import { CallRevisionService } from '../../services/call-revision.service';
-import { NotesService } from '../../services/notes.service';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { ILastCall } from '../../../common/interfaces/last-call';
+import { AuthService } from '../../../common/services/auth.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
+import { CallRevisionService } from '../../../common/services/call-revision.service';
+import { NotesService } from '../../../common/services/notes.service';
 
 @Component({
     selector: 'app-last-calls',

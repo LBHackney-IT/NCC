@@ -3,15 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
-import { PAGES } from '../../constants/pages.constant';
-import { IContactDetails } from '../../interfaces/contact-details';
-import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
-import { IdentifiedCaller } from '../../classes/identified-caller.class';
-import { CallService } from '../../services/call.service';
-import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
-import { BackLinkService } from '../../services/back-link.service';
-import { ViewOnlyService } from '../../services/view-only.service';
-import { PageTitleService } from '../../services/page-title.service';
+import { PAGES } from '../../../common/constants/pages.constant';
+import { IContactDetails } from '../../../common/interfaces/contact-details';
+import { ContactDetailsUpdate } from '../../../common/classes/contact-details-update.class';
+import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
+import { CallService } from '../../../common/services/call.service';
+import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
+import { BackLinkService } from '../../../common/services/back-link.service';
+import { ViewOnlyService } from '../../../common/services/view-only.service';
+import { PageTitleService } from '../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-contact-details',
