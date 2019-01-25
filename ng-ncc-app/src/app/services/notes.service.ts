@@ -20,7 +20,7 @@ export class NotesService {
     // This service controls the visibility of the add note form.
     // TODO this service should probably also be used to create automatic notes.
 
-    CALL_REASON_IDENTIFIER = 'SUMMARY';
+    CALL_REASON_IDENTIFIER = 'Call Summary';
 
     _added$ = new ReplaySubject<void>();
     _position$ = new Subject<{ x: number, y: number }>();
