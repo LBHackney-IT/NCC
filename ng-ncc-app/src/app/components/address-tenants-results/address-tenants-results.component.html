@@ -48,9 +48,11 @@
 
                 </label>
 
-                <button class="link-button govuk-!-margin-bottom-3" type="button" name="button" (click)="editContactDetails(row)">
-                    Edit tenant details
-                </button>
+                <div class="govuk-!-margin-bottom-3 govuk-!-margin-top-3">
+                    <button class="link-button" type="button" name="button" (click)="editContactDetails(row)">
+                        Edit tenant details
+                    </button>
+                </div>
 
                 <app-error-panel *ngIf="row.error">
                     <app-panel-header>Tenant details load failure</app-panel-header>
