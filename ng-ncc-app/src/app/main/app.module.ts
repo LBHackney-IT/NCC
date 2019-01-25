@@ -11,6 +11,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { LayoutModule } from '../common/layout/layout.module';
 import { ComponentModule } from '../common/component/component.module';
 
+import { HelperService } from './services/helper.service';
 import { WindowService } from './services/window.service';
 
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
@@ -23,6 +24,7 @@ import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-n
 
 import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 import { PageAuthComponent } from './pages/auth/auth.component';
+import { PageCallbackComponent } from './pages/callback/callback.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
@@ -69,6 +71,7 @@ import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { NoteFormComponent } from './components/note-form/note-form.component';
+import { NoteTypeComponent } from './components/note-type/note-type.component';
 import { NotifyTemplatePreviewComponent } from './components/notify-template-preview/notify-template-preview.component';
 import { OrComponent } from './components/or/or.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
@@ -86,6 +89,7 @@ import { RentBreakdownComponent } from './components/rent-breakdown/rent-breakdo
 import { CallNatureDialogueComponent } from './components/call-nature-dialogue/call-nature-dialogue.component';
 import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
 import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
+import { CommsTelephoneComponent } from './components/comms-telephone/comms-telephone.component';
 
 @NgModule({
     declarations: [
@@ -114,10 +118,12 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         NavigationComponent,
         NoResultsComponent,
         NoteFormComponent,
+        NoteTypeComponent,
         NotifyTemplatePreviewComponent,
         OrComponent,
         PageAddNotesComponent,
         PageAuthComponent,
+        PageCallbackComponent,
         PageCommsComponent,
         PageContactDetailsComponent,
         PageIdentifyAddressesComponent,
@@ -153,6 +159,7 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         CallNatureDialogueComponent,
         CurrentBalanceComponent,
         DisplayBalanceComponent,
+        CommsTelephoneComponent,
     ],
     imports: [
         BrowserModule,
@@ -176,7 +183,8 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
         ContactDetailsResolver,
         IdentifiedCallerResolver,
         IdentifiedOrNonTenantCallerResolver,
-        WindowService
+        WindowService,
+        HelperService
     ],
     bootstrap: [AppComponent]
 })

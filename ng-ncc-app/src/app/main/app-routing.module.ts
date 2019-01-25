@@ -7,6 +7,7 @@ import { AuthGuard } from './auth/auth.guard';
 
 import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
+import { PageCallbackComponent } from './pages/callback/callback.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
 import { PageContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addresses.component';
@@ -199,7 +200,7 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver,
-            call_nature: CallNatureResolver
+            // call_nature: CallNatureResolver
         }
     },
     {
@@ -213,10 +214,10 @@ export const AppRoutes: Routes = [
         }
     },
     {
-        // Log Additional Request page.
-        path: PAGES.ADDITIONAL_REASON.route,
+        // Request a Callback page.
+        path: PAGES.REQUEST_CALLBACK.route,
         canActivate: [AuthGuard],
-        component: PageLogAdditionalComponent,
+        component: PageCallbackComponent,
         resolve: {
             caller: CallerResolver
         }

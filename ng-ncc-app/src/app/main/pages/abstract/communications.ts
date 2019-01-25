@@ -196,7 +196,7 @@ export abstract class PageCommunications implements OnInit, OnDestroy {
 
         if (CONTACT.METHOD_POST === this.selected_details.method) {
             // Record that something is going to be sent by post.
-            this.UHTrigger.sentComms(template_name, method, parameters);
+            this.UHTrigger.sentComms(template_name, method);
 
             this.modal.confirmed = true;
             return;
@@ -230,7 +230,7 @@ export abstract class PageCommunications implements OnInit, OnDestroy {
                     (feedback) => {
                         // It was sent successfully.
                         this.modal.confirmed = true;
-                        this.UHTrigger.sentComms(template_name, method, parameters);
+                        this.UHTrigger.sentComms(template_name, method);
                     },
                     (error) => {
                         // Something went wrong.

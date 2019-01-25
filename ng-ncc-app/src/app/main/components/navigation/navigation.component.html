@@ -64,14 +64,12 @@
             </a>
         </li>
 
-        <!-- TODO: request a callback. -->
-        <!--
+        <!-- Request a callback. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a [routerLink]="page_defs.REQUEST_CALLBACK.route">
+            <a [routerLink]="page_defs.REQUEST_CALLBACK.route" [class.disabled]="!isCallActive()">
                 {{ page_defs.REQUEST_CALLBACK.label }}
             </a>
         </li>
-        -->
 
         <li class="navigation__spacer"></li>
 

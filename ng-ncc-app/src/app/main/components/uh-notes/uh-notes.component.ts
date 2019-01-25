@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 
+import { NOTES } from '../../constants/notes.constant';
 import { NotesService } from '../../services/notes.service';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
-import { NOTES } from '../../constants/notes.constant';
 
 // TODO along with transactions, extend a component providing basic functionality.
 
@@ -18,8 +18,8 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     @Input() tenancyReference: string;
     @Input() tenants: { [propKey: string]: string }[];
     @Input() filter: { [propKey: string]: string };
-    @Input() minDate?: Date;
-    @Input() maxDate?: Date;
+    @Input() minDate?: Date | null;
+    @Input() maxDate?: Date | null;
 
     private _destroyed$ = new Subject();
 
@@ -128,17 +128,6 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     *
-     */
-    getNoteTypeBadgeClass(note: INCCUHNote) {
-        return {
-            'call-type--automatic': NOTES.TYPE_AUTOMATIC === note.notesType,
-            'call-type--manual': NOTES.TYPE_MANUAL === note.notesType,
-            'call-type--diary': NOTES.TYPE_ACTION_DIARY === note.notesType
-        };
-    }
-
-    /**
      * Returns the name of a tenant matching the specified CRM contact ID.
      */
     getTenantName(note: INCCUHNote): string {
@@ -146,10 +135,26 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
+     * Returns the call type for a note.
+     */
+    getCallType(note: INCCUHNote): string {
+        return note.callType;
+    }
+
+    /**
      * Returns the call reason for a note, or "Other" if unspecified.
      */
     getCallReason(note: INCCUHNote): string {
-        return note.callReasonType ? note.callReasonType : 'Other';
+        return note.callReasonType ? note.callReasonType : this._getOtherReason(note);
+    }
+
+    /**
+     *
+     */
+    private _getOtherReason(note: INCCUHNote): string {
+        if (NOTES.TYPE_MANUAL === note.notesType) {
+            return 'Other';
+        }
     }
 
 }

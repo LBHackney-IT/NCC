@@ -7,4 +7,5 @@ export interface IAddNoteParameters {
     crm_contact_id: string;
     tenancy_reference: string | null;
     agent_name: string | null;
+    agent_crm_id: string | null;
 }
