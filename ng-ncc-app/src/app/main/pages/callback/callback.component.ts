@@ -42,6 +42,7 @@ export class PageCallbackComponent implements OnInit {
      *
      */
     numberSelected(number: string) {
+        console.log('Number set to', number);
         this.contactNumber = number;
     }
 
@@ -58,7 +59,7 @@ export class PageCallbackComponent implements OnInit {
     canSave(): boolean {
         return !this.sending &&
             this.Helper.isDefined(this.recipient) &&
-            this.Helper.isDefined(this.contactNumber) &&
+            this.Helper.isPopulated(this.contactNumber) &&
             this._isCallReasonDefined() &&
             this.Helper.isPopulated(this.message);
     }
@@ -84,7 +85,9 @@ export class PageCallbackComponent implements OnInit {
         const callbackDetails: ICallbackNoteParameters = {
             recipientEmail: this.recipient,
             managerEmail: this.teamLeader,
-            callbackNumber: this.contactNumber
+            callbackNumber: this.contactNumber,
+            message: this.message,
+            callbackFullName: this.Call.getCaller().getName()
         };
 
         this.sending = true;

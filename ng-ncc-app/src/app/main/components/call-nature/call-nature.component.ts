@@ -44,6 +44,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
                 data => {
                     this.call_types = data[0];
                     this.call_reasons = data[1];
+                    this.updateSelection();
                 },
                 () => { this.error = true; }
             );

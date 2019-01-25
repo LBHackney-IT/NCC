@@ -4,4 +4,6 @@ export interface ICallbackNoteParameters {
     managerEmail: string;
     callbackNumber: string;
     otherNumber?: string;
+    message: string;
+    callbackFullName: string;
 }

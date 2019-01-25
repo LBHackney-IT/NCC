@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AgentComponent } from './agent/agent.component';
 import { CurrentCallerComponent } from './current-caller/current-caller.component';
 import { EnvNameComponent } from './env-name/env-name.component';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
 import { PanelComponent } from './panel/panel.component';
 import { PanelHeadingComponent } from './panel/heading/heading.component';
 import { BoxPanelComponent } from './panel/box-panel/box-panel.component';
@@ -17,20 +15,21 @@ import { ErrorPanelComponent } from './panel/error-panel/error-panel.component';
     ],
     declarations: [
         AgentComponent,
+        BoxPanelComponent,
         CurrentCallerComponent,
         EnvNameComponent,
-        FooterComponent,
-        HeaderComponent,
+        ErrorPanelComponent,
         PanelComponent,
         PanelHeadingComponent,
-        BoxPanelComponent,
-        ErrorPanelComponent
     ],
     exports: [
+        AgentComponent,
+        BoxPanelComponent,
+        CurrentCallerComponent,
+        EnvNameComponent,
+        ErrorPanelComponent,
         PanelComponent,
         PanelHeadingComponent,
-        BoxPanelComponent,
-        ErrorPanelComponent
     ]
 })
 export class ComponentsModule { }

@@ -89,6 +89,8 @@ export class NCCAPIService {
      */
     createCallbackNote(agentCRMID: string, settings: INotesSettings, details: ICallbackNoteParameters) {
         settings.parameters = Object.assign({}, {
+            'CallbackRequest.MessageForEmail': details.message,
+            'CallbackRequest.CallersFullname': details.callbackFullName,
             'CallbackRequest.RecipientEmailId': details.recipientEmail,
             'CallbackRequest.ManagerEmailId': details.managerEmail,
             'CallbackRequest.PhoneNumber': details.callbackNumber,

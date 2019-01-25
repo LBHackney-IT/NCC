@@ -64,7 +64,6 @@ import { DateFieldComponent } from './components/date-field/date-field.component
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueTitleComponent } from './components/dialogue/title/dialogue-title.component';
 import { EditorialComponent } from './components/editorial/editorial.component';
-import { EnvNameComponent } from './components/env-name/env-name.component';
 import { HelperComponent } from './components/helper/helper.component';
 import { LastCallsListComponent } from './components/last-calls-list/last-calls.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
@@ -91,24 +90,28 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
 
 @NgModule({
     declarations: [
+        AccountBalanceComponent,
         AddressResultTenantComponent,
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
         AppComponent,
         BackLinkComponent,
         CallNatureComponent,
+        CallNatureDialogueComponent,
         CallNatureDropdownComponent,
         CommsMethodSelectComponent,
         CommsReceiptTemplatesComponent,
+        CommsTelephoneComponent,
         CommsTemplatesComponent,
         ConfirmDialogueComponent,
-        DPADialogueComponent,
-        DPATenancyComponent,
+        CurrentBalanceComponent,
         DateFieldComponent,
         DialogueComponent,
         DialogueTitleComponent,
+        DisplayBalanceComponent,
+        DPADialogueComponent,
+        DPATenancyComponent,
         EditorialComponent,
-        EnvNameComponent,
         HelperComponent,
         LastCallsListComponent,
         NavigationComponent,
@@ -116,6 +119,7 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         NoteFormComponent,
         NoteTypeComponent,
         NotifyTemplatePreviewComponent,
+        NumbersOnlyDirective,
         OrComponent,
         PageAddNotesComponent,
         PageAuthComponent,
@@ -140,22 +144,16 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         PageTransactionSuccessComponent,
         PageTryAgainComponent,
         PageViewNotesComponent,
+        RentBreakdownComponent,
         TabComponent,
         TabsComponent,
+        TenancyTypeComponent,
         TransactionsComponent,
         UHNotesComponent,
         ValueListComponent,
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
-        AccountBalanceComponent,
-        TenancyTypeComponent,
-        NumbersOnlyDirective,
-        RentBreakdownComponent,
-        CallNatureDialogueComponent,
-        CurrentBalanceComponent,
-        DisplayBalanceComponent,
-        CommsTelephoneComponent,
     ],
     imports: [
         BrowserModule,

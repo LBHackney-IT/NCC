@@ -36,6 +36,7 @@ export class CommsTelephoneComponent implements OnInit {
                     } else {
                         this._populateTelephoneNumbers(data);
                     }
+                    this.changedSelection();
                 },
                 (error) => {
                     // No contact details (with defaults) were available for this caller, so we will use

@@ -43,7 +43,7 @@ export class PageRespondComponent implements OnInit {
     }
 
     canSave(): boolean {
-        return !this.sending && this.details && this.Helper.isPopulated(this.note);
+        return !this.saving && this.details && this.Helper.isPopulated(this.note);
     }
 
     saveCallbackResponse() {

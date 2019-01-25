@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { CallService } from '../../../common/services/call.service';
+import { CallService } from '../../services/call.service';
 
 @Component({
     selector: 'app-current-caller',

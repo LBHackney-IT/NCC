@@ -10,40 +10,32 @@ $page-header-padding: 2rem !default;
 @import "~govuk-frontend/settings/typography-font";
 @import "../../../../assets/scss/mixins/hackney-stripes";
 
-.page__header {
+:host {
+    ::ng-deep p {
+        color: $page-header-text-colour !important;
+    }
+}
+
+header {
     @include hackney-stripes--bottom;
 
     background: $page-header-bg-colour;
-    color: $page-header-text-colour;
+    color: $page-header-text-colour !important;
     padding: $page-header-padding;
-
-    p {
-        color: inherit;
-    }
 }
+
 @media (min-width: 520px) {
-    .page__header__inner {
+    .inner {
         display: flex;
         align-items: center;
     }
 }
 
-.page__header__column--logo {
+.logo {
     flex-basis: 300px;
     /* see https://stackoverflow.com/.../what-are-the-differences-between-flex-basis-and-width */
 }
 
-.page__header__column--title {
-    flex-grow: 1;
-}
-
-.page__header__column--id {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.page__header__logo {
+.logo__image {
     max-height: 40px;
 }
