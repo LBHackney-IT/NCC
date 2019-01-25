@@ -6,8 +6,8 @@
 </span>
 
 <!-- Contact details. -->
-<span class="govuk-grid-column-one-half">
-    <span class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</span>
+<div class="govuk-!-margin-bottom-5">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</h3>
 
     <app-value-list class="govuk-body-s">
 
@@ -30,11 +30,11 @@
         </app-value-list-value>
 
     </app-value-list>
-</span>
+</div>
 
 <!-- DPA. -->
-<span class="govuk-grid-column-one-half">
-    <span class="govuk-heading-s govuk-!-margin-bottom-2">DPA</span>
+<div>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">DATA PROTECTION ACT QUESTIONS</h3>
     <app-value-list class="govuk-body-s">
         <app-value-list-label>Date of birth</app-value-list-label>
         <app-value-list-value>
@@ -42,4 +42,4 @@
             <em *ngIf="!tenant.getDateOfBirth()">none</em>
         </app-value-list-value>
     </app-value-list>
-</span>
+</div>
