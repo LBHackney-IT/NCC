@@ -1,15 +1,13 @@
 <!-- The contact's name. -->
-<span class="govuk-grid-column-full govuk-!-margin-bottom-5">
-    <span class="govuk-heading-m govuk-!-margin-bottom-1">
-        {{ tenant.getName() }}
-    </span>
-</span>
+<div class="govuk-heading-m govuk-!-margin-bottom-5">
+    {{ tenant.getName() }}
+</div>
 
 <!-- Contact details. -->
 <div class="govuk-!-margin-bottom-5">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</h3>
 
-    <app-value-list class="govuk-body-s">
+    <app-value-list class="govuk-body-s" emphasise="value">
 
         <!-- Telephone numbers. -->
         <app-value-list-label>Telephone</app-value-list-label>
@@ -35,9 +33,9 @@
 </div>
 
 <!-- DPA. -->
-<div>
+<div class="govuk-!-margin-bottom-2">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-2">DATA PROTECTION ACT QUESTIONS</h3>
-    <app-value-list class="govuk-body-s">
+    <app-value-list class="govuk-body-s" emphasise="value">
         <app-value-list-label>Date of birth</app-value-list-label>
         <app-value-list-value>
             {{ tenant.getDateOfBirth() }}
