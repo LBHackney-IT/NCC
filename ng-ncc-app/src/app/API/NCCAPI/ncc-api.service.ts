@@ -18,6 +18,7 @@ import { ICallbackNoteParameters } from '../../interfaces/callback-note-paramete
 import { IRentBreakdown } from '../../interfaces/rent-breakdown';
 import { ITenancyAgreementDetails } from '../../interfaces/tenancy-agreement-details';
 import { ITenancyTransactionRow } from '../../interfaces/tenancy-transaction-row';
+import { ICallbackDetails } from '../../interfaces/callback-details';
 import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
 import { NOTE_TYPE } from '../../constants/note-type.constant';
@@ -410,14 +411,15 @@ export class NCCAPIService {
      */
     getCallbackDetails(
         callbackID: string
-    ): Observable<ITenancyTransactionRow[]> {
+    ): Observable<ICallbackDetails> {
 
         const parameters = {
             CallbackId: callbackID
         };
 
         return this.http
-            .get(`${this._url}Callback/GetCallbackDetails?${this._buildQueryString(parameters)}`, {});
+            .get(`${this._url}Callback/GetCallbackDetails?${this._buildQueryString(parameters)}`, {})
+            .pipe(map((data: IJSONResponse) => <ICallbackDetails>data.response));
 
     }
 

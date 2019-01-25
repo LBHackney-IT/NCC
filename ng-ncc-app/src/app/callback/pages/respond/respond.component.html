@@ -7,12 +7,11 @@
 
         {{ details | json }}
 
-        <app-panel class="govuk-!-margin-bottom-5">
+        <app-panel class="govuk-!-margin-bottom-5" *ngIf="details">
             <h2 class="govuk-heading-m">Note left by <b>[name]</b></h2>
             <p class="govuk-body">Message:</p>
             <p class="govuk-body">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                "{{ details.notes }}"
             </p>
         </app-panel>
 
@@ -25,10 +24,11 @@
             <label class="govuk-label govuk-visually-hidden" for="response">
                 Your notes
             </label>
-            <textarea class="govuk-textarea" id="response" name="response" rows="6" placeholder="Your note"></textarea>
+            <textarea class="govuk-textarea" id="response" name="response" rows="6" placeholder="Your note"
+                [disabled]="sending"></textarea>
         </div>
 
-        <button class="govuk-button" type="button" name="button">Submit</button>
+        <button class="govuk-button" type="button" name="button" [disabled]="!canSave()">Submit</button>
 
     </div>
 </div>

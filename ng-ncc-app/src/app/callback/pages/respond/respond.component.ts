@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { NCCAPIService } from '../../../API/NCCAPI/ncc-api.service';
+import { HelperService } from '../../../services/helper.service';
+import { ICallbackDetails } from '../../../interfaces/callback-details';
 
 @Component({
     selector: 'app-page-respond',
@@ -13,9 +15,16 @@ export class PageRespondComponent implements OnInit {
 
     callbackID: string;
     email: string;
-    details: any;
+    details: ICallbackDetails;
+    note: string;
 
-    constructor(private route: ActivatedRoute, private NCCAPI: NCCAPIService) { }
+    saving: boolean;
+
+    constructor(
+        private route: ActivatedRoute,
+        private Helper: HelperService,
+        private NCCAPI: NCCAPIService
+    ) { }
 
     ngOnInit() {
         this.callbackID = this.route.snapshot.params.callbackID;
@@ -31,5 +40,13 @@ export class PageRespondComponent implements OnInit {
         } else {
             console.log('No callback ID provided.');
         }
+    }
+
+    canSave(): boolean {
+        return !this.sending && this.details && this.Helper.isPopulated(this.note);
+    }
+
+    saveCallbackResponse() {
+
     }
 }
