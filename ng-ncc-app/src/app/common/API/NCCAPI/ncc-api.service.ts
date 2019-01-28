@@ -7,19 +7,20 @@ import { Observable, forkJoin, of, from } from 'rxjs';
 
 import * as moment from 'moment';
 
+import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { IAuthentication } from '../../interfaces/authentication';
+import { ICallbackDetails } from '../../interfaces/callback-details';
+import { ICallbackNoteParameters } from '../../interfaces/callback-note-parameters';
+import { ICallbackResponse } from '../../interfaces/callback-response';
 import { ICRMServiceRequest } from '../../interfaces/crmservicerequest';
 import { IJSONResponse } from '../../interfaces/json-response';
+import { INCCInteraction } from '../../interfaces/ncc-interaction';
 import { INCCNote } from '../../interfaces/ncc-note';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
-import { INCCInteraction } from '../../interfaces/ncc-interaction';
 import { INotesSettings } from '../../interfaces/notes-settings';
-import { ICallbackNoteParameters } from '../../interfaces/callback-note-parameters';
 import { IRentBreakdown } from '../../interfaces/rent-breakdown';
 import { ITenancyAgreementDetails } from '../../interfaces/tenancy-agreement-details';
 import { ITenancyTransactionRow } from '../../interfaces/tenancy-transaction-row';
-import { ICallbackDetails } from '../../interfaces/callback-details';
-import { ContactDetailsUpdate } from '../../classes/contact-details-update.class';
 import { NOTES } from '../../constants/notes.constant';
 import { NOTE_TYPE } from '../../constants/note-type.constant';
 import { CALL_REASON } from '../../constants/call-reason.constant';
@@ -97,6 +98,27 @@ export class NCCAPIService {
             'CallbackRequest.OtherNumber': details.otherNumber,
         }, settings.parameters);
         return this._createNote(agentCRMID, settings, NOTE_TYPE.CALLBACK);
+    }
+
+    /**
+     * Create a callback note against a call.
+     */
+    createCallbackResponse(response: ICallbackResponse) {
+        const settings: INotesSettings = {
+            call_id: response.serviceRequestId,
+            ticket_number: response.ticketNumber,
+            call_reason_id: response.callReasonId,
+            other_reason: response.otherReason,
+            crm_contact_id: response.contactId,
+            content: response.notes,
+            tenancy_reference: response.tenancyReference,
+            parameters: {
+                InteractionId: response.callbackId,
+                'CallbackRequest.Response': response.gotThrough ? 'CalledThemBack' : 'CouldntGetThrough', // TODO constants
+                'CallbackRequest.ResponseBy': response.responseBy,
+            }
+        };
+        return this._createNote(null, settings, NOTE_TYPE.CALLBACK);
     }
 
     /**

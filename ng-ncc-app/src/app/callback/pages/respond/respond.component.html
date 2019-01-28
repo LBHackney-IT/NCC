@@ -1,11 +1,15 @@
-<div class="govuk-grid-row">
+<!-- Confirmation message. -->
+<app-success-panel *ngIf="completed">
+    <app-panel-heading>Confirmation saved</app-panel-heading>
+    <p class="govuk-body govuk-!-margin-bottom-0">
+        Thank you for confirming you have completed the callback.
+    </p>
+</app-success-panel>
+
+<div class="govuk-grid-row" *ngIf="!(completed || noDetails)">
     <div class="govuk-grid-column-one-half">
 
         <h1 class="govuk-heading-l">Callback completed</h1>
-
-        <p>{{ callbackID }} &#8594; {{ email }}</p>
-
-        {{ details | json }}
 
         <app-panel class="govuk-!-margin-bottom-5" *ngIf="details">
             <h2 class="govuk-heading-m">Note left by <b>[name]</b></h2>
@@ -14,6 +18,38 @@
                 "{{ details.notes }}"
             </p>
         </app-panel>
+
+        <!-- Were they able to get through? -->
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    <h2 class="govuk-fieldset__heading">
+                        Were you able to get through?
+                    </h2>
+                </legend>
+                <div class="govuk-radios">
+
+                    <!-- Yes -->
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="got-through-yes" name="gotThrough" type="radio" [value]="true"
+                            [(ngModel)]="gotThrough" [disabled]="saving">
+                        <label class="govuk-label govuk-radios__label" for="got-through-yes">
+                            Yes
+                        </label>
+                    </div>
+
+                    <!-- No -->
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="got-through-no" name="gotThrough" type="radio" [value]="false"
+                            [(ngModel)]="gotThrough" [disabled]="saving">
+                        <label class="govuk-label govuk-radios__label" for="got-through-no">
+                            No
+                        </label>
+                    </div>
+
+                </div>
+            </fieldset>
+        </div>
 
         <p class="govuk-body govuk-!-margin-bottom-5">
             To add a note, write any action taken below.<br>
@@ -25,10 +61,30 @@
                 Your notes
             </label>
             <textarea class="govuk-textarea" id="response" name="response" rows="6" placeholder="Your note"
-                [disabled]="sending"></textarea>
+                [(ngModel)]="note" [disabled]="saving"></textarea>
         </div>
 
-        <button class="govuk-button" type="button" name="button" [disabled]="!canSave()">Submit</button>
+        <button class="govuk-button" type="button" name="button" [disabled]="!canSave()" (click)="saveCallbackResponse()">
+            Submit
+        </button>
+
+        <!-- Error message. -->
+        <app-error-panel *ngIf="error">
+            <app-panel-heading>Failed to save</app-panel-heading>
+            <p class="govuk-body">
+                There was a problem saving the response to the callback request. Please try again.
+            </p>
+            <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+        </app-error-panel>
 
     </div>
 </div>
+
+<!-- Error message for no details. -->
+<app-error-panel *ngIf="noDetails">
+    <app-panel-heading>Failed to obtain details</app-panel-heading>
+    <p class="govuk-body">
+        There was a problem fetching information about the callback request. Please try again.
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+</app-error-panel>
