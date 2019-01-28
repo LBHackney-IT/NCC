@@ -2,3 +2,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.tenant-list {
+    .govuk-radios__label {
+        display: block;
+    }
+}
