@@ -4,6 +4,7 @@ import { map, take } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../interfaces/add-note-parameters';
 import { IJSONResponse } from '../interfaces/json-response';
+import { ICallbackNoteParameters } from '../interfaces/callback-note-parameters';
 import { ILogCallSelection } from '../interfaces/log-call-selection';
 
 import { CALL_REASON } from '../constants/call-reason.constant';
@@ -19,7 +20,7 @@ export class NotesService {
     // This service controls the visibility of the add note form.
     // TODO this service should probably also be used to create automatic notes.
 
-    CALL_REASON_IDENTIFIER = 'SUMMARY';
+    CALL_REASON_IDENTIFIER = 'Call Summary';
 
     _added$ = new ReplaySubject<void>();
     _position$ = new Subject<{ x: number, y: number }>();
@@ -126,7 +127,7 @@ export class NotesService {
         return forkJoin(
 
             // Automatic note...
-            this.NCCAPI.createAutomaticNote({
+            this.NCCAPI.createAutomaticNote(this._settings.agent_crm_id, {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
@@ -165,7 +166,7 @@ export class NotesService {
         return forkJoin(
 
             // Manual note...
-            this.NCCAPI.createManualNote({
+            this.NCCAPI.createManualNote(this._settings.agent_crm_id, {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 call_reason_id: call_nature.call_reason.id,
@@ -235,7 +236,7 @@ export class NotesService {
         return forkJoin(
 
             // Automatic note...
-            this.NCCAPI.createAutomaticNote({
+            this.NCCAPI.createAutomaticNote(this._settings.agent_crm_id, {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
@@ -254,13 +255,50 @@ export class NotesService {
         );
     }
 
+    /**
+     * Record a callback note against the call.
+     * A corresponding Action Diary note is also created.
+     */
+    recordCallbackNote(note_content: string, call_nature: ILogCallSelection = null, details: ICallbackNoteParameters): Observable<any> {
+        if (this.ViewOnly.status) {
+            // console.log('View only status; do not create an automatic note.');
+            return of(true);
+        }
+
+        return forkJoin(
+
+            // Callback note...
+            this.NCCAPI.createCallbackNote(this._settings.agent_crm_id, {
+                call_id: this._settings.call_id,
+                ticket_number: this._settings.ticket_number,
+                tenancy_reference: this._settings.tenancy_reference,
+                call_reason_id: call_nature.call_reason.id,
+                other_reason: call_nature.other_reason,
+                crm_contact_id: this._settings.crm_contact_id,
+                content: this._formatNoteContent(note_content, call_nature)
+            }, details),
+
+            // Action Diary note...
+            this.recordActionDiaryNote(note_content)
+        )
+            .pipe(map((data: IJSONResponse[]) => {
+                // Inform anything subscribed to note addition events that a note was added.
+                this._added$.next();
+
+                return data[0].response.NCCInteraction;
+            }));
+    }
+
+    /**
+     *
+     */
     recordCallReasons(call_reason_ids: string[], other_reason: string = null) {
         // Make sure we have a unique list of call reason IDs.
         const unique_call_reasons = Array.from(new Set(call_reason_ids));
 
         // For each call reason, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
         const observables = unique_call_reasons.map(
-            (reason_id) => this.NCCAPI.createAutomaticNote({
+            (reason_id) => this.NCCAPI.createAutomaticNote(this._settings.agent_crm_id, {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,

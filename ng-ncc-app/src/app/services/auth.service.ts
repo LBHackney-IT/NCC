@@ -42,7 +42,7 @@ export class AuthService {
             // Create a dummy agent.
             this.set({
                 fullname: 'Unknown NCC Agent',
-                userid: '123456',
+                userid: null,
                 username: 'unknown.nccagent',
                 useremail: 'unknown@localhost',
                 success: true,
@@ -100,6 +100,10 @@ export class AuthService {
      */
     getMessage(): string {
         return this.hasData() ? this._user.message : null;
+    }
+
+    getUserID(): string {
+        return this.hasData() ? this._user.userid : null;
     }
 
     /**

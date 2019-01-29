@@ -87,4 +87,24 @@ export class AddressResultTenantComponent implements OnChanges {
         return index;
     }
 
+    /**
+     *
+     */
+    isDefaultEmail(email: string): boolean {
+        if (this.details) {
+            return email === this.details.default.email;
+        }
+        return false;
+    }
+
+    /**
+     *
+     */
+    isDefaultTelephone(telephone: string): boolean {
+        if (this.details) {
+            return telephone === this.details.default.telephone || telephone === this.details.default.mobile;
+        }
+        return false;
+    }
+
 }

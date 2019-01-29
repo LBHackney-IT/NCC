@@ -188,6 +188,7 @@ export class CallService {
                             this.caller.tenancy_reference : this.account.tagReferenceNumber;
                         const settings = {
                             agent_name: this.Auth.getFullName(),
+                            agent_crm_id: this.Auth.getUserID(),
                             call_id: this.call_id,
                             ticket_number: this.ticket_number,
                             call_reason_id: null, // TODO this.call_nature.call_reason.id,
