@@ -62,7 +62,7 @@
                     <!-- Other (which should come last). -->
                     <div class="govuk-checkboxes__item small-checkbox">
                         <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="checkbox"
-                            [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="OTHER.id">
+                            [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="optionOther.id">
                         <label class="govuk-label govuk-checkboxes__label" for="call-reason-other">Other</label>
                     </div>
                 </div>

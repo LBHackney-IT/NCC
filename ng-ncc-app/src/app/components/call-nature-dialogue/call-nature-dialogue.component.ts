@@ -26,10 +26,9 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
     @ViewChild('otherReasonField') otherReasonField: ElementRef;
 
-    OTHER = new LogCallReason(CALL_REASON.OTHER, 'Other');
-
     private _destroyed$ = new Subject<void>();
 
+    optionOther: LogCallReason;
     saving: boolean;
     selectedType: LogCallType;
     selectedReasons: string[];  // a list of call reason IDs.
@@ -104,11 +103,29 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      */
     getCallTypeReasons(): LogCallReason[] {
         if (this.isCallTypeSelected()) {
-            const reasons: LogCallReason[] = this.callReasons[this.selectedType.id];
+            const reasons: LogCallReason[] = Array.from(new Set(this.callReasons[this.selectedType.id]));
+            this._separateOther(reasons);
+
             reasons.sort(this._sortCallReasons);
 
             return reasons;
         }
+    }
+
+    /**
+     *
+     */
+    private _separateOther(reasons_list: LogCallReason[]) {
+        const index = reasons_list.findIndex(
+            (reason: LogCallReason) => 'Other' === reason.label
+        );
+        if (-1 === index) {
+            // Create a "placeholder" Other call reason.
+            this.optionOther = new LogCallReason(CALL_REASON.OTHER, 'Other');
+        } else {
+            this.optionOther = reasons_list[index];
+        }
+        reasons_list.splice(index, 1);
     }
 
     /**
@@ -169,7 +186,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if "other" is selected as the call reason.
      */
     isOtherReasonSelected(): boolean {
-        return this.isReasonSelected(this.OTHER);
+        return this.isReasonSelected(this.optionOther);
     }
 
     /**
