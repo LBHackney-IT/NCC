@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { AddressSearchService } from '../../services/address-search.service';
 import { CallService } from '../../services/call.service';
 import { NotesService } from '../../services/notes.service';
 import { ViewOnlyService } from '../../services/view-only.service';
@@ -20,6 +21,7 @@ import { PAGES } from '../../constants/pages.constant';
 export class NavigationComponent implements AfterViewChecked, OnDestroy {
 
     constructor(
+        private AddressSearch: AddressSearchService,
         private Call: CallService,
         private Notes: NotesService,
         private ViewOnly: ViewOnlyService,
@@ -83,6 +85,7 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
      */
     confirmEndCall() {
         this.Call.reset();
+        this.AddressSearch.reset();
         this.router.navigateByUrl(PAGES.PREVIOUS_CALLS.route);
     }
 
