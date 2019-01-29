@@ -8,11 +8,11 @@ import { NCCAPIService } from '../API/NCCAPI/ncc-api.service';
 import { NotesService } from './notes.service';
 
 let Call: CallService;
-let AuthServiceSpy: jasmine.SpyObj<AuthService>;
-let HackneyAPIServiceSpy: jasmine.SpyObj<HackneyAPIService>;
-let ManageATenancyAPIServiceSpy: jasmine.SpyObj<ManageATenancyAPIService>;
-let NCCAPIServiceSpy: jasmine.SpyObj<NCCAPIService>;
-let NotesServiceSpy: jasmine.SpyObj<NotesService>;
+const AuthServiceSpy: jasmine.SpyObj<AuthService>;
+const HackneyAPIServiceSpy: jasmine.SpyObj<HackneyAPIService>;
+const ManageATenancyAPIServiceSpy: jasmine.SpyObj<ManageATenancyAPIService>;
+const NCCAPIServiceSpy: jasmine.SpyObj<NCCAPIService>;
+const NotesServiceSpy: jasmine.SpyObj<NotesService>;
 
 describe('CallService', () => {
     beforeEach(() => {
