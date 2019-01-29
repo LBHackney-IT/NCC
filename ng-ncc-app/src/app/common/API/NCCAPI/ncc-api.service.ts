@@ -423,7 +423,9 @@ export class NCCAPIService {
             CallBackId: details.callbackId,
             RecipientEmailId: details.recipientEmail,
             ManagerEmailId: details.managerEmail,
-            PhoneNumber: details.callbackNumber
+            PhoneNumber: details.callbackNumber,
+            MessageForEmail: details.message,
+            CallersFullName: details.callerName
         };
 
         return this.http

@@ -86,7 +86,7 @@ export class PageCallbackComponent implements OnInit {
             managerEmail: this.teamLeader,
             callbackNumber: this.contactNumber,
             message: this.message,
-            callbackFullName: this.Call.getCaller().getName()
+            callerName: this.Call.getCaller().getName()
         };
 
         this.sending = true;

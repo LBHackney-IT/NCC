@@ -5,5 +5,5 @@ export interface ICallbackNoteParameters {
     callbackNumber: string;
     otherNumber?: string;
     message: string;
-    callbackFullName: string;
+    callerName: string;
 }

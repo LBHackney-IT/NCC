@@ -19,7 +19,6 @@ export class AddressSearchService {
     private _addresses: ICitizenIndexSearchResult[];
     private _address: IAddressSearchGroupedResult;
     private _error: boolean;
-    private _subscription: Observable<void>;
 
     // We're using a ReplaySubject to provide address search results.
     // ReplaySubjects will provide the last value given to it, if available,
@@ -37,6 +36,8 @@ export class AddressSearchService {
         this._postcode = null;
         this._error = false;
         this._addresses = null;
+        this._address = null;
+        this._resultsSubject = new ReplaySubject();
     }
 
     /**
