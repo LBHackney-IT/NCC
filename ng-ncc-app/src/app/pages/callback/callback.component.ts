@@ -84,7 +84,9 @@ export class PageCallbackComponent implements OnInit {
         const callbackDetails: ICallbackNoteParameters = {
             recipientEmail: this.recipient,
             managerEmail: this.teamLeader,
-            callbackNumber: this.contactNumber
+            callbackNumber: this.contactNumber,
+            message: this.message,
+            callerName: this.Call.getCaller().getName()
         };
 
         this.sending = true;
