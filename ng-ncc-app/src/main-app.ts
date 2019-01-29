@@ -12,5 +12,5 @@ if (environment.disable.consoleLogs) {
     window.console.log = function() { };
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-    .catch(err => console.log(err));
+platformBrowserDynamic().bootstrapModule(AppModule);
+    // .catch(err => console.log(err));

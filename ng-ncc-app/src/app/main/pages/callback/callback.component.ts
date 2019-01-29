@@ -42,7 +42,6 @@ export class PageCallbackComponent implements OnInit {
      *
      */
     numberSelected(number: string) {
-        console.log('Number set to', number);
         this.contactNumber = number;
     }
 
