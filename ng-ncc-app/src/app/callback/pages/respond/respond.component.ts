@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, take } from 'rxjs/operators';
 
+import { CALLBACK_SUCCESS } from '../../../common/constants/callback-success.constant';
 import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
 import { HelperService } from '../../../common/services/helper.service';
 import { ICallbackDetails } from '../../../common/interfaces/callback-details';
@@ -33,7 +34,7 @@ export class PageRespondComponent implements OnInit {
     ngOnInit() {
         this.callbackID = this.route.snapshot.params.callbackID;
         this.email = this.route.snapshot.params.email;
-        this.gotThrough = true;
+        this.gotThrough = CALLBACK_SUCCESS.YES === parseInt(this.route.snapshot.params.gotThrough, 10);
         this.saving = false;
 
         if (this.callbackID) {

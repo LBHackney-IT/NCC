@@ -1,4 +1,4 @@
 export const CALLBACK_SUCCESS = {
-    YES: 'CalledThemBack',
-    NO: 'CouldntGetThrough'
+    YES: 1, //'CalledThemBack',
+    NO: 2, //'CouldntGetThrough'
 };
