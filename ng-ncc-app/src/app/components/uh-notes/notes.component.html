@@ -38,7 +38,11 @@
                     <td class="govuk-table__cell" [innerHtml]="getCallReason(row)"></td>
                     <td class="govuk-table__cell">{{ row.templatename }}</td>
                     <td class="govuk-table__cell">{{ row.channeltype }}</td>
-                    <td class="govuk-table__cell column__notes">{{ row.notes }}</td>
+                    <td class="govuk-table__cell column__notes">
+                        {{ row.notes }}
+                        <span class="agent govuk-body-s govuk-!-margin-top-2" *ngIf="row.createdBy">
+                            <b>Added by:</b> {{ row.createdBy }}</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
