@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { mergeMap, finalize, take } from 'rxjs/operators';
 
 import { CALL_REASON } from '../../constants/call-reason.constant';
@@ -9,6 +9,8 @@ import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { INCCInteraction } from '../../interfaces/ncc-interaction';
 import { NotesService } from '../../services/notes.service';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { CallNatureDropdownComponent } from '../../components/call-nature-dropdown/call-nature-dropdown.component';
+import { CommsTelephoneComponent } from '../../components/comms-telephone/comms-telephone.component';
 
 @Component({
     selector: 'app-page-callback',
@@ -17,7 +19,16 @@ import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 })
 export class PageCallbackComponent implements OnInit {
 
+    // A reference to the app-call-nature-dropdown.
+    @ViewChild(CallNatureDropdownComponent)
+    callNatureField: CallNatureDropdownComponent;
+
+    // A reference to the app-comms-telephone.
+    @ViewChild(CommsTelephoneComponent)
+    telephoneField: CommsTelephoneComponent;
+
     sending: boolean;
+    completed: boolean;
     error: boolean;
     recipient: string;  // Recipient or Officer email address.
     teamLeader: string; // Team leader or Manager email address.
@@ -90,6 +101,7 @@ export class PageCallbackComponent implements OnInit {
         };
 
         this.sending = true;
+        this.completed = false;
         this.error = false;
 
         // Using flatMap to subscribe to two Observables in series.
@@ -105,6 +117,8 @@ export class PageCallbackComponent implements OnInit {
             .subscribe(
                 (response) => {
                     // TODO what happens next?
+                    this.completed = true;
+                    this._reset();
                 },
                 (error) => { this.error = true; }
             );
@@ -119,6 +133,9 @@ export class PageCallbackComponent implements OnInit {
         this.contactNumber = null;
         this.callNature = null;
         this.message = null;
+
+        this.callNatureField.reset();
+        this.telephoneField.reset();
     }
 
 }
