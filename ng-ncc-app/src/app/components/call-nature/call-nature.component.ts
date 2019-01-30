@@ -128,6 +128,13 @@ export class CallNatureComponent implements OnInit, OnDestroy {
         }
     }
 
+    reset() {
+        if (this.selected) {
+            this.selected.call_type = null;
+            this.selected.call_reason = null;
+        }
+    }
+
     /**
      * This is called when the call type is set/changed, and resets the selected call reason.
      */

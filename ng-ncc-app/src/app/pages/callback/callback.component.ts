@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { mergeMap, finalize, take } from 'rxjs/operators';
 
 import { CALL_REASON } from '../../constants/call-reason.constant';
@@ -9,6 +9,7 @@ import { ILogCallSelection } from '../../interfaces/log-call-selection';
 import { INCCInteraction } from '../../interfaces/ncc-interaction';
 import { NotesService } from '../../services/notes.service';
 import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
+import { CallNatureDropdownComponent } from '../../components/call-nature-dropdown/call-nature-dropdown.component';
 
 @Component({
     selector: 'app-page-callback',
@@ -16,6 +17,10 @@ import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
     styleUrls: ['./callback.component.scss']
 })
 export class PageCallbackComponent implements OnInit {
+
+    // A reference to the app-call-nature-dropdown.
+    @ViewChild(CallNatureDropdownComponent)
+    callNatureField: CallNatureDropdownComponent;
 
     sending: boolean;
     completed: boolean;
@@ -123,6 +128,10 @@ export class PageCallbackComponent implements OnInit {
         this.contactNumber = null;
         this.callNature = null;
         this.message = null;
+
+        if (this.callNatureField) {
+            this.callNatureField.reset();
+        }
     }
 
 }
