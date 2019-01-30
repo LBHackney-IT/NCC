@@ -18,6 +18,7 @@ import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
 export class PageCallbackComponent implements OnInit {
 
     sending: boolean;
+    completed: boolean;
     error: boolean;
     recipient: string;  // Recipient or Officer email address.
     teamLeader: string; // Team leader or Manager email address.
@@ -90,6 +91,7 @@ export class PageCallbackComponent implements OnInit {
         };
 
         this.sending = true;
+        this.completed = false;
         this.error = false;
 
         // Using flatMap to subscribe to two Observables in series.
@@ -105,6 +107,8 @@ export class PageCallbackComponent implements OnInit {
             .subscribe(
                 (response) => {
                     // TODO what happens next?
+                    this.completed = true;
+                    this._reset();
                 },
                 (error) => { this.error = true; }
             );
