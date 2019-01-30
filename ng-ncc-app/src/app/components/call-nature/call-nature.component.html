@@ -15,9 +15,9 @@
                     Select call type
                 </label>
                 <select class="govuk-select govuk-input--width-20" id="call_type" name="call_type" [(ngModel)]="selected.call_type"
-                    [disabled]="!this.call_types" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
+                    [disabled]="!callTypes" (change)="resetCallReason()" (ngModelChange)="updateSelection()">
                     <option [ngValue]="null" selected>- select a call type</option>
-                    <option *ngFor="let item of call_types; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
+                    <option *ngFor="let item of callTypes; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
                 </select>
                 <app-helper class="govuk-!-margin-left-3" title="">
                     New call types or reasons may be added by Team Leaders via the Support Service.
@@ -71,8 +71,8 @@
                     <!-- Other (which should come last). -->
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" id="call-reason-other" name="call_reason" type="radio"
-                            [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="OTHER">
-                        <label class="govuk-label govuk-radios__label" for="call-reason-other">Other</label>
+                            [(ngModel)]="selected.call_reason" (ngModelChange)="updateSelection()" [value]="optionOther">
+                        <label class="govuk-label govuk-radios__label" for="call-reason-other">{{ optionOther.label }}</label>
                     </div>
                 </div>
 

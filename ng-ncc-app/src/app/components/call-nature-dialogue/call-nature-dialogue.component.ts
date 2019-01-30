@@ -83,7 +83,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     *
+     * Preselects call reasons in the dialogue.
      */
     private _preselectCallReasons() {
         const natures = this.Notes.getUsedCallNatures().map(
@@ -103,7 +103,10 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      */
     getCallTypeReasons(): LogCallReason[] {
         if (this.isCallTypeSelected()) {
-            const reasons: LogCallReason[] = Array.from(new Set(this.callReasons[this.selectedType.id]));
+            const reasons: LogCallReason[] = Array.from(this.callReasons[this.selectedType.id]);
+            // We use Array.from() to create a new instance of the list of call reasons.
+            // Without this we would have an ever-shrinking list of call reasons as they are selected,
+            // because of the below method.
             this._separateOther(reasons);
 
             reasons.sort(this._sortCallReasons);
@@ -113,7 +116,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     *
+     * Filters out a call type's "other" call reason.
+     * If none exists then a dummy "other" call reason is created.
      */
     private _separateOther(reasons_list: LogCallReason[]) {
         const index = reasons_list.findIndex(
@@ -129,7 +133,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     *
+     * A sorting function for call reasons.
      */
     private _sortCallReasons(a: LogCallReason, b: LogCallReason) {
         // "Other" always goes to the bottom of the list.
