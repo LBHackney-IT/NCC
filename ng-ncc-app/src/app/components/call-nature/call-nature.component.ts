@@ -90,8 +90,6 @@ export class CallNatureComponent implements OnInit, OnDestroy {
         if (this.isOtherReasonSelected()) {
             this._focusOtherReason();
         }
-
-        console.log('selected reason:', this.selected.call_reason);
     }
 
     /**
@@ -135,7 +133,6 @@ export class CallNatureComponent implements OnInit, OnDestroy {
         } else {
             this.optionOther = reasons_list[index];
         }
-        console.log('Other is:', this.optionOther.id);
         reasons_list.splice(index, 1);
     }
 
