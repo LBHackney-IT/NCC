@@ -36,6 +36,7 @@ import { CallerResolver } from './resolvers/caller-resolver.service';
 import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
+import { IsLeaseholdPropertyResolver } from './resolvers/is-leasehold-property.resolver';
 
 export const AppRoutes: Routes = [
     // -------------------------------------------------------------------------------------------------------------------------------------
@@ -179,7 +180,10 @@ export const AppRoutes: Routes = [
             },
             {
                 path: PAGES.IDENTIFY_TENANTS.route,
-                component: PageIdentifyTenantsComponent
+                component: PageIdentifyTenantsComponent,
+                resolve: {
+                    isLeasehold: IsLeaseholdPropertyResolver
+                }
             }
         ]
     },
@@ -247,6 +251,9 @@ export const AppRoutes: Routes = [
     ],
     imports: [
         RouterModule.forRoot(AppRoutes)
+    ],
+    providers: [
+        IsLeaseholdPropertyResolver
     ]
 })
 export class AppRoutingModule { }
