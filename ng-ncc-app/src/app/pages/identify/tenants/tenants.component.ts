@@ -25,6 +25,7 @@ export class PageIdentifyTenantsComponent implements OnInit {
     address: IAddressSearchGroupedResult;
     error: boolean;
     confirm_non_tenant: boolean;
+    isLeasehold: boolean;
     private _caller: ICaller;
 
     constructor(
@@ -49,7 +50,7 @@ export class PageIdentifyTenantsComponent implements OnInit {
             .pipe(take(1))
             .subscribe(
                 (data: { isLeasehold: boolean }) => {
-                    console.log('Is this property a leasehold?', data.isLeasehold);
+                    this.isLeasehold = data.isLeasehold;
                 }
             );
 

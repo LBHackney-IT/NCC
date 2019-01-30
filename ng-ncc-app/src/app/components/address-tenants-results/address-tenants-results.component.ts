@@ -14,6 +14,7 @@ import { DPAService } from '../../services/dpa.service';
 })
 export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() address: IAddressSearchGroupedResult;
+    @Input() isLeasehold: boolean;
     @Input() showBackButton: boolean;
 
     // When a tenant is selected and the Continue button is hit.
