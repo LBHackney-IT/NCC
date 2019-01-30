@@ -119,6 +119,13 @@ export class CallNatureComponent implements OnInit, OnDestroy {
         }
     }
 
+    reset() {
+        if (this.selected) {
+            this.selected.call_type = null;
+            this.selected.call_reason = null;
+        }
+    }
+
     /**
      * Filters out a call type's "other" call reason.
      * If none exists then a dummy "other" call reason is created.
