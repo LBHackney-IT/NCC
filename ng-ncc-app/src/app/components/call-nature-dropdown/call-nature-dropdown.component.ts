@@ -22,7 +22,7 @@ export class CallNatureDropdownComponent extends CallNatureComponent {
      *
      */
     canSelectCallReason(): boolean {
-        return !this.disabled && this.isCallTypeSelected() && undefined !== this.call_reasons;
+        return !this.disabled && this.isCallTypeSelected() && undefined !== this.callReasons;
     }
 
 }

@@ -10,6 +10,7 @@ import { ContentAreaComponent } from '../content-area/content-area.component';
 import { CallService } from '../../services/call.service';
 import { WindowService } from '../../services/window.service';
 import { NotesService } from '../../services/notes.service';
+import { HelperService } from '../../services/helper.service';
 
 import { CALL_REASON } from '../../constants/call-reason.constant';
 import { PAGES } from '../../constants/pages.constant';
@@ -52,6 +53,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         private element: ElementRef,
         private router: Router,
         private Call: CallService,
+        private Helper: HelperService,
         private Notes: NotesService,
         private Window: WindowService
     ) { }
@@ -229,12 +231,12 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
+     * Returns TRUE if a call type and reason are selected.
      */
     isCallNatureSelected(): boolean {
-        if (this.call_nature) {
-            if (this.call_nature.call_reason) {
-                return (CALL_REASON.OTHER !== this.call_nature.call_reason.id || !!(this.call_nature.other_reason));
+        if (this.Helper.isDefined(this.call_nature)) {
+            if (this.Helper.isDefined(this.call_nature.call_reason)) {
+                return ('Other' !== this.call_nature.call_reason.label) || this.Helper.isPopulated(this.call_nature.other_reason);
             }
         }
         return false;
