@@ -19,9 +19,9 @@ export class CallNatureComponent implements OnInit, OnDestroy {
 
     private _destroyed$ = new Subject();
 
-    OTHER = new LogCallReason(CALL_REASON.OTHER, 'Other');
-    call_types: LogCallType[];
-    call_reasons: Array<any>;
+    optionOther: LogCallReason;
+    callTypes: LogCallType[];
+    callReasons: Array<any>;
     error: boolean;
     selected: ILogCallSelection; // the selected call type and reason.
 
@@ -42,8 +42,8 @@ export class CallNatureComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 data => {
-                    this.call_types = data[0];
-                    this.call_reasons = data[1];
+                    this.callTypes = data[0];
+                    this.callReasons = data[1];
                 },
                 () => { this.error = true; }
             );
@@ -74,7 +74,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
      * Returns TRUE if "other" is selected as the call reason.
      */
     isOtherReasonSelected(): boolean {
-        return this.selected.call_reason && CALL_REASON.OTHER === this.selected.call_reason.id;
+        return this.selected.call_reason && this.optionOther.id === this.selected.call_reason.id;
     }
 
     /**
@@ -106,26 +106,54 @@ export class CallNatureComponent implements OnInit, OnDestroy {
      */
     getCallTypeReasons(): LogCallReason[] {
         if (this.isCallTypeSelected()) {
-            const reasons: LogCallReason[] = this.call_reasons[this.selected.call_type.id];
-            reasons.sort(function(a: LogCallReason, b: LogCallReason) {
-                // "Other" always goes to the bottom of the list.
-                if ('0' === a.id || '0' === b.id) {
-                    return -1;
-                }
+            const reasons: LogCallReason[] = Array.from(this.callReasons[this.selected.call_type.id]);
+            // We use Array.from() to create a new instance of the list of call reasons.
+            // Without this we would have an ever-shrinking list of call reasons as they are selected,
+            // because of the below method.
 
-                const left = a.label.toLowerCase();
-                const right = b.label.toLowerCase();
+            this._separateOther(reasons);
 
-                if (left < right) {
-                    return -1;
-                } else if (left > right) {
-                    return 1;
-                }
-                return 0;
-            });
+            reasons.sort(this._sortCallReasons);
 
             return reasons;
         }
+    }
+
+    /**
+     * Filters out a call type's "other" call reason.
+     * If none exists then a dummy "other" call reason is created.
+     */
+    private _separateOther(reasons_list: LogCallReason[]) {
+        const index = reasons_list.findIndex(
+            (reason: LogCallReason) => 'Other' === reason.label
+        );
+        if (-1 === index) {
+            // Create a "placeholder" Other call reason.
+            this.optionOther = new LogCallReason(CALL_REASON.OTHER, 'Other');
+        } else {
+            this.optionOther = reasons_list[index];
+        }
+        reasons_list.splice(index, 1);
+    }
+
+    /**
+     * A sorting function for call reasons.
+     */
+    private _sortCallReasons(a: LogCallReason, b: LogCallReason) {
+        // "Other" always goes to the bottom of the list.
+        if ('0' === a.id || '0' === b.id) {
+            return -1;
+        }
+
+        const left = a.label.toLowerCase();
+        const right = b.label.toLowerCase();
+
+        if (left < right) {
+            return -1;
+        } else if (left > right) {
+            return 1;
+        }
+        return 0;
     }
 
     /**
