@@ -12,7 +12,7 @@
 
         <!-- Rent amount. -->
         <div class="govuk-grid-column-three-quarters">
-            <h3 class="govuk-!-font-weight-bold">Rent amount</h3>
+            <h3 class="govuk-!-font-weight-bold">Amount ({{ isLeasehold ? 'per month' : 'per week' }})</h3>
             <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">
                 <span *ngIf="account">{{ account.rent | currency:'GBP' }}</span>
                 <span *ngIf="!account">--</span>
