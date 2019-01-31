@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,4 +6,10 @@ import { Component } from '@angular/core';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent { }
+export class HeaderComponent {
+
+    isTestSite(): boolean {
+        return !environment.production;
+    }
+
+}
