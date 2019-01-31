@@ -1,0 +1,218 @@
+<app-error-panel class="govuk-!-margin-bottom-9" *ngIf="saving_error">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Unable to save new details</h2>
+    <p class="govuk-body">There was a problem saving the new details for this {{ isLeasehold ? 'leaseholder' : 'tenant'}}. Click 'Add new' below and try again.</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+</app-error-panel>
+
+<app-error-panel *ngIf="error; else contactDetails">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">{{ isLeasehold ? 'Leaseholder' : 'Tenant'}} details load failure</h2>
+    <p class="govuk-body">There was a problem loading the details for this {{ isLeasehold ? 'leaseholder' : 'tenant'}}. Click 'Back' above and try again.</p>
+    <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+</app-error-panel>
+
+<ng-template #contactDetails>
+    <div class="govuk-grid-row">
+        <form #formContactDetails="ngForm" class="govuk-grid-column-two-thirds" (ngSubmit)="saveDetails()">
+            <!-- #formContactDetails="ngForm" -->
+            <!-- This creates a local template variable called formContactDetails, which is bound to ngForm. -->
+            <!-- We can now use formContactDetails.valid and other methods to check the validation status of the form. -->
+            <!-- Similarly we can use #name="ngModel" on input fields to bind the model of an input field to a local variable. -->
+
+            <h1 class="govuk-heading-l">Edit {{ isLeasehold ? 'leaseholder' : 'tenant'}} details</h1>
+
+            <app-warning *ngIf="view_only">
+                Contact details will not be saved.
+            </app-warning>
+
+            <!-- Title. -->
+            <div class="govuk-grid-row">
+                <label class="govuk-grid-column-one-third govuk-body govuk-!-font-weight-bold" for="title">
+                    Title
+                </label>
+                <div class="govuk-grid-column-two-thirds govuk-body" id="title">
+                    {{ caller.getTitle() }}
+                </div>
+            </div>
+
+            <!-- First name. -->
+            <div class="govuk-grid-row">
+                <label class="govuk-grid-column-one-third govuk-body govuk-!-font-weight-bold" for="first-name">
+                    First name
+                </label>
+                <div class="govuk-grid-column-two-thirds govuk-body" id="first-name">
+                    {{ caller.getFirstName() }}
+                </div>
+            </div>
+
+            <!-- Last name. -->
+            <div class="govuk-grid-row">
+                <label class="govuk-grid-column-one-third govuk-body govuk-!-font-weight-bold" for="last-name">
+                    Last name
+                </label>
+                <div class="govuk-grid-column-two-thirds govuk-body" id="last-name">
+                    {{ caller.getLastName() }}
+                </div>
+            </div>
+
+            <!-- Home number(s). -->
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                        <div class="add-new govuk-!-padding-left-0 govuk-!-padding-right-0">
+                            <h2 class="govuk-fieldset__heading add-new__title">
+                                Home number
+                            </h2>
+                            <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughTelephoneNumbers()" (click)="addTelephoneNumber()">+ Add new</button>
+                        </div>
+                    </legend>
+                    <div class="govuk-radios">
+
+                        <!-- Existing home numbers. -->
+                        <div class="govuk-radios__item" *ngFor="let row of update.telephone; let i = index; trackBy: trackByIndex">
+                            <input class="govuk-radios__input" id="existing-telephone-{{ i }}" name="telephone-default" type="radio"
+                                [(ngModel)]="update.default.telephone" [value]="update.telephone[i]">
+                            <label class="govuk-label govuk-radios__label" for="existing-telephone-{{ i }}">
+                                {{ row }}
+                            </label>
+                        </div>
+
+                        <app-warning *ngIf="new_telephone.length">
+                            Check DPA before adding new details.
+                        </app-warning>
+
+                        <!-- New home number(s). -->
+                        <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_telephone; let i = index; trackBy: trackByIndex;">
+                            <!-- See the component for trackByIndex(). -->
+
+                            <!-- radio button... -->
+                            <input class="govuk-radios__input" id="new-telephone-{{ i }}" name="telephone-default" type="radio"
+                            [(ngModel)]="update.default.telephone" [value]="row">
+                            <label class="govuk-label govuk-radios__label radio-text-field" for="new-telephone-{{ i }}"></label>
+
+                            <!-- text field... -->
+                            <div class="govuk-form-group govuk-!-margin-left-3">
+                                <label class="govuk-label govuk-visually-hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
+                                <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}"
+                                    required appNumbersOnly
+                                    [(ngModel)]="new_telephone[i]"
+                                    (focus)="update.default.telephone = row;"
+                                    (blur)="update.default.telephone = row;"
+                                    [disabled]="saving">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Mobile number(s). -->
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                        <div class="add-new govuk-!-padding-left-0 govuk-!-padding-right-0">
+                            <h2 class="govuk-fieldset__heading add-new__title">
+                                Mobile number
+                            </h2>
+                            <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughMobileNumbers()" (click)="addMobileNumber()">+ Add new</button>
+                        </div>
+                    </legend>
+                    <div class="govuk-radios">
+
+                        <!-- Existing mobile numbers. -->
+                        <div class="govuk-radios__item" *ngFor="let row of update.mobile; let i = index; trackBy: trackByIndex">
+                            <input class="govuk-radios__input" id="existing-mobile-{{ i }}" name="mobile-default" type="radio"
+                                [(ngModel)]="update.default.mobile" [value]="update.mobile[i]">
+                            <label class="govuk-label govuk-radios__label" for="existing-mobile-{{ i }}">
+                                {{ row }}
+                            </label>
+                        </div>
+
+                        <app-warning *ngIf="new_mobile.length">
+                            Check DPA before adding new details.
+                        </app-warning>
+
+                        <!-- New mobile number(s). -->
+                        <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_mobile; let i = index; trackBy: trackByIndex;">
+
+                            <!-- radio button... -->
+                            <input class="govuk-radios__input" id="new-mobile-{{ i }}" name="mobile-default" type="radio"
+                            [(ngModel)]="update.default.mobile" [value]="row">
+                            <label class="govuk-label govuk-radios__label radio-text-field" for="new-mobile-{{ i }}"></label>
+
+                            <!-- text field... -->
+                            <div class="govuk-form-group govuk-!-margin-left-3">
+                                <label class="govuk-label govuk-visually-hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
+                                <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}"
+                                    required appNumbersOnly
+                                    [(ngModel)]="new_mobile[i]" (focus)="update.default.mobile = row;"
+                                    (blur)="update.default.mobile = row;"
+                                    [disabled]="saving">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Email address(es). -->
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                        <div class="add-new govuk-!-padding-left-0 govuk-!-padding-right-0">
+                            <h2 class="govuk-fieldset__heading add-new__title">
+                                Email
+                            </h2>
+                            <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughEmailAddresses()"
+                                (click)="addEmailAddress()">+ Add new</button>
+                        </div>
+                    </legend>
+                    <div class="govuk-radios">
+
+                        <!-- Existing email addresses. -->
+                        <div class="govuk-radios__item" *ngFor="let row of update.email; let i = index; trackBy: trackByIndex">
+                            <input class="govuk-radios__input" id="existing-email-{{ i }}" name="email-default" type="radio"
+                                [(ngModel)]="update.default.email" [value]="update.email[i]">
+                            <label class="govuk-label govuk-radios__label" for="existing-email-{{ i }}">
+                                {{ row }}
+                            </label>
+                        </div>
+
+                        <app-warning *ngIf="new_email.length">
+                            Check DPA before adding new details.
+                        </app-warning>
+
+                        <!-- New email address(es). -->
+                        <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_email; let i = index; trackBy: trackByIndex;">
+
+                            <!-- radio button... -->
+                            <input class="govuk-radios__input" id="new-email-{{ i }}" name="email-default" type="radio"
+                            [(ngModel)]="update.default.email" [value]="row">
+                            <label class="govuk-label govuk-radios__label radio-text-field" for="new-email-{{ i }}"></label>
+
+                            <!-- text field... -->
+                            <!-- This uses Angular's email validator. -->
+                            <div class="govuk-form-group govuk-!-margin-left-3">
+                                <label class="govuk-label govuk-visually-hidden" for="new-email-{{ i }}-value">New email {{ i + 1 }}</label>
+                                <input class="govuk-input" type="email" id="new-email-{{ i }}-value" name="new_email_{{ i }}" email required
+                                    [(ngModel)]="new_email[i]" (focus)="update.default.email = row;"
+                                    (blur)="update.default.email = row;"
+                                    [disabled]="saving">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- The submit button. -->
+            <!-- It should be disabled if we have any empty fields or an invalid email address. -->
+            <button class="govuk-button" type="submit" name="button" [disabled]="!formContactDetails.valid || saving">
+                Save
+            </button>
+
+        </form>
+    </div>
+</ng-template>
