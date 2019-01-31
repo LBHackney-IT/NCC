@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     @ViewChild('content') contentArea: ElementRef;
 
+    title = 'Hackney Neighbourhood Call Centre';
     loading = false;
 
     private _destroyed$ = new Subject();

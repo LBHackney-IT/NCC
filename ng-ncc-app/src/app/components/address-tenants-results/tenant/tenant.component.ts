@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { take } from 'rxjs/operators';
 
 import { IAccountDetails } from '../../../interfaces/account-details';
@@ -12,7 +12,7 @@ import { ManageATenancyAPIService } from '../../../API/ManageATenancyAPI/managea
     templateUrl: './tenant.component.html',
     styleUrls: ['./tenant.component.scss']
 })
-export class AddressResultTenantComponent implements OnInit {
+export class AddressResultTenantComponent implements OnChanges {
     // This component exists because we want to use the communications details saved through the NCC API endpoint,
     // rather than those from the Hackney API endpoint.
 
@@ -23,13 +23,15 @@ export class AddressResultTenantComponent implements OnInit {
 
     constructor(private ManageATenancyAPI: ManageATenancyAPIService, private NCCAPI: NCCAPIService) { }
 
-    ngOnInit() {
-        // Attempt to obtain contact details from the NCC API.
-        this.NCCAPI.getContactDetails(this.tenant.getContactID())
-            .pipe(take(1))
-            .subscribe((data) => {
-                this.details = data;
-            });
+    ngOnChanges() {
+        if (this.tenant) {
+            // Attempt to obtain contact details from the NCC API.
+            this.NCCAPI.getContactDetails(this.tenant.getContactID())
+                .pipe(take(1))
+                .subscribe((data) => {
+                    this.details = data;
+                });
+        }
     }
 
     /**
@@ -37,10 +39,14 @@ export class AddressResultTenantComponent implements OnInit {
      * Results from the NCC API are given priority.
      */
     getTelephoneNumbers(): string[] {
-        const ncc_details = this.details ? this.details.telephone.concat(this.details.mobile) : null;
-        const hackney_details = this.tenant.getTelephoneNumbers();
+        if (this.tenant) {
+            const ncc_details = this.details ? this.details.telephone.concat(this.details.mobile) : null;
+            const hackney_details = this.tenant.getTelephoneNumbers();
 
-        return ncc_details ? ncc_details : hackney_details;
+            return ncc_details ? ncc_details : hackney_details;
+        }
+
+        return [];
     }
 
     /**
@@ -48,10 +54,14 @@ export class AddressResultTenantComponent implements OnInit {
     * Results from the NCC API are given priority.
      */
     getEmailAddresses(): string[] {
-        const ncc_details = this.details ? this.details.email : null;
-        const hackney_details = this.tenant.getEmailAddresses();
+        if (this.tenant) {
+            const ncc_details = this.details ? this.details.email : null;
+            const hackney_details = this.tenant.getEmailAddresses();
 
-        return ncc_details ? ncc_details : hackney_details;
+            return ncc_details ? ncc_details : hackney_details;
+        }
+
+        return [];
     }
 
     /**
