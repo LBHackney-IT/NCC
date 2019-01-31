@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnDestroy, OnInit, ViewChild, 
+    OnChanges } from '@angular/core';
 import { Observable, of, forkJoin, Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
@@ -18,7 +19,7 @@ import { ViewOnlyService } from '../../services/view-only.service';
     templateUrl: './call-nature-dialogue.component.html',
     styleUrls: ['./call-nature-dialogue.component.scss']
 })
-export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit, OnDestroy {
+export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit, OnChanges, OnDestroy {
     @Input() show: boolean;
     @Output() showChange = new EventEmitter<boolean>();
     @Output() confirmed = new EventEmitter<void>();
@@ -34,6 +35,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     selectedType: LogCallType;
     selectedReasons: string[];  // a list of call reason IDs.
     selectedReasonOther: string;
+    selectedReasonObjects: object[];
 
     callTypes: LogCallType[];
     callReasons: { [propKey: number]: LogCallReason[] };
@@ -97,6 +99,40 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
         this.selectedReasons = natures;
         this.selectedReasonOther = other_reasons.join(', ');
+    }
+
+    private _mapSelectedCallReasonsToListOfReasons = (): void => {
+        const selectedReasonObjects = this.selectedReasons.map((reasonId) => {
+            // Intialise object to be returned
+            let returnedObject: object;
+
+            // Get keys from callReasons objects
+            const callReasonsKeyArray: number[] = Object.keys(this.callReasons).map(Number);
+
+            // Iterate through keys in callReasons
+            callReasonsKeyArray.forEach((reasonKey: number) => {
+                // Get Array of Reason objects
+                const possibleReasons: LogCallReason[] = this.callReasons[reasonKey];
+                if (!returnedObject) {
+                // Find the object which matches the reason ID
+                returnedObject = possibleReasons.find((logCallObject: LogCallReason) => {
+                    return logCallObject.id === reasonId;
+                });
+                if (returnedObject && !returnedObject.hasOwnProperty('type')) {
+                    // Append the type
+                    returnedObject['type'] = this.selectedType;
+                }
+            }
+
+        });
+
+            if (returnedObject !== undefined) {
+                return returnedObject;
+            }
+
+        });
+
+        this.selectedReasonObjects = selectedReasonObjects;
     }
 
     /**
