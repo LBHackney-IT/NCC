@@ -1,3 +1,11 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/settings/typography-font";
+
+:host {
+    color: inherit;
+    font-family: $govuk-font-family;
+}
+
 .caller {
     color: inherit;
     margin: 0;

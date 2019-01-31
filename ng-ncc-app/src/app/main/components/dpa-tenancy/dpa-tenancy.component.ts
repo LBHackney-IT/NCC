@@ -12,6 +12,7 @@ import { IAccountDetails } from '../../../common/interfaces/account-details';
 })
 export class DPATenancyComponent implements OnInit, OnDestroy {
     @Input() crmContactID: string;
+    @Input() isLeasehold: boolean;
 
     private _destroyed$ = new Subject();
     error: boolean;

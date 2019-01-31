@@ -10,6 +10,7 @@ import { NextPaymentService } from '../../../common/services/next-payment.servic
 })
 export class AccountBalanceComponent implements OnInit {
     @Input() account: IAccountDetails;
+    @Input() isLeasehold: boolean;
 
     private next_payment: number;
 

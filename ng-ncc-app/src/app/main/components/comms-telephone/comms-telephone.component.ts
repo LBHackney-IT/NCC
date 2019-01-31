@@ -19,6 +19,7 @@ export class CommsTelephoneComponent implements OnInit {
     private _destroyed$ = new Subject();
 
     caller: ICaller;
+    details: ContactDetailsUpdate;
     selected: string; // the selected or entered telephone number.
     otherNumber: string;
     telephoneNumbers: string[]; // all available telephone numbers.
@@ -56,37 +57,64 @@ export class CommsTelephoneComponent implements OnInit {
     }
 
     /**
-     *
+     *  Add all available telephone numbers to the list.
      */
     _populateTelephoneNumbers(details: ContactDetailsUpdate) {
-        // Add all available telephone numbers to the list.
+        this.details = details;
         this.telephoneNumbers = [];
-        if (details.telephone) {
-            this.telephoneNumbers = this.telephoneNumbers.concat(details.telephone);
+        if (this.details.telephone) {
+            this.telephoneNumbers = this.telephoneNumbers.concat(this.details.telephone);
         }
-        if (details.mobile) {
-            this.telephoneNumbers = this.telephoneNumbers.concat(details.mobile);
+        if (this.details.mobile) {
+            this.telephoneNumbers = this.telephoneNumbers.concat(this.details.mobile);
         }
 
         // Set the default number to use, if available.
-        if (details.default.telephone) {
-            this.selected = details.default.telephone;
-        } else if (details.default.mobile) {
-            this.selected = details.default.mobile;
+        this.setDefault();
+    }
+
+    /**
+     *  Sets the selected telephone number to the default, if available.
+     */
+    setDefault() {
+        this.selected = null;
+        if (this.details) {
+            if (this.details.default.telephone) {
+                this.selected = this.details.default.telephone;
+            } else if (this.details.default.mobile) {
+                this.selected = this.details.default.mobile;
+            }
         }
     }
 
+    /**
+     *
+     */
     trackByFn(index, item) {
         return index; // or item.id
     }
 
+    /**
+     *
+     */
     setSelectedAsOther() {
         this.selected = null;
     }
 
+    /**
+     *
+     */
     changedSelection() {
         const number = this.selected ? this.selected : this.otherNumber;
         this.selectedChange.emit(number);
+    }
+
+    /**
+     *
+     */
+    reset() {
+        this.otherNumber = null;
+        this.setDefault();
     }
 
 }

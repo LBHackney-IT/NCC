@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     @ViewChild('content') contentArea: ElementRef;
 
+    title = 'Hackney Neighbourhood Call Centre';
     loading = false;
 
     private _destroyed$ = new Subject();
@@ -30,6 +31,9 @@ export class AppComponent implements OnInit, OnDestroy {
         private Auth: AuthService,
         private BackLink: BackLinkService
     ) {
+    }
+
+    ngOnInit() {
         // This part handles the display of the route loading activity bar.
         this.router.events
             .pipe(
@@ -37,32 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
                 // i.e. continue the subscription until the _destroyed$ observable emits a value (see ngOnDestroy).
             )
             .subscribe((event: Event) => {
-                switch (true) {
-                    case event instanceof NavigationStart: {
-                        // Started navigating to a route.
-                        this.loading = true;
-                        break;
-                    }
-
-                    case event instanceof NavigationEnd:
-                        // Scroll the content area to the top of its content.
-                        this.loading = false;
-
-                        // By default disable (or hide) the back link.
-                        this.BackLink.disable();
-                        break;
-
-                    case event instanceof NavigationCancel:
-                    case event instanceof NavigationError:
-                        // Navigation came to an end somehow.
-                        this.loading = false;
-                        break;
+                if (event instanceof NavigationEnd) {
+                    // By default disable (or hide) the back link.
+                    this.BackLink.disable();
                 }
             });
-    }
-
-    ngOnInit() {
-        // initAll(); // initialise GOV.UK Frontend components.
     }
 
     ngOnDestroy() {

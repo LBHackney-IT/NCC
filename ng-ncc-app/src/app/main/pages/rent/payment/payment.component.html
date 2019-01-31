@@ -6,16 +6,14 @@
 
 <form action="">
 
-    <app-panel class="govuk-!-margin-bottom-5">
+    <!-- <app-panel class="govuk-!-margin-bottom-5">
         <div class="flex-columns">
 
-            <!-- Tenancy reference number. -->
             <div>
                 <span class="govuk-!-font-weight-bold govuk-!-margin-right-2">Tenancy ref no.</span>
                 {{ account_details ? account_details.tagReferenceNumber : '--' }}
             </div>
 
-            <!-- The amount to pay. -->
             <div>
                 <span class="govuk-!-margin-right-2">Pay now</span>
                 <label>
@@ -25,7 +23,6 @@
                 </label>
             </div>
 
-            <!-- The remaining balance. -->
             <div *ngIf="isCallerIdentified()">
                 <span class="govuk-!-margin-right-2">Balance after this payment</span>
                 <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ -getCalculatedBalance() | currency:'GBP' }}</span>
@@ -33,7 +30,7 @@
             </div>
 
         </div>
-    </app-panel>
+    </app-panel> -->
 
     <app-warning>
         Please go to Paris to take payment.

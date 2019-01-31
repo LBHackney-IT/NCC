@@ -69,6 +69,12 @@
 
 <button class="govuk-button" type="button" name="button" (click)="saveCallbackRequest()" [disabled]="!canSave()">Send</button>
 
+<app-success-panel *ngIf="completed">
+    <p class="govuk-body">
+        Callback request has been sent.
+    </p>
+</app-success-panel>
+
 <app-error-panel class="govuk-!-margin-bottom-5" *ngIf="error">
     <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Failed to save</h2>
     <p class="govuk-body">

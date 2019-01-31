@@ -26,10 +26,9 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
     @ViewChild('otherReasonField') otherReasonField: ElementRef;
 
-    OTHER = new LogCallReason(CALL_REASON.OTHER, 'Other');
-
     private _destroyed$ = new Subject<void>();
 
+    optionOther: LogCallReason;
     saving: boolean;
     selectedType: LogCallType;
     selectedReasons: string[];  // a list of call reason IDs.
@@ -84,7 +83,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     *
+     * Preselects call reasons in the dialogue.
      */
     private _preselectCallReasons() {
         const natures = this.Notes.getUsedCallNatures().map(
@@ -104,7 +103,12 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      */
     getCallTypeReasons(): LogCallReason[] {
         if (this.isCallTypeSelected()) {
-            const reasons: LogCallReason[] = this.callReasons[this.selectedType.id];
+            const reasons: LogCallReason[] = Array.from(this.callReasons[this.selectedType.id]);
+            // We use Array.from() to create a new instance of the list of call reasons.
+            // Without this we would have an ever-shrinking list of call reasons as they are selected,
+            // because of the below method.
+            this._separateOther(reasons);
+
             reasons.sort(this._sortCallReasons);
 
             return reasons;
@@ -112,7 +116,24 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     *
+     * Filters out a call type's "other" call reason.
+     * If none exists then a dummy "other" call reason is created.
+     */
+    private _separateOther(reasons_list: LogCallReason[]) {
+        const index = reasons_list.findIndex(
+            (reason: LogCallReason) => 'Other' === reason.label
+        );
+        if (-1 === index) {
+            // Create a "placeholder" Other call reason.
+            this.optionOther = new LogCallReason(CALL_REASON.OTHER, 'Other');
+        } else {
+            this.optionOther = reasons_list[index];
+        }
+        reasons_list.splice(index, 1);
+    }
+
+    /**
+     * A sorting function for call reasons.
      */
     private _sortCallReasons(a: LogCallReason, b: LogCallReason) {
         // "Other" always goes to the bottom of the list.
@@ -169,7 +190,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if "other" is selected as the call reason.
      */
     isOtherReasonSelected(): boolean {
-        return this.isReasonSelected(this.OTHER);
+        return this.isReasonSelected(this.optionOther);
     }
 
     /**

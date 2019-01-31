@@ -7,10 +7,10 @@
     <!-- Caller details. -->
     <app-value-list class="govuk-body-s">
 
-        <app-value-list-label *ngIf="!isCallerAnonymous()">Tenancy reference</app-value-list-label>
+        <app-value-list-label *ngIf="!isCallerAnonymous()">Reference</app-value-list-label>
         <app-value-list-value *ngIf="!isCallerAnonymous()">{{ getTenancyReference() }}</app-value-list-value>
 
-        <app-value-list-label>Tenant</app-value-list-label>
+        <app-value-list-label>Caller</app-value-list-label>
         <app-value-list-value>
             <span [class.is-anonymous]="isCallerAnonymous()">{{ getCallerName() }}</span>
         </app-value-list-value>

@@ -131,7 +131,11 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
      * Returns the name of a tenant matching the specified CRM contact ID.
      */
     getTenantName(note: INCCUHNote): string {
-        return note.clientName ? note.clientName : 'anonymous';
+        if (note.clientName) {
+            return note.clientName;
+        } else {
+            return NOTES.TYPE_ACTION_DIARY === note.notesType ? null : 'anonymous';
+        }
     }
 
     /**
