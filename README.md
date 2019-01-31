@@ -37,6 +37,20 @@ node src/versioning.js
 ```
 This creates a `versioning.js` file used by the app to obtain the current version number.
 
+## RUNNING the site(s) locally
+
+### Main site
+```
+cd ng-ncc-app
+ng serve
+```
+
+### Callback response app
+```
+cd ng-ncc-app
+ng serve ng-ncc-callback
+```
+
 ## BUILDING site versions
 When copying files over to the host folders, **be careful not to remove the `web.config` file** Everything else should be safe to delete or replace.
 
@@ -47,7 +61,7 @@ When copying files over to the host folders, **be careful not to remove the `web
 This is no longer used, but while available it might be useful for testing scenarios that require non-*localhost* URLs (e.g. payments via Paris).
 
 ```
-npm build -c dev-site
+ng build -c dev-site
 ```
 
 Build folder: `ng-ncc-app/dist/dev-test`
@@ -63,7 +77,7 @@ Front end: http://lbhwebintd01:2020
 #### LIVE test site
 
 ```
-npm build -c live-site
+ng build -c live-site
 ```
 
 Build folder: `ng-ncc-app/dist/live-test`
@@ -79,7 +93,7 @@ Front end: http://lbhwebintd01:4040
 #### PRODUCTION/LIVE site
 
 ```
-npm build --prod
+ng build --prod
 ```
 
 Build folder: `ng-ncc-app/dist/ng-ncc-app`
@@ -99,7 +113,7 @@ Front end: http://secure.ncc.hackney.gov.uk:4040
 #### Test site
 
 ```
-npm build ng-ncc-callback -c live-test
+ng build ng-ncc-callback -c live-test
 ```
 (this will use *live-test* settings.)
 
@@ -107,4 +121,16 @@ Build folder: `ng-ncc-app/dist/live-test/callback`
 
 Server folder: \\lbhwebintd01\c$\ng-ncc-callback
 
-http://lbhwebintd01:6060/[callback id]/[email address]
+Front end: http://lbhwebintd01:6060/[callback id]/[email address]
+
+#### Production
+
+```
+ng build ng-ncc-callback --prod
+```
+
+Build folder: `ng-ncc-app/dist/ng-ncc-callback`
+
+Server folder: *to be determined*
+
+Front end: *to be determined*
