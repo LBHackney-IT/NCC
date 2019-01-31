@@ -123,6 +123,9 @@ export const AppRoutes: Routes = [
         path: PAGES.RENT.route,
         component: PageRentComponent,
         canActivate: [AuthGuard],
+        resolve: {
+            isLeasehold: IsLeaseholdPropertyResolver
+        },
         children: [
             {
                 // Rent > Transactions.
