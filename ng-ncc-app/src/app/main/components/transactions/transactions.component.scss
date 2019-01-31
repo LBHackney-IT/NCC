@@ -1,0 +1,30 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/settings/colours-applied";
+
+$transactions-loading-padding: 1rem;
+
+$transactions-border-colour: $govuk-border-colour !default;
+$transactions-border-width: 1px !default;
+$transactions-max-height: 21rem !default;
+$transactions-tall-max-height: 50rem !default;
+$transactions-padding: .5rem 1rem !default;
+
+
+////////////////////
+
+.loading {
+    font-style: italic;
+    padding: $transactions-loading-padding;
+    text-align: center;
+}
+
+.transactions {
+    border: $transactions-border-width solid $transactions-border-colour;
+    max-height: $transactions-max-height;
+    overflow: auto;
+    padding: $transactions-padding;
+}
+
+.transactions--tall {
+    max-height: $transactions-tall-max-height;
+}
