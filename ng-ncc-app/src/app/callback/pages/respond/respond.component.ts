@@ -49,14 +49,20 @@ export class PageRespondComponent implements OnInit {
     }
 
     /**
-     *
+     * Returns TRUE if we can save the callback response.
      */
     canSave(): boolean {
-        return !this.saving && this.Helper.isDefined(this.details) && this.Helper.isPopulated(this.note);
+        if (this.saving) {
+            return false;
+        }
+
+        return this.Helper.isDefined(this.gotThrough) &&
+            this.Helper.isDefined(this.details) &&
+            this.Helper.isPopulated(this.note);
     }
 
     /**
-     *
+     * Saves the callback response.
      */
     saveCallbackResponse() {
         if (this.saving) {

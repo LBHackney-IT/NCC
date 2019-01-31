@@ -11,8 +11,8 @@ export const AppRoutes: Routes = [
         component: PageRespondComponent
     },
     {
-        // TODO Accessing this app with no parameters.
-        path: '',
+        // Accessing this app with no parameters.
+        path: '**',
         component: PageRespondComponent
     },
 ];
