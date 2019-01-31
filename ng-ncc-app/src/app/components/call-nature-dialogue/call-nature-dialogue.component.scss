@@ -1,8 +1,11 @@
+$dialogue-max-width: 900px !default;
+$call-nature-dialogue-width: $dialogue-max-width;
 @import "../dialogue/dialogue.component";
 
 .dialogue__box {
     min-width: 600px;
     padding: 0;
+    width: $call-nature-dialogue-width;
 }
 
 .dialogue__buttons {
