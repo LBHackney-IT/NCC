@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CallerResolverService } from './caller-resolver.service';
+import { CallerResolver } from './caller-resolver.service';
 
-describe('CallerResolverService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [CallerResolverService]
+describe('CallerResolver', () => {
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [CallerResolver]
+        });
     });
-  });
 
-  it('should be created', inject([CallerResolverService], (service: CallerResolverService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should be created', inject([CallerResolver], (service: CallerResolver) => {
+        expect(service).toBeTruthy();
+    }));
 });

@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TryAgainComponent } from './try-again.component';
+import { PageTryAgainComponent } from './try-again.component';
 
-describe('TryAgainComponent', () => {
-  let component: TryAgainComponent;
-  let fixture: ComponentFixture<TryAgainComponent>;
+describe('PageTryAgainComponent', () => {
+    let component: PageTryAgainComponent;
+    let fixture: ComponentFixture<PageTryAgainComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ TryAgainComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [PageTryAgainComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TryAgainComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PageTryAgainComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

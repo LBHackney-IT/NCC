@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IdentifyComponent } from './identify.component';
+import { PageIdentifyComponent } from './identify.component';
 
-describe('IdentifyComponent', () => {
-  let component: IdentifyComponent;
-  let fixture: ComponentFixture<IdentifyComponent>;
+describe('PageIdentifyComponent', () => {
+    let component: PageIdentifyComponent;
+    let fixture: ComponentFixture<PageIdentifyComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ IdentifyComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [PageIdentifyComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IdentifyComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PageIdentifyComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
