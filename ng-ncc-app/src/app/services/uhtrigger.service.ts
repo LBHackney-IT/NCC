@@ -63,7 +63,7 @@ export class UHTriggerService {
      */
     sentStatement(method: string) {
         if (this.Call.isCallerIdentified()) {
-            this.Call.recordAutomaticNote(`Statement sent by ${method}.`)
+            this.Call.recordAutomaticNote(`Transaction history sent by ${method}.`)
                 .pipe(take(1))
                 .subscribe();
         }
