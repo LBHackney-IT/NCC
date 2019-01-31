@@ -26,6 +26,7 @@ import { NOTE_TYPE } from '../../constants/note-type.constant';
 import { CALL_REASON } from '../../constants/call-reason.constant';
 import { COMMS } from '../../constants/comms.constant';
 import { PAYMENT_STATUS } from '../../constants/payment-status.constant';
+import { CALLBACK_SUCCESS } from '../../constants/callback-success.constant';
 import { CallService } from '../../services/call.service';
 import { HelperService } from '../../services/helper.service';
 
@@ -89,7 +90,13 @@ export class NCCAPIService {
      * Create a callback note against a call.
      */
     createCallbackNote(agentCRMID: string, settings: INotesSettings, details: ICallbackNoteParameters) {
+        const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
+        // A list of email addresses.
+
+        const noteMessage = `Callback request\n${details.message}\nSent to ${emails.join(', ')}`;
+
         settings.parameters = Object.assign({}, {
+            Notes: noteMessage,
             'CallbackRequest.MessageForEmail': details.message,
             'CallbackRequest.CallersFullname': details.callerName,
             'CallbackRequest.RecipientEmailId': details.recipientEmail,
@@ -104,17 +111,19 @@ export class NCCAPIService {
      * Create a callback note against a call.
      */
     createCallbackResponse(response: ICallbackResponse) {
+        const responseStatus = response.gotThrough ? 'Callback successful' : 'Callback unsuccessful';
+        const responseMessage = `${responseStatus}\n${response.notes}\nOfficer: ${response.responseBy}`;
         const settings: INotesSettings = {
             call_id: response.serviceRequestId,
             ticket_number: response.ticketNumber,
             call_reason_id: response.callReasonId,
             other_reason: response.otherReason,
             crm_contact_id: response.contactId,
-            content: response.notes,
+            content: responseMessage,
             tenancy_reference: response.tenancyReference,
             parameters: {
                 InteractionId: response.callbackId,
-                'CallbackRequest.Response': response.gotThrough ? 'CalledThemBack' : 'CouldntGetThrough', // TODO constants
+                'CallbackRequest.Response': response.gotThrough ? CALLBACK_SUCCESS.YES : CALLBACK_SUCCESS.NO,
                 'CallbackRequest.ResponseBy': response.responseBy,
             }
         };

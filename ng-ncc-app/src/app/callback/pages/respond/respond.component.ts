@@ -34,7 +34,6 @@ export class PageRespondComponent implements OnInit {
     ngOnInit() {
         this.callbackID = this.route.snapshot.params.callbackID;
         this.email = this.route.snapshot.params.email;
-        this.gotThrough = CALLBACK_SUCCESS.YES === parseInt(this.route.snapshot.params.gotThrough, 10);
         this.saving = false;
 
         if (this.callbackID) {
@@ -50,14 +49,20 @@ export class PageRespondComponent implements OnInit {
     }
 
     /**
-     *
+     * Returns TRUE if we can save the callback response.
      */
     canSave(): boolean {
-        return !this.saving && this.Helper.isDefined(this.details) && this.Helper.isPopulated(this.note);
+        if (this.saving) {
+            return false;
+        }
+
+        return this.Helper.isDefined(this.gotThrough) &&
+            this.Helper.isDefined(this.details) &&
+            this.Helper.isPopulated(this.note);
     }
 
     /**
-     *
+     * Saves the callback response.
      */
     saveCallbackResponse() {
         if (this.saving) {

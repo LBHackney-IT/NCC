@@ -7,12 +7,12 @@ import { PageRespondComponent } from './pages/respond/respond.component';
 export const AppRoutes: Routes = [
     {
         // Accessing this app with a callback ID and email address, and whether they got through or not.
-        path: ':callbackID/:email/:gotThrough',
+        path: ':callbackID/:email',
         component: PageRespondComponent
     },
     {
-        // TODO Accessing this app with no parameters.
-        path: '',
+        // Accessing this app with no parameters.
+        path: '**',
         component: PageRespondComponent
     },
 ];

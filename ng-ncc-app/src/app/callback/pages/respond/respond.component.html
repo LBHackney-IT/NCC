@@ -9,7 +9,7 @@
 <div class="govuk-grid-row" *ngIf="!(completed || noDetails)">
     <div class="govuk-grid-column-one-half">
 
-        <h1 class="govuk-heading-l">Callback completed</h1>
+        <h1 class="govuk-heading-l">Callback Response</h1>
 
         <app-panel class="govuk-!-margin-bottom-5" *ngIf="details">
             <!-- <h2 class="govuk-heading-m">Note left by <b>[name]</b></h2> -->
@@ -55,6 +55,8 @@
             To add a note, write any action taken below.<br>
             This will go to UH Action Diary and CRM.
         </p>
+
+        <p>Officer email: <b>{{ email }}</b></p>
 
         <div class="govuk-form-group">
             <label class="govuk-label govuk-visually-hidden" for="response">
