@@ -1,4 +1,5 @@
 $page-header-bg-colour: #252525 !default;
+$page-header-testing-bg-colour: #252544 !default;
 $page-header-text-colour: #EEE !default;
 $page-header-border-width: 4px !default;
 $page-header-border-colour: #999 !default;
@@ -16,6 +17,10 @@ $page-header-padding: 2rem !default;
     background: $page-header-bg-colour;
     color: $page-header-text-colour;
     padding: $page-header-padding;
+
+    &.page__header--test-site {
+        background: $page-header-testing-bg-colour;
+    }
 
     p {
         color: inherit;
