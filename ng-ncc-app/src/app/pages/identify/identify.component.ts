@@ -40,7 +40,7 @@ export class PageIdentifyComponent implements OnInit {
 
     ngOnInit() {
         this.PageTitle.set(PAGES.IDENTIFY.label);
-        this.AddressSearch.reset();
+        //this.AddressSearch.reset();
 
         this.existing_call = false;
 

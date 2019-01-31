@@ -194,7 +194,8 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             caller: IdentifiedCallerResolver,
-            details: ContactDetailsResolver
+            details: ContactDetailsResolver,
+            isLeasehold: IsLeaseholdPropertyResolver
         }
     },
     {
