@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 
 import { PAGES } from '../../../constants/pages.constant';
 import { HackneyAPIService } from '../../../API/HackneyAPI/hackney-api.service';
@@ -25,6 +25,7 @@ export class PageIdentifyTenantsComponent implements OnInit {
     address: IAddressSearchGroupedResult;
     error: boolean;
     confirm_non_tenant: boolean;
+    isLeasehold: boolean;
     private _caller: ICaller;
 
     constructor(
@@ -40,9 +41,19 @@ export class PageIdentifyTenantsComponent implements OnInit {
         this.address = this.AddressSearch.getAddress();
 
         // If there hasn't been an address selected, go to the Identify page.
+        // TODO use a guard for this.
         if (!this.address) {
             this.router.navigateByUrl(PAGES.IDENTIFY.route);
         }
+
+        this.route.data
+            .pipe(take(1))
+            .subscribe(
+                (data: { isLeasehold: boolean }) => {
+                    this.isLeasehold = data.isLeasehold;
+                }
+            );
+
 
         if (!this.Call.hasTenancy()) {
             // The Back link should go to the addresses subpage.

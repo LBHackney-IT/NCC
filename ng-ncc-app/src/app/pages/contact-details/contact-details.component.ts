@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
@@ -18,16 +18,15 @@ import { PageTitleService } from '../../services/page-title.service';
     templateUrl: './contact-details.component.html',
     styleUrls: ['./contact-details.component.scss']
 })
-export class PageContactDetailsComponent implements OnInit, OnDestroy {
+export class PageContactDetailsComponent implements OnInit {
 
     // TODO it doesn't make much sense to create a new call (which happens from the identify tenant page) in order to edit contact details.
     // I would think that editing contact details would be an option available from the navigation, once a tenant has been identified.
     // However, this is how the feature was intended to work.
 
-    private _destroyed$ = new Subject();
-
     MAX_OPTIONS = 0;        // maximum number of each contact method we can have for a caller (set to 0 for infinite).
     caller: IdentifiedCaller;
+    isLeasehold: boolean;
     new_telephone: string[];
     new_mobile: string[];
     new_email: string[];
@@ -53,8 +52,9 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         this.route.data
             .pipe(take(1))
             .subscribe(
-                (data: { caller: IdentifiedCaller, details: ContactDetailsUpdate }) => {
+                (data: { caller: IdentifiedCaller, details: ContactDetailsUpdate, isLeasehold: boolean }) => {
                     this._buildDetails(data.caller, data.details);
+                    this.isLeasehold = data.isLeasehold;
                 },
                 () => { this.error = true; }
             );
@@ -64,10 +64,6 @@ export class PageContactDetailsComponent implements OnInit, OnDestroy {
         this.BackLink.setTarget(`/${PAGES.IDENTIFY.route}/${PAGES.IDENTIFY_TENANTS.route}`);
 
         this.view_only = this.ViewOnly.status;
-    }
-
-    ngOnDestroy() {
-        this._destroyed$.next();
     }
 
     /**

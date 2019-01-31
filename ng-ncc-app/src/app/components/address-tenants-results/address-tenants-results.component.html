@@ -25,12 +25,15 @@
         <h3 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h3>
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
+        <!-- DPA questions and answers. -->
         <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h3>
-        <app-dpa-tenancy [crmContactID]="crm_contact_id"></app-dpa-tenancy>
+        <app-dpa-tenancy [crmContactID]="crm_contact_id" [isLeasehold]="isLeasehold"></app-dpa-tenancy>
     </app-panel>
 
     <!-- Display each tenant. -->
-    <h2 class="govuk-heading-m">Tenant details</h2>
+    <h2 class="govuk-heading-m">
+        {{ isLeasehold ? 'Details' : 'Tenant details' }}
+    </h2>
 
     <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios">
@@ -50,13 +53,18 @@
 
                 <div class="govuk-!-margin-bottom-5">
                     <button class="link-button" type="button" name="button" (click)="editContactDetails(row)">
-                        Edit tenant details
+                        {{ isLeasehold ? 'Edit details' : 'Edit tenant details' }}
                     </button>
                 </div>
 
                 <app-error-panel *ngIf="row.error">
-                    <app-panel-header>Tenant details load failure</app-panel-header>
-                    <p class="govuk-body">There was a problem loading the details for this tenant. Click 'Back' above and try again.</p>
+                    <app-panel-header>
+                        {{ isLeasehold ? 'Details' : 'Tenant details' }} load failure
+                    </app-panel-header>
+                    <p class="govuk-body">
+                        There was a problem loading the details for this {{ isLeasehold ? 'leaseholder' : 'tenant' }}.
+                        Click 'Back' above and try again.
+                    </p>
                     <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
                 </app-error-panel>
             </div>
@@ -76,7 +84,7 @@
                 <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-non-tenant">
                     <span class="govuk-grid-column-full">
                         <span class="govuk-body govuk-!-margin-bottom-1">
-                            Not a tenant
+                            Not a {{ isLeasehold ? 'leaseholder' : 'tenant' }}
                         </span>
                     </span>
                 </label>

@@ -1,5 +1,5 @@
 <h1 class="govuk-heading-l">
-    Rent account
+    Account
     <span *ngIf="account_details">({{ account_details.tagReferenceNumber }})</span>
 </h1>
 
@@ -12,7 +12,7 @@
 </app-error-panel>
 
 <!-- Rent balance. -->
-<app-account-balance [account]="account_details"></app-account-balance>
+<app-account-balance [account]="account_details" [isLeasehold]="isLeasehold"></app-account-balance>
 
 
 <app-tabs>

@@ -6,8 +6,15 @@ $route-loader-bar-colour: govuk-colour("blue") !default;
 $route-loader-bar-width: 200px !default;
 $route-loader-height: 4px !default;
 $route-loader-speed: 2s !default;
+$route-loader-z-index: 100 !default;
 
 ////////////////////
+
+:host {
+    &.hidden {
+        display: none;
+    }
+}
 
 // Taken from https://www.pexels.com/blog/css-only-loaders/
 .loader {
@@ -18,6 +25,7 @@ $route-loader-speed: 2s !default;
     overflow: hidden;
     position: absolute;
     top: 0;
+    z-index: $route-loader-z-index;
 
     &:before {
         display: block;
