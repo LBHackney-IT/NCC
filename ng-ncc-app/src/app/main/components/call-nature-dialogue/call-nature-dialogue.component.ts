@@ -33,7 +33,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     selectedType: LogCallType;
     selectedReasons: string[];  // a list of call reason IDs.
     selectedReasonOther: string;
-
+    selectedReasonObjects: object[];
     callTypes: LogCallType[];
     callReasons: { [propKey: number]: LogCallReason[] };
     error: boolean;
@@ -96,6 +96,49 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
         this.selectedReasons = natures;
         this.selectedReasonOther = other_reasons.join(', ');
+    }
+
+    /**
+     * Creates an array of objects {selectedReasonObjects} to display the Selected Reasons
+     * by transforming the list of reason id's in selectedReasons array to an
+     * object with the LogCallReason and the associated type
+     *
+     * @private
+     * @memberof CallNatureDialogueComponent
+     * @returns {void}
+     */
+    private _mapSelectedCallReasonsToListOfReasons = (): void => {
+        const selectedReasonObjects = this.selectedReasons.map((reasonId) => {
+            // Intialise object to be returned
+            let returnedObject: object;
+
+            // Get keys from callReasons objects
+            const callReasonsKeyArray: number[] = Object.keys(this.callReasons).map(Number);
+
+            // Iterate through keys in callReasons
+            callReasonsKeyArray.forEach((reasonKey: number) => {
+                // Get Array of Reason objects
+                const possibleReasons: LogCallReason[] = this.callReasons[reasonKey];
+                if (!returnedObject) {
+                // Find the object which matches the reason ID
+                returnedObject = possibleReasons.find((logCallObject: LogCallReason) => {
+                    return logCallObject.id === reasonId;
+                });
+                if (returnedObject && !returnedObject.hasOwnProperty('type')) {
+                    // Append the type
+                    returnedObject['type'] = this.selectedType;
+                }
+            }
+
+        });
+
+            if (returnedObject !== undefined) {
+                return returnedObject;
+            }
+
+        });
+
+        this.selectedReasonObjects = selectedReasonObjects;
     }
 
     /**
