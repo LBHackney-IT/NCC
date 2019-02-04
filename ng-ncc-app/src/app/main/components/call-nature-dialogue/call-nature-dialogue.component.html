@@ -1,13 +1,12 @@
 <dialog class="dialogue" role="dialog" aria-labelledby="dialogue-title" [open]="show" (keyup.esc)="closeDialogue()">
     <div class="dialogue__box">
 
-
         <!-- Dialogue text. -->
         <div class="dialogue__text govuk-body govuk-!-margin-bottom-5">
-
             <div class="govuk-grid-row">
                 <!-- First Column-->
                 <div class="govuk-grid-column-two-thirds">
+
                     <!-- The type of call. -->
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-!-font-weight-bold" for="call_type">
@@ -26,14 +25,14 @@
                     <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" *ngIf="isCallTypeSelected()">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                             <h2 class="govuk-fieldset__heading">
-                            What was the reason(s) for the call?
-                        </h2>
+                        What was the reason(s) for the call?
+                    </h2>
                         </legend>
 
                         <div class="govuk-checkboxes" data-module="radios">
                             <ng-template ngFor let-reason [ngForOf]="getCallTypeReasons()" [ngForTrackBy]="trackByCallReason">
                                 <div class="govuk-checkboxes__item small-checkbox">
-                                    <input class="govuk-checkboxes__input" id="call-reason-{{ reason.id }}" name="call_reason" type="checkbox" [(checklist)]="selectedReasons" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()" (ngModelChange)="updateSelection()" [checklistValue]="reason.id">
+                                    <input class="govuk-checkboxes__input" id="call-reason-{{ reason.id }}" name="call_reason" type="checkbox" [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="reason.id" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
                                     <label class="govuk-label govuk-checkboxes__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                                 </div>
 
@@ -60,8 +59,8 @@
 
                             <!-- Other (which should come last). -->
                             <div class="govuk-checkboxes__item small-checkbox">
-                                <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="checkbox" [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="OTHER.id">
-                                <label class="govuk-label govuk-checkboxes__label" for="call-reason-other">Other</label>
+                                <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="checkbox" [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="optionOther.id">
+                                <label class="govuk-label govuk-checkboxes__label" for="call-reason-other">{{ optionOther.label }}</label>
                             </div>
                         </div>
 
@@ -73,19 +72,19 @@
                             <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other" placeholder="Specify the call reason" maxlength="50" #otherReasonField [(ngModel)]="selectedReasonOther" (ngModelChange)="updateSelection()">
                         </div>
                     </fieldset>
+
                 </div>
-                <!-- Second Column-->
-                
                 <div class="govuk-grid-column-one-third">
                     <div *ngIf="selectedReasonObjects">
-                        <p class="govuk-body-l">Currently Selected</p> 
-                        <div class="govuk-checkboxes__item small-checkbox" *ngFor="let selectedReason of selectedReasonObjects">   
-                            <input class="govuk-checkboxes__input" id="call-selected-reason-{{ selectedReason.id }}" name="call_reason" type="checkbox" [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()"  [checklistValue]="selectedReason.id" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()"> 
-                            <label class="govuk-label govuk-checkboxes__label" for="call-selected-reason-{{ selectedReason.id }}"><strong>{{selectedReason.type.label}}:</strong> {{selectedReason.label}}</label>                        
+                        <p class="govuk-body-l">Currently Selected</p>
+                        <div class="govuk-checkboxes__item small-checkbox" *ngFor="let selectedReason of selectedReasonObjects">
+                            <input class="govuk-checkboxes__input" id="call-selected-reason-{{ selectedReason.id }}" name="call_reason" type="checkbox" [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="selectedReason.id" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
+                            <label class="govuk-label govuk-checkboxes__label" for="call-selected-reason-{{ selectedReason.id }}"><strong>{{selectedReason.type.label}}:</strong> {{selectedReason.label}}</label>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="dialogue__buttons">
