@@ -88,6 +88,14 @@ export class PageRespondComponent implements OnInit {
         this.NCCAPI.createCallbackResponse(parameters)
             .pipe(take(1))
             .pipe(finalize(() => {
+            }))
+            .subscribe(
+                () => {},
+                () => { this.error = true; }
+            );
+        this.NCCAPI.createActionDiaryEntry(parameters.tenancyReference, parameters.notes)
+            .pipe(take(1))
+            .pipe(finalize(() => {
                 this.saving = false;
             }))
             .subscribe(

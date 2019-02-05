@@ -254,12 +254,11 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         }
 
         this.saving = true;
-
         let observe;
         if (this.ViewOnly.status) {
             observe = of([]);
         } else {
-            observe = this.Notes.recordCallReasons(this.selectedReasons, this.selectedReasonOther);
+            observe = this.Notes.recordCallReasons(this.selectedReasonObjects, this.selectedReasonOther);
         }
 
         // Attempt to save the selected call reasons as notes.

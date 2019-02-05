@@ -61,7 +61,7 @@ When copying files over to the host folders, **be careful not to remove the `web
 This is no longer used, but while available it might be useful for testing scenarios that require non-*localhost* URLs (e.g. payments via Paris).
 
 ```
-ng build -c dev-site
+ng build -c dev-test
 ```
 
 Build folder: `ng-ncc-app/dist/dev-test`
@@ -77,7 +77,7 @@ Front end: http://lbhwebintd01:2020
 #### LIVE test site
 
 ```
-ng build -c live-site
+ng build -c live-test
 ```
 
 Build folder: `ng-ncc-app/dist/live-test`
