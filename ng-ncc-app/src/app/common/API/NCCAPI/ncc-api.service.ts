@@ -165,6 +165,26 @@ export class NCCAPIService {
     }
 
     /**
+     *
+     *
+     * @param {string} tenancyReference
+     * @param {string} content
+     * @param {string} username
+     * @returns
+     * @memberof NCCAPIService
+     */
+    addTenancyAgreementNotes(tenancyReference: string, content: string, username: string) {
+        const parameters = {
+            tenancyAgreementId: tenancyReference,
+            notes: content,
+            username: username
+        };
+
+        return this.http
+            .post( `${this._url}UH/AddTenancyAgreementNotes?${this._buildQueryString(parameters)}`, {});
+    }
+
+    /**
      * Fetches a list of notes associated with the specified CRM contact ID.
      */
     getNotes(crm_contact_id: string) {
