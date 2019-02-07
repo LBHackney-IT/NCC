@@ -5,8 +5,8 @@
 </app-error-panel>
 
 <app-error-panel *ngIf="error; else contactDetails">
-    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">{{ isLeasehold ? 'Leaseholder' : 'Tenant'}} details load failure</h2>
-    <p class="govuk-body">There was a problem loading the details for this {{ isLeasehold ? 'leaseholder' : 'tenant'}}. Click 'Back' above and try again.</p>
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Details load failure</h2>
+    <p class="govuk-body">There was a problem loading the details for this user. Click 'Back' above and try again.</p>
     <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
 </app-error-panel>
 
@@ -18,7 +18,7 @@
             <!-- We can now use formContactDetails.valid and other methods to check the validation status of the form. -->
             <!-- Similarly we can use #name="ngModel" on input fields to bind the model of an input field to a local variable. -->
 
-            <h1 class="govuk-heading-l">Edit {{ isLeasehold ? 'leaseholder' : 'tenant'}} details</h1>
+            <h1 class="govuk-heading-l">Edit details</h1>
 
             <app-warning *ngIf="view_only">
                 Contact details will not be saved.
