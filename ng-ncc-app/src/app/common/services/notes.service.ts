@@ -12,6 +12,7 @@ import { CALL_REASON } from '../constants/call-reason.constant';
 import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
 import { LogCallReason } from '../../common/classes/log-call-reason.class';
 import { ViewOnlyService } from '../services/view-only.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,7 @@ export class NotesService {
     _visible: boolean;
     _usedNatures: ILogCallSelection[]; // previously used call natures.
 
-    constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService) { }
+    constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService, private authService: AuthService) { }
 
     /**
      * Attempt to enable the add note form.
@@ -163,6 +164,9 @@ export class NotesService {
             note_content = `${note_content}\n(Transferred)`;
         }
 
+        const callTypes = ['Rent', 'Leaseholder Services'];
+        const callType = call_nature.call_type.label;
+
         return forkJoin(
 
             // Manual note...
@@ -177,8 +181,12 @@ export class NotesService {
                 tenancy_reference: this._settings.tenancy_reference
             }),
 
+
+
             // Action Diary note...
-            this.recordActionDiaryNote(note_content)
+            // recordNote(note_content, call_nature)
+            callTypes.includes(callType) ? this.recordActionDiaryNote(note_content) : this.recordTenancyAgreementNote(note_content)
+            //  this.recordActionDiaryNote(note_content)
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Add the call nature to the list.
@@ -216,6 +224,33 @@ export class NotesService {
             note.push(`${this._name}: ${note_content}`);
 
             return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note.join('\n'));
+        }
+
+        return of(true);
+    }
+
+    recordTenancyAgreementNote(note_content: string, call_nature: ILogCallSelection = null) {
+        if (this.ViewOnly.status) {
+            // console.log('View only status; do not create an Action Diary note.');
+            return of(true);
+        }
+        const username: string = this.authService.getUsername();
+        const tenancy_reference = this._settings.tenancy_reference;
+        if (tenancy_reference && username) {
+            const note = [];
+            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : 'none';
+
+            // Add the agent's name.
+            note.push(`Logged by: ${this._settings.agent_name}`);
+
+            // Add the additional call reason, if there is one.
+            note.push(`Additional reason: ${reason}`);
+
+            // The actual message.
+            // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
+            note.push(`${this._name}: ${note_content}`);
+
+            return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note.join('\n'), username);
         }
 
         return of(true);
