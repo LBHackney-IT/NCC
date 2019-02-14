@@ -1,0 +1,9 @@
+@import "../panel.component";
+
+$box-panel-border-width: 2px !default;
+$box-panel-border-colour: govuk-colour("grey-3") !default;
+
+:host {
+    background: transparent;
+    border: $box-panel-border-width solid $box-panel-border-colour;
+}

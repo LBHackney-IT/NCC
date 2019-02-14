@@ -1,0 +1,11 @@
+// This is considered the recommended way to hide content on a page, but still have it made accessible for screen readers.
+// https://webaim.org/techniques/css/invisiblecontent/#techniques
+
+.hidden {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
