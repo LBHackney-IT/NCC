@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject, forkJoin, Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../../common/interfaces/add-note-parameters';
 import { IJSONResponse } from '../../common/interfaces/json-response';
 import { ICallbackNoteParameters } from '../../common/interfaces/callback-note-parameters';
 import { ILogCallSelection } from '../../common/interfaces/log-call-selection';
 
-import { CALL_REASON } from '../constants/call-reason.constant';
-
 import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
-import { LogCallReason } from '../../common/classes/log-call-reason.class';
 import { ViewOnlyService } from '../services/view-only.service';
 import { AuthService } from './auth.service';
 
@@ -139,7 +136,7 @@ export class NotesService {
             }),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content)
+            this.recordActionDiaryNote(note_content, call_nature)
 
         )
             .pipe(map((data: IJSONResponse[]) => {
@@ -185,7 +182,7 @@ export class NotesService {
 
             // Action Diary note...
             // recordNote(note_content, call_nature)
-            callTypes.includes(callType) ? this.recordActionDiaryNote(note_content) : this.recordTenancyAgreementNote(note_content)
+            callTypes.includes(callType) ? this.recordActionDiaryNote(note_content, call_nature) : this.recordTenancyAgreementNote(note_content)
             //  this.recordActionDiaryNote(note_content)
         )
             .pipe(map((data: IJSONResponse[]) => {
@@ -286,7 +283,7 @@ export class NotesService {
             }),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content)
+            this.recordActionDiaryNote(note_content, call_nature)
         );
     }
 
@@ -314,7 +311,7 @@ export class NotesService {
             }, details),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content)
+            this.recordActionDiaryNote(note_content, call_nature)
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
