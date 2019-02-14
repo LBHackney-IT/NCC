@@ -1,0 +1,52 @@
+<p class="govuk-inset-text">
+    Remind the caller that they can pay their rent via <a href="">https://www.hackney.gov.uk/rentaccount</a>
+    or the 24 hour payment line 020 8356 5050.<br>
+    Ask if they would like you to email or text them a link to either.
+</p>
+
+<form action="">
+
+    <!-- <app-panel class="govuk-!-margin-bottom-5">
+        <div class="flex-columns">
+
+            <div>
+                <span class="govuk-!-font-weight-bold govuk-!-margin-right-2">Tenancy ref no.</span>
+                {{ account_details ? account_details.tagReferenceNumber : '--' }}
+            </div>
+
+            <div>
+                <span class="govuk-!-margin-right-2">Pay now</span>
+                <label>
+                    &pound; <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="number" placeholder="0.00"
+                        disabled
+                        [(ngModel)]="amount">
+                </label>
+            </div>
+
+            <div *ngIf="isCallerIdentified()">
+                <span class="govuk-!-margin-right-2">Balance after this payment</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ -getCalculatedBalance() | currency:'GBP' }}</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="!account_details">--</span>
+            </div>
+
+        </div>
+    </app-panel> -->
+
+    <app-warning>
+        Please go to Paris to take payment.
+    </app-warning>
+
+    <!-- <p class="govuk-body">
+        Payment will be made in Paris.
+    </p> -->
+
+    <!-- <button type="submit" class="govuk-button" (click)="confirmPayment()" [disabled]="!canConfirmPayment()">
+        Make payment
+    </button> -->
+</form>
+
+
+<app-confirm-dialogue [(show)]="show_confirm" yesButtonText="Yes" noButtonText="Cancel"
+    (selectedYes)="answeredYes()" (selectedNo)="answeredNo()">
+    <app-dialogue-title>Are you sure you want to make this payment?</app-dialogue-title>
+</app-confirm-dialogue>

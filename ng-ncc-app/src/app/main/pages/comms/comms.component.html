@@ -1,0 +1,76 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">Non-sensitive communications</h1>
+
+        <p class="govuk-body">
+            Here you can send non-sensitive emails and texts.
+            <ng-container *ngIf="isRentLinkVisible()">
+                <br>
+                To send sensitive information visit the <a [routerLink]="getRentPageRoute()">'View/pay rent'</a> page after verifying Data Protection.
+            </ng-container>
+        </p>
+
+        <p class="govuk-body">
+            If the caller would like to set up a Standing Order for rent payments they will need to tell their bank the details below.
+        </p>
+
+        <div class="govuk-inset-text">
+            <p>
+                <b>Standing Order details for rent payments</b><br>
+                Bank name: Lloyds<br>
+                Account number: 00641877<br>
+                Sort code: 30-00-02
+            </p>
+        </div>
+
+        <app-error-panel *ngIf="_error">
+            <app-panel-heading>Communications unavailable</app-panel-heading>
+            <p class="govuk-body">
+                The 3rd party system Gov Notify that sends texts (SMS) and emails is currently not working. They will be working to fix the problem.
+            </p>
+            <p class="govuk-body govuk-!-margin-0">
+                If it persists you will need to contact ICT.
+            </p>
+        </app-error-panel>
+
+        <form (submit)="sendMessage($event)" *ngIf="!_error">
+
+            <!-- Select the form to send. -->
+            <app-comms-templates title="Select an item to send:" (selected)="selectedOption($event)"
+                (error)="commsError()"></app-comms-templates>
+
+            <!-- Select the communications method. -->
+            <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
+            <app-comms-method-select
+                [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
+                [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
+                [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
+                (selected)="onSelectCommsMethod($event)"
+                (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
+
+            <!-- Previewing the message to be sent. -->
+            <div *ngIf="shouldShowPreview()">
+                <app-notify-template-preview [(settings)]="preview"></app-notify-template-preview>
+            </div>
+
+            <!-- Send the message to the caller. -->
+            <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
+                {{ getSendButtonText() }}
+            </button>
+
+            <!-- Confirmation modal. -->
+            <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
+                Message sent successfully.
+            </app-dialogue>
+
+            <app-dialogue [(show)]="modal.error">
+                <app-warning>
+                    There was a problem with sending the message.
+                </app-warning>
+            </app-dialogue>
+
+        </form>
+
+    </div>
+</div>

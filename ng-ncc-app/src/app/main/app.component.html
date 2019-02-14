@@ -1,0 +1,46 @@
+<!-- Accessibility link to skip to the main content. -->
+<a (click)="jumpToContent($event)" href="" class="govuk-skip-link">Skip to main content</ a>
+
+<!-- PAGE HEADER. -->
+<app-header>
+    <div class="page__header__column page__header__column--title">
+        <p class="govuk-!-font-size-24 govuk-!-margin-bottom-1">NCC - CRM</p>
+        <app-env-name class="govuk-body-s"></app-env-name>
+    </div>
+
+    <div class="page__header__column page__header__column--id">
+        <!-- Display the current caller's name (if present) -->
+        <app-current-caller withPrefix="true" allowAnonymous="true"></app-current-caller>
+
+        <!-- Display the logged in agent's name and avatar. -->
+        <app-agent></app-agent>
+    </div>
+
+    <!-- The Add Note form. -->
+    <app-note-form></app-note-form>
+</app-header>
+
+<div class="container">
+    <app-route-loading *ngIf="loading"></app-route-loading>
+
+    <!-- Navigation menu. -->
+    <app-navigation *ngIf="loggedIn()"></app-navigation>
+
+    <!-- MAIN CONTENT AREA. -->
+    <app-content-area>
+
+        <!-- General back link. -->
+        <app-back-link></app-back-link>
+
+        <div class="govuk-main-wrapper" #content tabindex="-1">
+            <router-outlet></router-outlet>
+        </div>
+
+    </app-content-area>
+</div>
+
+
+<!-- PAGE FOOTER. -->
+<app-footer>
+    <div class="version">{{ getVersion() }}</div>
+</app-footer>

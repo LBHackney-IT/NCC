@@ -1,0 +1,117 @@
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-label govuk-!-font-weight-bold">Select communication method:</h2>
+        </legend>
+        <div class="govuk-radios" data-module="radios">
+
+            <!-- By email. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-email" name="method" type="radio"
+                    [(ngModel)]="selection.method" (ngModelChange)="checkDetails()"
+                    [disabled]="disableEmail" [value]="methods.METHOD_EMAIL" data-aria-controls="method-by-email">
+                <label class="govuk-label govuk-radios__label" for="method-email">
+                    Email
+                </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-email" *ngIf="isEmailSelected()">
+
+                <!-- Which email address? -->
+                <div class="govuk-form-group">
+
+                    <!-- Existing email addresses (from the caller). -->
+                    <div class="govuk-radios__item"
+                        *ngFor="let email_address of existingEmailAddresses(); let i = index; trackBy: trackByMethod">
+                        <input class="govuk-radios__input" id="method-email-{{ i }}" name="detail" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="email_address">
+                        <label class="govuk-label govuk-radios__label" for="method-email-{{ i }}">
+                            {{ email_address }}
+                        </label>
+                    </div>
+
+                    <!-- Enter a new email address. -->
+                    <div class="govuk-radios__item govuk-!-width-one-half">
+
+                        <!-- radio button. -->
+                        <input class="govuk-radios__input" id="method-email-new" name="detail" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_EMAIL]" [value]="null">
+                        <label class="govuk-label govuk-radios__label radio-text-field" for="method-email-new"></label>
+
+                        <!-- text field. -->
+                        <label class="govuk-label govuk-visually-hidden" for="method-email-new-value">Use a different email address</label>
+                        <input id="method-email-new-value" class="govuk-input govuk-!-margin-left-3" type="email" name="new_email"
+                            [(ngModel)]="selection.create[methods.METHOD_EMAIL]"
+                            (focus)="prepareNewDetail(methods.METHOD_EMAIL)"
+                            (ngModelChange)="checkDetails()">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- By SMS. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-sms" name="method" type="radio"
+                    [(ngModel)]="selection.method" (ngModelChange)="checkDetails()"
+                    [disabled]="disableSMS" [value]="methods.METHOD_SMS" data-aria-controls="method-by-sms">
+                <label class="govuk-label govuk-radios__label" for="method-sms">
+                    SMS
+                </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-sms" *ngIf="isMobileSelected()">
+                <div class="govuk-form-group">
+
+                    <!-- Existing telephone numbers (from the caller). -->
+                    <div class="govuk-radios__item"
+                        *ngFor="let telephone_number of existingTelephoneNumbers(); let i = index; trackBy: trackByMethod">
+                        <input class="govuk-radios__input" id="method-mobile-{{ i }}" name="detail-mobile" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="telephone_number">
+                        <label class="govuk-label govuk-radios__label" for="method-mobile-{{ i }}">
+                            {{ telephone_number }}
+                        </label>
+                    </div>
+
+                    <!-- Enter a new [mobile] phone number. -->
+                    <div class="govuk-radios__item govuk-!-width-one-half">
+
+                        <!-- radio button. -->
+                        <input class="govuk-radios__input" id="method-mobile-new" name="detail-mobile" type="radio"
+                            [(ngModel)]="selection.existing[methods.METHOD_SMS]" [value]="null">
+                        <label class="govuk-label govuk-radios__label radio-text-field" for="method-mobile-new"></label>
+
+                        <!-- text field. -->
+                        <label class="govuk-label govuk-visually-hidden" for="method-mobile-new-value">Use a different mobile number</label>
+                        <input id="method-mobile-new-value" class="govuk-input govuk-!-margin-left-3" type="tel" name="new_mobile"
+                            appNumbersOnly
+                            [(ngModel)]="selection.create[methods.METHOD_SMS]"
+                            (focus)="prepareNewDetail(methods.METHOD_SMS)"
+                            (ngModelChange)="checkDetails()">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- By post. -->
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="method-post" name="method" type="radio"
+                    [(ngModel)]="selection.method" (ngModelChange)="checkDetails()"
+                    [disabled]="disablePost" [value]="methods.METHOD_POST" data-aria-controls="method-by-post">
+                <label class="govuk-label govuk-radios__label" for="method-post">
+                    Post
+                </label>
+            </div>
+            <div class="govuk-radios__conditional" id="method-by-post" *ngIf="isPostSelected()">
+
+                <p class="govuk-body" *ngIf="postText; else defaultPostText">
+                    {{ postText }}
+                </p>
+                <ng-template #defaultPostText>
+                    <p class="govuk-body">
+                        This letter won’t be sent out automatically. You will need to write down the address and send this yourself.<br>
+                        Click ‘Send’ to capture that you are sending a letter yourself.
+                    </p>
+                </ng-template>
+
+            </div>
+        </div>
+    </fieldset>
+</div>

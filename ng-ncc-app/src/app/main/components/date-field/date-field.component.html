@@ -1,0 +1,30 @@
+<div class="govuk-date-input">
+
+    <!-- Day. -->
+    <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
+            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-day" name="date-day" type="number"
+                maxlength="2" pattern="[0-9]*" [(ngModel)]="day" (ngModelChange)="updateDate()">
+        </div>
+    </div>
+
+    <!-- Month. -->
+    <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
+            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-month" name="date-month" type="number"
+                maxlength="2" pattern="[0-9]*" [(ngModel)]="month" (ngModelChange)="updateDate()">
+        </div>
+    </div>
+
+    <!-- Year. -->
+    <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
+            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-year" name="date-year" type="number"
+                maxlength="4" pattern="[0-9]*" [(ngModel)]="year" (ngModelChange)="updateDate()">
+        </div>
+    </div>
+
+</div>

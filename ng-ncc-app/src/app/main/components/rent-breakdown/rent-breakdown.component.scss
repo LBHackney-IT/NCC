@@ -1,0 +1,14 @@
+$rent-breakdown-item-margin: 1rem;
+$rent-breakdown-item-width: 8.5rem;
+
+////////////////////
+
+ul {
+    display: flex;
+}
+
+li {
+    margin-right: $rent-breakdown-item-margin;
+    max-width: $rent-breakdown-item-width;
+    word-break: break-word;
+}
