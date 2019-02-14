@@ -79,14 +79,24 @@
                     </fieldset>
 
                 </div>
+
                 <div class="govuk-grid-column-one-third">
+
+                    <!-- LIST OF CURRENTLY SELECTED CALL REASONS. -->
                     <div *ngIf="selectedReasons">
                         <p class="govuk-heading-s" *ngIf="selectedReasons.length">Currently Selected</p>
                         <div class="govuk-checkboxes__item small-checkbox" *ngFor="let selectedReason of selectedReasons">
-                            <input class="govuk-checkboxes__input" id="call-selected-reason-{{ selectedReason.id }}" name="call_reason" type="checkbox" [(checklist)]="selectedReasonIds" (ngModelChange)="updateSelection()" [checklistValue]="selectedReason.id" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
-                            <label class="govuk-label govuk-checkboxes__label" for="call-selected-reason-{{ selectedReason.id }}"><strong>{{selectedReason.type.label}}:</strong> {{selectedReason.label}}</label>
+                            <input class="govuk-checkboxes__input" id="call-selected-reason-{{ selectedReason.callReasonId }}"
+                                name="call_reason" type="checkbox"
+                                (ngModelChange)="updateSelection()"
+                                [(checklist)]="selectedReasonIds" [checklistValue]="selectedReason.callReasonId"
+                                (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
+                            <label class="govuk-label govuk-checkboxes__label" for="call-selected-reason-{{ selectedReason.callReasonId }}">
+                                <strong>{{ selectedReason.callTypeLabel }}:</strong> {{ selectedReason.callReasonLabel }}
+                            </label>
                         </div>
                     </div>
+
                 </div>
             </div>
 
