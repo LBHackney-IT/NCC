@@ -211,13 +211,15 @@ export class NotesService {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
             const note = [];
-            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : 'none';
+            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : null;
 
             // Add the agent's name.
             note.push(`Logged by: ${this._settings.agent_name}`);
 
             // Add the additional call reason, if there is one.
-            note.push(`Additional reason: ${reason}`);
+            if ( reason ) {
+                note.push(`Additional reason: ${reason}`);
+            }
 
             // The actual message.
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
@@ -238,13 +240,15 @@ export class NotesService {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference && username) {
             const note = [];
-            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : 'none';
+            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : null;
 
             // Add the agent's name.
             note.push(`Logged by: ${this._settings.agent_name}`);
 
             // Add the additional call reason, if there is one.
-            note.push(`Additional reason: ${reason}`);
+            if (reason) {
+                note.push(`Additional reason: ${reason}`);
+            }
 
             // The actual message.
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
