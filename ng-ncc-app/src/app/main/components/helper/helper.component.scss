@@ -1,0 +1,81 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
+@import "~govuk-frontend/settings/typography-font";
+
+$helper-icon-bg-colour: $govuk-text-colour !default;
+$helper-icon-text-colour: govuk-colour("white") !default;
+$helper-icon-fount-stack: $govuk-font-family;
+$helper-icon-padding: .25rem !default;
+$helper-icon-width: 2rem !default;
+$helper-icon-height: 2rem !default;
+
+$helper-text-bg-colour: $govuk-text-colour !default;
+$helper-text-colour: govuk-colour("white") !default;
+$helper-text-radius: .25rem !default;
+$helper-text-padding: 1rem !default;
+$helper-text-min-width: 300px !default;
+$helper-text-tip-size: 10px !default;
+$helper-text-z-index: 30 !default;
+
+/////////////////////////
+
+:host {
+    position: relative;
+}
+
+@mixin helper-text($width: $helper-text-min-width, $padding: $helper-text-padding) {
+    background: $helper-text-bg-colour;
+    border-radius: $helper-text-radius;
+    color: $helper-text-colour;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: -($helper-text-tip-size * 2);
+    transform: translate(-50%, -100%);
+    min-width: $width;
+    user-select: none;
+    padding: $padding;
+    z-index: $helper-text-z-index;
+
+    &:after {
+        content: "";
+        width: 0;
+        height: 0;
+        border: $helper-text-tip-size solid transparent;
+        border-top-color: $helper-text-bg-colour;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 100%);
+    }
+}
+
+@mixin helper-icon {
+    background: $helper-icon-bg-colour;
+    border-radius: 50%;
+    color: $helper-icon-text-colour;
+    cursor: default;
+    display: inline-block;
+    font-family: $helper-icon-fount-stack;
+    font-weight: bold;
+    text-align: center;
+    min-height: $helper-icon-height;
+    min-width: $helper-icon-width;
+    line-height: ($helper-icon-height - $helper-icon-padding * 2);
+    padding: $helper-icon-padding;
+    vertical-align: middle;
+}
+
+.icon {
+    @include helper-icon;
+
+    &:hover + .text {
+        display: block;
+    }
+}
+
+.text {
+    @include helper-text();
+}

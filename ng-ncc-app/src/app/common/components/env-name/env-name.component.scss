@@ -1,0 +1,7 @@
+$env-name-colour: inherit !default;
+
+:host {
+    color: $env-name-colour;
+    display: block;
+    margin: 0;
+}

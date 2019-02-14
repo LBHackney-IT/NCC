@@ -1,0 +1,13 @@
+<!-- A list of tenants at the selected address. -->
+<app-address-tenants-results
+    [address]="address"
+    [isLeasehold]="isLeasehold"
+    (beginEdit)="tenantToEdit($event)"
+    (selected)="tenantSelected($event)">
+</app-address-tenants-results>
+
+<!-- Confirmation modal (for when non-tenant is selected). -->
+<app-confirm-dialogue [(show)]="confirm_non_tenant" yesButtonText="Continue" noButtonText="Back"
+    (selectedYes)="confirmNewTenant()">
+    <app-warning>Do not give out sensitive information without passing Data Protection</app-warning>
+</app-confirm-dialogue>

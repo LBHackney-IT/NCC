@@ -1,0 +1,17 @@
+:host {
+    // This selector targets the host (i.e. <app-root/>).
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+    padding-bottom: 10px; // for the Hackney stripe branding on the footer.
+
+    // https://teamtreehouse.com/community/firefox-flexbox-not-working
+    min-height: 0;
+    min-width: 0;
+}

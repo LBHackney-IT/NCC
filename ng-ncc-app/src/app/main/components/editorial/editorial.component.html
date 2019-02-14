@@ -1,0 +1,26 @@
+<div *ngIf="!editing">
+    <p class="message">
+        {{ content }}
+    </p>
+    <button class="govuk-button" type="button" name="button" *ngIf="canEdit()" (click)="beginEdit()">Edit</button>
+</div>
+
+<!-- a form with a textarea field to edit text (if we are a team leader). -->
+<form class="" method="post" *ngIf="editing">
+
+    <div class="govuk-form-group">
+        <label class="govuk-label" for="editorial">
+            Editorial text
+        </label>
+        <textarea class="govuk-textarea" id="editorial" name="editorial" rows="5" [(ngModel)]="new_content" [disabled]="saving"></textarea>
+    </div>
+
+    <button class="govuk-button govuk-!-margin-right-2" type="button" name="button" (click)="saveText()" [disabled]="saving">Update</button>
+    <button class="govuk-button" type="button" name="button" (click)="resetText()">Cancel</button>
+
+    <app-error-panel *ngIf="error">
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Update failure</h3>
+        <p class="govuk-body govuk-!-margin-bottom-2">There was a problem updating the editorial text.</p>
+        <p class="govuk-body govuk-!-margin-bottom-0">Try again, if this continues you will need to contact ICT.</p>
+    </app-error-panel>
+</form>

@@ -1,0 +1,6 @@
+<ul *ngIf="rows">
+    <li *ngFor="let row of rows" class="govuk-body-s govuk-!-margin-bottom-0">
+        <h3 class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">{{ row.description }}</h3>
+        <span>{{ row.value | currency : 'GBP' }}</span>
+    </li>
+</ul>
