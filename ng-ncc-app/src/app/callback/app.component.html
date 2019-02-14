@@ -2,21 +2,20 @@
 <a (click)="jumpToContent($event)" href="" class="govuk-skip-link">Skip to main content</a>
 
 <!-- PAGE HEADER. -->
-<app-header></app-header>
+<app-layout-header></app-layout-header>
 
 <div class="container">
     <app-route-loading></app-route-loading>
 
     <!-- MAIN CONTENT AREA. -->
-    <app-content-area>
+    <app-layout-content>
 
         <div class="govuk-main-wrapper" #content tabindex="-1">
             <router-outlet></router-outlet>
         </div>
 
-    </app-content-area>
+    </app-layout-content>
 </div>
 
-
 <!-- PAGE FOOTER. -->
-<app-footer></app-footer>
+<app-layout-footer></app-layout-footer>
