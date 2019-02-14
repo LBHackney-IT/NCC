@@ -5,20 +5,14 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
-import { ContentAreaComponent } from '../../../common/layout/content-area/content-area.component';
-
 import { CallService } from '../../../common/services/call.service';
 import { WindowService } from '../../../common/services/window.service';
 import { NotesService } from '../../../common/services/notes.service';
 import { HelperService } from '../../../common/services/helper.service';
 
-import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 import { PAGES } from '../../../common/constants/pages.constant';
 
-import { IAddNoteParameters } from '../../../common/interfaces/add-note-parameters';
 import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
-import { LogCallReason } from '../../../common/classes/log-call-reason.class';
-import { LogCallType } from '../../../common/classes/log-call-type.class';
 
 
 @Component({
