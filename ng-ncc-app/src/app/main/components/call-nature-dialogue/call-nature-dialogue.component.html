@@ -59,17 +59,22 @@
 
                             <!-- Other (which should come last). -->
                             <div class="govuk-checkboxes__item small-checkbox">
-                                <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="checkbox" [(checklist)]="selectedReasons" (ngModelChange)="updateSelection()" [checklistValue]="optionOther.id" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
+                                <input class="govuk-checkboxes__input" id="call-reason-other" name="call_reason" type="checkbox"
+                                    [(checklist)]="selectedReasons" [checklistValue]="optionOther.id"
+                                    (ngModelChange)="updateSelection()" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
                                 <label class="govuk-label govuk-checkboxes__label" for="call-reason-other">{{ optionOther.label }}</label>
                             </div>
                         </div>
 
-                        <!-- A text field for entering a manual call reason (in the event of "other" being selected). -->
+                        <!-- A text field for entering additional text for "other" (in the event of "other" being selected). -->
                         <div class="govuk-form-group govuk-!-margin-left-8 govuk-!-margin-top-1" *ngIf="isOtherReasonSelected()">
                             <label class="govuk-label govuk-!-font-weight-bold govuk-visually-hidden" for="call_reason_other">
                                 Specify the call reason:
                             </label>
-                            <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other" placeholder="Specify the call reason" maxlength="50" #otherReasonField [(ngModel)]="selectedReasonOther" (ngModelChange)="updateSelection()">
+                            <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
+                                placeholder="Specify the call reason" maxlength="50"
+                                #otherReasonField
+                                [(ngModel)]="otherAdditional[optionOther.id]" (ngModelChange)="updateSelection()">
                         </div>
                     </fieldset>
 

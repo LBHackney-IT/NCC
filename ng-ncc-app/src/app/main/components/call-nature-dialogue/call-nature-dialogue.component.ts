@@ -34,6 +34,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     selectedReasons: string[];  // a list of call reason IDs.
     selectedReasonOther: string;
     selectedReasonObjects: object[];
+    otherAdditional: {[propKey: string]: string}; // contains additional text for call-type specific "other" reasons.
     callTypes: LogCallType[];
     callReasons: { [propKey: number]: LogCallReason[] };
     error: boolean;
@@ -52,6 +53,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         this.selectedType = null;
         this.selectedReasons = [];
         this.selectedReasonOther = null;
+        this.otherAdditional = {};
 
         // Fetch a list of call types and reasons from the Hackney API.
         forkJoin(
@@ -263,6 +265,9 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         if (this.saving) {
             return;
         }
+
+        console.log(this.otherAdditional);
+        return;
 
         this.saving = true;
         let observe;
