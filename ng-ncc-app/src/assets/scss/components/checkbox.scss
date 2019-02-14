@@ -1,0 +1,68 @@
+$small-checkbox-size: 24px !default;
+$small-checkbox-text-size: 19 !default;
+
+$small-radio-size: 24px !default;
+$small-radio-text-size: 19 !default;
+
+////////////////////
+
+.govuk-checkboxes__item.small-checkbox {
+    @include govuk-font($size: $small-checkbox-text-size);
+
+    min-height: $small-checkbox-size;
+    padding-left: $small-checkbox-size;
+
+    .govuk-checkboxes__input {
+        width: $small-checkbox-size;
+        height: $small-checkbox-size;
+
+        + .govuk-checkboxes__label::before {
+          width: $small-checkbox-size;
+          height: $small-checkbox-size;
+        }
+
+        + .govuk-checkboxes__label::after {
+            border-width: 0 0 4px 4px;
+            top: 7px;
+            left: 6px;
+            width: 8px;
+            height: 4px;
+        }
+    }
+
+    .govuk-checkboxes__label {
+      padding: 0 govuk-spacing(2) govuk-spacing(1);
+    }
+
+}
+
+// RADIO BUTTONS
+.govuk-radios__item.small-radio {
+    @include govuk-font($size: $small-radio-text-size);
+
+    min-height: $small-radio-size;
+    padding-left: $small-radio-size;
+
+    .govuk-radios__input {
+        width: $small-radio-size;
+        height: $small-radio-size;
+
+        + .govuk-radios__label::before {
+          width: $small-radio-size;
+          height: $small-radio-size;
+        }
+
+        + .govuk-radios__label::after {
+            border-width: 0 0 4px 4px;
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 8px;
+        }
+    }
+
+    .govuk-radios__label {
+      padding: 0 govuk-spacing(2) govuk-spacing(1);
+    }
+
+}

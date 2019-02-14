@@ -1,0 +1,48 @@
+<app-error-panel class="govuk-!-margin-bottom-5">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Failed payment</h1>
+    <p class="govuk-heading-m govuk-!-margin-0">There was a problem taking a payment. You can try again by clicking the button below.</p>
+</app-error-panel>
+
+<p class="govuk-inset-text">
+    Remind the caller that they can pay their rent via <a href="">https://www.hackney.gov.uk/rentaccount</a>.
+</p>
+
+<form action="">
+
+    <app-panel class="govuk-!-margin-bottom-5 govuk-body">
+        <div class="flex-columns">
+
+            <!-- Tenancy reference number. -->
+            <div>
+                <span class="govuk-!-font-weight-bold govuk-!-margin-right-2">Tenancy ref no.</span>
+                {{ account_details ? account_details.tagReferenceNumber : '--' }}
+            </div>
+
+            <!-- The amount to pay. -->
+            <div>
+                <span class="govuk-!-margin-right-2">Pay now</span>
+                <label>
+                    &pound; <input class="govuk-input govuk-input--width-5" id="amount" name="amount" type="number" placeholder="0.00"
+                        [(ngModel)]="amount">
+                </label>
+            </div>
+
+            <!-- The remaining balance. -->
+            <div *ngIf="isCallerIdentified()">
+                <span class="govuk-!-margin-right-2">Balance after this payment</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="account_details">{{ getCalculatedBalance() | currency:'GBP' }}</span>
+                <span class="govuk-!-font-weight-bold" *ngIf="!account_details">--</span>
+            </div>
+
+        </div>
+    </app-panel>
+
+    <button type="submit" class="govuk-button" (click)="confirmPayment()" [disabled]="!canConfirmPayment()">
+        Make payment
+    </button>
+</form>
+
+<app-confirm-dialogue [(show)]="show_confirm" yesButtonText="Yes" noButtonText="Cancel"
+    (selectedYes)="answeredYes()" (selectedNo)="answeredNo()">
+    <app-dialogue-title>Are you sure you want to make this payment?</app-dialogue-title>
+</app-confirm-dialogue>

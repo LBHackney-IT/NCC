@@ -1,0 +1,21 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">Log call</h1>
+
+        <app-call-nature (changed)="selectedCallNature($event)"></app-call-nature>
+
+        <!-- Next button. -->
+        <button class="govuk-button" [disabled]="!canProceed()" (click)="proceed()">
+            Continue
+        </button>
+
+    </div>
+</div>
+
+<!-- A list of up to ten previous calls. -->
+<div *ngIf="!isCallTypeSelected()">
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+</div>

@@ -1,0 +1,18 @@
+<dialog class="dialogue" role="dialog" aria-labelledby="dialogue-title" [open]="show"
+    (keyup.esc)="closeDialogue()">
+    <div class="dialogue__box">
+
+        <!-- Optional dialogue title. -->
+        <ng-content select="app-dialogue-title"></ng-content>
+
+        <!-- Dialogue content. -->
+        <ng-content></ng-content>
+
+        <!-- Close button. -->
+        <button class="button dialogue__button--close dialogue__button govuk-button govuk-!-margin-bottom-0" type="button"
+            (click)="closeDialogue()" #dialogueButton>
+            Close
+        </button>
+
+    </div>
+</dialog>
