@@ -6,6 +6,7 @@ import { IAddNoteParameters } from '../../common/interfaces/add-note-parameters'
 import { IJSONResponse } from '../../common/interfaces/json-response';
 import { ICallbackNoteParameters } from '../../common/interfaces/callback-note-parameters';
 import { ILogCallSelection } from '../../common/interfaces/log-call-selection';
+import { ICallReasonNote } from '../../common/interfaces/call-reason-note';
 
 import { CALL_REASON } from '../constants/call-reason.constant';
 
@@ -325,23 +326,23 @@ export class NotesService {
     }
 
     /**
-     *
+     * Record a series of automatic notes representing call reasons.
      */
-    recordCallReasons(call_reason_ids: object[], other_reason: string = null) {
-        // Make sure we have a unique list of call reason IDs.
-        const unique_call_reasons = Array.from(new Set(call_reason_ids));
-
+    recordCallReasons(callReasonNotes: ICallReasonNote[]) {
         // For each call reason, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
-        const observables = unique_call_reasons.map(
-            (reason) => this.NCCAPI.createAutomaticNote(this._settings.agent_crm_id, {
-                call_id: this._settings.call_id,
-                ticket_number: this._settings.ticket_number,
-                tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: reason['id'],
-                other_reason: reason['label'] === 'Other' ? other_reason : null,
-                crm_contact_id: this._settings.crm_contact_id,
-                content: this.CALL_REASON_IDENTIFIER
-            })
+        const observables = callReasonNotes.map(
+            (note: ICallReasonNote) => this.NCCAPI.createAutomaticNote(
+                this._settings.agent_crm_id,
+                {
+                    call_id: this._settings.call_id,
+                    ticket_number: this._settings.ticket_number,
+                    tenancy_reference: this._settings.tenancy_reference,
+                    call_reason_id: note.callReasonId,
+                    other_reason: note.otherReason,
+                    crm_contact_id: this._settings.crm_contact_id,
+                    content: this.CALL_REASON_IDENTIFIER
+                }
+            )
         );
 
         return forkJoin(observables);
