@@ -1,0 +1,47 @@
+<!doctype>
+<html>
+<head>
+<title>Testing...</title>
+<script>
+    // Process the search (parameters) part of the URL.
+	var data = window.location.search.substring(1); // exclude the ? prefix.
+	var rows = data.split('&');
+
+    // The first item in the list of parameters will contain the interaction ID, username and amount concatenated by the literal string
+    // "%24" (ReturnValue).
+	var reserved = rows.shift().split('=')[1];
+
+    // Create a series of key/value pairs from the rest of the data.
+	var pairs = rows.map(function(row) {
+        var parts = row.split('=');
+
+		// Don't include the hash value: for failed transactions it results in a 400 HTTP error (for an unknown reason).
+        // We don't need it anyway.
+		if ( 'hash' !== parts[0] ) {
+			return row.split('=').join(':');
+		}
+	});
+
+    // Add our "reserved" values to the list of pairs.
+    if ( reserved.indexOf('%24') > -1 ) {
+        reserved = reserved.split('%24');
+    } else {
+        reserved = reserved.split('$');
+    }
+	pairs.push( ['interactionId', reserved[0]].join(':') );
+	pairs.push( ['username', reserved[1]].join(':') );
+	pairs.push( ['original_amount', reserved[2]].join(':') );
+
+    // Create a string from the list of pairs, omitting any empty values.
+	var query = pairs.filter(function(value) { return undefined !== value; }).join('$');
+
+    // Finally we set a localStorage value.
+    // The app should listen to the window.storage event to detect the update, provided the localStorage entry has *changed*
+    // (or didn't exist).
+    localStorage.setItem('ncc-payment', query);
+</script>
+</head>
+<body>
+    <p>You can close this window/tab.</p>
+</body>
+</html>

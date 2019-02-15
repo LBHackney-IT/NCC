@@ -1,0 +1,49 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/settings/typography-font";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
+
+$tenancy-type-border-width: 3px !default;
+$tenancy-type-padding: .2rem 1rem !default;
+
+$tenancy-type-default-colour: $govuk-text-colour !default;
+$tenancy-type-secure-colour: $govuk-text-colour !default;
+$tenancy-type-tenancy-colour: govuk-colour("turquoise") !default;
+$tenancy-type-leasehold-colour: govuk-colour("blue") !default;
+$tenancy-type-introductory-colour: govuk-colour("grey-1") !default;
+$tenancy-type-special-colour: govuk-colour("orange") !default;
+
+////////////////////
+
+@mixin tenancyType($colour) {
+    border-color: $colour;
+    color: $colour;
+}
+
+:host {
+    display: inline-block;
+    border: $tenancy-type-border-width solid $tenancy-type-default-colour;
+    padding: $tenancy-type-padding;
+    font-family: $govuk-font-family;
+    font-weight: $govuk-font-weight-bold;
+
+    &.hidden {
+        display: none;
+    }
+
+    &.is-tenancy {
+        @include tenancyType($tenancy-type-tenancy-colour);
+    }
+
+    &.is-leasehold {
+        @include tenancyType($tenancy-type-leasehold-colour);
+    }
+
+    &.is-introductory {
+        @include tenancyType($tenancy-type-introductory-colour);
+    }
+
+    &.is-special-circumstance {
+        @include tenancyType($tenancy-type-special-colour);
+    }
+}

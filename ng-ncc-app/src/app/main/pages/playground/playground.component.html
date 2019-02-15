@@ -1,0 +1,104 @@
+<h2 class="govuk-heading-m">Note types</h2>
+<div class="govuk-!-margin-bottom-5">
+    <app-note-type [type]="noteTypes.TYPE_MANUAL"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_AUTOMATIC"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_ACTION_DIARY"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_CALLBACK"></app-note-type>
+</div>
+
+<h2 class="govuk-heading-m">Current balance</h2>
+<p><app-current-balance [tenancyReference]="account.tagReferenceNumber"></app-current-balance></p>
+
+<h2 class="govuk-heading-m">Numbers only</h2>
+<div class="govuk-form-group">
+    <label class="govuk-label" for="number">
+        Testing
+    </label>
+    <input class="govuk-input" id="number" [(ngModel)]="number_value" name="number" type="text" appNumbersOnly>
+</div>
+<p>{{ number_value }}</p>
+
+<h2 class="govuk-heading-m">Test payment</h2>
+<div>
+    <h2 class="govuk-heading-s">Test amounts for payment</h2>
+    <app-value-list class="govuk-body-s" emphasise="value">
+
+        <app-value-list-label>&pound;10.00</app-value-list-label>
+        <app-value-list-value>Successful transaction</app-value-list-value>
+
+        <app-value-list-label>&pound;10.10</app-value-list-label>
+        <app-value-list-value>Failed transaction</app-value-list-value>
+
+        <app-value-list-label>&pound;10.20</app-value-list-label>
+        <app-value-list-value>Referral</app-value-list-value>
+
+        <app-value-list-label>&pound;10.30</app-value-list-label>
+        <app-value-list-value>Verification failed</app-value-list-value>
+
+    </app-value-list>
+
+    <div class="govuk-form-group">
+        <input class="govuk-input govuk-input--width-10" [(ngModel)]="amount">
+        <button type="button" name="button" class="govuk-button" (click)="beginPayment()">Begin payment</button>
+    </div>
+
+</div>
+
+<h2 class="govuk-heading-m">Warning component</h2>
+<app-warning>This is a warning.</app-warning>
+
+<h2 class="govuk-heading-m">Dialogue component</h2>
+<app-dialogue [(show)]="show" [buttonText]="'All right then'" (closed)="handleClose()">
+    <app-dialogue-title>Example title</app-dialogue-title>
+    This is a dialogue.
+</app-dialogue>
+<button class="govuk-button" type="button" name="button" (click)="openModal()">Show dialogue...</button>
+
+<h2 class="govuk-heading-m">Comms template component</h2>
+<app-comms-templates (selected)="selectedTemplate($event)"></app-comms-templates>
+<app-comms-templates title="Custom title..." (selected)="selectedTemplate($event)"></app-comms-templates>
+<app-comms-templates title="Include sensitive templates:" includeSensitive="false" (selected)="selectedTemplate($event)"></app-comms-templates>
+
+<h2 class="govuk-heading-m">Receipt comms template component</h2>
+<app-comms-receipt-templates title="Receipt templates"></app-comms-receipt-templates>
+
+<h2 class="govuk-heading-m">Helper text component</h2>
+<p>
+    Helper text demo:
+    <app-helper>Some helper text here.</app-helper>
+</p>
+
+<h2 class="govuk-heading-m">Value list component</h2>
+<app-value-list>
+
+    <app-value-list-label>Some label text here</app-value-list-label>
+    <app-value-list-value>0123456</app-value-list-value>
+
+    <app-value-list-label>Another label here</app-value-list-label>
+    <app-value-list-value>abcdef</app-value-list-value>
+
+    <app-value-list-label>Yet another here</app-value-list-label>
+    <app-value-list-value>---</app-value-list-value>
+
+</app-value-list>
+
+<h2 class="govuk-heading-m">Panel component</h2>
+<app-panel>Default panel...</app-panel>
+<app-box-panel>Box panel...</app-box-panel>
+<app-error-panel>Error panel...</app-error-panel>
+
+<h2 class="govuk-heading-m">"Or" component</h2>
+<app-or></app-or>
+
+<h2 class="govuk-heading-m">Tabs component</h2>
+<app-tabs>
+    <app-tab class="active">
+        <a>One</a>
+    </app-tab>
+    <app-tab>
+        <a>Two</a>
+    </app-tab>
+</app-tabs>
+
+<h2 class="govuk-heading-m">Secondary button component</h2>
+<button class="link-button">Button</button>

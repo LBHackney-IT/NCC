@@ -1,0 +1,47 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <div *ngIf="!existing_call">
+
+            <!-- Search for contact details. -->
+            <h2 class="govuk-heading-l">Caller details</h2>
+
+            <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
+            <app-panel class="govuk-!-margin-bottom-5">
+                <form class="govuk-form-group govuk-!-margin-bottom-2"
+                      [class.disabled]="disable_identify_caller" (submit)="performSearch($event)">
+                    <label class="govuk-label govuk-!-font-weight-bold" for="query">
+                        Search by postcode:
+                    </label>
+                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text"
+                        [(ngModel)]="postcode"
+                        [disabled]="!canUseSearch()">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" [disabled]="!canPerformSearch()">
+                        Search
+                    </button>
+                </form>
+            </app-panel>
+
+            <!-- Or... -->
+            <app-or [class.disabled]="disable_identify_caller"></app-or>
+
+            <!-- Option to mark the caller as anonymous. -->
+            <p class="govuk-body">
+                <button class="link-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" (click)="anonymousSelected()">
+                    Caller is anonymous
+                </button>
+                <app-helper>
+                    Select this option if the caller wants to remain anonymous.<br>
+                    Anonymous callers will not be able to access sensitive information.
+                </app-helper>
+            </p>
+
+            <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+        </div>
+
+        <router-outlet></router-outlet>
+
+    </div>
+
+</div>
