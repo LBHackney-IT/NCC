@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContentAreaComponent } from './content-area.component';
+import { LayoutContentComponent } from './content-area.component';
 
-describe('ContentAreaComponent', () => {
-  let component: ContentAreaComponent;
-  let fixture: ComponentFixture<ContentAreaComponent>;
+describe('LayoutContentComponent', () => {
+  let component: LayoutContentComponent;
+  let fixture: ComponentFixture<LayoutContentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentAreaComponent ]
+      declarations: [ LayoutContentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContentAreaComponent);
+    fixture = TestBed.createComponent(LayoutContentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

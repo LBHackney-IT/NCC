@@ -1,14 +1,16 @@
 import { environment } from '../../../../environments/environment';
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
-    selector: 'app-header',
+    selector: 'app-layout-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class LayoutHeaderComponent {
 
-    isTestSite(): boolean {
+    // Add a class to this component if we are not on a PRODUCTION version of the site.
+    @HostBinding('class.is-test-site')
+    get isTestSite(): boolean {
         return !environment.production;
     }
 

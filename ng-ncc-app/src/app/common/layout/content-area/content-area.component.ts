@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
 * This component serves as the scrollable content area for the app.
@@ -7,8 +7,8 @@ import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angu
 */
 
 @Component({
-    selector: 'app-content-area',
+    selector: 'app-layout-content',
     templateUrl: './content-area.component.html',
     styleUrls: ['./content-area.component.scss']
 })
-export class ContentAreaComponent { }
+export class LayoutContentComponent { }
