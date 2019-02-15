@@ -1,0 +1,22 @@
+@import "../../../../../assets/scss/vars.scss";
+
+$value-list-value-margin: .25rem 0 !default;
+
+$value-list-default-value-width: 60% !default;
+$value-list-more-label-value-width: 25% !default;
+$value-list-less-label-value-width: 75% !default;
+
+////////////////////
+
+:host {
+    margin: $value-list-value-margin;
+    width: $value-list-default-value-width;
+
+    .less-label & {
+        width: $value-list-less-label-value-width;
+    }
+
+    .more-label & {
+        width: $value-list-more-label-value-width;
+    }
+}

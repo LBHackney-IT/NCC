@@ -1,0 +1,20 @@
+<dialog class="dialogue" role="dialog" aria-labelledby="dialogue-title" [class.dialogue--large]="large" [open]="show"
+    (keyup.esc)="closeDialogue()">
+    <div class="dialogue__box">
+
+        <!-- Optional dialogue title. -->
+        <ng-content select="app-dialogue-title"></ng-content>
+
+        <!-- Dialogue text. -->
+        <p class="dialogue__text govuk-body-l govuk-!-font-weight-bold">
+            <ng-content></ng-content>
+        </p>
+
+        <!-- Close button. -->
+        <button class="button dialogue__button--close dialogue__button govuk-button govuk-!-margin-bottom-0" type="button"
+            (click)="closeDialogue()" #dialogueButton>
+            {{ buttonText || defaultButtonText }}
+        </button>
+
+    </div>
+</dialog>
