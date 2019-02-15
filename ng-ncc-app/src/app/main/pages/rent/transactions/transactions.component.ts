@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../../common/constants/pages.constant';
 import { IAccountDetails } from '../../../../common/interfaces/account-details';
-import { ManageATenancyAPIService } from '../../../../common/API/ManageATenancyAPI/manageatenancy-api.service';
 import { PageHistory } from '../../abstract/history';
 import { CallService } from '../../../../common/services/call.service';
 import { PageTitleService } from '../../../../common/services/page-title.service';
@@ -21,9 +20,9 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
 
     account_details: IAccountDetails;
 
-    filter_settings: {
-        min_date: Date,
-        max_date: Date,
+    filter: {
+        min_date: Date | null,
+        max_date: Date | null,
         manual: { [propKey: string]: string }
     };
 
@@ -31,7 +30,6 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
 
     constructor(
         private Call: CallService,
-        private ManageATenancyAPI: ManageATenancyAPIService,
         private route: ActivatedRoute,
         private router: Router,
         private PageTitle: PageTitleService) {
@@ -51,6 +49,7 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
             manual: {}
         };
 
+        // TODO can this be cleaned up with forkJoin()?
         this.Call.getAccount()
             .pipe(takeUntil(this._destroyed$))
             .subscribe((account: IAccountDetails) => { this.account_details = account; });
@@ -59,15 +58,18 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
             .pipe(
                 takeUntil(this._destroyed$)
             )
-            .subscribe((data) => {
-                // this.account_details = data.IAccountDetails;
-                this.filterByDate();
-                this.filterTransactions();
+            .subscribe(() => {
+                this._doFilter();
             });
     }
 
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    private _doFilter() {
+        this.filterTransactions();
+        this.filterByDate();
     }
 
     /**
@@ -84,7 +86,7 @@ export class PageRentTransactionsComponent extends PageHistory implements OnInit
      */
     clearFilter() {
         this.filter_type = null;
-        this.filterTransactions();
+        this._doFilter();
     }
 
     /**
