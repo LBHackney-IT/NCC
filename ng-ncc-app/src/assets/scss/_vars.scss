@@ -3,6 +3,8 @@ $hackney-light-green: #9BCF7F;
 $dark-grey: #252525;
 $white: #FFF;
 
+$disabled-opacity: .5;
+
 // GOV.UK customisation.
 $govuk-global-styles: true;
 $govuk-font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -10,8 +12,20 @@ $govuk-font-family-tabular: "HelveticaNeue-Light", "Helvetica Neue Light", "Helv
 $govuk-brand-colour: $hackney-green;
 
 $page-header-bg-colour: $dark-grey;
+$page-header-testing-bg-colour: darken(#B10E1E, 20%); // dark red
 $page-header-text-colour: $white;
 $page-header-border-colour: $hackney-green;
 
 $page-footer-border-colour: $hackney-light-green;
 $page-footer-link-colour: $white;
+
+$value-list-label-width: 50%;
+$value-list-value-width: 50%;
+
+// Z-index settings.
+// Set as multiples of 10, old school like BASIC lines.
+$page-footer-z-index: 10;
+$note-form-z-index: 20;
+$helper-text-z-index: 30;
+$route-loader-z-index: 40;
+$dialogue-z-index: 50;

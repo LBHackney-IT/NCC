@@ -1,0 +1,33 @@
+.link-button {
+    @extend .govuk-button;
+
+    // box-shadow: 0 $govuk-border-width-form-element 0 $govuk-border-colour;
+    box-shadow: 0 $govuk-border-width-form-element 0 transparent;
+    color: $govuk-text-colour;
+    background-color: govuk-colour('white');
+    border: 2px solid $govuk-border-colour;
+    // border-bottom: 0 solid govuk-colour('white');
+    vertical-align: middle; // for the benefit of anything appearing next to it horizontally.
+
+    @include govuk-if-ie8 {
+        border-bottom-color: $govuk-border-colour;
+    }
+
+    &:link,
+    &:visited,
+    &:active,
+    &:hover {
+        color: $govuk-text-colour;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: govuk-colour('white');
+    }
+
+    @include govuk-compatibility(govuk_template) {
+        &:link:focus {
+            color: $govuk-text-colour;
+        }
+    }
+}

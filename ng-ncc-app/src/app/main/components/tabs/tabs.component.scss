@@ -1,0 +1,27 @@
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
+
+$tabs-content-bg-colour: govuk-colour('white') !default;
+$tabs-content-border-width: 3px !default;
+$tabs-content-border-colour: $govuk-text-colour !default;
+$tabs-content-padding: 1em !default;
+$tabs-bottom-margin: 2rem !default;
+
+////////////////////
+
+:host {
+    margin-bottom: $tabs-bottom-margin;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: -$tabs-content-border-width;
+}
+
+.content {
+    background: $tabs-content-bg-colour;
+    border: $tabs-content-border-width solid $tabs-content-border-colour;
+    padding: $tabs-content-padding;
+}

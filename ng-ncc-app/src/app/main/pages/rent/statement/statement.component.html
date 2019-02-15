@@ -1,0 +1,65 @@
+<h1 class="govuk-heading-l">Transactions Preview</h1>
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="date-hint" role="group">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">Dates</h1>
+        </legend>
+        <span id="date-hint" class="govuk-hint">Example 10 03 2018</span>
+
+        <div class="govuk-grid-row">
+
+            <!-- FROM date -->
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-1">From</h2>
+                <app-date-field [(date)]="from_date"></app-date-field>
+            </div>
+
+            <!-- TO date -->
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-1">Until</h2>
+                <app-date-field [(date)]="until_date"></app-date-field>
+            </div>
+
+            <div class="govuk-grid-column-one-third">
+                <button class="govuk-button govuk-!-margin-top-9" type="button" name="button"
+                    (click)="refreshStatement()" [disabled]="!canRefresh()">Create</button>
+            </div>
+
+        </div>
+    </fieldset>
+
+    <form (submit)="sendStatement($event)" *ngIf="statement_url">
+
+        <!-- An IFRAME displaying the rent transactions. -->
+        <iframe [src]="statement_url" width="100%" height="500"></iframe>
+
+        <!-- Select the communications method. -->
+        <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
+        <div class="govuk-!-margin-top-5 govuk-!-margin-bottom-5">
+            <app-comms-method-select
+                [disableSMS]="true"
+                [postText]="'Print the Rent Transactions by clicking the \'print\' button in the window above.'"
+                (selected)="onSelectCommsMethod($event)"
+                (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
+        </div>
+
+        <!-- Send the message to the caller. -->
+        <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()" [disabled]="!canSend()">
+            {{ getButtonText() }}
+        </button>
+
+    </form>
+
+    <!-- Confirmation modal. -->
+    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
+        {{ success_message }}
+    </app-dialogue>
+
+    <app-dialogue [(show)]="modal.error">
+        <app-warning>
+            There was a problem with sending the rent transactions.
+        </app-warning>
+    </app-dialogue>
+
+</div>
