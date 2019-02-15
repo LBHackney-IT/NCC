@@ -305,11 +305,22 @@ export class NotesService {
      * Record a callback note against the call.
      * A corresponding Action Diary note is also created.
      */
-    recordCallbackNote(note_content: string, call_nature: ILogCallSelection = null, details: ICallbackNoteParameters): Observable<any> {
+    recordCallbackNote(call_nature: ILogCallSelection = null, details: ICallbackNoteParameters): Observable<any> {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an automatic note.');
             return of(true);
         }
+        
+        // Remove any empty email addresses.
+        const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
+
+        // The callback request is considered sent to the first specified email address,
+        // with any other email addresses being carbon copied (CC'd).
+        let noteMessage = `Callback request sent to: ${emails[0]}`;
+        if ( emails[1] ) {
+            noteMessage += `\nCC'd to: ${emails[1]}`;
+        }
+        noteMessage += `\n${details.message}`;
 
         return forkJoin(
 
@@ -321,11 +332,11 @@ export class NotesService {
                 call_reason_id: call_nature.call_reason.id,
                 other_reason: call_nature.other_reason,
                 crm_contact_id: this._settings.crm_contact_id,
-                content: this._formatNoteContent(note_content, call_nature)
+                content: noteMessage
             }, details),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content, call_nature)
+            this.recordActionDiaryNote(noteMessage, call_nature)
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
