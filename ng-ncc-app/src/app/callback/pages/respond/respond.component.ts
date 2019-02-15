@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
-import { CALLBACK_SUCCESS } from '../../../common/constants/callback-success.constant';
 import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
 import { HelperService } from '../../../common/services/helper.service';
 import { ICallbackDetails } from '../../../common/interfaces/callback-details';
@@ -71,6 +71,7 @@ export class PageRespondComponent implements OnInit {
 
         this.saving = true;
         this.error = false;
+        this.completed = false;
 
         const parameters: ICallbackResponse = {
             callbackId: this.callbackID,
@@ -85,19 +86,19 @@ export class PageRespondComponent implements OnInit {
             ticketNumber: this.details.ticketnumber
         };
 
-        this.NCCAPI.createCallbackResponse(parameters)
+        const actionDiaryNote = `Callback response logged by ${parameters.responseBy}\n${parameters.notes}`;
+
+        // NOTE: using forkJoin is cleaner here, but recording the callback response will fail
+        // if either endpoint returns an error.
+        forkJoin(
+            // CRM note
+            this.NCCAPI.createCallbackResponse(parameters),
+
+            // Action Diary note
+            this.NCCAPI.createActionDiaryEntry(parameters.tenancyReference, actionDiaryNote)
+        )
             .pipe(take(1))
-            .pipe(finalize(() => {
-            }))
-            .subscribe(
-                () => {},
-                () => { this.error = true; }
-            );
-        this.NCCAPI.createActionDiaryEntry(parameters.tenancyReference, parameters.notes)
-            .pipe(take(1))
-            .pipe(finalize(() => {
-                this.saving = false;
-            }))
+            .pipe(finalize(() => { this.saving = false; }))
             .subscribe(
                 () => { this.completed = true; },
                 () => { this.error = true; }
