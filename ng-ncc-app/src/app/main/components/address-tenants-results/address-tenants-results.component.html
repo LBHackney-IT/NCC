@@ -32,7 +32,8 @@
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">
-        {{ isLeasehold ? 'Details' : 'Tenant details' }}
+        <!-- {{ isLeasehold ? 'Details' : 'Tenant details' }} -->
+        Details
     </h2>
 
     <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
@@ -53,16 +54,19 @@
 
                 <div class="govuk-!-margin-bottom-5">
                     <button class="link-button" type="button" name="button" (click)="editContactDetails(row)">
-                        {{ isLeasehold ? 'Edit details' : 'Edit tenant details' }}
+                        <!-- {{ isLeasehold ? 'Edit details' : 'Edit tenant details' }} -->
+                        Edit Details
                     </button>
                 </div>
 
                 <app-error-panel *ngIf="row.error">
                     <app-panel-header>
-                        {{ isLeasehold ? 'Details' : 'Tenant details' }} load failure
+                        <!-- {{ isLeasehold ? 'Details' : 'Tenant details' }} load failure -->
+                        Details load failure
                     </app-panel-header>
                     <p class="govuk-body">
-                        There was a problem loading the details for this {{ isLeasehold ? 'leaseholder' : 'tenant' }}.
+                        <!-- There was a problem loading the details for this {{ isLeasehold ? 'leaseholder' : 'tenant' }}. -->
+                        There was a problem loading the details for this user.
                         Click 'Back' above and try again.
                     </p>
                     <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
