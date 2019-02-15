@@ -437,7 +437,17 @@ export class NCCAPIService {
 
         return this.http
             .get(`${this._url}UH/GetAllTenancyTransactionStatements?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((response) => <ITenancyTransactionRow[]>response));
+            .pipe(map((response) => {
+                // We also want the date formatted differently for sorting purposes.
+                const rows = Object.values(response).map((row) => {
+                    const date = moment(row.date, 'DD/MM/YYYY HH:mm:ss');
+                    row.date = date.format('DD/MM/YYYY HH:mm:ss');
+                    row.dateSort = date.format('YYYYMMDDHHmmss');
+                    return row;
+                });
+
+                return <ITenancyTransactionRow[]>rows;
+            }));
 
     }
 

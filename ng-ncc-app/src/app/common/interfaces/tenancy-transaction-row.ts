@@ -1,5 +1,6 @@
 export interface ITenancyTransactionRow {
     date: string;
+    dateSort: string;
     description: string;
     in: number;
     out: number;
