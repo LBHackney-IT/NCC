@@ -5,8 +5,6 @@ import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../../common/constants/pages.constant';
 import { PageHistory } from '../abstract/history';
-import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
-import { CallService } from '../../../common/services/call.service';
 import { NotesService } from '../../../common/services/notes.service';
 import { PageTitleService } from '../../../common/services/page-title.service';
 
@@ -38,13 +36,6 @@ export abstract class PageNotes extends PageHistory implements OnInit {
      */
     ngOnInit() {
         this.PageTitle.set(PAGES.VIEW_NOTES.label);
-
-        // Set up the filter.
-        this.filter = {
-            min_date: null,
-            max_date: null,
-            manual: {}
-        };
 
         // Retrieve a list of tenants (for the filter).
         this.getTenants()
