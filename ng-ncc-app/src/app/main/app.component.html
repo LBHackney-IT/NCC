@@ -2,7 +2,7 @@
 <a (click)="jumpToContent($event)" href="" class="govuk-skip-link">Skip to main content</ a>
 
 <!-- PAGE HEADER. -->
-<app-header>
+<app-layout-header>
     <div class="page__header__column page__header__column--title">
         <p class="govuk-!-font-size-24 govuk-!-margin-bottom-1">NCC - CRM</p>
         <app-env-name class="govuk-body-s"></app-env-name>
@@ -18,7 +18,7 @@
 
     <!-- The Add Note form. -->
     <app-note-form></app-note-form>
-</app-header>
+</app-layout-header>
 
 <div class="container">
     <app-route-loading *ngIf="loading"></app-route-loading>
@@ -27,7 +27,7 @@
     <app-navigation *ngIf="loggedIn()"></app-navigation>
 
     <!-- MAIN CONTENT AREA. -->
-    <app-content-area>
+    <app-layout-content>
 
         <!-- General back link. -->
         <app-back-link></app-back-link>
@@ -36,11 +36,11 @@
             <router-outlet></router-outlet>
         </div>
 
-    </app-content-area>
+    </app-layout-content>
 </div>
 
 
 <!-- PAGE FOOTER. -->
-<app-footer>
+<app-layout-footer>
     <div class="version">{{ getVersion() }}</div>
-</app-footer>
+</app-layout-footer>

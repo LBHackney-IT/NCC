@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject, forkJoin, Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../../common/interfaces/add-note-parameters';
 import { IJSONResponse } from '../../common/interfaces/json-response';
 import { ICallbackNoteParameters } from '../../common/interfaces/callback-note-parameters';
 import { ILogCallSelection } from '../../common/interfaces/log-call-selection';
-
-import { CALL_REASON } from '../constants/call-reason.constant';
+import { ICallReasonNote } from '../../common/interfaces/call-reason-note';
 
 import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
-import { LogCallReason } from '../../common/classes/log-call-reason.class';
 import { ViewOnlyService } from '../services/view-only.service';
 import { AuthService } from './auth.service';
 
@@ -139,7 +137,7 @@ export class NotesService {
             }),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content)
+            this.recordActionDiaryNote(note_content, call_nature)
 
         )
             .pipe(map((data: IJSONResponse[]) => {
@@ -213,13 +211,15 @@ export class NotesService {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
             const note = [];
-            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : 'none';
+            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : null;
 
             // Add the agent's name.
             note.push(`Logged by: ${this._settings.agent_name}`);
 
             // Add the additional call reason, if there is one.
-            note.push(`Additional reason: ${reason}`);
+            if ( reason ) {
+                note.push(`Additional reason: ${reason}`);
+            }
 
             // The actual message.
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
@@ -248,13 +248,15 @@ export class NotesService {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference && username) {
             const note = [];
-            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : 'none';
+            const reason = (call_nature && call_nature.other_reason) ? call_nature.other_reason : null;
 
             // Add the agent's name.
             note.push(`Logged by: ${this._settings.agent_name}`);
 
             // Add the additional call reason, if there is one.
-            note.push(`Additional reason: ${reason}`);
+            if (reason) {
+                note.push(`Additional reason: ${reason}`);
+            }
 
             // The actual message.
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
@@ -295,7 +297,7 @@ export class NotesService {
             }),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content)
+            this.recordActionDiaryNote(note_content, call_nature)
         );
     }
 
@@ -323,7 +325,7 @@ export class NotesService {
             }, details),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content)
+            this.recordActionDiaryNote(note_content, call_nature)
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
@@ -334,23 +336,23 @@ export class NotesService {
     }
 
     /**
-     *
+     * Record a series of automatic notes representing call reasons.
      */
-    recordCallReasons(call_reason_ids: object[], other_reason: string = null) {
-        // Make sure we have a unique list of call reason IDs.
-        const unique_call_reasons = Array.from(new Set(call_reason_ids));
-
+    recordCallReasons(callReasonNotes: ICallReasonNote[]) {
         // For each call reason, create an automatic note with CALL_REASON_IDENTIFIER as the note content.
-        const observables = unique_call_reasons.map(
-            (reason) => this.NCCAPI.createAutomaticNote(this._settings.agent_crm_id, {
-                call_id: this._settings.call_id,
-                ticket_number: this._settings.ticket_number,
-                tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: reason['id'],
-                other_reason: reason['label'] === 'Other' ? other_reason : null,
-                crm_contact_id: this._settings.crm_contact_id,
-                content: this.CALL_REASON_IDENTIFIER
-            })
+        const observables = callReasonNotes.map(
+            (note: ICallReasonNote) => this.NCCAPI.createAutomaticNote(
+                this._settings.agent_crm_id,
+                {
+                    call_id: this._settings.call_id,
+                    ticket_number: this._settings.ticket_number,
+                    tenancy_reference: this._settings.tenancy_reference,
+                    call_reason_id: note.callReasonId,
+                    other_reason: note.otherReason,
+                    crm_contact_id: this._settings.crm_contact_id,
+                    content: this.CALL_REASON_IDENTIFIER
+                }
+            )
         );
 
         return forkJoin(observables);
