@@ -106,7 +106,7 @@ export class PageCallbackComponent implements OnInit {
 
         // Using flatMap to subscribe to two Observables in series.
         // The call to sendCallbackEmail should not run if for some reason createCallbackNote fails.
-        this.Notes.recordCallbackNote(this.message, this.callNature, callbackDetails)
+        this.Notes.recordCallbackNote(this.callNature, callbackDetails)
             .pipe(take(1))
             .pipe(finalize(() => { this.sending = false; }))
             .pipe(mergeMap((data: INCCInteraction) => {

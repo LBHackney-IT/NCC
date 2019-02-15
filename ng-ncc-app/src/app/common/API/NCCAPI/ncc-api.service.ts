@@ -91,9 +91,15 @@ export class NCCAPIService {
      */
     createCallbackNote(agentCRMID: string, settings: INotesSettings, details: ICallbackNoteParameters) {
         const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
-        // A list of email addresses.
 
-        const noteMessage = `Callback request\n${details.message}\nSent to ${emails.join(', ')}`;
+        // The callback request is considered sent to the first specified email address,
+        // with any other email addresses being carbon copied (CC'd).
+        const firstEmail = emails.shift();
+        let noteMessage = `Callback request sent to: ${firstEmail}`;
+        if ( emails.length ) {
+            noteMessage += `\nCC'd to: ${emails.join(', ')}`;
+        }
+        noteMessage += `\n${details.message}`;
 
         settings.parameters = Object.assign({}, {
             Notes: noteMessage,
