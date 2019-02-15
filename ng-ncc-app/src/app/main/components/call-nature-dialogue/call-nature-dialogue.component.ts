@@ -8,6 +8,8 @@ import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 import { ConfirmDialogueComponent } from '../dialogue/confirm/confirm-dialogue.component';
 
 import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
+import { ICallReasonNote } from '../../../common/interfaces/call-reason-note';
+import { ICallReasonListItem } from '../../../common/interfaces/call-reason-list-item';
 
 import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
 import { NotesService } from '../../../common/services/notes.service';
@@ -31,12 +33,13 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     optionOther: LogCallReason;
     saving: boolean;
     selectedType: LogCallType;
-    selectedReasons: string[];  // a list of call reason IDs.
-    selectedReasonOther: string;
-    selectedReasonObjects: object[];
+    selectedReasonIds: string[];  // a list of call reason IDs.
+    selectedReasons: ICallReasonListItem[]; // used to display a list of selected call reasons with their type.
+    otherReason: {[propKey: string]: string}; // contains additional text for call-type specific "other" reasons.
     callTypes: LogCallType[];
     callReasons: { [propKey: number]: LogCallReason[] };
     error: boolean;
+    callReasonList: ICallReasonListItem[];
 
 
     constructor(
@@ -49,9 +52,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     ngOnInit() {
-        this.selectedType = null;
-        this.selectedReasons = [];
-        this.selectedReasonOther = null;
+        this.reset();
 
         // Fetch a list of call types and reasons from the Hackney API.
         forkJoin(
@@ -63,6 +64,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                 data => {
                     this.callTypes = data[0];
                     this.callReasons = data[1];
+                    this._buildInternalCallReasonList();
                 },
                 () => {
                     this.error = true;
@@ -83,35 +85,34 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     * Preselects call reasons in the dialogue.
+     * Reset the selection.
      */
-    private _preselectCallReasons() {
-        const natures = this.Notes.getUsedCallNatures().map(
-            (nature: ILogCallSelection) => nature.call_reason.id
-        );
-
-        const natureObjects = this.Notes.getUsedCallNatures().map(
-            (nature: ILogCallSelection) => {
-                return {
-                    id: nature.call_reason.id,
-                    label: nature.call_reason.label,
-                    type: nature.call_type
-                };
-            }
-        );
-        const other_reasons = this.Notes.getUsedCallNatures().map(
-            (nature: ILogCallSelection) => nature.other_reason
-        ).filter((reason: string) => null !== reason);
-        const unique_natures = new Set(natures).values();
-
-        this.selectedReasonObjects = natureObjects;
-        this.selectedReasons = natures;
-        this.selectedReasonOther = other_reasons.join(', ');
+    reset() {
+        this.selectedType = null;
+        this.selectedReasonIds = [];
+        this.otherReason = {};
     }
 
     /**
-     * Creates an array of objects {selectedReasonObjects} to display the Selected Reasons
-     * by transforming the list of reason id's in selectedReasons array to an
+     * Preselects call reasons in the dialogue.
+     */
+    private _preselectCallReasons() {
+        const natures = this.Notes.getUsedCallNatures();
+
+        this.selectedReasonIds = natures.map(
+            (nature: ILogCallSelection) => nature.call_reason.id
+        );
+        this._mapSelectedCallReasonsToListOfReasons();
+
+        // Record "other" call reason text, whether filled in or not.
+        natures.forEach((nature: ILogCallSelection) => {
+            this.otherReason[ nature.call_reason.id ] = nature.other_reason;
+        });
+    }
+
+    /**
+     * Creates an array of objects {selectedReasons} to display the Selected Reasons
+     * by transforming the list of reason id's in selectedReasonIds array to an
      * object with the LogCallReason and the associated type
      *
      * @private
@@ -119,37 +120,11 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * @returns {void}
      */
     private _mapSelectedCallReasonsToListOfReasons = (): void => {
-        const selectedReasonObjects = this.selectedReasons.map((reasonId) => {
-            // Intialise object to be returned
-            let returnedObject: object;
-
-            // Get keys from callReasons objects
-            const callReasonsKeyArray: number[] = Object.keys(this.callReasons).map(Number);
-
-            // Iterate through keys in callReasons
-            callReasonsKeyArray.forEach((reasonKey: number) => {
-                // Get Array of Reason objects
-                const possibleReasons: LogCallReason[] = this.callReasons[reasonKey];
-                if (!returnedObject) {
-                // Find the object which matches the reason ID
-                returnedObject = possibleReasons.find((logCallObject: LogCallReason) => {
-                    return logCallObject.id === reasonId;
-                });
-                if (returnedObject && !returnedObject.hasOwnProperty('type')) {
-                    // Append the type
-                    returnedObject['type'] = this.selectedType;
-                }
-            }
-
+        const selectedReasons = this.selectedReasonIds.map((callReasonId: string) => {
+            return this.callReasonList.find((item: ICallReasonListItem) => item.callReasonId === callReasonId);
         });
 
-            if (returnedObject !== undefined) {
-                return returnedObject;
-            }
-
-        });
-
-        this.selectedReasonObjects = selectedReasonObjects;
+        this.selectedReasons = selectedReasons;
     }
 
     /**
@@ -181,6 +156,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
             // Create a "placeholder" Other call reason.
             this.optionOther = new LogCallReason(CALL_REASON.OTHER, 'Other');
         } else {
+            // Use an existing "other" call reason.
             this.optionOther = reasons_list[index];
         }
         reasons_list.splice(index, 1);
@@ -230,14 +206,14 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if the specific call reason has been selected.
      */
     isReasonSelected(reason: LogCallReason) {
-        return this.selectedReasons && this.selectedReasons.indexOf(reason.id) > -1;
+        return this.selectedReasonIds && this.selectedReasonIds.indexOf(reason.id) > -1;
     }
 
     /**
      * Returns TRUE if a call type has been selected.
      */
     isAtLeastOneReasonSelected() {
-        return this.selectedReasons && this.selectedReasons.length > 0;
+        return this.selectedReasonIds && this.selectedReasonIds.length > 0;
     }
 
     /**
@@ -269,10 +245,12 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         if (this.ViewOnly.status) {
             observe = of([]);
         } else {
-            observe = this.Notes.recordCallReasons(this.selectedReasonObjects, this.selectedReasonOther);
+            const notes = this._buildCallReasonNotes();
+            observe = this.Notes.recordCallReasons(notes);
         }
 
         // Attempt to save the selected call reasons as notes.
+        // If we're in View Only mode, nothing should be actually saved.
         observe
             .pipe(take(1))
             .pipe(finalize(() => {
@@ -281,10 +259,24 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
             .subscribe(
                 () => {
                     this.confirmed.emit();
+                    this.reset();
                     this.closeDialogue();
-                    this.selectedType = null;
                 }
             );
+    }
+
+    /**
+     * Build a list of call reason IDs with corresponding "other" text, to pass to NotesService.recordCallReasons().
+     */
+    private _buildCallReasonNotes(): ICallReasonNote[] {
+        const notes: ICallReasonNote[] = this.selectedReasonIds.map((reasonId: string) => {
+            return <ICallReasonNote>{
+                callReasonId: reasonId,
+                otherReason: this.otherReason[reasonId] || null
+            };
+        });
+
+        return notes;
     }
 
     /**
@@ -314,6 +306,25 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      */
     trackByCallReason(index: number, item: LogCallReason): string {
         return item.id;
+    }
+
+    /**
+     * Builds a "flat" list of call reasons with their matching call type.
+     */
+    private _buildInternalCallReasonList() {
+        const list: ICallReasonListItem[] = [];
+        this.callTypes.forEach((callType: LogCallType) => {
+            this.callReasons[callType.id].forEach((callReason: LogCallReason) => {
+                list.push({
+                    callTypeId: callType.id,
+                    callTypeLabel: callType.label,
+                    callReasonId: callReason.id,
+                    callReasonLabel: callReason.label
+                });
+            });
+        });
+
+        this.callReasonList = list;
     }
 
 }
