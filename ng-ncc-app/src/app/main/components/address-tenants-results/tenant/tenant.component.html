@@ -1,0 +1,45 @@
+<!-- The contact's name. -->
+<div class="govuk-heading-m govuk-!-margin-bottom-5">
+    {{ tenant.getName() }}
+</div>
+
+<!-- Contact details. -->
+<div class="govuk-!-margin-bottom-5">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">CONTACT DETAILS</h3>
+
+    <app-value-list class="govuk-body-s" emphasise="value">
+
+        <!-- Telephone numbers. -->
+        <app-value-list-label>Telephone</app-value-list-label>
+        <app-value-list-value>
+            <div *ngFor="let number of getTelephoneNumbers(); trackBy: trackByMethod">
+                {{ number }}
+                <b *ngIf="isDefaultTelephone(number)">[default]</b>
+            </div>
+            <em *ngIf="hasNoTelephoneNumbers()">none</em>
+        </app-value-list-value>
+
+        <!-- Email addresses. -->
+        <app-value-list-label>Email</app-value-list-label>
+        <app-value-list-value>
+            <div *ngFor="let email of getEmailAddresses(); trackBy: trackByMethod">
+                {{ email }}
+                <b *ngIf="isDefaultEmail(email)">[default]</b>
+            </div>
+            <em *ngIf="hasNoEmailAddresses()">none</em>
+        </app-value-list-value>
+
+    </app-value-list>
+</div>
+
+<!-- DPA. -->
+<div class="govuk-!-margin-bottom-2">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">DATA PROTECTION ACT QUESTIONS</h3>
+    <app-value-list class="govuk-body-s" emphasise="value">
+        <app-value-list-label>Date of birth</app-value-list-label>
+        <app-value-list-value>
+            {{ tenant.getDateOfBirth() }}
+            <em *ngIf="!tenant.getDateOfBirth()">none</em>
+        </app-value-list-value>
+    </app-value-list>
+</div>

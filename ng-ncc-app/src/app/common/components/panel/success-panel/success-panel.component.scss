@@ -1,0 +1,10 @@
+@import "../panel.component";
+@import "~govuk-frontend/settings/colours-applied";
+
+$success-panel-border-width: 4px !default;
+$success-panel-border-colour: govuk-colour("green") !default;
+
+:host {
+    background: transparent;
+    border: $success-panel-border-width solid $success-panel-border-colour;
+}

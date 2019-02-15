@@ -1,0 +1,82 @@
+<h1 class="govuk-heading-l">Transaction complete</h1>
+
+<app-warning *ngIf="isTestPayment()">
+    This is a TEST payment.
+</app-warning>
+
+<app-value-list emphasise="value">
+
+    <app-value-list-label>Authorisation code</app-value-list-label>
+    <app-value-list-value>{{ data.authorisationcode }}</app-value-list-value>
+
+    <app-value-list-label>Receipt number</app-value-list-label>
+    <app-value-list-value>{{ data.receiptnumber }}</app-value-list-value>
+
+    <app-value-list-label>Is a test payment?</app-value-list-label>
+    <app-value-list-value>{{ isTestPayment() ? 'Yes' : 'No' }}</app-value-list-value>
+
+    <app-value-list-label>Transaction type</app-value-list-label>
+    <app-value-list-value>{{ data.transactiontype }}</app-value-list-value>
+
+    <app-value-list-label>Merchant number</app-value-list-label>
+    <app-value-list-value>{{ data.merchantnumber }}</app-value-list-value>
+
+    <app-value-list-label>Merchant (transaction) ID</app-value-list-label>
+    <app-value-list-value>{{ data.merchanttid }}</app-value-list-value>
+
+    <app-value-list-label>Data</app-value-list-label>
+    <app-value-list-value>{{ data.data }}</app-value-list-value>
+
+    <app-value-list-label>Date</app-value-list-label>
+    <app-value-list-value>{{ data.date }}</app-value-list-value>
+
+    <app-value-list-label>Amount</app-value-list-label>
+    <app-value-list-value>{{ data.amount | currency:'GBP' }}</app-value-list-value>
+
+    <app-value-list-label>Administration charge</app-value-list-label>
+    <app-value-list-value>{{ data.administrationcharge | currency:'GBP' }}</app-value-list-value>
+
+</app-value-list>
+
+<form (submit)="sendMessage($event)" *ngIf="!_error">
+
+    <h1 class="govuk-heading-l">Payment Receipt</h1>
+
+    <p class="govuk-body">How would you like us to send a receipt?</p>
+
+    <p class="govuk-body">Caller: <b>{{ getCallerName() }}</b></p>
+
+    <!-- A list of receipt comms templates. -->
+    <!-- At present there should only be one, preselected. -->
+    <app-comms-receipt-templates title="Receipt templates" (selected)="selectedOption($event)"
+        (error)="commsError()"></app-comms-receipt-templates>
+
+    <!-- The comms method. -->
+    <app-comms-method-select
+        [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
+        [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
+        disablePost="true"
+        (selected)="onSelectCommsMethod($event)"
+        (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
+
+    <!-- Previewing the message to be sent. -->
+    <div *ngIf="shouldShowPreview()">
+        <app-notify-template-preview [(settings)]="preview" [editPlaceholders]="false"></app-notify-template-preview>
+    </div>
+
+    <!-- Send the message to the caller. -->
+    <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
+        Finish and send
+    </button>
+</form>
+
+<!-- Confirmation modal. -->
+<app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="returnToPayment()">
+    Message sent successfully.
+</app-dialogue>
+
+<app-dialogue [(show)]="modal.error">
+    <app-warning>
+        There was a problem with sending the message.
+    </app-warning>
+</app-dialogue>
