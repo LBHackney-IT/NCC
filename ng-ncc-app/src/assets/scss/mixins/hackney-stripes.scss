@@ -1,0 +1,91 @@
+// A mixin for the Hackney "stripes" identity.
+
+$hackney-stripes-dark-colour: #00664F !default;
+$hackney-stripes-middle-colour: #00B140 !default;
+$hackney-stripes-light-colour: #A4D65E !default;
+
+$hackney-stripe-width: 4px !default;
+$hackney-stripe-spacing: $hackney-stripe-width * 2 !default;
+
+/////////////////////////
+
+@mixin hackney-stripes($position: 'bottom') {
+    $middle-stripe-width: $hackney-stripe-width;
+    $light-stripe-width: $hackney-stripe-width / 2;
+    $dark-stripe-width: $hackney-stripe-width * 2;
+
+    $middle-stripe-style: $middle-stripe-width solid $hackney-stripes-middle-colour;
+
+    position: relative;
+
+    // Dark and light stripes.
+    &:before,
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+    }
+    // Dark stripe.
+    &:before {
+        background: $hackney-stripes-dark-colour;
+        height: $dark-stripe-width;
+    }
+
+    // Light stripe.
+    &:after {
+        background: $hackney-stripes-light-colour;
+        height: $light-stripe-width;
+    }
+
+    // Position the middle stripe.
+    @if ( 'top' == $position ) {
+        border-top: $middle-stripe-style;
+
+        &:before,
+        &:after {
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        // Dark stripe.
+        &:before {
+            transform: translate3d(0, $hackney-stripe-spacing, 1px);
+        }
+
+        // Light stripe.
+        &:after {
+            transform: translate3d(0, -($middle-stripe-width + $hackney-stripe-spacing), 1px);
+        }
+    } @else {
+        // Bottom as a default.
+        border-bottom: $middle-stripe-style;
+
+        &:before,
+        &:after {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        // Dark stripe.
+        &:before {
+            transform: translate3d(0, -$hackney-stripe-spacing, 1px);
+        }
+
+        // Light stripe.
+        &:after {
+            transform: translate3d(0, $middle-stripe-width + $hackney-stripe-spacing, 1px);
+        }
+    }
+    // TODO: styles for stripes on the left and right.
+
+}
+
+@mixin hackney-stripes--bottom {
+    @include hackney-stripes('bottom');
+}
+
+@mixin hackney-stripes--top {
+    @include hackney-stripes('top');
+}

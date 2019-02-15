@@ -1,0 +1,7 @@
+<!-- http://codehow.io/angular-ng-content-with-default-content/ -->
+<div #contentRef class="govuk-body">
+    <ng-content></ng-content>
+</div>
+<div *ngIf="contentRef.childNodes.length === 0" class="govuk-body">
+    Please try again.
+</div>

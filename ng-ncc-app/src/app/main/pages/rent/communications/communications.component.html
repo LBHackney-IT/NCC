@@ -1,0 +1,131 @@
+<form (submit)="sendMessage($event)">
+
+    <!-- Select the form to send. -->
+    <app-comms-templates title="Select an item to send:" includeSensitive="true" (selected)="selectedOption($event)"></app-comms-templates>
+
+    <!-- Select the communications method. -->
+    <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
+    <app-comms-method-select
+        [disableEmail]="!isMethodAvailable(CONTACT_METHOD.METHOD_EMAIL)"
+        [disableSMS]="!isMethodAvailable(CONTACT_METHOD.METHOD_SMS)"
+        [disablePost]="!isMethodAvailable(CONTACT_METHOD.METHOD_POST)"
+        (selected)="onSelectCommsMethod($event)"
+        (invalidated)="onInvalidCommsMethod()"></app-comms-method-select>
+
+    <!-- Previewing the message to be sent. -->
+    <div *ngIf="shouldShowPreview()">
+        <app-notify-template-preview [(settings)]="preview"
+            [editPlaceholders]="!isSensitiveTemplateSelected()"></app-notify-template-preview>
+    </div>
+
+    <!-- Send the message to the caller. -->
+    <button type="submit" class="govuk-button" *ngIf="shouldShowSendButton()">
+        Send
+    </button>
+
+    <!-- Confirmation modal. -->
+    <app-dialogue [(show)]="modal.confirmed" [buttonText]="'Done'" (closed)="commsSuccess()">
+        Message sent successfully.
+    </app-dialogue>
+
+    <app-dialogue [(show)]="modal.error">
+        <app-warning>
+            There was a problem with sending the message.
+        </app-warning>
+    </app-dialogue>
+
+    <!-- Data protection Act (DPA) questions prompt - for a tenant. -->
+    <app-dpa-dialogue [(show)]="modal.dpa_identified" buttonText="Close" *ngIf="is_identified">
+        <app-dialogue-title>Data Protection Act questions</app-dialogue-title>
+
+        <div class="govuk-grid-row govuk-!-margin-bottom-5">
+
+            <!-- The tenancy address. -->
+            <div class="govuk-grid-column-one-third" [innerHtml]="getTenancyAddress()"></div>
+
+            <!-- DPA questions relating to the tenancy address(?). -->
+            <div class="govuk-grid-column-two-thirds">
+                <app-dpa-tenancy [crmContactID]="caller.getContactID()"></app-dpa-tenancy>
+            </div>
+
+        </div>
+
+        <h3 class="govuk-heading-s">Tenant details</h3>
+        <div class="govuk-grid-row">
+
+            <!-- The tenant's name (and optional advocate's name). -->
+            <div class="govuk-grid-column-full">
+                {{ caller.getName() }}
+            </div>
+
+            <!-- Contact details. -->
+            <div class="govuk-grid-column-one-half govuk-body-s">
+                <app-value-list>
+                    <app-value-list-label>Telephone</app-value-list-label>
+                    <app-value-list-value>
+                        <div *ngFor="let number of caller.getTelephoneNumbers(); trackBy: trackByIndex">
+                            {{ number }}
+                        </div>
+                        <em *ngIf="caller.hasNoTelephoneNumbers()">none</em>
+                    </app-value-list-value>
+
+                    <app-value-list-label>Email</app-value-list-label>
+                    <app-value-list-value>
+                        <div *ngFor="let email of caller.getEmailAddresses(); trackBy: trackByIndex">
+                            {{ email }}
+                        </div>
+                        <em *ngIf="caller.hasNoEmailAddresses()">none</em>
+                    </app-value-list-value>
+                </app-value-list>
+            </div>
+
+            <!-- DPA questions for the tenant. -->
+            <div class="govuk-grid-column-one-half govuk-body-s">
+                <app-value-list>
+                    <app-value-list-label>Date of birth</app-value-list-label>
+                    <app-value-list-value>{{ caller.getDateOfBirth() }}</app-value-list-value>
+                </app-value-list>
+            </div>
+
+        </div>
+    </app-dpa-dialogue>
+
+    <!-- Data protection Act (DPA) questions prompt - for a non-tenant. -->
+    <app-dpa-dialogue [(show)]="modal.dpa_non_tenant" buttonText="Continue" *ngIf="is_non_tenant">
+        <app-warning>
+            You must not give out sensitive information to people who shouldn't see it.
+            If the non-tenant has the correct contact available then verify Data Protection.
+        </app-warning>
+
+        <app-panel>
+            <h3 class="govuk-heading-m">Property details</h3>
+
+            <h4 class="govuk-heading-s">ADDRESS</h4>
+            <p [innerHtml]="getTenancyAddress()"></p>
+
+            <h4 class="govuk-heading-s">Data Protection Act questions</h4>
+            <div class="govuk-body-s">
+                <app-value-list>
+                    <app-value-list-label>Tenancy reference number</app-value-list-label>
+                    <app-value-list-value>{{ account_details.tagReferenceNumber }}</app-value-list-value>
+
+                    <app-value-list-label>Payment reference</app-value-list-label>
+                    <app-value-list-value>{{ account_details.paymentReferenceNumber }}</app-value-list-value>
+
+                    <app-value-list-label>Current balance</app-value-list-label>
+                    <app-value-list-value>
+                        <app-current-balance [account]="account_details.tagReferenceNumber"></app-current-balance>
+                    </app-value-list-value>
+
+                    <app-value-list-label>Payment amount</app-value-list-label>
+                    <app-value-list-value>{{ account_details.rent | currency : 'GBP' }}</app-value-list-value>
+
+                    <!-- <app-value-list-label>Most recent payment</app-value-list-label>
+                    <app-value-list-value>...</app-value-list-value> -->
+                </app-value-list>
+            </div>
+
+        </app-panel>
+    </app-dpa-dialogue>
+
+</form>
