@@ -8,16 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EnvNameComponent implements OnInit {
 
-    display: boolean;
-
-    /**
-     *
-     */
-    ngOnInit() {
-        // Don't display this component if we're in a production build.
-        this.display = !environment.production;
-    }
-
     /**
      *
      */
