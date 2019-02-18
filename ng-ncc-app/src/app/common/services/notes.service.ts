@@ -162,7 +162,7 @@ export class NotesService {
             note_content = `${note_content}\n(Transferred)`;
         }
 
-        const callTypes = ['Rent', 'Leaseholder Services'];
+        const callTypes = ['Rent', 'Leasehold Services'];
         const callType = call_nature.call_type.label;
 
         return forkJoin(
@@ -183,7 +183,9 @@ export class NotesService {
 
             // Action Diary note...
             // recordNote(note_content, call_nature)
-            callTypes.includes(callType) ? this.recordActionDiaryNote(note_content, call_nature) : this.recordTenancyAgreementNote(note_content)
+            callTypes.includes(callType) ?
+                this.recordActionDiaryNote(note_content, call_nature) :
+                this.recordTenancyAgreementNote(note_content, call_nature)
             //  this.recordActionDiaryNote(note_content)
         )
             .pipe(map((data: IJSONResponse[]) => {
@@ -229,6 +231,14 @@ export class NotesService {
         return of(true);
     }
 
+    /**
+     *
+     *
+     * @param {string} note_content
+     * @param {ILogCallSelection} [call_nature=null]
+     * @returns
+     * @memberof NotesService
+     */
     recordTenancyAgreementNote(note_content: string, call_nature: ILogCallSelection = null) {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an Action Diary note.');
@@ -251,7 +261,6 @@ export class NotesService {
             // The actual message.
             // Add the caller's name to the note content (as caller information isn't saved with Action Diary notes).
             note.push(`${this._name}: ${note_content}`);
-
             return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note.join('\n'), username);
         }
 
