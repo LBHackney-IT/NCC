@@ -1,6 +1,7 @@
 // =========================================================================================================================================
 // Layout > HEADER component integration test.
 // =========================================================================================================================================
+import { environment } from '../../../../environments/environment';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutHeaderComponent } from './header.component';
 
@@ -25,23 +26,23 @@ describe('LayoutHeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should not have .is-test-site by default', () => {
+  it('should have .is-test-site by default', () => {
       const hasClass: boolean = fixture.debugElement.classes['is-test-site'];
-      expect(hasClass).toBeFalsy();
+      expect(hasClass).toBeTruthy();
   });
 
-  it('should not have .is-test-site if on a non-production site', () => {
+  it('should have .is-test-site on a non-production site', () => {
       environment.production = false;
       fixture.detectChanges();
       const hasClass: boolean = fixture.debugElement.classes['is-test-site'];
-      expect(hasClass).toBeFalsy();
+      expect(hasClass).toBeTruthy();
   });
 
-  it('should have .is-test-site if on a live (production) site', () => {
+  it('should not have .is-test-site on a live (production) site', () => {
       environment.production = true;
       fixture.detectChanges();
       const hasClass: boolean = fixture.debugElement.classes['is-test-site'];
-      expect(hasClass).toBeTruthy();
+      expect(hasClass).toBeFalsy();
   });
 
 });
