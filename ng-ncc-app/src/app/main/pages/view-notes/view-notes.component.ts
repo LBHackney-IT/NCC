@@ -1,13 +1,10 @@
-import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, Injector, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 import { PAGES } from '../../../common/constants/pages.constant';
 import { PageNotes } from '../abstract/notes';
 import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
 import { CallService } from '../../../common/services/call.service';
-import { PageTitleService } from '../../../common/services/page-title.service';
 
 @Component({
     selector: 'app-view-notes',

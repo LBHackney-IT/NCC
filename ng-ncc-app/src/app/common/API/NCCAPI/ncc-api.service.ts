@@ -91,9 +91,15 @@ export class NCCAPIService {
      */
     createCallbackNote(agentCRMID: string, settings: INotesSettings, details: ICallbackNoteParameters) {
         const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
-        // A list of email addresses.
 
-        const noteMessage = `Callback request\n${details.message}\nSent to ${emails.join(', ')}`;
+        // The callback request is considered sent to the first specified email address,
+        // with any other email addresses being carbon copied (CC'd).
+        const firstEmail = emails.shift();
+        let noteMessage = `Callback request sent to: ${firstEmail}`;
+        if ( emails.length ) {
+            noteMessage += `\nCC'd to: ${emails.join(', ')}`;
+        }
+        noteMessage += `\n${details.message}`;
 
         settings.parameters = Object.assign({}, {
             Notes: noteMessage,
@@ -437,7 +443,17 @@ export class NCCAPIService {
 
         return this.http
             .get(`${this._url}UH/GetAllTenancyTransactionStatements?${this._buildQueryString(parameters)}`, {})
-            .pipe(map((response) => <ITenancyTransactionRow[]>response));
+            .pipe(map((response) => {
+                // We also want the date formatted differently for sorting purposes.
+                const rows = Object.values(response).map((row) => {
+                    const date = moment(row.date, 'DD/MM/YYYY HH:mm:ss');
+                    row.date = date.format('DD/MM/YYYY HH:mm:ss');
+                    row.dateSort = date.format('YYYYMMDDHHmmss');
+                    return row;
+                });
+
+                return <ITenancyTransactionRow[]>rows;
+            }));
 
     }
 
@@ -448,7 +464,8 @@ export class NCCAPIService {
             ManagerEmailId: details.managerEmail,
             PhoneNumber: details.callbackNumber,
             MessageForEmail: details.message,
-            CallersFullName: details.callerName
+            CallersFullName: details.callerName,
+            HousingTagRef: details.tenancyReference
         };
 
         return this.http
