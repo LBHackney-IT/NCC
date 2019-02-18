@@ -1,5 +1,9 @@
+// ========================================================================================================================================
+// CALL NATURE DIALOGUE component.
+// ========================================================================================================================================
+
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, of, forkJoin, Subject } from 'rxjs';
+import { of, forkJoin, Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
 import { LogCallReason } from '../../../common/classes/log-call-reason.class';
@@ -21,40 +25,74 @@ import { ViewOnlyService } from '../../../common/services/view-only.service';
     styleUrls: ['./call-nature-dialogue.component.scss']
 })
 export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit, OnDestroy {
+
+    // The visible status of the dialogue, which has two-way binding.
     @Input() show: boolean;
     @Output() showChange = new EventEmitter<boolean>();
+
+    // A callback for when the selection of call types and reasons is confirmed.
     @Output() confirmed = new EventEmitter<void>();
+
+    // A callback for when the dialogue is cancelled.
     @Output() cancel = new EventEmitter<void>();
 
+    // A reference to the text field used for entering "other" call reason text.
     @ViewChild('otherReasonField') otherReasonField: ElementRef;
 
+    // A private Subject used to unsubscribe from subscriptions, to avoid memory leaks.
     private _destroyed$ = new Subject<void>();
 
+    callReasonList: ICallReasonListItem[];
+    callReasons: { [propKey: number]: LogCallReason[] };
+    callTypes: LogCallType[];
+    error: boolean;
     optionOther: LogCallReason;
+    otherReason: {[propKey: string]: string}; // contains additional text for call-type specific "other" reasons.
     saving: boolean;
-    selectedType: LogCallType;
     selectedReasonIds: string[];  // a list of call reason IDs.
     selectedReasons: ICallReasonListItem[]; // used to display a list of selected call reasons with their type.
-    otherReason: {[propKey: string]: string}; // contains additional text for call-type specific "other" reasons.
-    callTypes: LogCallType[];
-    callReasons: { [propKey: number]: LogCallReason[] };
-    error: boolean;
-    callReasonList: ICallReasonListItem[];
+    selectedType: LogCallType;
 
+    ////////////////////
 
     constructor(
+        private cdRef: ChangeDetectorRef,
         private HackneyAPI: HackneyAPIService,
         private Notes: NotesService,
-        private cdRef: ChangeDetectorRef,
         private ViewOnly: ViewOnlyService
     ) {
         super();
     }
 
+    /**
+     *
+     */
     ngOnInit() {
         this.reset();
 
         // Fetch a list of call types and reasons from the Hackney API.
+        this.getCallNatures();
+
+        // Subscribe to note addition events.
+        this.Notes.noteWasAdded()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                // Preselect call reasons.
+                this._preselectCallReasons();
+            });
+    }
+
+    /**
+     *
+     */
+    ngOnDestroy() {
+        this._destroyed$.next();
+    }
+
+    /**
+     *
+     */
+    getCallNatures() {
         forkJoin(
             this.HackneyAPI.getCallTypes(),
             this.HackneyAPI.getCallReasons()
@@ -70,22 +108,10 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                     this.error = true;
                 }
             );
-
-        // Subscribe to note addition events.
-        this.Notes.noteWasAdded()
-            .pipe(takeUntil(this._destroyed$))
-            .subscribe(() => {
-                // Preselect call reasons.
-                this._preselectCallReasons();
-            });
-    }
-
-    ngOnDestroy() {
-        this._destroyed$.next();
     }
 
     /**
-     * Reset the selection.
+     * Reset the selection of call types/reasons.
      */
     reset() {
         this.selectedType = null;
@@ -166,7 +192,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * A sorting function for call reasons.
      */
     private _sortCallReasons(a: LogCallReason, b: LogCallReason) {
-        // "Other" always goes to the bottom of the list.
+        // A dummy "Other" always goes to the bottom of the list.
         if ('0' === a.id || '0' === b.id) {
             return -1;
         }
@@ -210,7 +236,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     * Returns TRUE if a call type has been selected.
+     * Returns TRUE if at least one call type has been selected.
      */
     isAtLeastOneReasonSelected() {
         return this.selectedReasonIds && this.selectedReasonIds.length > 0;
@@ -233,7 +259,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     *
+     * Called when the user is attempting to save the call types and reasons.
      */
     answerYes() {
         if (this.saving) {
@@ -253,9 +279,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         // If we're in View Only mode, nothing should be actually saved.
         observe
             .pipe(take(1))
-            .pipe(finalize(() => {
-                this.saving = false;
-            }))
+            .pipe(finalize(() => this.saving = false))
             .subscribe(
                 () => {
                     this.confirmed.emit();
@@ -288,7 +312,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     }
 
     /**
-     *
+     * Returns TRUE if the list of call types and reasons can be saved.
      */
     canSave(): boolean {
         return !this.saving && this.isCallTypeSelected() && this.isAtLeastOneReasonSelected();
@@ -310,6 +334,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
     /**
      * Builds a "flat" list of call reasons with their matching call type.
+     * This isn't the most efficient thing to do, particularly if we have hundreds of call types and/or reasons,
+     * but it's a simple approach.
      */
     private _buildInternalCallReasonList() {
         const list: ICallReasonListItem[] = [];
