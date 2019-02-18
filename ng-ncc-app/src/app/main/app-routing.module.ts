@@ -33,7 +33,6 @@ import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver
 import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-non-tenant-caller-resolver.service';
 import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
 import { CallerResolver } from './resolvers/caller-resolver.service';
-import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { IsLeaseholdPropertyResolver } from './resolvers/is-leasehold-property.resolver';
@@ -173,9 +172,6 @@ export const AppRoutes: Routes = [
         path: PAGES.IDENTIFY.route,
         component: PageIdentifyComponent,
         canActivate: [AuthGuard],
-        // resolve: {
-        //     call_nature: CallNatureResolver
-        // },
         children: [
             {
                 path: PAGES.IDENTIFY_ADDRESSES.route,
@@ -208,7 +204,6 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard],
         resolve: {
             caller: CallerResolver,
-            // call_nature: CallNatureResolver
         }
     },
     {
