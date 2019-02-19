@@ -382,6 +382,11 @@ export class NotesService {
         return this._usedNatures;
     }
 
+    /**
+     *
+     * @private
+     * @memberof NotesService
+     */
     private buildNoteText = (call_nature: ILogCallSelection = null, additional_notes: string = null): string => {
         const note = ['Call Summary'];
 
