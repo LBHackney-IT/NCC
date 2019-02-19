@@ -166,9 +166,11 @@ export class NotesService {
             note_content = `${note_content}\n(Transferred)`;
         }
 
+
         // const callTypes = ['Rent', 'Leaseholder Services'];
         const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
         const callType = call_nature.call_type.id;
+
 
         return forkJoin(
 
@@ -188,6 +190,7 @@ export class NotesService {
             callType !== null ? (callTypes.includes(callType) ?
                 this.recordActionDiaryNote(note_content, call_nature) :
                 this.recordTenancyAgreementNote(note_content, call_nature)) : of({})
+
             //  this.recordActionDiaryNote(note_content)
         )
             .pipe(map((data: IJSONResponse[]) => {
@@ -221,6 +224,7 @@ export class NotesService {
     }
 
     recordTenancyAgreementNote(note_content: string | null, call_nature: ILogCallSelection = null) {
+
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an Action Diary note.');
             return of(true);
@@ -230,6 +234,7 @@ export class NotesService {
         if (tenancy_reference && username) {
             const note = this.buildNoteText(call_nature, null);
             return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note, username);
+
         }
 
         return of(true);

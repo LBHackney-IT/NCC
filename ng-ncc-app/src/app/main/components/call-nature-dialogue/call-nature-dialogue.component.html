@@ -105,12 +105,14 @@
         <div class="dialogue__buttons">
 
             <!-- "Yes" button. -->
-            <button class="button dialogue__button dialogue__button--close govuk-button govuk-!-margin-bottom-0" type="button" [disabled]="!canSave()" (click)="answerYes()">
+            <button class="button dialogue__button dialogue__button--close govuk-button govuk-!-margin-bottom-0" type="button"
+                [disabled]="!canSave()" (click)="answerYes()">
                 Save and end call
             </button>
 
             <!-- "No" button. -->
-            <button class="button dialogue__button dialogue__button--close link-button govuk-!-margin-bottom-0" type="button" (click)="answerNo()" #dialogueButton>
+            <button class="button dialogue__button dialogue__button--close link-button govuk-!-margin-bottom-0" type="button"
+                (click)="answerNo()" #dialogueButton>
                 Cancel
             </button>
 
