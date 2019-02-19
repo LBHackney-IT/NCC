@@ -72,14 +72,8 @@ export abstract class PageCommunications implements OnInit, OnDestroy {
             dpa: false
         };
 
-        this.route.data
-            .pipe(
-                takeUntil(this._destroyed$)
-            )
-            .subscribe((data) => {
-                this.account_details = data.IAccountDetails;
-                this.caller = data.caller;
-            });
+        this.caller = this.Call.getCaller();
+        this.account_details = this.Call.getAccount();
     }
 
     /**
