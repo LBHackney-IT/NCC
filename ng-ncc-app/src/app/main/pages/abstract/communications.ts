@@ -72,8 +72,10 @@ export abstract class PageCommunications implements OnInit, OnDestroy {
             dpa: false
         };
 
-        this.caller = this.Call.getCaller();
-        this.account_details = this.Call.getAccount();
+        this.caller = <IdentifiedCaller>this.Call.getCaller();
+        this.Call.getAccount().subscribe((response) => {
+            this.account_details = response;
+        });
     }
 
     /**
