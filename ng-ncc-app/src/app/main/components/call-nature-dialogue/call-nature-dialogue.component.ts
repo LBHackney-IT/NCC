@@ -268,11 +268,26 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     /**
      * Build a list of call reason IDs with corresponding "other" text, to pass to NotesService.recordCallReasons().
      */
-    private _buildCallReasonNotes(): ICallReasonNote[] {
-        const notes: ICallReasonNote[] = this.selectedReasonIds.map((reasonId: string) => {
-            return <ICallReasonNote>{
-                callReasonId: reasonId,
-                otherReason: this.otherReason[reasonId] || null
+    private _buildCallReasonNotes(): ILogCallSelection[] {
+        // const notes: ICallReasonNote[] = this.selectedReasonIds.map((reasonId: string) => {
+        //     return <ICallReasonNote>{
+        //         callReasonId: reasonId,
+        //         otherReason: this.otherReason[reasonId] || null
+        //     };
+        // });
+
+        const notes = this.selectedReasons.map((reason) => {
+            const otherReason = this.otherReason[reason.callReasonId] ? this.otherReason[reason.callReasonId] : null;
+            return {
+                call_type: {
+                    id: reason.callTypeId,
+                    label: reason.callTypeLabel
+                },
+                call_reason: {
+                    id: reason.callReasonId,
+                    label: reason.callReasonLabel
+                },
+                other_reason: this.otherReason[reason.callReasonId]
             };
         });
 
