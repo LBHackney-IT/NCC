@@ -13,7 +13,7 @@ $page-header-padding: 2rem !default;
 
 :host {
     ::ng-deep p {
-        color: $page-header-text-colour !important;
+        color: $page-header-text-colour;
     }
 
     &.is-test-site {
