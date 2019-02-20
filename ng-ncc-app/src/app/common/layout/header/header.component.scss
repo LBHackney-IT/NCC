@@ -13,7 +13,13 @@ $page-header-padding: 2rem !default;
 
 :host {
     ::ng-deep p {
-        color: $page-header-text-colour !important;
+        color: $page-header-text-colour;
+    }
+
+    &.is-test-site {
+        header {
+            background: $page-header-testing-bg-colour;
+        }
     }
 }
 
@@ -23,10 +29,6 @@ header {
     background: $page-header-bg-colour;
     color: $page-header-text-colour !important;
     padding: $page-header-padding;
-
-    &.page__header--test-site {
-        background: $page-header-testing-bg-colour;
-    }
 
     p {
         color: inherit;

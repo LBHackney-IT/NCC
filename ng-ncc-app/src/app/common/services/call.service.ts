@@ -220,8 +220,8 @@ export class CallService {
     createCallerNote() {
         if (this.call_id) {
             const name = (this.caller.isAnonymous() && !this.caller.isNonTenant()) ? 'anonymous' : this.caller.getName();
-            const call_type = null; // TODO this.call_nature.call_type.label;
-            const call_reason = null; // TODO this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
+            // const call_type = null; // TODO this.call_nature.call_type.label;
+            // const call_reason = null; // TODO this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
             // this.call_nature.call_reason.label;
 
             forkJoin(
@@ -229,7 +229,9 @@ export class CallService {
                 this.recordAutomaticNote(`Caller identified as ${name}.`),
 
                 // Record an Action Diary note about the call type and reason.
-                this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`)
+                // this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`)
+                // Commented out because the call type and reason are only determined at the end of the call, so here they will always be
+                // NULL.
             )
                 .pipe(take(1))
                 .pipe(map((data) => data[0])) // only interested in the response from recordAutomaticNote().

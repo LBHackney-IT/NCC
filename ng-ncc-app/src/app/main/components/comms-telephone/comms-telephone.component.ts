@@ -61,13 +61,12 @@ export class CommsTelephoneComponent implements OnInit {
      */
     _populateTelephoneNumbers(details: ContactDetailsUpdate) {
         this.details = details;
-        this.telephoneNumbers = [];
-        if (this.details.telephone) {
-            this.telephoneNumbers = this.telephoneNumbers.concat(this.details.telephone);
-        }
-        if (this.details.mobile) {
-            this.telephoneNumbers = this.telephoneNumbers.concat(this.details.mobile);
-        }
+        // this.telephoneNumbers = [];
+
+        // Because there was previously no validation, a tenant might have duplicate telephone numbers.
+        // We will have to make sure there aren't any duplicates after combining both lists of numbers.
+        const allNumbers = (this.details.telephone || []).concat(this.details.mobile || []);
+        this.telephoneNumbers = Array.from(new Set(allNumbers));
 
         // Set the default number to use, if available.
         this.setDefault();

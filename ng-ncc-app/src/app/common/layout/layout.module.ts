@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ContentAreaComponent } from './content-area/content-area.component';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
+import { LayoutContentComponent } from './content-area/content-area.component';
+import { LayoutFooterComponent } from './footer/footer.component';
+import { LayoutHeaderComponent } from './header/header.component';
 import { RouteLoadingComponent } from './route-loading/route-loading.component';
 
 @NgModule({
@@ -11,15 +11,15 @@ import { RouteLoadingComponent } from './route-loading/route-loading.component';
         CommonModule
     ],
     declarations: [
-        ContentAreaComponent,
-        HeaderComponent,
-        FooterComponent,
+        LayoutContentComponent,
+        LayoutFooterComponent,
+        LayoutHeaderComponent,
         RouteLoadingComponent
     ],
     exports: [
-        ContentAreaComponent,
-        HeaderComponent,
-        FooterComponent,
+        LayoutContentComponent,
+        LayoutFooterComponent,
+        LayoutHeaderComponent,
         RouteLoadingComponent
     ]
 })
