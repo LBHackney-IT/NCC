@@ -203,7 +203,7 @@ export const AppRoutes: Routes = [
         component: PageViewNotesComponent,
         canActivate: [
             AuthGuard,
-            IsIdentifiedCallerGuard
+            IsIdentifiedOrNonTenantCallerGuard
         ]
     },
     {
