@@ -195,7 +195,10 @@ export const AppRoutes: Routes = [
         canActivate: [
             AuthGuard,
             IsIdentifiedCallerGuard
-        ]
+        ],
+        resolve: {
+            isLeasehold: IsLeaseholdPropertyResolver
+        }
     },
     {
         // View Notes page.

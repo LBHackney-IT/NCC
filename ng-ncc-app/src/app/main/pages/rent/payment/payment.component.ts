@@ -76,7 +76,6 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
         this.amount = null;
 
         // Find out whether this account is for a leasehold property.
-        // TODO would forkJoin be necessary/appropriate here?
         this.route.data
             .pipe(take(1))
             .subscribe(
