@@ -34,7 +34,10 @@ export const environment = {
         statement: 'dd757ce7-468a-4fd1-8cb1-4315c74cfded'
     },
     // Call Type IDs: Rent = 1 & Leasehold Services = 3
-    listOfCallTypeIdsToBeSentToActionDiary: [1, 3]
+    listOfCallTypeIdsToBeSentToActionDiary: [
+        1, // Rent
+        3, // Leasehold Services
+    ]
 };
 
 /*
