@@ -87,6 +87,7 @@ import { CallNatureDialogueComponent } from './components/call-nature-dialogue/c
 import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
 import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
 import { CommsTelephoneComponent } from './components/comms-telephone/comms-telephone.component';
+import { PatchDetailsComponent } from './components/patch-details/patch-details.component';
 
 @NgModule({
     declarations: [
@@ -154,6 +155,7 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
+        PatchDetailsComponent,
     ],
     imports: [
         BrowserModule,

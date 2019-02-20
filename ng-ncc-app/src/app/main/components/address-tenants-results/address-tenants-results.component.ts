@@ -127,6 +127,20 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
     }
 
     /**
+     *
+     */
+    getAddressPostcode(): string {
+        return this.address.results[0].postCode;
+    }
+
+    /**
+     *
+     */
+    getAddressUPRN(): string {
+        return this.address.results[0].uprn;
+    }
+
+    /**
      * Returns TRUE if a tenant is selected.
      */
     hasSelection(): boolean {
@@ -147,6 +161,9 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
         this.back.emit();
     }
 
+    /**
+     *
+     */
     editContactDetails(citizen: IdentifiedCaller) {
         this.beginEdit.emit(citizen);
     }

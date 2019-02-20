@@ -20,6 +20,7 @@
         <h2 class="govuk-heading-m property-heading">
             Property details
             <app-tenancy-type [crmContactID]="crm_contact_id"></app-tenancy-type>
+            <app-patch-details [postcode]="getAddressPostcode()" [uprn]="getAddressUPRN()"></app-patch-details>
         </h2>
 
         <h3 class="govuk-heading-s govuk-!-margin-bottom-2">ADDRESS</h3>

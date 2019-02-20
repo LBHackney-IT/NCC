@@ -60,6 +60,16 @@ export class ManageATenancyAPIService {
             .pipe(map((data: IJSONResponse) => data.results[0]));
     }
 
+    getAreaPatch(postcode: string, uprn: string) {
+        return this.http
+            .get(`${this._url}/AreaPatch/GetAreaPatch?postcode=${postcode}&UPRN=${uprn}`);
+        // .pipe(
+        //     map((data) => {
+        //         return data as IContactDetails;
+        //     })
+        // );
+    }
+
     /**
      * Returns contact details for the specified CRM contact ID (for a tenant).
      * There are subtle differences between the details returned from this endpoint and those from the Hackney API,
