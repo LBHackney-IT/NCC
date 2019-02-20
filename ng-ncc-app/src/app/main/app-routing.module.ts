@@ -211,7 +211,7 @@ export const AppRoutes: Routes = [
         path: PAGES.REQUEST_CALLBACK.route,
         canActivate: [
             AuthGuard,
-            IsCallerAvailableGuard
+            IsIdentifiedOrNonTenantCallerGuard
         ],
         component: PageCallbackComponent
     },
