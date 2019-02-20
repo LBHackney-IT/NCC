@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../../../common/constants/pages.constant';
-import { HackneyAPIService } from '../../../../common/API/HackneyAPI/hackney-api.service';
 import { AddressSearchService } from '../../../../common/services/address-search.service';
 import { BackLinkService } from '../../../../common/services/back-link.service';
 import { CallService } from '../../../../common/services/call.service';
 import { IAddressSearchGroupedResult } from '../../../../common/interfaces/address-search-grouped-result';
-import { ICitizenIndexSearchResult } from '../../../../common/interfaces/citizen-index-search-result';
 import { IdentifiedCaller } from '../../../../common/classes/identified-caller.class';
 import { NonTenantCaller } from '../../../../common/classes/non-tenant-caller.class';
-import { AnonymousCaller } from '../../../../common/classes/anonymous-caller.class';
 import { ICaller } from '../../../../common/interfaces/caller';
 
 @Component({
@@ -22,19 +19,20 @@ import { ICaller } from '../../../../common/interfaces/caller';
 })
 export class PageIdentifyTenantsComponent implements OnInit {
 
-    address: IAddressSearchGroupedResult;
-    error: boolean;
-    confirm_non_tenant: boolean;
-    isLeasehold: boolean;
     private _caller: ICaller;
+
+    address: IAddressSearchGroupedResult;
+    confirm_non_tenant: boolean;
+    error: boolean;
+    hasCaller: boolean;
+    isLeasehold: boolean;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private AddressSearch: AddressSearchService,
         private BackLink: BackLinkService,
-        private Call: CallService,
-        private HackneyAPI: HackneyAPIService
+        private Call: CallService
     ) { }
 
     ngOnInit() {
@@ -45,6 +43,9 @@ export class PageIdentifyTenantsComponent implements OnInit {
         if (!this.address) {
             this.router.navigateByUrl(PAGES.IDENTIFY.route);
         }
+
+        // If a caller has been selected, prevent a different tenant being selected.
+        this.hasCaller = this.Call.hasCaller();
 
         this.route.data
             .pipe(take(1))

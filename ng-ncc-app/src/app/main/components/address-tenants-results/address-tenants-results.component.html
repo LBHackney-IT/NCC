@@ -39,7 +39,8 @@
     <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios">
             <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index; trackBy: trackByMethod">
-                <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio" [(ngModel)]="_selected" [value]="row">
+                <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio"
+                    [(ngModel)]="_selected" [value]="row" [disabled]="disabled">
                 <label class="govuk-label govuk-radios__label" for="changed-name-{{i}}">
                     <!--
                     NOTE: inline tags (such as LABEL) CAN contain block level elements,
@@ -84,7 +85,7 @@
         <div class="govuk-radios govuk-radios--inline">
             <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="changed-name-non-tenant" name="changed-name" type="radio"
-                     [(ngModel)]="_selected" [value]="nonTenantCaller">
+                     [(ngModel)]="_selected" [value]="nonTenantCaller" [disabled]="disabled">
                 <label class="govuk-label govuk-radios__label govuk-grid-row" for="changed-name-non-tenant">
                     <span class="govuk-grid-column-full">
                         <span class="govuk-body govuk-!-margin-bottom-1">

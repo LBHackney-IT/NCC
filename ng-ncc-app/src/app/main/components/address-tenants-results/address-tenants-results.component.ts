@@ -14,6 +14,7 @@ import { DPAService } from '../../../common/services/dpa.service';
 })
 export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() address: IAddressSearchGroupedResult;
+    @Input() disabled: boolean;
     @Input() isLeasehold: boolean;
     @Input() showBackButton: boolean;
 
@@ -130,14 +131,16 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
      * Returns TRUE if a tenant is selected.
      */
     hasSelection(): boolean {
-        return null !== this._selected;
+        return this.disabled ? false : (null !== this._selected);
     }
 
     /**
      * Called when the user hits the Continue button.
      */
     confirmSelection() {
-        this.selected.emit(this._selected);
+        if (!this.disabled) {
+            this.selected.emit(this._selected);
+        }
     }
 
     /**
