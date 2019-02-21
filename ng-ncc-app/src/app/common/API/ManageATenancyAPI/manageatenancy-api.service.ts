@@ -7,6 +7,7 @@ import { Observable, of, from } from 'rxjs';
 
 import { IAccountDetails } from '../../interfaces/account-details';
 import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';
+import { IAreaPatchResult } from '../../interfaces/area-patch-result';
 import { ICitizenIndexSearchResult } from '../../interfaces/citizen-index-search-result';
 import { IContactDetails } from '../../interfaces/contact-details';
 import { IJSONResponse } from '../../interfaces/json-response';
@@ -58,6 +59,15 @@ export class ManageATenancyAPIService {
         return this.http
             .get(`${this._url}/Accounts/AccountDetailsByPaymentorTagReference?referencenumber=${reference}`, {})
             .pipe(map((data: IJSONResponse) => data.results[0]));
+    }
+
+    /**
+     *
+     */
+    getAreaPatch(postcode: string, uprn: string): Observable<IAreaPatchResult> {
+        return this.http
+            .get(`${this._url}/AreaPatch/GetAreaPatch?postcode=${postcode}&UPRN=${uprn}`)
+            .pipe(map((data: IJSONResponse) => <IAreaPatchResult>data.result));
     }
 
     /**
