@@ -1,1 +1,20 @@
-{{ data | json }}
+<table class="govuk-body-s" *ngIf="data">
+    <tbody>
+        <tr>
+            <th scope="row">Area</th>
+            <td>{{ area }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Ward</th>
+            <td>{{ ward }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Manager</th>
+            <td>{{ managerName }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Estate Officer</th>
+            <td>{{ officerName }}</td>
+        </tr>
+    </tbody>
+</table>
