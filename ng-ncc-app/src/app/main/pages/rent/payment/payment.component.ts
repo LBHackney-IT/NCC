@@ -1,5 +1,5 @@
 import { Component, HostListener, Injector, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -27,6 +27,8 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
     account_details: IAccountDetails;
     show_confirm: boolean;
     amount: string;
+    route: ActivatedRoute;
+    isLeasehold: boolean;
 
     // Listen to the window's storage event.
     // This is fired whenever a localStorage property (it has access to?) is *changed*.
@@ -56,6 +58,7 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
     constructor(private injectorObj: Injector) {
         this.Call = this.injectorObj.get(CallService);
         this.NCCAPI = this.injectorObj.get(NCCAPIService);
+        this.route = this.injectorObj.get(ActivatedRoute);
         this.router = this.injectorObj.get(Router);
         this.PageTitle = this.injectorObj.get(PageTitleService);
     }
@@ -71,6 +74,16 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
                 this.account_details = account;
             });
         this.amount = null;
+
+        // Find out whether this account is for a leasehold property.
+        this.route.data
+            .pipe(take(1))
+            .subscribe(
+                (data: { isLeasehold: boolean }) => {
+                    this.isLeasehold = data.isLeasehold;
+                },
+                () => { this.isLeasehold = false; }
+            );
     }
 
     /**
