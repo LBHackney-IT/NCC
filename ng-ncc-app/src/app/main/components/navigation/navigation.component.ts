@@ -135,6 +135,13 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     }
 
     /**
+     * Returns TRUE if requesting a callback should be possible.
+     */
+    isCallbackPossible(): boolean {
+        return this.Call.isCallerIdentified() || this.Call.isCallerNonTenant();
+    }
+
+    /**
      *
      */
     getIdentifyRoute(): string {
