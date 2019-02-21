@@ -154,7 +154,7 @@ export class NotesService {
 
     /**
      * Record a manual note.
-     * A corresponding Action Diary note is also created.
+     * A corresponding Action Diary or Universal Housing note is also created.
      */
     recordManualNote(call_nature: ILogCallSelection, note_content: string, transferred: boolean = false) {
         if (this.ViewOnly.status) {
