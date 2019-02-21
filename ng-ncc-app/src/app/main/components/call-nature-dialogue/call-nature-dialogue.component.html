@@ -116,6 +116,13 @@
                 Cancel
             </button>
 
+            <app-error-panel *ngIf="error">
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                    There was a problem ending this call, please try again.<br>
+                    If this continues you will need to contact ICT.
+                </p>
+            </app-error-panel>
+
         </div>
 
     </div>
