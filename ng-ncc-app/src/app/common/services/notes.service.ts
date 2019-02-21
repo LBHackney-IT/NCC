@@ -410,7 +410,8 @@ export class NotesService {
         }
 
         if (additional_notes) {
-            note.push('Additional Comment: ' + additional_notes);
+            note.push('Additional Comments:');
+            note.push(additional_notes);
         }
 
         return note.join('\n');
