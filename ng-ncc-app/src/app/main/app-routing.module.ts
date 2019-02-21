@@ -197,7 +197,7 @@ export const AppRoutes: Routes = [
         component: PageCommsComponent,
         canActivate: [
             AuthGuard,
-            IsIdentifiedCallerGuard
+            IsCallerAvailableGuard
         ],
         resolve: {
             isLeasehold: IsLeaseholdPropertyResolver
@@ -217,7 +217,7 @@ export const AppRoutes: Routes = [
         path: PAGES.REQUEST_CALLBACK.route,
         canActivate: [
             AuthGuard,
-            IsCallerAvailableGuard
+            IsIdentifiedOrNonTenantCallerGuard
         ],
         component: PageCallbackComponent
     },
