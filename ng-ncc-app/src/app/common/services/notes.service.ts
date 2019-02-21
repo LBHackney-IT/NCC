@@ -184,7 +184,7 @@ export class NotesService {
                 tenancy_reference: this._settings.tenancy_reference
             }),
 
-            // Action Diary note...
+            // Action Diary or Universal Housing note...
             callType !== null ? (callTypes.includes(callType) ?
                 this.recordActionDiaryNote(note_content, call_nature) :
                 this.recordTenancyAgreementNote(note_content, call_nature)) : of({})
