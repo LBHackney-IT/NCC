@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { environment } from '../../environments/environment';
 
 import { PAGES } from '../common/constants/pages.constant';
-import { AuthGuard } from './auth/auth.guard';
 
 import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
@@ -29,11 +28,12 @@ import { PageTransactionSuccessComponent } from './pages/transaction/success/suc
 import { PageTryAgainComponent } from './pages/try-again/try-again.component';
 import { PageViewNotesComponent } from './pages/view-notes/view-notes.component';
 
-import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
-import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-non-tenant-caller-resolver.service';
-import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
-import { CallerResolver } from './resolvers/caller-resolver.service';
-import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
+import { AuthGuard } from './guard/auth.guard';
+import { IsIdentifiedCallerGuard } from './guard/is-identified-caller.guard';
+import { IsIdentifiedOrNonTenantCallerGuard } from './guard/is-identified-or-non-tenant-caller.guard';
+import { CallerCanMakePaymentGuard } from './guard/caller-can-make-payment.guard';
+import { IsCallerAvailableGuard } from './guard/is-caller-available.guard';
+
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
 import { IsLeaseholdPropertyResolver } from './resolvers/is-leasehold-property.resolver';
@@ -79,12 +79,6 @@ export const AppRoutes: Routes = [
         component: PageLastCallsComponent,
         canActivate: [AuthGuard]
     },
-    // {
-    //     // Log Call page.
-    //     path: PAGES.LOG_CALL.route,
-    //     component: PageLogCallComponent,
-    //     canActivate: [AuthGuard]
-    // },
     {
         // Add Notes page.
         path: PAGES.ADD_NOTES.route,
@@ -131,25 +125,22 @@ export const AppRoutes: Routes = [
                 // Rent > Transactions.
                 path: PAGES.RENT_TRANSACTIONS.route,
                 component: PageRentTransactionsComponent,
-                resolve: {
-                    caller: IdentifiedOrNonTenantCallerResolver
-                }
+                canActivate: [IsIdentifiedOrNonTenantCallerGuard]
             },
             {
                 // Rent > Make (Payment).
                 path: PAGES.RENT_PAYMENT.route,
                 component: PageRentPaymentComponent,
+                canActivate: [CallerCanMakePaymentGuard],
                 resolve: {
-                    caller: CallerCanPayResolver
+                    isLeasehold: IsLeaseholdPropertyResolver
                 }
             },
             {
                 // Rent > Communications.
                 path: PAGES.RENT_COMMS.route,
                 component: PageRentCommunicationsComponent,
-                resolve: {
-                    caller: IdentifiedOrNonTenantCallerResolver
-                }
+                canActivate: [IsIdentifiedOrNonTenantCallerGuard]
             },
             {
                 // Catch-all (which should go to the summary child page).
@@ -163,19 +154,16 @@ export const AppRoutes: Routes = [
         // Statement page.
         path: PAGES.RENT_STATEMENT.route,
         component: PageRentStatementComponent,
-        canActivate: [AuthGuard],
-        resolve: {
-            caller: IdentifiedCallerResolver
-        }
+        canActivate: [
+            AuthGuard,
+            IsIdentifiedCallerGuard
+        ]
     },
     {
         // Identify page.
         path: PAGES.IDENTIFY.route,
         component: PageIdentifyComponent,
         canActivate: [AuthGuard],
-        // resolve: {
-        //     call_nature: CallNatureResolver
-        // },
         children: [
             {
                 path: PAGES.IDENTIFY_ADDRESSES.route,
@@ -194,9 +182,11 @@ export const AppRoutes: Routes = [
         // [Edit] Contact Details page.
         path: PAGES.EDIT_CONTACT_DETAILS.route,
         component: PageContactDetailsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [
+            AuthGuard,
+            IsIdentifiedCallerGuard
+        ],
         resolve: {
-            caller: IdentifiedCallerResolver,
             details: ContactDetailsResolver,
             isLeasehold: IsLeaseholdPropertyResolver
         }
@@ -205,30 +195,31 @@ export const AppRoutes: Routes = [
         // Comms page.
         path: PAGES.COMMS.route,
         component: PageCommsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [
+            AuthGuard,
+            IsCallerAvailableGuard
+        ],
         resolve: {
-            caller: CallerResolver,
-            // call_nature: CallNatureResolver
+            isLeasehold: IsLeaseholdPropertyResolver
         }
     },
     {
         // View Notes page.
         path: PAGES.VIEW_NOTES.route,
         component: PageViewNotesComponent,
-        canActivate: [AuthGuard],
-        resolve: {
-            caller: CallerResolver
-            // caller: IdentifiedCallerResolver
-        }
+        canActivate: [
+            AuthGuard,
+            IsIdentifiedOrNonTenantCallerGuard
+        ]
     },
     {
         // Request a Callback page.
         path: PAGES.REQUEST_CALLBACK.route,
-        canActivate: [AuthGuard],
-        component: PageCallbackComponent,
-        resolve: {
-            caller: CallerResolver
-        }
+        canActivate: [
+            AuthGuard,
+            IsIdentifiedOrNonTenantCallerGuard
+        ],
+        component: PageCallbackComponent
     },
 
     // -------------------------------------------------------------------------------------------------------------------------------------

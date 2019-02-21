@@ -15,12 +15,12 @@ import { HelperService } from '../common/services/helper.service';
 import { WindowService } from '../common/services/window.service';
 
 import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
-import { CallerCanPayResolver } from './resolvers/caller-can-pay-resolver.service';
-import { CallerResolver } from './resolvers/caller-resolver.service';
-import { CallNatureResolver } from './resolvers/call-nature-resolver.service';
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
-import { IdentifiedCallerResolver } from './resolvers/identified-caller-resolver.service';
-import { IdentifiedOrNonTenantCallerResolver } from './resolvers/identified-or-non-tenant-caller-resolver.service';
+
+import { CallerCanMakePaymentGuard } from './guard/caller-can-make-payment.guard';
+import { IsCallerAvailableGuard } from './guard/is-caller-available.guard';
+import { IsIdentifiedCallerGuard } from './guard/is-identified-caller.guard';
+import { IsIdentifiedOrNonTenantCallerGuard } from './guard/is-identified-or-non-tenant-caller.guard';
 
 import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 import { PageAuthComponent } from './pages/auth/auth.component';
@@ -87,6 +87,7 @@ import { CallNatureDialogueComponent } from './components/call-nature-dialogue/c
 import { CurrentBalanceComponent } from './components/current-balance/current-balance.component';
 import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
 import { CommsTelephoneComponent } from './components/comms-telephone/comms-telephone.component';
+import { PatchDetailsComponent } from './components/patch-details/patch-details.component';
 
 @NgModule({
     declarations: [
@@ -154,6 +155,7 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
         ValueListLabelComponent,
         ValueListValueComponent,
         WarningComponent,
+        PatchDetailsComponent,
     ],
     imports: [
         BrowserModule,
@@ -171,12 +173,11 @@ import { CommsTelephoneComponent } from './components/comms-telephone/comms-tele
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AccountDetailsResolver,
-        CallerCanPayResolver,
-        CallerResolver,
-        CallNatureResolver,
+        CallerCanMakePaymentGuard,
+        IsCallerAvailableGuard,
         ContactDetailsResolver,
-        IdentifiedCallerResolver,
-        IdentifiedOrNonTenantCallerResolver,
+        IsIdentifiedCallerGuard,
+        IsIdentifiedOrNonTenantCallerGuard,
         WindowService,
         HelperService
     ],

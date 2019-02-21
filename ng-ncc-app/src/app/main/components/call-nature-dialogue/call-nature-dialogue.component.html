@@ -16,7 +16,7 @@
                             <option [ngValue]="null" selected>- select a call type</option>
                             <option *ngFor="let item of callTypes; trackBy: trackByCallType" [ngValue]="item">{{ item.label }}</option>
                         </select>
-                        <app-helper class="govuk-!-margin-left-3" title="">
+                        <app-helper class="govuk-!-margin-left-3" below="true" title="">
                             New call types or reasons may be added by Team Leaders via the Support Service.
                         </app-helper>
                     </div>
@@ -115,6 +115,13 @@
                 (click)="answerNo()" #dialogueButton>
                 Cancel
             </button>
+
+            <app-error-panel *ngIf="error">
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                    There was a problem ending this call, please try again.<br>
+                    If this continues you will need to contact ICT.
+                </p>
+            </app-error-panel>
 
         </div>
 

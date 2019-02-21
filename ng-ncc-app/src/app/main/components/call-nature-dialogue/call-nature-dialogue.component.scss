@@ -15,6 +15,7 @@ $call-nature-dialogue-width: $dialogue-max-width;
 
 .dialogue__text {
     max-height: 60vh;
+    min-height: 280px;
     overflow: auto;
     padding: ($dialogue-padding / 2) $dialogue-padding 0;
 }

@@ -14,6 +14,7 @@ import { DPAService } from '../../../common/services/dpa.service';
 })
 export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() address: IAddressSearchGroupedResult;
+    @Input() disabled: boolean;
     @Input() isLeasehold: boolean;
     @Input() showBackButton: boolean;
 
@@ -127,17 +128,33 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
     }
 
     /**
+     *
+     */
+    getAddressPostcode(): string {
+        return this.address.results[0].postCode;
+    }
+
+    /**
+     *
+     */
+    getAddressUPRN(): string {
+        return this.address.results[0].uprn;
+    }
+
+    /**
      * Returns TRUE if a tenant is selected.
      */
     hasSelection(): boolean {
-        return null !== this._selected;
+        return this.disabled ? false : (null !== this._selected);
     }
 
     /**
      * Called when the user hits the Continue button.
      */
     confirmSelection() {
-        this.selected.emit(this._selected);
+        if (!this.disabled) {
+            this.selected.emit(this._selected);
+        }
     }
 
     /**
@@ -147,6 +164,9 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
         this.back.emit();
     }
 
+    /**
+     *
+     */
     editContactDetails(citizen: IdentifiedCaller) {
         this.beginEdit.emit(citizen);
     }

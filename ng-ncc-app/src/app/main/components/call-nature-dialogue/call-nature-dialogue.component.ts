@@ -47,7 +47,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     callTypes: LogCallType[];
     error: boolean;
     optionOther: LogCallReason;
-    otherReason: {[propKey: string]: string}; // contains additional text for call-type specific "other" reasons.
+    otherReason: { [propKey: string]: string }; // contains additional text for call-type specific "other" reasons.
     saving: boolean;
     selectedReasonIds: string[];  // a list of call reason IDs.
     selectedReasons: ICallReasonListItem[]; // used to display a list of selected call reasons with their type.
@@ -132,7 +132,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
         // Record "other" call reason text, whether filled in or not.
         natures.forEach((nature: ILogCallSelection) => {
-            this.otherReason[ nature.call_reason.id ] = nature.other_reason;
+            this.otherReason[nature.call_reason.id] = nature.other_reason;
         });
     }
 
@@ -266,7 +266,9 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
             return;
         }
 
+        this.error = false;
         this.saving = true;
+
         let observe;
         if (this.ViewOnly.status) {
             observe = of([]);
@@ -285,18 +287,34 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                     this.confirmed.emit();
                     this.reset();
                     this.closeDialogue();
-                }
+                },
+                () => this.error = true
             );
     }
 
     /**
      * Build a list of call reason IDs with corresponding "other" text, to pass to NotesService.recordCallReasons().
      */
-    private _buildCallReasonNotes(): ICallReasonNote[] {
-        const notes: ICallReasonNote[] = this.selectedReasonIds.map((reasonId: string) => {
-            return <ICallReasonNote>{
-                callReasonId: reasonId,
-                otherReason: this.otherReason[reasonId] || null
+    private _buildCallReasonNotes(): ILogCallSelection[] {
+        // const notes: ICallReasonNote[] = this.selectedReasonIds.map((reasonId: string) => {
+        //     return <ICallReasonNote>{
+        //         callReasonId: reasonId,
+        //         otherReason: this.otherReason[reasonId] || null
+        //     };
+        // });
+
+        const notes = this.selectedReasons.map((reason) => {
+            const otherReason = this.otherReason[reason.callReasonId] ? this.otherReason[reason.callReasonId] : null;
+            return {
+                call_type: {
+                    id: reason.callTypeId,
+                    label: reason.callTypeLabel
+                },
+                call_reason: {
+                    id: reason.callReasonId,
+                    label: reason.callReasonLabel
+                },
+                other_reason: this.otherReason[reason.callReasonId]
             };
         });
 
