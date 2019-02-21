@@ -293,7 +293,7 @@ export class NotesService {
         if (emails[1]) {
             noteMessage += `\nCC'd to: ${emails[1]}`;
         }
-        noteMessage += `\n${details.message}`;
+        noteMessage += `\n Message: ${details.message}`;
 
         return forkJoin(
 
