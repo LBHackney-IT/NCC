@@ -309,7 +309,9 @@ export class NotesService {
             }, details),
 
             // Action Diary note...
-            this.recordActionDiaryNote(noteMessage, call_nature)
+            callType !== null ? (callTypes.includes(callType) ?
+                this.recordActionDiaryNote(noteMessage, call_nature) :
+                this.recordTenancyAgreementNote(noteMessage, call_nature)) : of({})
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
