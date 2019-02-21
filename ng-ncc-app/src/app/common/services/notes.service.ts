@@ -134,8 +134,8 @@ export class NotesService {
                 call_id: this._settings.call_id,
                 ticket_number: this._settings.ticket_number,
                 tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: null,
-                other_reason: null,
+                call_reason_id: call_nature ? call_nature.call_reason.id : null,
+                other_reason: call_nature ? call_nature.other_reason : null,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this._formatNoteContent(note_content, call_nature)
             }),
