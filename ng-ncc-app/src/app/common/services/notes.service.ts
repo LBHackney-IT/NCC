@@ -214,7 +214,7 @@ export class NotesService {
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
 
-            const note = this.buildNoteText(call_nature, null);
+            const note = this.buildNoteText(call_nature, note_content);
             return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
         }
 
