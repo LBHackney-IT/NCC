@@ -1,5 +1,6 @@
 <!-- A list of tenants at the selected address. -->
 <app-address-tenants-results
+    [disabled]="hasCaller"
     [address]="address"
     [isLeasehold]="isLeasehold"
     (beginEdit)="tenantToEdit($event)"
