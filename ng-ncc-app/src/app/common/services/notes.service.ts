@@ -166,8 +166,6 @@ export class NotesService {
             note_content = `${note_content}\n(Transferred)`;
         }
 
-
-        // const callTypes = ['Rent', 'Leaseholder Services'];
         const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
         const callType = call_nature.call_type.id;
 
