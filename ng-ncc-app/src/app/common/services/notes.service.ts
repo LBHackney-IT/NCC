@@ -230,7 +230,7 @@ export class NotesService {
         const username: string = this.authService.getUsername();
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference && username) {
-            const note = this.buildNoteText(call_nature, null);
+            const note = this.buildNoteText(call_nature, note_content);
             return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note, username);
 
         }
