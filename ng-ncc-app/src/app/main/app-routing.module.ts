@@ -194,7 +194,7 @@ export const AppRoutes: Routes = [
         component: PageCommsComponent,
         canActivate: [
             AuthGuard,
-            IsIdentifiedCallerGuard
+            IsCallerAvailableGuard
         ]
     },
     {
