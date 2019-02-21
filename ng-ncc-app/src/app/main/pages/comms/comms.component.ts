@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { PAGES } from '../../../common/constants/pages.constant';
 import { PageCommunications } from '../abstract/communications';
-import { PageTitleService } from '../../../common/services/page-title.service';
+import { take } from '../../../../../node_modules/rxjs/operators';
 
 @Component({
     selector: 'app-page-comms',
@@ -10,6 +10,7 @@ import { PageTitleService } from '../../../common/services/page-title.service';
     styleUrls: ['./comms.component.css']
 })
 export class PageCommsComponent extends PageCommunications implements OnInit {
+    isLeasehold: boolean;
 
     /**
      *
@@ -17,6 +18,16 @@ export class PageCommsComponent extends PageCommunications implements OnInit {
     ngOnInit() {
         super.ngOnInit();
         this.PageTitle.set(PAGES.COMMS.label);
+
+        // Find out whether this account is for a leasehold property.
+        this.route.data
+            .pipe(take(1))
+            .subscribe(
+                (data: { isLeasehold: boolean }) => {
+                    this.isLeasehold = data.isLeasehold;
+                },
+                () => { this.isLeasehold = false; }
+            );
     }
 
     /**

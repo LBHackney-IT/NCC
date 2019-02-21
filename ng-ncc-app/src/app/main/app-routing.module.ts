@@ -131,7 +131,10 @@ export const AppRoutes: Routes = [
                 // Rent > Make (Payment).
                 path: PAGES.RENT_PAYMENT.route,
                 component: PageRentPaymentComponent,
-                canActivate: [CallerCanMakePaymentGuard]
+                canActivate: [CallerCanMakePaymentGuard],
+                resolve: {
+                    isLeasehold: IsLeaseholdPropertyResolver
+                }
             },
             {
                 // Rent > Communications.
@@ -195,7 +198,10 @@ export const AppRoutes: Routes = [
         canActivate: [
             AuthGuard,
             IsIdentifiedCallerGuard
-        ]
+        ],
+        resolve: {
+            isLeasehold: IsLeaseholdPropertyResolver
+        }
     },
     {
         // View Notes page.
