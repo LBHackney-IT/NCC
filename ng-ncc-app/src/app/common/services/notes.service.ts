@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject, forkJoin, Observable, of, iif } from 'rxjs';
+import { ReplaySubject, Subject, forkJoin, Observable, of, iif, ObservableInput } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IAddNoteParameters } from '../../common/interfaces/add-note-parameters';
@@ -140,9 +140,8 @@ export class NotesService {
                 content: this._formatNoteContent(note_content, call_nature)
             }),
 
-            callType !== null ? (callTypes.includes(callType) ?
-                this.recordActionDiaryNote(note_content, call_nature) :
-                this.recordTenancyAgreementNote(note_content, call_nature)) : of({})
+            this.checkCallTypeAndMakeCall(call_nature, note_content)
+
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
@@ -185,9 +184,8 @@ export class NotesService {
             }),
 
             // Action Diary or Universal Housing note...
-            callType !== null ? (callTypes.includes(callType) ?
-                this.recordActionDiaryNote(note_content, call_nature) :
-                this.recordTenancyAgreementNote(note_content, call_nature)) : of({})
+            this.checkCallTypeAndMakeCall(call_nature, note_content)
+
 
             //  this.recordActionDiaryNote(note_content)
         )
@@ -309,9 +307,7 @@ export class NotesService {
             }, details),
 
             // Action Diary note...
-            callType !== null ? (callTypes.includes(callType) ?
-                this.recordActionDiaryNote(noteMessage, call_nature) :
-                this.recordTenancyAgreementNote(noteMessage, call_nature)) : of({})
+            this.checkCallTypeAndMakeCall(call_nature, noteMessage)
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
@@ -385,7 +381,7 @@ export class NotesService {
     }
 
     /**
-     *
+     * This function builds
      * @private
      * @memberof NotesService
      */
@@ -417,6 +413,31 @@ export class NotesService {
         }
 
         return note.join('\n');
+    }
+
+    /**
+     * Check whether it needs to call Action Diary or Universal housing
+     * depending on the type.
+     * Then make the appropiate api call
+     *
+     * @private
+     * @memberof NotesService
+     */
+    private checkCallTypeAndMakeCall = (call_nature: ILogCallSelection, additional_notes: string): ObservableInput<any> => {
+        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
+        // call_nature.call_type !== null ? (callTypes.includes(call_nature.call_type.id) ?
+        //     this.recordActionDiaryNote(additional_notes, call_nature) :
+        //     this.recordTenancyAgreementNote(additional_notes, call_nature)) : of({});
+
+        if (call_nature.call_type !== null) {
+            if (callTypes.includes(call_nature.call_type.id)) {
+                return this.recordActionDiaryNote(additional_notes, call_nature);
+            } else {
+                return this.recordTenancyAgreementNote(additional_notes, call_nature);
+            }
+        } else {
+            return of({});
+        }
     }
 
 }
