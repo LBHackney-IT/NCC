@@ -108,7 +108,6 @@ export class CommsTemplatesComponent implements OnInit, OnDestroy {
         switch (option.displayName.toLowerCase()) {
             case 'right to buy':
             case 'standing order (major works)':
-            case 'standing order (service charge)':
                 return true;
         }
 
