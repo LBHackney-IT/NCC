@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { ChecklistModule } from 'angular-checklist';
+import { NgxTypeaheadModule } from 'ngx-typeahead';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -163,6 +163,7 @@ import { PatchDetailsComponent } from './components/patch-details/patch-details.
         HttpClientModule,
 
         ChecklistModule,
+        NgxTypeaheadModule,
 
         LayoutModule,
         ComponentsModule,

@@ -10,16 +10,28 @@
             <label class="govuk-label govuk-!-width-one-half" for="recipient">
                 Recipient or Officer email address
             </label>
+            <!-- <input class="govuk-input govuk-!-width-one-half" id="recipient" name="recipient" [(ngModel)]="recipient" type="email"
+                [disabled]="sending"> -->
             <input class="govuk-input govuk-!-width-one-half" id="recipient" name="recipient" [(ngModel)]="recipient" type="email"
-                [disabled]="sending">
+                [disabled]="sending"
+                ngxTypeahead
+                [taList]="emailList"
+                [value]="recipient"
+                (taSelected)="selectedRecipientEmail($event)">
         </div>
 
         <div class="govuk-form-group">
             <label class="govuk-label govuk-!-width-one-half" for="team-leader">
                 Their Team leader or Manager email address (optional)
             </label>
-            <input class="govuk-input govuk-!-width-one-half" id="team-leader" name="team_leader" [(ngModel)]="teamLeader" type="email"
-                [disabled]="sending">
+            <!-- <input class="govuk-input govuk-!-width-one-half" id="team-leader" name="team_leader" [(ngModel)]="teamLeader" type="email"
+                [disabled]="sending"> -->
+                <input class="govuk-input govuk-!-width-one-half" id="team-leader" name="team_leader" [(ngModel)]="teamLeader" type="email"
+                    [disabled]="sending"
+                    ngxTypeahead
+                    [taList]="emailList"
+                    [value]="teamLeader"
+                    (taSelected)="selectedTeamLeaderEmail($event)">
         </div>
 
     </fieldset>

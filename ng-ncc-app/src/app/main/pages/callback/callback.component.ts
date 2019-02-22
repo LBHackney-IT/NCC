@@ -37,6 +37,12 @@ export class PageCallbackComponent implements OnInit {
     message: string;
     tenancyReference: string;
 
+    emailList = [
+        'rod@hackney.gov.uk',
+        'jane@hackney.gov.uk',
+        'freddy@hackney.gov.uk',
+    ];
+
     constructor(
         private Call: CallService,
         private Helper: HelperService,
@@ -137,6 +143,14 @@ export class PageCallbackComponent implements OnInit {
 
         this.callNatureField.reset();
         this.telephoneField.reset();
+    }
+
+    selectedRecipientEmail(result: string) {
+        this.recipient = result;
+    }
+
+    selectedTeamLeaderEmail(result: string) {
+        this.teamLeader = result;
     }
 
 }
