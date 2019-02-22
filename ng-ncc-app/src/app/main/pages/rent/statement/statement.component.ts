@@ -172,7 +172,7 @@ export class PageRentStatementComponent extends PageCommunications implements On
                     .subscribe(
                         (json: INotifyAPIJSONResult) => {
                             if (1 === json.response) {
-                                this.success_message = 'Rent transactions sent successfully.';
+                                this.success_message = 'Transactions sent successfully.';
                                 this.modal.confirmed = true;
 
                                 // Create an automatic note.
