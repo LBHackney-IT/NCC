@@ -237,8 +237,8 @@ export class NCCAPIService {
                             break;
                         default:
                             date = moment(row.createdOn);
-                            row.createdOn = date.format('DD/MM/YYYY HH:mm');
                     }
+                    row.createdOn = date.format('DD/MM/YYYY HH:mm');
 
                     // We also want the date formatted differently for sorting purposes.
                     row.createdOnSort = date.format('YYYYMMDDHHmmss');
