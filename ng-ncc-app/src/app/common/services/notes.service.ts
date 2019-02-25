@@ -211,9 +211,7 @@ export class NotesService {
 
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
-
-            const note = this.buildNoteText(call_nature, note_content);
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
+            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note_content);
         }
 
         return of(true);
@@ -228,8 +226,7 @@ export class NotesService {
         const username: string = this.authService.getUsername();
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference && username) {
-            const note = this.buildNoteText(call_nature, note_content);
-            return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note, username);
+            return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note_content, username);
 
         }
 
