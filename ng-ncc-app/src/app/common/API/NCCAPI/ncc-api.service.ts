@@ -96,7 +96,7 @@ export class NCCAPIService {
         // with any other email addresses being carbon copied (CC'd).
         const firstEmail = emails.shift();
         let noteMessage = `Callback request sent to: ${firstEmail}`;
-        if ( emails.length ) {
+        if (emails.length) {
             noteMessage += `\nCC'd to: ${emails.join(', ')}`;
         }
         noteMessage += `\n${details.message}`;
@@ -187,7 +187,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post( `${this._url}UH/AddTenancyAgreementNotes?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}UH/AddTenancyAgreementNotes?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
@@ -227,12 +227,16 @@ export class NCCAPIService {
                     // Format the created on date ahead of time.
                     // We're using moment.js fo this, because Angular's DatePipe behaves inconsistently - often giving an error.
                     let date;
-                    if (NOTES.TYPE_ACTION_DIARY === row.notesType) {
-                        // Action Diary entries have a preformatted date, but moment.js can't interpret it without help.
-                        date = moment(row.createdOn, 'DD/MM/YYYY HH:mm');
-                    } else {
-                        date = moment(row.createdOn);
-                        row.createdOn = date.format('DD/MM/YYYY HH:mm');
+                    switch (row.notesType) {
+                        case NOTES.TYPE_ACTION_DIARY:
+                        case NOTES.TYPE_UH:
+                            // Action Diary and Universal Housing notes entries have a preformatted date,
+                            // but moment.js can't interpret them without help.
+                            date = moment(row.createdOn, 'DD/MM/YYYY HH:mm');
+                            break;
+                        default:
+                            date = moment(row.createdOn);
+                            row.createdOn = date.format('DD/MM/YYYY HH:mm');
                     }
 
                     // We also want the date formatted differently for sorting purposes.
