@@ -382,8 +382,13 @@ export class NotesService {
      * @private
      * @memberof NotesService
      */
-    private buildNoteText = (call_nature: ILogCallSelection = null, additional_notes: string = null): string => {
-        const note = ['Call Summary'];
+    private buildNoteText = (call_nature: ILogCallSelection = null,
+        additional_notes: string = null,
+        note_header: string = 'Call Summary'): string => {
+
+
+        const note = [];
+        note.push(note_header);
 
         // Add callers name
         note.push('Caller identified as ' + this._name);
