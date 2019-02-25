@@ -386,17 +386,14 @@ export class NotesService {
         additional_notes: string = null,
         note_header: string = 'Call Summary'): string => {
 
-
         const note = [];
         note.push(note_header);
-
         // Add callers name
         note.push('Caller identified as ' + this._name);
         // Add the agent's name.
         note.push(`Logged by: ${this._settings.agent_name}`);
         // Add types and reasons if not null
         if (call_nature !== null) {
-            note.push('Call Type: Reason');
             !call_nature.other_reason ?
                 note.push(call_nature.call_type.label + ': ' + call_nature.call_reason.label) :
                 note.push(
@@ -410,10 +407,8 @@ export class NotesService {
         }
 
         if (additional_notes) {
-            note.push('Additional Comments:');
             note.push(additional_notes);
         }
-
         return note.join('\n');
     }
 
