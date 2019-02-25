@@ -429,7 +429,7 @@ export class NotesService {
         //     this.recordActionDiaryNote(additional_notes, call_nature) :
         //     this.recordTenancyAgreementNote(additional_notes, call_nature)) : of({});
 
-        if (call_nature.call_type !== null) {
+        if (call_nature && call_nature.call_type !== null) {
             if (callTypes.includes(call_nature.call_type.id)) {
                 return this.recordActionDiaryNote(additional_notes, call_nature);
             } else {
