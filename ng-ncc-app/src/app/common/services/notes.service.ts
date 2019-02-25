@@ -304,7 +304,7 @@ export class NotesService {
             }, details),
 
             // Action Diary note...
-            this.checkCallTypeAndMakeCall(call_nature, noteMessage)
+            this.checkCallTypeAndMakeCall(call_nature, noteMessage, 'Callback Request')
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
