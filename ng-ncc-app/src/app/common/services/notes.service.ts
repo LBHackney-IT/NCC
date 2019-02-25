@@ -423,17 +423,21 @@ export class NotesService {
      * @private
      * @memberof NotesService
      */
-    private checkCallTypeAndMakeCall = (call_nature: ILogCallSelection, additional_notes: string): ObservableInput<any> => {
+    private checkCallTypeAndMakeCall = (call_nature: ILogCallSelection,
+        additional_notes: string,
+        note_header?: string): ObservableInput<any> => {
+
         const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        // call_nature.call_type !== null ? (callTypes.includes(call_nature.call_type.id) ?
-        //     this.recordActionDiaryNote(additional_notes, call_nature) :
-        //     this.recordTenancyAgreementNote(additional_notes, call_nature)) : of({});
 
         if (call_nature && call_nature.call_type !== null) {
+            const note = note_header ?
+                this.buildNoteText(call_nature, additional_notes, note_header) :
+                this.buildNoteText(call_nature, additional_notes);
+
             if (callTypes.includes(call_nature.call_type.id)) {
-                return this.recordActionDiaryNote(additional_notes, call_nature);
+                return this.recordActionDiaryNote(note, call_nature);
             } else {
-                return this.recordTenancyAgreementNote(additional_notes, call_nature);
+                return this.recordTenancyAgreementNote(note, call_nature);
             }
         } else {
             return of({});
