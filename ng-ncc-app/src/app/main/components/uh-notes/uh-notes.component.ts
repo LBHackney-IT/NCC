@@ -133,8 +133,13 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     getTenantName(note: INCCUHNote): string {
         if (note.clientName) {
             return note.clientName;
-        } else {
-            return NOTES.TYPE_ACTION_DIARY === note.notesType ? null : 'anonymous';
+        }
+        switch (note.notesType) {
+            case NOTES.TYPE_ACTION_DIARY:
+            case NOTES.TYPE_UH:
+                return null;
+            default:
+                return 'anonymous';
         }
     }
 

@@ -6,13 +6,11 @@ import { IAddNoteParameters } from '../../common/interfaces/add-note-parameters'
 import { IJSONResponse } from '../../common/interfaces/json-response';
 import { ICallbackNoteParameters } from '../../common/interfaces/callback-note-parameters';
 import { ILogCallSelection } from '../../common/interfaces/log-call-selection';
-import { ICallReasonNote } from '../../common/interfaces/call-reason-note';
 
 import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
 import { ViewOnlyService } from '../services/view-only.service';
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
-import { LogCallReason } from '../classes/log-call-reason.class';
 @Injectable({
     providedIn: 'root'
 })

@@ -15,6 +15,9 @@ $note-type-diary-text-colour: govuk-colour("white") !default;
 $note-type-callback-bg-colour: govuk-colour("yellow") !default;
 $note-type-callback-text-colour: $govuk-text-colour !default;
 
+$note-type-uh-bg-colour: $govuk-secondary-text-colour !default;
+$note-type-uh-text-colour: govuk-colour("white") !default;
+
 $note-type-helper-text-padding: .5rem !default;
 $note-type-helper-text-width: 140px !default;
 
@@ -71,6 +74,14 @@ $note-type-helper-text-width: 140px !default;
             background: $note-type-callback-bg-colour;
             color: $note-type-callback-text-colour;
             content: "C";
+        }
+    }
+
+    &.note-type--uh {
+        &:before {
+            background: $note-type-uh-bg-colour;
+            color: $note-type-uh-text-colour;
+            content: "U";
         }
     }
 }
