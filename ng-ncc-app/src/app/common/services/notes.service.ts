@@ -6,13 +6,11 @@ import { IAddNoteParameters } from '../../common/interfaces/add-note-parameters'
 import { IJSONResponse } from '../../common/interfaces/json-response';
 import { ICallbackNoteParameters } from '../../common/interfaces/callback-note-parameters';
 import { ILogCallSelection } from '../../common/interfaces/log-call-selection';
-import { ICallReasonNote } from '../../common/interfaces/call-reason-note';
 
 import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
 import { ViewOnlyService } from '../services/view-only.service';
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
-import { LogCallReason } from '../classes/log-call-reason.class';
 @Injectable({
     providedIn: 'root'
 })
@@ -211,9 +209,7 @@ export class NotesService {
 
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference) {
-
-            const note = this.buildNoteText(call_nature, note_content);
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note);
+            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note_content);
         }
 
         return of(true);
@@ -228,8 +224,7 @@ export class NotesService {
         const username: string = this.authService.getUsername();
         const tenancy_reference = this._settings.tenancy_reference;
         if (tenancy_reference && username) {
-            const note = this.buildNoteText(call_nature, note_content);
-            return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note, username);
+            return this.NCCAPI.addTenancyAgreementNotes(tenancy_reference, note_content, username);
 
         }
 
@@ -307,7 +302,7 @@ export class NotesService {
             }, details),
 
             // Action Diary note...
-            this.checkCallTypeAndMakeCall(call_nature, noteMessage)
+            this.checkCallTypeAndMakeCall(call_nature, noteMessage, 'Callback Request')
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
@@ -385,16 +380,18 @@ export class NotesService {
      * @private
      * @memberof NotesService
      */
-    private buildNoteText = (call_nature: ILogCallSelection = null, additional_notes: string = null): string => {
-        const note = ['Call Summary'];
+    private buildNoteText = (call_nature: ILogCallSelection = null,
+        additional_notes: string = null,
+        note_header: string = 'Call Summary'): string => {
 
+        const note = [];
+        note.push(note_header);
         // Add callers name
         note.push('Caller identified as ' + this._name);
         // Add the agent's name.
         note.push(`Logged by: ${this._settings.agent_name}`);
         // Add types and reasons if not null
         if (call_nature !== null) {
-            note.push('Call Type: Reason');
             !call_nature.other_reason ?
                 note.push(call_nature.call_type.label + ': ' + call_nature.call_reason.label) :
                 note.push(
@@ -408,10 +405,8 @@ export class NotesService {
         }
 
         if (additional_notes) {
-            note.push('Additional Comments:');
             note.push(additional_notes);
         }
-
         return note.join('\n');
     }
 
@@ -423,17 +418,21 @@ export class NotesService {
      * @private
      * @memberof NotesService
      */
-    private checkCallTypeAndMakeCall = (call_nature: ILogCallSelection, additional_notes: string): ObservableInput<any> => {
+    private checkCallTypeAndMakeCall = (call_nature: ILogCallSelection,
+        additional_notes: string,
+        note_header?: string): ObservableInput<any> => {
+
         const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        // call_nature.call_type !== null ? (callTypes.includes(call_nature.call_type.id) ?
-        //     this.recordActionDiaryNote(additional_notes, call_nature) :
-        //     this.recordTenancyAgreementNote(additional_notes, call_nature)) : of({});
 
         if (call_nature && call_nature.call_type !== null) {
+            const note = note_header ?
+                this.buildNoteText(call_nature, additional_notes, note_header) :
+                this.buildNoteText(call_nature, additional_notes);
+
             if (callTypes.includes(call_nature.call_type.id)) {
-                return this.recordActionDiaryNote(additional_notes, call_nature);
+                return this.recordActionDiaryNote(note, call_nature);
             } else {
-                return this.recordTenancyAgreementNote(additional_notes, call_nature);
+                return this.recordTenancyAgreementNote(note, call_nature);
             }
         } else {
             return of({});
