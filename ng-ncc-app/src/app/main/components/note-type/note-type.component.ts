@@ -15,7 +15,8 @@ export class NoteTypeComponent {
             'note-type--automatic': NOTES.TYPE_AUTOMATIC === this.type,
             'note-type--manual': NOTES.TYPE_MANUAL === this.type,
             'note-type--diary': NOTES.TYPE_ACTION_DIARY === this.type,
-            'note-type--callback': NOTES.TYPE_CALLBACK === this.type
+            'note-type--callback': NOTES.TYPE_CALLBACK === this.type,
+            'note-type--uh': NOTES.TYPE_UH === this.type
         };
         return Object.keys(this.pickBy(classes)).join(' ');
     }
