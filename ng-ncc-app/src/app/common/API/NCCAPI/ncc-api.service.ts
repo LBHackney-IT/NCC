@@ -96,7 +96,7 @@ export class NCCAPIService {
         // with any other email addresses being carbon copied (CC'd).
         const firstEmail = emails.shift();
         let noteMessage = `Callback request sent to: ${firstEmail}`;
-        if ( emails.length ) {
+        if (emails.length) {
             noteMessage += `\nCC'd to: ${emails.join(', ')}`;
         }
         noteMessage += `\n${details.message}`;
@@ -129,6 +129,7 @@ export class NCCAPIService {
             tenancy_reference: response.tenancyReference,
             parameters: {
                 InteractionId: response.callbackId,
+                'CallbackRequest.CallBackId': response.callbackId,
                 'CallbackRequest.Response': response.gotThrough ? CALLBACK_SUCCESS.YES : CALLBACK_SUCCESS.NO,
                 'CallbackRequest.ResponseBy': response.responseBy,
             }
@@ -187,7 +188,7 @@ export class NCCAPIService {
         };
 
         return this.http
-            .post( `${this._url}UH/AddTenancyAgreementNotes?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}UH/AddTenancyAgreementNotes?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
