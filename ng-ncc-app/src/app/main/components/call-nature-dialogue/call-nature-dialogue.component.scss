@@ -1,7 +1,10 @@
 $dialogue-max-width: 900px !default;
-$call-nature-dialogue-width: $dialogue-max-width;
+$call-nature-dialogue-width: $dialogue-max-width !default;
 
 @import "../dialogue/dialogue.component";
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/colours-applied";
 
 .dialogue__box {
     min-width: 600px;
@@ -18,4 +21,28 @@ $call-nature-dialogue-width: $dialogue-max-width;
     min-height: 280px;
     overflow: auto;
     padding: ($dialogue-padding / 2) $dialogue-padding 0;
+}
+
+.missing-text {
+    color: $govuk-error-colour;
+    display: block;
+    line-height: 1;
+    margin: 0;
+
+    &:before {
+        $icon-height: 1.5rem;
+
+        content: "!";
+        background: $govuk-error-colour;
+        border-radius: 50%;
+        color: govuk-colour("white");
+        display: inline-block;
+        font-weight: bold;
+        margin-right: .25rem;
+        text-align: center;
+        vertical-align: middle;
+        width: $icon-height;
+        height: $icon-height;
+        line-height: $icon-height;
+    }
 }
