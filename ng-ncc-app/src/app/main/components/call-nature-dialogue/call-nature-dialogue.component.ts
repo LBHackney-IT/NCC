@@ -12,7 +12,6 @@ import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 import { ConfirmDialogueComponent } from '../dialogue/confirm/confirm-dialogue.component';
 
 import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
-import { ICallReasonNote } from '../../../common/interfaces/call-reason-note';
 import { ICallReasonListItem } from '../../../common/interfaces/call-reason-list-item';
 
 import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
@@ -24,7 +23,8 @@ import { ViewOnlyService } from '../../../common/services/view-only.service';
     templateUrl: './call-nature-dialogue.component.html',
     styleUrls: ['./call-nature-dialogue.component.scss']
 })
-export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit, OnDestroy {
+export class CallNatureDialogueComponent extends ConfirmDialogueComponent
+    implements OnInit, OnDestroy {
 
     // The visible status of the dialogue, which has two-way binding.
     @Input() show: boolean;
@@ -239,7 +239,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if at least one call type has been selected.
      */
     isAtLeastOneReasonSelected() {
-        return this.selectedReasonIds && this.selectedReasonIds.length > 0;
+        return (this.selectedReasonIds && this.selectedReasonIds.length);
     }
 
     /**
@@ -333,7 +333,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if the list of call types and reasons can be saved.
      */
     canSave(): boolean {
-        return !this.saving && this.isCallTypeSelected() && this.isAtLeastOneReasonSelected();
+        return !this.saving && this.isCallTypeSelected() && this.isAtLeastOneReasonSelected() && !this.isMissingReasonForOther();
     }
 
     /**
@@ -369,6 +369,27 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         });
 
         this.callReasonList = list;
+    }
+
+    /**
+     * Retuns TRUE if at one of the "other" options has been selected and there is no corresponding text.
+     */
+    private isMissingReasonForOther(): boolean {
+        if (!this.callReasonList) {
+            return;
+        }
+
+        const otherReasonsIds = this.callReasonList.filter((r) => r.callReasonLabel === 'Other')
+            .map((r) => r.callReasonId);
+        const selectedOtherReasonIds = otherReasonsIds.filter((id) => this.selectedReasonIds.indexOf(id) !== -1);
+        const hasBlankReasonText = selectedOtherReasonIds.filter((id) => {
+            if (this.otherReason.hasOwnProperty(id)) {
+                return this.otherReason[id].trim().length === 0;
+            }
+            return true;
+        });
+
+        return hasBlankReasonText.length > 0;
     }
 
 }
