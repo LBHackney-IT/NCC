@@ -10,7 +10,7 @@ export const PAGES = {
     COMMS: { route: 'comms', label: 'Send emails, texts, and letters' },
     RENT: { route: 'rent', label: 'View or pay account' },
     RENT_TRANSACTIONS: { route: 'transactions', label: 'Transaction History' },
-    RENT_PAYMENT: { route: 'make', label: 'Pay Rent' },
+    RENT_PAYMENT: { route: 'make', label: 'Pay' },
     RENT_COMMS: { route: 'comms', label: 'Communications to caller' },
     RENT_STATEMENT: { route: 'statement', label: 'Transactions Preview' },
     REQUEST_CALLBACK: { route: 'callback', label: 'Request a callback' },
