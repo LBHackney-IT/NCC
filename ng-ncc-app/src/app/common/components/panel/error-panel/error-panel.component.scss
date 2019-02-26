@@ -3,8 +3,10 @@
 
 $error-panel-border-width: 4px !default;
 $error-panel-border-colour: $govuk-error-colour !default;
+$error-panel-text-colour: $govuk-text-colour !default;
 
 :host {
     background: transparent;
     border: $error-panel-border-width solid $error-panel-border-colour;
+    color: $error-panel-text-colour !important;
 }
