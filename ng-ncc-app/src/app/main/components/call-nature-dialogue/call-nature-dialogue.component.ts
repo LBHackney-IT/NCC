@@ -23,7 +23,8 @@ import { ViewOnlyService } from '../../../common/services/view-only.service';
     templateUrl: './call-nature-dialogue.component.html',
     styleUrls: ['./call-nature-dialogue.component.scss']
 })
-export class CallNatureDialogueComponent extends ConfirmDialogueComponent implements OnInit, OnDestroy {
+export class CallNatureDialogueComponent extends ConfirmDialogueComponent
+    implements OnInit, OnDestroy {
 
     // The visible status of the dialogue, which has two-way binding.
     @Input() show: boolean;
@@ -46,7 +47,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     callTypes: LogCallType[];
     error: boolean;
     optionOther: LogCallReason;
-    otherReason: { [propKey: string]: string }; // contains additional text for call-type specific "other" reasons.
+    otherReasonText: { [propKey: string]: string }; // contains additional text for call-type specific "other" reasons.
+    otherReasonIds: string[];
     saving: boolean;
     selectedReasonIds: string[];  // a list of call reason IDs.
     selectedReasons: ICallReasonListItem[]; // used to display a list of selected call reasons with their type.
@@ -115,7 +117,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
     reset() {
         this.selectedType = null;
         this.selectedReasonIds = [];
-        this.otherReason = {};
+        this.otherReasonText = {};
     }
 
     /**
@@ -131,7 +133,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
 
         // Record "other" call reason text, whether filled in or not.
         natures.forEach((nature: ILogCallSelection) => {
-            this.otherReason[nature.call_reason.id] = nature.other_reason;
+            this.otherReasonText[nature.call_reason.id] = nature.other_reason;
         });
     }
 
@@ -238,7 +240,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if at least one call type has been selected.
      */
     isAtLeastOneReasonSelected() {
-        return this.selectedReasonIds && this.selectedReasonIds.length > 0;
+        return (this.selectedReasonIds && this.selectedReasonIds.length);
     }
 
     /**
@@ -298,12 +300,12 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
         // const notes: ICallReasonNote[] = this.selectedReasonIds.map((reasonId: string) => {
         //     return <ICallReasonNote>{
         //         callReasonId: reasonId,
-        //         otherReason: this.otherReason[reasonId] || null
+        //         otherReason: this.otherReasonText[reasonId] || null
         //     };
         // });
 
         const notes = this.selectedReasons.map((reason) => {
-            const otherReason = this.otherReason[reason.callReasonId] ? this.otherReason[reason.callReasonId] : null;
+            const otherReasonText = this.otherReasonText[reason.callReasonId] ? this.otherReasonText[reason.callReasonId] : null;
             return {
                 call_type: {
                     id: reason.callTypeId,
@@ -313,7 +315,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                     id: reason.callReasonId,
                     label: reason.callReasonLabel
                 },
-                other_reason: this.otherReason[reason.callReasonId]
+                other_reason: otherReasonText
             };
         });
 
@@ -332,7 +334,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if the list of call types and reasons can be saved.
      */
     canSave(): boolean {
-        return !this.saving && this.isAtLeastOneReasonSelected();
+        return !this.saving && this.isAtLeastOneReasonSelected() && !this.isMissingReasonForOther();
     }
 
     /**
@@ -356,6 +358,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      */
     private _buildInternalCallReasonList() {
         const list: ICallReasonListItem[] = [];
+        this.otherReasonIds = [];
+
         this.callTypes.forEach((callType: LogCallType) => {
             this.callReasons[callType.id].forEach((callReason: LogCallReason) => {
                 list.push({
@@ -364,10 +368,42 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
                     callReasonId: callReason.id,
                     callReasonLabel: callReason.label
                 });
+                if ('Other' === callReason.label) {
+                    this.otherReasonIds.push(callReason.id);
+                }
             });
         });
 
         this.callReasonList = list;
+    }
+
+    /**
+     * Retuns TRUE if at one of the "other" options has been selected and there is no corresponding text.
+     */
+    private isMissingReasonForOther(): boolean {
+        if (!this.otherReasonIds) {
+            return false;
+        }
+
+        const selectedOtherReasonIds = this.otherReasonIds.filter((id) => this.selectedReasonIds.indexOf(id) !== -1);
+        const hasBlankReasonText = selectedOtherReasonIds.filter((id) => this.isMissingReasonText(id));
+
+        return hasBlankReasonText.length > 0;
+    }
+
+    /**
+     *
+     */
+    private isMissingReasonText(callReasonId: string) {
+        if (-1 === this.otherReasonIds.indexOf(callReasonId)) {
+            // This call reason isn't "Other".
+            return false;
+        }
+
+        if (this.otherReasonText.hasOwnProperty(callReasonId)) {
+            return this.otherReasonText[callReasonId].trim().length === 0;
+        }
+        return true;
     }
 
 }

@@ -74,7 +74,7 @@
                             <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_other" name="call_reason_other"
                                 placeholder="Specify the call reason" maxlength="50"
                                 #otherReasonField
-                                [(ngModel)]="otherReason[optionOther.id]" (ngModelChange)="updateSelection()">
+                                [(ngModel)]="otherReasonText[optionOther.id]" (ngModelChange)="updateSelection()">
                         </div>
                     </fieldset>
 
@@ -92,8 +92,12 @@
                                 [(checklist)]="selectedReasonIds" [checklistValue]="selectedReason.callReasonId"
                                 (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
                             <label class="govuk-label govuk-checkboxes__label" for="call-selected-reason-{{ selectedReason.callReasonId }}">
-                                <strong>{{ selectedReason.callTypeLabel }}:</strong> {{ selectedReason.callReasonLabel }}
+                                <strong>{{ selectedReason.callTypeLabel }}:</strong>
+                                {{ selectedReason.callReasonLabel }}
                             </label>
+                            <small class="missing-text govuk-body-s" *ngIf="isMissingReasonText(selectedReason.callReasonId)">
+                                Missing reason text
+                            </small>
                         </div>
                     </div>
 
