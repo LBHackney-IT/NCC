@@ -40,6 +40,13 @@ export class PageCommsComponent extends PageCommunications implements OnInit {
     /**
      *
      */
+    isAnonymousCaller(): boolean {
+        return !this.Call.isCallerIdentified();
+    }
+
+    /**
+     *
+     */
     getRentPageRoute(): string {
         return `/${PAGES.RENT.route}`;
     }

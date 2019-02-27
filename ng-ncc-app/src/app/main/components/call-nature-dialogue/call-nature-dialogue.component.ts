@@ -334,7 +334,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
      * Returns TRUE if the list of call types and reasons can be saved.
      */
     canSave(): boolean {
-        return !this.saving && this.isCallTypeSelected() && this.isAtLeastOneReasonSelected() && !this.isMissingReasonForOther();
+        return !this.saving && this.isAtLeastOneReasonSelected() && !this.isMissingReasonForOther();
     }
 
     /**
