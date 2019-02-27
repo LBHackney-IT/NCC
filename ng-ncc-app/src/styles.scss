@@ -59,3 +59,7 @@
 @import "assets/scss/components/page";
 @import "assets/scss/components/scrollbar";
 // -------------------------------------------------------------------------------
+
+body {
+    font-family: $govuk-font-family;
+}
