@@ -1,13 +1,6 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { Observable, forkJoin, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, Input } from '@angular/core';
 
 import { CallNatureComponent } from '../call-nature/call-nature.component';
-import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
-import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
-import { LogCallReason } from '../../../common/classes/log-call-reason.class';
-import { LogCallType } from '../../../common/classes/log-call-type.class';
-import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 
 @Component({
     selector: 'app-call-nature-dropdown',

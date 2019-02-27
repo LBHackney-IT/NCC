@@ -3,8 +3,10 @@
 
 $success-panel-border-width: 4px !default;
 $success-panel-border-colour: govuk-colour("green") !default;
+$success-panel-text-colour: $govuk-text-colour !default;
 
 :host {
     background: transparent;
     border: $success-panel-border-width solid $success-panel-border-colour;
+    color: $success-panel-text-colour !important;
 }

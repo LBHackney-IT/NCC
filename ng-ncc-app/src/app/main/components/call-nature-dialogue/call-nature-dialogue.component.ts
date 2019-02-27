@@ -12,7 +12,6 @@ import { CALL_REASON } from '../../../common/constants/call-reason.constant';
 import { ConfirmDialogueComponent } from '../dialogue/confirm/confirm-dialogue.component';
 
 import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
-import { ICallReasonNote } from '../../../common/interfaces/call-reason-note';
 import { ICallReasonListItem } from '../../../common/interfaces/call-reason-list-item';
 
 import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
@@ -333,7 +332,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent implem
      * Returns TRUE if the list of call types and reasons can be saved.
      */
     canSave(): boolean {
-        return !this.saving && this.isCallTypeSelected() && this.isAtLeastOneReasonSelected();
+        return !this.saving && this.isAtLeastOneReasonSelected();
     }
 
     /**

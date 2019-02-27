@@ -17,7 +17,7 @@
 
     </app-value-list>
 
-    <app-call-nature-dropdown (changed)="selectedCallNature($event)"></app-call-nature-dropdown>
+    <app-call-nature-dropdown (changed)="selectedCallNature($event)" [disabled]="saving"></app-call-nature-dropdown>
 
     <!-- Comment field. -->
     <div class="govuk-form-group">
