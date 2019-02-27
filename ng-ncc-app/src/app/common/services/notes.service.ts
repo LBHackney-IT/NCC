@@ -284,9 +284,9 @@ export class NotesService {
         // with any other email addresses being carbon copied (CC'd).
         let noteMessage = `Callback request sent to: ${emails[0]}`;
         if (emails[1]) {
-            noteMessage += `;CC'd to: ${emails[1]}`;
+            noteMessage += `; CC'd to: ${emails[1]}`;
         }
-        noteMessage += `;Message: ${details.message}`;
+        noteMessage += `; Message: ${details.message}`;
 
         return forkJoin(
 
@@ -407,7 +407,7 @@ export class NotesService {
         if (additional_notes) {
             note.push(additional_notes);
         }
-        return note.join(';');
+        return note.join('; ');
     }
 
     /**
