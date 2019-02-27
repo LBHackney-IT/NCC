@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { finalize, take } from 'rxjs/operators';
+import { finalize, take, map } from 'rxjs/operators';
 
+import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
 import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
 import { HelperService } from '../../../common/services/helper.service';
 import { ICallbackDetails } from '../../../common/interfaces/callback-details';
 import { ICallbackResponse } from '../../../common/interfaces/callback-response';
+import { environment } from 'src/environments/environment';
+import { LogCallReason } from 'src/app/common/classes/log-call-reason.class';
 
 @Component({
     selector: 'app-page-respond',
@@ -16,6 +19,7 @@ import { ICallbackResponse } from '../../../common/interfaces/callback-response'
 export class PageRespondComponent implements OnInit {
 
     callbackID: string;
+    callReasonsToTypes: { [propKey: string]: number };
     email: string;
     gotThrough: boolean;
     details: ICallbackDetails;
@@ -28,6 +32,7 @@ export class PageRespondComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private Helper: HelperService,
+        private HackneyAPI: HackneyAPIService,
         private NCCAPI: NCCAPIService
     ) { }
 
@@ -37,15 +42,39 @@ export class PageRespondComponent implements OnInit {
         this.saving = false;
 
         if (this.callbackID) {
-            this.NCCAPI.getCallbackDetails(this.callbackID)
+            forkJoin(
+                this.NCCAPI.getCallbackDetails(this.callbackID),
+                this.HackneyAPI.getCallReasons()
+            )
                 .pipe(take(1))
+                .pipe(map((data) => {
+                    return {
+                        details: data[0],
+                        callReasons: data[1]
+                    }
+                }))
                 .subscribe(
-                    (response) => { this.details = response; },
-                    (error) => { this.noDetails = true; }
+                    (response) => {
+                        this.details = response.details;
+                        this._buildCallReasonsToTypes(response.callReasons);
+                    },
+                    () => { this.noDetails = true; }
                 );
         } else {
             this.noDetails = true;
         }
+    }
+
+    /**
+     * Build a list of call reason IDs and their corresponding call types.
+     */
+    private _buildCallReasonsToTypes(list) {
+        this.callReasonsToTypes = {};
+        Object.keys(list).forEach((key: string) => {
+            list[key].forEach((row: LogCallReason) => {
+                this.callReasonsToTypes[row.id] = parseInt(key, 10);
+            })
+        });
     }
 
     /**
@@ -94,8 +123,8 @@ export class PageRespondComponent implements OnInit {
             // CRM note
             this.NCCAPI.createCallbackResponse(parameters),
 
-            // Action Diary note
-            this.NCCAPI.createActionDiaryEntry(parameters.tenancyReference, actionDiaryNote)
+            // Action Diary or UH note, depending on the call type.
+            this.decideADorUH(parameters, actionDiaryNote)
         )
             .pipe(take(1))
             .pipe(finalize(() => { this.saving = false; }))
@@ -104,4 +133,19 @@ export class PageRespondComponent implements OnInit {
                 () => { this.error = true; }
             );
     }
+
+    /**
+     * Returns an Observable for creating either an Action Diary or UH note, depending on the call type.
+     */
+    private decideADorUH(parameters: ICallbackResponse, note: string) {
+        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
+        if (callTypes.includes(this.callReasonsToTypes[parameters.callReasonId])) {
+            // Action Diary note.
+            return this.NCCAPI.createActionDiaryEntry(parameters.tenancyReference, note)
+        } else {
+            // UH note.
+            return this.NCCAPI.addTenancyAgreementNotes(parameters.tenancyReference, note, null);
+        }
+    }
+
 }
