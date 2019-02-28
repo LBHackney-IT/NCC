@@ -37,12 +37,6 @@ export class PageCallbackComponent implements OnInit {
     message: string;
     tenancyReference: string;
 
-    emailList = [
-        'rod@hackney.gov.uk',
-        'jane@hackney.gov.uk',
-        'freddy@hackney.gov.uk',
-    ];
-
     constructor(
         private Call: CallService,
         private Helper: HelperService,

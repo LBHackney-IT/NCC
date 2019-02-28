@@ -1,12 +1,6 @@
-<h2 class="govuk-heading-m">Note types</h2>
+<h2 class="govuk-heading-m">User lookup</h2>
 <div class="govuk-!-margin-bottom-5">
-    <div class="typeahead-container">
-        <input class="govuk-input govuk-!-width-one-half" name="typeahead" [(ngModel)]="taValue" type="text"
-            ngxTypeahead
-            [taList]="taList"
-            [value]="taValue"
-            (taSelected)="selectedTypeahead($event)">
-    </div>
+    <app-user-lookup [(model)]="taValue" placeholder="Look for a person..."></app-user-lookup>
 </div>
 
 <h2 class="govuk-heading-m">Note types</h2>
@@ -15,6 +9,7 @@
     <app-note-type [type]="noteTypes.TYPE_AUTOMATIC"></app-note-type>
     <app-note-type [type]="noteTypes.TYPE_ACTION_DIARY"></app-note-type>
     <app-note-type [type]="noteTypes.TYPE_CALLBACK"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_UH"></app-note-type>
 </div>
 
 <h2 class="govuk-heading-m">Current balance</h2>
