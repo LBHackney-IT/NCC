@@ -11,6 +11,7 @@ import { NotesService } from '../../../common/services/notes.service';
 import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
 import { CallNatureDropdownComponent } from '../../components/call-nature-dropdown/call-nature-dropdown.component';
 import { CommsTelephoneComponent } from '../../components/comms-telephone/comms-telephone.component';
+import { AuthService } from '../../../common/services/auth.service';
 
 @Component({
     selector: 'app-page-callback',
@@ -38,6 +39,7 @@ export class PageCallbackComponent implements OnInit {
     tenancyReference: string;
 
     constructor(
+        private Auth: AuthService,
         private Call: CallService,
         private Helper: HelperService,
         private NCCAPI: NCCAPIService,
@@ -98,7 +100,9 @@ export class PageCallbackComponent implements OnInit {
             callbackNumber: this.contactNumber,
             message: this.message,
             callerName: this.Call.getCaller().getName(),
-            tenancyReference: this.Call.getTenancyReference()
+            tenancyReference: this.Call.getTenancyReference(),
+            address: this.Call.getTenancy().address,
+            fromName: this.Auth.getFullName()
         };
 
         this.sending = true;
@@ -116,12 +120,12 @@ export class PageCallbackComponent implements OnInit {
                 return this.NCCAPI.sendCallbackEmail(callbackDetails);
             }))
             .subscribe(
-                (response) => {
+                () => {
                     // TODO what happens next?
                     this.completed = true;
                     this._reset();
                 },
-                (error) => { this.error = true; }
+                () => { this.error = true; }
             );
     }
 

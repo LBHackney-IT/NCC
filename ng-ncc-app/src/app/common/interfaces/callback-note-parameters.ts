@@ -7,4 +7,6 @@ export interface ICallbackNoteParameters {
     message: string;
     callerName: string;
     tenancyReference: string;
+    address: string;
+    fromName: string;
 }
