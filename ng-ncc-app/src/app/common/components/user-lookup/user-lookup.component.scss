@@ -1,0 +1,56 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/typography-font";
+@import "~govuk-frontend/settings/all";
+@import "~govuk-frontend/tools/all";
+@import "~govuk-frontend/helpers/all";
+@import "~govuk-frontend/core/all";
+@import "~govuk-frontend/objects/all";
+@import "~govuk-frontend/helpers/all";
+@import "~govuk-frontend/utilities/all";
+@import "~govuk-frontend/overrides/all";
+
+$typeahead-text-size: 19 !default;
+$typeahead-border-width: 2px !default;
+$typeahead-border-colour: #000 !default;
+$typeahead-item-padding: 0.5rem !default;
+$typeahead-bg-colour: #FFF !default;
+$typeahead-text-colour: #000 !default;
+$typeahead-focus-bg-colour: #FC0 !default;
+$typeahead-focus-text-colour: #000 !default;
+
+////////////////////
+
+:host {
+    display: block;
+}
+
+.container {
+    position: relative;
+}
+
+.results {
+    width: 100%;
+}
+
+.results__item {
+    @include govuk-font($size: $typeahead-text-size);
+    display: block;
+    position: relative;
+    padding: $typeahead-item-padding;
+    // Place the border on the list items and negative margin up for better styling
+    margin-bottom: -$typeahead-border-width;
+    background-color: $typeahead-bg-colour;
+    border: $typeahead-border-width solid $typeahead-border-colour;
+    color: $typeahead-text-colour;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+
+    &:hover,
+    &.active {
+        background-color: $typeahead-focus-bg-colour;
+        color: $typeahead-focus-text-colour;
+        z-index: 2; // Place active items above their siblings for proper border styling
+    }
+}

@@ -1,11 +1,11 @@
-<div class="typeahead-container">
-    <input class="govuk-input govuk-!-width-one-half" name="typeahead" type="text"
+<div class="container">
+    <input class="govuk-input" name="typeahead" type="text"
         [placeholder]="placeholder"
         [(ngModel)]="txtQuery" (ngModelChange)="onFieldChange($event)">
 
     <div class="results" *ngIf="userList.length">
-        <a *ngFor="let result of userList" (click)="selectedOption(result)">
+        <button class="results__item" *ngFor="let result of userList" (click)="selectedOption(result)">
             <strong>{{ result.name }}</strong> {{ result.email }}
-        </a>
+        </button>
     </div>
 </div>

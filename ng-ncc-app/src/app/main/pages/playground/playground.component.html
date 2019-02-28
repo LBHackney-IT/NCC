@@ -1,6 +1,7 @@
 <h2 class="govuk-heading-m">User lookup</h2>
 <div class="govuk-!-margin-bottom-5">
     <app-user-lookup [(model)]="taValue" placeholder="Look for a person..."></app-user-lookup>
+    <p>{{ taValue | json }}</p>
 </div>
 
 <h2 class="govuk-heading-m">Note types</h2>
