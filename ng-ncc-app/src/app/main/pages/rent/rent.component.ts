@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, of } from 'rxjs';
-import { take, takeUntil, catchError } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { PAGES } from '../../../common/constants/pages.constant';
 import { CallService } from '../../../common/services/call.service';
