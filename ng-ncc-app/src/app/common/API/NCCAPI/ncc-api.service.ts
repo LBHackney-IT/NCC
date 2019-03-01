@@ -458,6 +458,9 @@ export class NCCAPIService {
 
     }
 
+    /**
+     *
+     */
     sendCallbackEmail(details: ICallbackNoteParameters) {
         const parameters = {
             CallBackId: details.callbackId,
@@ -495,7 +498,7 @@ export class NCCAPIService {
      */
     getUsersListFromActiveDirectory(term: string): Observable<IActiveDirectoryUserResult[]> {
         return this.http
-            .post(`${this._url}Callback/GetUsersListFromActiveDirectory?username=${term}`, {})
+            .get(`${this._url}Callback/GetUsersListFromActiveDirectory?username=${term}`, {})
             .pipe(map((data: IJSONResponse) => data.response.ADList));
 
     }

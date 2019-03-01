@@ -18,6 +18,15 @@ $typeahead-bg-colour: #FFF !default;
 $typeahead-text-colour: #000 !default;
 $typeahead-focus-bg-colour: #FC0 !default;
 $typeahead-focus-text-colour: #000 !default;
+$typeahead-z-index: 90 !default;
+$typeahead-max-height: 20rem !default;
+
+$typeahead-loading-bg-colour: govuk-colour("grey-3") !default;
+$typeahead-loading-bar-colour: govuk-colour("blue") !default;
+$typeahead-loading-bar-width: 200px !default;
+$typeahead-loading-height: 3px !default;
+$typeahead-loading-speed: 2s !default;
+$typeahead-loading-z-index: 100 !default;
 
 ////////////////////
 
@@ -34,7 +43,10 @@ $typeahead-focus-text-colour: #000 !default;
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 8rem;
+    max-height: $typeahead-max-height;
+    position: absolute;
+    top: 100%;
+    z-index: $typeahead-z-index;
 }
 
 .results__item {
@@ -60,5 +72,54 @@ $typeahead-focus-text-colour: #000 !default;
         background-color: $typeahead-focus-bg-colour;
         color: $typeahead-focus-text-colour;
         z-index: 2; // Place active items above their siblings for proper border styling
+    }
+}
+
+// TODO this progress bar styling should be a mixin.
+.loading {
+    background: $typeahead-loading-bg-colour;
+    display: block;
+    height: $typeahead-loading-height;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+    z-index: $typeahead-loading-z-index;
+
+    &:before {
+        display: block;
+        position: absolute;
+        content: '';
+        left: -$typeahead-loading-bar-width;
+        width: $typeahead-loading-bar-width;
+        height: $typeahead-loading-height;
+        background: $typeahead-loading-bar-colour;
+        animation: loading $typeahead-loading-speed linear infinite;
+    }
+}
+@keyframes loading {
+    from {
+        left: -$typeahead-loading-bar-width;
+        width: 30%;
+    }
+
+    50% {
+        width: 30%;
+    }
+
+    70% {
+        width: 70%;
+    }
+
+    80% {
+        left: 50%;
+    }
+
+    95% {
+        left: 120%;
+    }
+
+    to {
+        left: 100%;
     }
 }
