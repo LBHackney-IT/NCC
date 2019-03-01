@@ -57,7 +57,6 @@ export class UserLookupComponent {
     hideResults() {
         // A small "debounce" is added here, to allow time for an item in the list to be selected.
         setTimeout(() => {
-            this.selectedOption(this.selected);
             this.userList = [];
         }, 50);
     }
@@ -67,6 +66,7 @@ export class UserLookupComponent {
      */
     onFieldChange(query: string) {
         this.selected = null;
+        this.selectedOption(null);
         this.txtQueryChanged.next(query);
     }
 
