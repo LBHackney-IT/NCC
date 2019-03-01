@@ -70,7 +70,7 @@ export class PageCallbackComponent implements OnInit {
      */
     canSave(): boolean {
         return !this.sending &&
-            this.Helper.isDefined(this.recipient) &&
+            this.Helper.isPopulated(this.recipient) &&
             this.Helper.isPopulated(this.contactNumber) &&
             this._isCallReasonDefined() &&
             this.Helper.isPopulated(this.message);
@@ -141,6 +141,14 @@ export class PageCallbackComponent implements OnInit {
 
         this.callNatureField.reset();
         this.telephoneField.reset();
+    }
+
+    selectedRecipientEmail(result: string) {
+        this.recipient = result;
+    }
+
+    selectedTeamLeaderEmail(result: string) {
+        this.teamLeader = result;
     }
 
 }

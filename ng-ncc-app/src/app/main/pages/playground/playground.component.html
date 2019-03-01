@@ -1,9 +1,16 @@
+<h2 class="govuk-heading-m">User lookup</h2>
+<div class="govuk-!-margin-bottom-5">
+    <app-user-lookup [(model)]="taValue" placeholder="Look for a person..."></app-user-lookup>
+    <p>{{ taValue | json }}</p>
+</div>
+
 <h2 class="govuk-heading-m">Note types</h2>
 <div class="govuk-!-margin-bottom-5">
     <app-note-type [type]="noteTypes.TYPE_MANUAL"></app-note-type>
     <app-note-type [type]="noteTypes.TYPE_AUTOMATIC"></app-note-type>
     <app-note-type [type]="noteTypes.TYPE_ACTION_DIARY"></app-note-type>
     <app-note-type [type]="noteTypes.TYPE_CALLBACK"></app-note-type>
+    <app-note-type [type]="noteTypes.TYPE_UH"></app-note-type>
 </div>
 
 <h2 class="govuk-heading-m">Current balance</h2>

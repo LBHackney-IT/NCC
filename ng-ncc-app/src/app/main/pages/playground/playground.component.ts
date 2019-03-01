@@ -39,6 +39,10 @@ export class PagePlaygroundComponent implements OnInit {
     show: boolean;
     amount = 10;
     number_value: string;
+    taList = [
+        'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'
+    ];
+    taValue: string;
     user = new AnonymousCaller;
     data: IAccountDetails;
 
@@ -155,4 +159,7 @@ export class PagePlaygroundComponent implements OnInit {
         return output.join('&');
     }
 
+    selectedTypeahead(result: string) {
+        this.taValue = result;
+    }
 }

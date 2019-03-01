@@ -9,10 +9,13 @@ import { PanelHeadingComponent } from './panel/heading/heading.component';
 import { BoxPanelComponent } from './panel/box-panel/box-panel.component';
 import { ErrorPanelComponent } from './panel/error-panel/error-panel.component';
 import { SuccessPanelComponent } from './panel/success-panel/success-panel.component';
+import { UserLookupComponent } from './user-lookup/user-lookup.component';
+import { FormsModule } from '../../../../node_modules/@angular/forms';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        FormsModule,
     ],
     declarations: [
         AgentComponent,
@@ -23,6 +26,7 @@ import { SuccessPanelComponent } from './panel/success-panel/success-panel.compo
         PanelComponent,
         PanelHeadingComponent,
         SuccessPanelComponent,
+        UserLookupComponent,
     ],
     exports: [
         AgentComponent,
@@ -32,7 +36,8 @@ import { SuccessPanelComponent } from './panel/success-panel/success-panel.compo
         ErrorPanelComponent,
         PanelComponent,
         PanelHeadingComponent,
-        SuccessPanelComponent
+        SuccessPanelComponent,
+        UserLookupComponent,
     ]
 })
 export class ComponentsModule { }
