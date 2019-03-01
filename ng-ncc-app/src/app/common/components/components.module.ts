@@ -9,6 +9,7 @@ import { PanelHeadingComponent } from './panel/heading/heading.component';
 import { BoxPanelComponent } from './panel/box-panel/box-panel.component';
 import { ErrorPanelComponent } from './panel/error-panel/error-panel.component';
 import { SuccessPanelComponent } from './panel/success-panel/success-panel.component';
+import { CallerAddressComponent } from './caller-address/caller-address.component';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import { SuccessPanelComponent } from './panel/success-panel/success-panel.compo
     declarations: [
         AgentComponent,
         BoxPanelComponent,
+        CallerAddressComponent,
         CurrentCallerComponent,
         EnvNameComponent,
         ErrorPanelComponent,
@@ -27,12 +29,13 @@ import { SuccessPanelComponent } from './panel/success-panel/success-panel.compo
     exports: [
         AgentComponent,
         BoxPanelComponent,
+        CallerAddressComponent,
         CurrentCallerComponent,
         EnvNameComponent,
         ErrorPanelComponent,
         PanelComponent,
         PanelHeadingComponent,
-        SuccessPanelComponent
+        SuccessPanelComponent,
     ]
 })
 export class ComponentsModule { }
