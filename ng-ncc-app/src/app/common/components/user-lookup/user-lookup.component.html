@@ -1,10 +1,11 @@
 <div class="container">
     <input class="govuk-input" name="typeahead" type="text"
         [placeholder]="placeholder"
-        [(ngModel)]="txtQuery" (ngModelChange)="onFieldChange($event)">
+        [(ngModel)]="txtQuery" (ngModelChange)="onFieldChange($event)" (focusout)="hideResults()"
+        (keydown.arrowup)="prevItem()" (keydown.arrowdown)="nextItem()"(keydown.enter)="selectItem()">
 
     <div class="results" *ngIf="userList.length">
-        <button class="results__item" *ngFor="let result of userList" (click)="selectedOption(result)">
+        <button class="results__item" *ngFor="let result of userList; let i = index" [class.active]="focusIndex === i" (click)="selectedOption(result)">
             <strong>{{ result.name }}</strong> {{ result.email }}
         </button>
     </div>

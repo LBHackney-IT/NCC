@@ -30,7 +30,11 @@ $typeahead-focus-text-colour: #000 !default;
 }
 
 .results {
+    border-bottom: $typeahead-border-width solid $typeahead-border-colour;
     width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 8rem;
 }
 
 .results__item {
@@ -46,6 +50,10 @@ $typeahead-focus-text-colour: #000 !default;
     cursor: pointer;
     text-align: left;
     width: 100%;
+
+    &:last-child {
+        border-bottom: none;
+    }
 
     &:hover,
     &.active {

@@ -15,11 +15,13 @@ export class UserLookupComponent {
 
     @Input() placeholder: string;
 
+    protected focusIndex: number;
     protected userList: IActiveDirectoryUserResult[];
     protected txtQuery: string; // bind this to input with ngModel
     protected txtQueryChanged = new Subject<string>();
 
     constructor(private NCCAPI: NCCAPIService) {
+        this.focusIndex = 0;
         this.userList = [];
         this.txtQueryChanged
             .pipe(
@@ -130,6 +132,18 @@ export class UserLookupComponent {
             });
     }
 
+    prevItem() {
+        this.focusIndex = Math.max(0, this.focusIndex - 1);
+    }
+
+    nextItem() {
+        this.focusIndex = Math.min(this.userList.length - 1, this.focusIndex + 1);
+    }
+
+    selectItem() {
+        this.selectedOption(this.userList[this.focusIndex]);
+    }
+
     hideResults() {
         this.userList = [];
     }
@@ -139,5 +153,6 @@ export class UserLookupComponent {
         this.modelChange.emit(option.email);
         this.hideResults();
         this.txtQuery = option.email;
+        this.focusIndex = 0;
     }
 }
