@@ -9,6 +9,7 @@ import { PanelHeadingComponent } from './panel/heading/heading.component';
 import { BoxPanelComponent } from './panel/box-panel/box-panel.component';
 import { ErrorPanelComponent } from './panel/error-panel/error-panel.component';
 import { SuccessPanelComponent } from './panel/success-panel/success-panel.component';
+import { CallerAddressComponent } from './caller-address/caller-address.component';
 import { UserLookupComponent } from './user-lookup/user-lookup.component';
 import { FormsModule } from '../../../../node_modules/@angular/forms';
 
@@ -20,6 +21,7 @@ import { FormsModule } from '../../../../node_modules/@angular/forms';
     declarations: [
         AgentComponent,
         BoxPanelComponent,
+        CallerAddressComponent,
         CurrentCallerComponent,
         EnvNameComponent,
         ErrorPanelComponent,
@@ -31,6 +33,7 @@ import { FormsModule } from '../../../../node_modules/@angular/forms';
     exports: [
         AgentComponent,
         BoxPanelComponent,
+        CallerAddressComponent,
         CurrentCallerComponent,
         EnvNameComponent,
         ErrorPanelComponent,
