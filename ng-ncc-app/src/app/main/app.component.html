@@ -8,10 +8,13 @@
         <app-env-name class="govuk-body-s"></app-env-name>
     </div>
 
-    <div class="page__header__column page__header__column--id">
+    <div class="page__header__column">
         <!-- Display the current caller's name (if present) -->
         <app-current-caller withPrefix="true" allowAnonymous="true"></app-current-caller>
+        <app-caller-address></app-caller-address>
+    </div>
 
+    <div class="page__header__column page__header__column--id">
         <!-- Display the logged in agent's name and avatar. -->
         <app-agent></app-agent>
     </div>
