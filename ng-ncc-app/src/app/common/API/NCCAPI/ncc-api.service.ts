@@ -29,6 +29,7 @@ import { PAYMENT_STATUS } from '../../constants/payment-status.constant';
 import { CALLBACK_SUCCESS } from '../../constants/callback-success.constant';
 import { CallService } from '../../services/call.service';
 import { HelperService } from '../../services/helper.service';
+import { IActiveDirectoryUserResult } from '../../interfaces/active-directory-user-result';
 
 @Injectable({
     providedIn: 'root'
@@ -464,6 +465,9 @@ export class NCCAPIService {
 
     }
 
+    /**
+     *
+     */
     sendCallbackEmail(details: ICallbackNoteParameters) {
         const parameters = {
             CallBackId: details.callbackId,
@@ -493,6 +497,16 @@ export class NCCAPIService {
         return this.http
             .get(`${this._url}Callback/GetCallbackDetails?${this._buildQueryString(parameters)}`, {})
             .pipe(map((data: IJSONResponse) => <ICallbackDetails>data.response));
+
+    }
+
+    /**
+     *
+     */
+    getUsersListFromActiveDirectory(term: string): Observable<IActiveDirectoryUserResult[]> {
+        return this.http
+            .get(`${this._url}Callback/GetUsersListFromActiveDirectory?username=${term}`, {})
+            .pipe(map((data: IJSONResponse) => data.response.ADList));
 
     }
 

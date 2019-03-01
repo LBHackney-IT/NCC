@@ -1,0 +1,125 @@
+@import "../../../../assets/scss/vars.scss";
+@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/settings/typography-font";
+@import "~govuk-frontend/settings/all";
+@import "~govuk-frontend/tools/all";
+@import "~govuk-frontend/helpers/all";
+@import "~govuk-frontend/core/all";
+@import "~govuk-frontend/objects/all";
+@import "~govuk-frontend/helpers/all";
+@import "~govuk-frontend/utilities/all";
+@import "~govuk-frontend/overrides/all";
+
+$typeahead-text-size: 19 !default;
+$typeahead-border-width: 2px !default;
+$typeahead-border-colour: #000 !default;
+$typeahead-item-padding: 0.5rem !default;
+$typeahead-bg-colour: #FFF !default;
+$typeahead-text-colour: #000 !default;
+$typeahead-focus-bg-colour: #FC0 !default;
+$typeahead-focus-text-colour: #000 !default;
+$typeahead-z-index: 90 !default;
+$typeahead-max-height: 20rem !default;
+
+$typeahead-loading-bg-colour: govuk-colour("grey-3") !default;
+$typeahead-loading-bar-colour: govuk-colour("blue") !default;
+$typeahead-loading-bar-width: 200px !default;
+$typeahead-loading-height: 3px !default;
+$typeahead-loading-speed: 2s !default;
+$typeahead-loading-z-index: 100 !default;
+
+////////////////////
+
+:host {
+    display: block;
+}
+
+.container {
+    position: relative;
+}
+
+.results {
+    border-bottom: $typeahead-border-width solid $typeahead-border-colour;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: $typeahead-max-height;
+    position: absolute;
+    top: 100%;
+    z-index: $typeahead-z-index;
+}
+
+.results__item {
+    @include govuk-font($size: $typeahead-text-size);
+    display: block;
+    position: relative;
+    padding: $typeahead-item-padding;
+    // Place the border on the list items and negative margin up for better styling
+    margin-bottom: -$typeahead-border-width;
+    background-color: $typeahead-bg-colour;
+    border: $typeahead-border-width solid $typeahead-border-colour;
+    color: $typeahead-text-colour;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover,
+    &.active {
+        background-color: $typeahead-focus-bg-colour;
+        color: $typeahead-focus-text-colour;
+        z-index: 2; // Place active items above their siblings for proper border styling
+    }
+}
+
+// TODO this progress bar styling should be a mixin.
+.loading {
+    background: $typeahead-loading-bg-colour;
+    display: block;
+    height: $typeahead-loading-height;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+    z-index: $typeahead-loading-z-index;
+
+    &:before {
+        display: block;
+        position: absolute;
+        content: '';
+        left: -$typeahead-loading-bar-width;
+        width: $typeahead-loading-bar-width;
+        height: $typeahead-loading-height;
+        background: $typeahead-loading-bar-colour;
+        animation: loading $typeahead-loading-speed linear infinite;
+    }
+}
+@keyframes loading {
+    from {
+        left: -$typeahead-loading-bar-width;
+        width: 30%;
+    }
+
+    50% {
+        width: 30%;
+    }
+
+    70% {
+        width: 70%;
+    }
+
+    80% {
+        left: 50%;
+    }
+
+    95% {
+        left: 120%;
+    }
+
+    to {
+        left: 100%;
+    }
+}

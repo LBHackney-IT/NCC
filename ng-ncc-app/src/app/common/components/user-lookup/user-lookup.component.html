@@ -1,0 +1,16 @@
+<div class="container">
+    <input class="govuk-input" name="typeahead" type="text"
+        [placeholder]="placeholder" [disabled]="disabled"
+        [(ngModel)]="txtQuery" (ngModelChange)="onFieldChange($event)"
+        (keydown.esc)="hideResults()"
+        (keydown.arrowup)="prevItem()" (keydown.arrowdown)="nextItem()"
+        (keydown.enter)="selectItem()" (keydown.tab)="selectItem()">
+
+    <div class="loading" *ngIf="isLoading"></div>
+
+    <div class="results" *ngIf="userList.length" #resultsList>
+        <button class="results__item" *ngFor="let result of userList; let i = index" [class.active]="focusIndex === i" (click)="selectedOption(result)">
+            <strong>{{ result.name }}</strong> {{ result.email }}
+        </button>
+    </div>
+</div>
