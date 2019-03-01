@@ -1,6 +1,6 @@
 <div class="container">
     <input class="govuk-input" name="typeahead" type="text"
-        [placeholder]="placeholder"
+        [placeholder]="placeholder" [disabled]="disabled"
         [(ngModel)]="txtQuery" (ngModelChange)="onFieldChange($event)"
         (keydown.esc)="hideResults()"
         (keydown.arrowup)="prevItem()" (keydown.arrowdown)="nextItem()"

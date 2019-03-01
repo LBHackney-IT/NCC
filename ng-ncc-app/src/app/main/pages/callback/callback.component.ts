@@ -68,7 +68,7 @@ export class PageCallbackComponent implements OnInit {
      */
     canSave(): boolean {
         return !this.sending &&
-            this.Helper.isDefined(this.recipient) &&
+            this.Helper.isPopulated(this.recipient) &&
             this.Helper.isPopulated(this.contactNumber) &&
             this._isCallReasonDefined() &&
             this.Helper.isPopulated(this.message);

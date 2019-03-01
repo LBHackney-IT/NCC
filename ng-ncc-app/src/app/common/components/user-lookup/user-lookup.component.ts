@@ -14,6 +14,7 @@ export class UserLookupComponent {
     @Output() modelChange = new EventEmitter<string>();
 
     @Input() placeholder: string;
+    @Input() disabled: boolean;
 
     @ViewChild('resultsList') resultsList: ElementRef;
     @ViewChild('.active') activeItem: ElementRef;
@@ -24,6 +25,7 @@ export class UserLookupComponent {
     protected focusIndex: number;
     protected isLoading: boolean;
     protected userList: IActiveDirectoryUserResult[];
+    protected selected: IActiveDirectoryUserResult;
     protected txtQuery: string; // bind this to input with ngModel
     protected txtQueryChanged = new Subject<string>();
 
@@ -40,7 +42,7 @@ export class UserLookupComponent {
                 distinctUntilChanged() // only emit if value is different from previous value.
             )
             .subscribe(model => {
-                this.txtQuery = model;
+                // this.txtQuery = model;
 
                 if (this.txtQuery && this.txtQuery.length >= this.minLength) {
                     this.updateList();
@@ -54,13 +56,17 @@ export class UserLookupComponent {
     @HostListener('document:click')
     hideResults() {
         // A small "debounce" is added here, to allow time for an item in the list to be selected.
-        setTimeout(() => { this.userList = []; }, 50);
+        setTimeout(() => {
+            this.selectedOption(this.selected);
+            this.userList = [];
+        }, 50);
     }
 
     /**
      * Called when the value of the INPUT field changes.
      */
     onFieldChange(query: string) {
+        this.selected = null;
         this.txtQueryChanged.next(query);
     }
 
@@ -132,6 +138,8 @@ export class UserLookupComponent {
         const item = this.userList[this.focusIndex];
         if (item) {
             this.selectedOption(this.userList[this.focusIndex]);
+        } else {
+            this.selectedOption(this.selected);
         }
     }
 
@@ -139,9 +147,11 @@ export class UserLookupComponent {
      * Fires the model change event emitter.
      */
     selectedOption(option: IActiveDirectoryUserResult) {
-        this.modelChange.emit(option.email);
+        const newValue = option ? option.email : this.txtQuery;
+        // i.e. if an option hasn't been selected, use whatever is in the text field.
+        this.modelChange.emit(newValue);
         this.hideResults();
-        this.txtQuery = option.email;   // display the email address in the INPUT field.
+        this.txtQuery = newValue;   // display the result in the INPUT field.
         this.focusIndex = 0;
     }
 }
