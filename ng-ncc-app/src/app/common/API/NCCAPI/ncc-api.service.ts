@@ -87,7 +87,7 @@ export class NCCAPIService {
     }
 
     /**
-     * Create a callback note against a call.
+     * Create a callback request note against a call.
      */
     createCallbackNote(agentCRMID: string, settings: INotesSettings, details: ICallbackNoteParameters) {
         const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
@@ -103,6 +103,8 @@ export class NCCAPIService {
 
         settings.parameters = Object.assign({}, {
             Notes: noteMessage,
+            'CallbackRequest.Address': details.address,
+            'CallbackRequest.AgentName': details.fromName,
             'CallbackRequest.MessageForEmail': details.message,
             'CallbackRequest.CallersFullname': details.callerName,
             'CallbackRequest.RecipientEmailId': details.recipientEmail,
