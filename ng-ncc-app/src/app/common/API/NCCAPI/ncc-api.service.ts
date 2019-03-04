@@ -477,7 +477,8 @@ export class NCCAPIService {
             MessageForEmail: details.message,
             CallersFullName: details.callerName,
             HousingTagRef: details.tenancyReference,
-            Address: details.address
+            Address: details.address,
+            AgentName: details.fromName
         };
 
         return this.http
