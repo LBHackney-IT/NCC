@@ -277,8 +277,6 @@ export class NotesService {
 
         // Remove any empty email addresses.
         const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
-        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        const callType = call_nature.call_type.id;
 
         // The callback request is considered sent to the first specified email address,
         // with any other email addresses being carbon copied (CC'd).
