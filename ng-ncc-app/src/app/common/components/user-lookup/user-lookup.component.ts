@@ -21,13 +21,13 @@ export class UserLookupComponent {
 
     protected minLength: number;
     protected debounceTime: number;
-
     protected focusIndex: number;
-    protected isLoading: boolean;
-    protected userList: IActiveDirectoryUserResult[];
     protected selected: IActiveDirectoryUserResult;
-    protected txtQuery: string; // bind this to input with ngModel
     protected txtQueryChanged = new Subject<string>();
+
+    isLoading: boolean;
+    txtQuery: string; // bind this to input with ngModel
+    userList: IActiveDirectoryUserResult[];
 
     constructor(private cdRef: ChangeDetectorRef, private NCCAPI: NCCAPIService) {
 
