@@ -115,7 +115,8 @@ export class PageRespondComponent implements OnInit {
             ticketNumber: this.details.ticketnumber
         };
 
-        const actionDiaryNote = `Callback response logged by ${parameters.responseBy}\n${parameters.notes}`;
+        const responseStatus = this.gotThrough ? 'Callback successful' : 'Callback unsuccessful';
+        const actionDiaryNote = `${responseStatus}; Callback response logged by ${parameters.responseBy}; ${parameters.notes}`;
 
         // NOTE: using forkJoin is cleaner here, but recording the callback response will fail
         // if either endpoint returns an error.

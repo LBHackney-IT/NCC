@@ -2,8 +2,8 @@ import { environment } from '../../../../environments/environment';
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, take } from 'rxjs/operators';
-import { Observable, forkJoin, of, from } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import * as moment from 'moment';
 
@@ -14,7 +14,6 @@ import { ICallbackNoteParameters } from '../../interfaces/callback-note-paramete
 import { ICallbackResponse } from '../../interfaces/callback-response';
 import { ICRMServiceRequest } from '../../interfaces/crmservicerequest';
 import { IJSONResponse } from '../../interfaces/json-response';
-import { INCCInteraction } from '../../interfaces/ncc-interaction';
 import { INCCNote } from '../../interfaces/ncc-note';
 import { INCCUHNote } from '../../interfaces/ncc-uh-note';
 import { INotesSettings } from '../../interfaces/notes-settings';
@@ -23,11 +22,7 @@ import { ITenancyAgreementDetails } from '../../interfaces/tenancy-agreement-det
 import { ITenancyTransactionRow } from '../../interfaces/tenancy-transaction-row';
 import { NOTES } from '../../constants/notes.constant';
 import { NOTE_TYPE } from '../../constants/note-type.constant';
-import { CALL_REASON } from '../../constants/call-reason.constant';
-import { COMMS } from '../../constants/comms.constant';
-import { PAYMENT_STATUS } from '../../constants/payment-status.constant';
 import { CALLBACK_SUCCESS } from '../../constants/callback-success.constant';
-import { CallService } from '../../services/call.service';
 import { HelperService } from '../../services/helper.service';
 import { IActiveDirectoryUserResult } from '../../interfaces/active-directory-user-result';
 
