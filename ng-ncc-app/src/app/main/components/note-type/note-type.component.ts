@@ -35,4 +35,16 @@ export class NoteTypeComponent {
         return obj;
     }
 
+    /**
+     *
+     */
+    get typeText(): string {
+        switch (this.type) {
+            case NOTES.TYPE_UH:
+                return 'Universal Housing Note';
+            default:
+                return this.type;
+        }
+    }
+
 }
