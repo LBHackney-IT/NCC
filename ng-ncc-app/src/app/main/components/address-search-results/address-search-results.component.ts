@@ -65,11 +65,12 @@ export class AddressSearchResultsComponent implements OnChanges {
                     (r[k] || (r[k] = {
                         id: k,
                         address: v.fullAddressDisplay,
-                        addressLine1: parseInt(v.addressLine1.toLowerCase(), 10),
-                        addressLine1_raw: v.addressLine1.toLowerCase(),
+                        addressLine1_raw: parseInt(v.addressLine1.toLowerCase().replace(/^(flat|room) [a-z]?/, ''), 10),
+                        addressLine1: v.addressLine1.toLowerCase(),
                         addressLine2: v.addressLine2.toLowerCase(),
                         addressLine3: v.addressLine3.toLowerCase(),
                         postcode: v.postCode.toLowerCase(),
+                        isFlat: v.addressLine1.toLowerCase().indexOf('flat') >= 0,
                         results: []
                     })).results.push(v), r), {}
             );
@@ -88,8 +89,9 @@ export class AddressSearchResultsComponent implements OnChanges {
             const checks = [
                 this._compare(a, b, 'addressLine2'),
                 this._compare(a, b, 'addressLine3'),
-                this._compare(a, b, 'addressLine1'),
                 this._compare(a, b, 'addressLine1_raw'),
+                this._compare(a, b, 'isFlat'),
+                this._compare(a, b, 'addressLine1'),
                 this._compare(a, b, 'postcode')
             ];
             const filtered = checks.filter((v: number) => 0 !== v);
