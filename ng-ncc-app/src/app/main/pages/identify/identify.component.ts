@@ -1,16 +1,12 @@
 import { environment } from '../../../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { PAGES } from '../../../common/constants/pages.constant';
-import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
-import { ICitizenIndexSearchResult } from '../../../common/interfaces/citizen-index-search-result';
-import { IAddressSearchGroupedResult } from '../../../common/interfaces/address-search-grouped-result';
 import { CallService } from '../../../common/services/call.service';
 import { AddressSearchService } from '../../../common/services/address-search.service';
-import { BackLinkService } from '../../../common/services/back-link.service';
 import { NotesService } from '../../../common/services/notes.service';
 import { PageTitleService } from '../../../common/services/page-title.service';
 import { AnonymousCaller } from '../../../common/classes/anonymous-caller.class';
@@ -22,6 +18,9 @@ import { AnonymousCaller } from '../../../common/classes/anonymous-caller.class'
 })
 export class PageIdentifyComponent implements OnInit {
 
+    @ViewChild('searchName') searchNameForm: NgForm;
+    @ViewChild('searchPostcode') searchPostcodeForm: NgForm;
+
     is_searching: boolean;
     disable_identify_caller: boolean = environment.disable.identifyCaller;
     existing_call: boolean;
@@ -29,10 +28,8 @@ export class PageIdentifyComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private HackneyAPI: HackneyAPIService,
         private Call: CallService,
         private AddressSearch: AddressSearchService,
-        private BackLink: BackLinkService,
         private Notes: NotesService,
         private PageTitle: PageTitleService,
         private route: ActivatedRoute
@@ -56,16 +53,35 @@ export class PageIdentifyComponent implements OnInit {
 
     }
 
+    searchByName() {
+        // Set the first and last name in the AddressSearch service, making sure the postcode is blank.
+        this.AddressSearch.setFirstName(this.searchNameForm.value.firstName);
+        this.AddressSearch.setLastName(this.searchNameForm.value.lastName);
+        this.AddressSearch.setPostcode(null);
+
+        // Perform a search.
+        this._performSearch();
+    }
+
     /**
      * Performs a Citizen Index search.
      */
-    performSearch(event: Event) {
-        if ((event && event.defaultPrevented) || this.disable_identify_caller || this.AddressSearch.isSearching()) {
+    searchByPostcode() {
+        // Set the postcode in the AddressSearch service.
+        this.AddressSearch.setPostcode(this.searchPostcodeForm.value.postcode);
+        this.AddressSearch.setFirstName(null);
+        this.AddressSearch.setLastName(null);
+
+        this._performSearch();
+    }
+
+    /**
+     *
+     */
+    private _performSearch() {
+        if (this.disable_identify_caller || this.AddressSearch.isSearching()) {
             return;
         }
-
-        // Set the postcode in the AddressSearch service.
-        this.AddressSearch.setPostcode(this.postcode);
 
         // Navigate to the addresses subpage.
         // If the addresses subpage is already displayed, this will have no effect.
@@ -85,10 +101,24 @@ export class PageIdentifyComponent implements OnInit {
     }
 
     /**
-     * Returns TRUE if the user can peform a search for details.
+     * Returns TRUE if the user can peform a search for details by postcode.
      */
-    canPerformSearch() {
-        return this.canUseSearch() && !!(this.postcode);
+    canPerformPostcodeSearch() {
+        return this.canUseSearch() /*&& !!(this.searchPostcode.valid)*/;
+    }
+
+    /**
+     * Returns TRUE if the user can peform a search for details by name.
+     */
+    canPerformNameSearch() {
+        try {
+            const isValid = this.searchNameForm.value.firstName.length >= 2 ||
+                this.searchNameForm.value.lastName.length >= 2;
+            // Perhaps a custom validator?
+            return this.canUseSearch() && isValid;
+        } catch (e) {
+            return false;
+        }
     }
 
     /**
