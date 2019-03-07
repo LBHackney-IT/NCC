@@ -6,20 +6,39 @@
             <!-- Search for contact details. -->
             <h2 class="govuk-heading-l">Caller details</h2>
 
-            <!-- Search box - see https://github.com/alphagov/govuk-design-system-backlog/issues/132 -->
+            <!-- Name search. -->
             <app-panel class="govuk-!-margin-bottom-5">
-                <form class="govuk-form-group govuk-!-margin-bottom-2"
-                      [class.disabled]="disable_identify_caller" (submit)="performSearch($event)">
-                    <label class="govuk-label govuk-!-font-weight-bold" for="query">
-                        Search by postcode:
+
+                <form #searchName="ngForm" class="govuk-form-group govuk-!-margin-bottom-2"
+                      [class.disabled]="disable_identify_caller" (ngSubmit)="searchByName()">
+                    <label class="govuk-label govuk-!-font-weight-bold" for="firstname">
+                        Search by name:
                     </label>
-                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="query" name="query" type="text"
-                        [(ngModel)]="postcode"
-                        [disabled]="!canUseSearch()">
-                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" [disabled]="!canPerformSearch()">
+                    <input class="govuk-input govuk-!-width-two-thirds govuk-!-margin-right-1 govuk-!-margin-bottom-1"
+                        id="firstname" name="firstName" type="text"
+                        placeholder="First name" ngModel [disabled]="!canUseSearch()" minlength="2">
+                    <input class="govuk-input govuk-!-width-two-thirds govuk-!-margin-right-1" id="lastname" name="lastName" type="text"
+                        placeholder="Last name" ngModel [disabled]="!canUseSearch()" minlength="2">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" [disabled]="!canPerformNameSearch()">
                         Search
                     </button>
                 </form>
+            </app-panel>
+
+            <!-- Postcode search. -->
+            <app-panel class="govuk-!-margin-bottom-5">
+                <form #searchPostcode="ngForm" class="govuk-form-group govuk-!-margin-bottom-2"
+                      [class.disabled]="disable_identify_caller" (ngSubmit)="searchByPostcode()">
+                    <label class="govuk-label govuk-!-font-weight-bold" for="postcode">
+                        Search by postcode:
+                    </label>
+                    <input class="govuk-input govuk-!-width-one-half govuk-!-margin-right-1" id="postcode" name="postcode" type="text"
+                        ngModel required [disabled]="!canUseSearch()">
+                    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" [disabled]="!canPerformPostcodeSearch()">
+                        Search
+                    </button>
+                </form>
+
             </app-panel>
 
             <!-- Or... -->

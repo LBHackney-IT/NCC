@@ -15,6 +15,8 @@ export class AddressSearchService {
     // This service is used to store information about an address search, and is used by the "identify" pages.
 
     private _searching: boolean;
+    private _firstName: string;
+    private _lastName: string;
     private _postcode: string;
     private _addresses: ICitizenIndexSearchResult[];
     private _address: IAddressSearchGroupedResult;
@@ -33,6 +35,8 @@ export class AddressSearchService {
      */
     reset() {
         this._searching = false;
+        this._firstName = null;
+        this._lastName = null;
         this._postcode = null;
         this._error = false;
         this._addresses = null;
@@ -45,6 +49,14 @@ export class AddressSearchService {
      */
     setPostcode(postcode: string) {
         this._postcode = postcode;
+    }
+
+    setFirstName(name: string) {
+        this._firstName = name;
+    }
+
+    setLastName(name: string) {
+        this._lastName = name;
     }
 
     /**
@@ -80,7 +92,7 @@ export class AddressSearchService {
         this._addresses = null;
         this._error = false;
 
-        return this.ManageATenancyAPI.getCitizenIndexSearch(null, null, null, this._postcode, isAdvanceSearch)
+        return this.ManageATenancyAPI.getCitizenIndexSearch(this._firstName, this._lastName, null, this._postcode, isAdvanceSearch)
             .pipe(finalize(() => {
                 // The finalize pipe is triggered when the Observable is completed,
                 // whether resolved or rejected. It's equivalent to finally() for Promises.
