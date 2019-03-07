@@ -10,4 +10,22 @@ import { CurrentBalanceComponent } from '../current-balance/current-balance.comp
     templateUrl: './display-balance.component.html',
     styleUrls: ['./display-balance.component.scss']
 })
-export class DisplayBalanceComponent extends CurrentBalanceComponent { }
+export class DisplayBalanceComponent extends CurrentBalanceComponent {
+
+    @Input() indicate: boolean;
+
+    /**
+     *
+     */
+    isInCredit(): boolean {
+        return (this.indicate && this.details) ? (this.details.displayBalance > 0) : false;
+    }
+
+    /**
+     *
+     */
+    isInDebit(): boolean {
+        return (this.indicate && this.details) ? (this.details.displayBalance < 0) : false;
+    }
+
+}
