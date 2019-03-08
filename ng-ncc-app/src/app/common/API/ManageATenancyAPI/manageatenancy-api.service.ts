@@ -94,10 +94,10 @@ export class ManageATenancyAPIService {
 
         // Build the query part of the URL.
         let query = '';
-        if (first_name) { query += `firstname=${first_name}`; }
-        if (last_name) { query += `surname=${last_name}`; }
-        if (address) { query += `addressline12=${address}`; }
-        if (postcode) { query += `postcode=${postcode}`; }
+        if (first_name) { query += `&firstname=${first_name}`; }
+        if (last_name) { query += `&surname=${last_name}`; }
+        if (address) { query += `&addressline12=${address}`; }
+        if (postcode) { query += `&postcode=${postcode}`; }
         query += `&IsAdvanceSearch=${advanceSearch ? 'true' : 'false'}`;
         // very important to set IsAdvanceSearch to false.
 
