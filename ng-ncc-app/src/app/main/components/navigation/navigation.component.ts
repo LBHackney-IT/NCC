@@ -2,7 +2,7 @@
 // <app-navigation></app-navigation>
 
 import { environment } from '../../../../environments/environment';
-import { AfterViewChecked, Component, ElementRef, HostListener, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -40,15 +40,27 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     @ViewChild('notesButton') notesButton: ElementRef;
 
     // Listen to the scroll event on this component.
-    @HostListener('scroll', ['$event'])
-    onScrollEvent(event: UIEvent): void {
-        this._positionNotesForm();
-    }
+    // @HostListener('scroll', ['$event'])
+    // onScrollEvent(event: UIEvent): void {
+    //     this._positionNotesForm();
+    // }
 
     ngOnInit() {
         this.ViewOnly.updates()
             .pipe(takeUntil(this._destroyed$))
             .subscribe((status: boolean) => this.view_only = status);
+
+        this.Notes.whenEnabled
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                setTimeout(() => this._positionNotesForm(), 100);
+            });
+
+        this.Notes.whenShown
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                setTimeout(() => this._positionNotesForm(), 100);
+            });
     }
     /**
      *

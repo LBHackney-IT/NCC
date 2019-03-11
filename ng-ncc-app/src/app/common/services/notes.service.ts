@@ -29,6 +29,8 @@ export class NotesService {
     _usedNatures: ILogCallSelection[]; // previously used call natures.
 
     public getSettings = new ReplaySubject<IAddNoteParameters>();
+    public whenEnabled = new Subject<void>();
+    public whenShown = new Subject<void>();
 
     constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService, private authService: AuthService) { }
 
@@ -48,6 +50,7 @@ export class NotesService {
             this._enabled = true;
             this._name = name;
             this._visible = false;
+            this.whenEnabled.next();
         } else {
             this.disable();
         }
@@ -71,6 +74,7 @@ export class NotesService {
 
     show() {
         this._visible = true;
+        this.whenShown.next();
     }
 
     hide() {
@@ -78,7 +82,11 @@ export class NotesService {
     }
 
     toggle() {
-        this._visible = !this._visible;
+        if (this._visible) {
+            this.hide();
+        } else {
+            this.show();
+        }
     }
 
     /**
