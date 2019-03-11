@@ -35,7 +35,8 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     disable_previous_calls: boolean = environment.disable.previousCalls;
     disable_additional_reasons: boolean = environment.disable.additionalCallReason;
     view_only = false;
-    ending_call = false;
+    endingCall = false;
+    notePending: boolean;
 
     @ViewChild('notesButton') notesButton: ElementRef;
 
@@ -86,10 +87,17 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     }
 
     /**
-     * Displays the call type/reason dialogue.
+     * Begins the process of ending the current call.
+     * This is prevented if the agent is currently writing a note.
      */
     endCall() {
-        this.ending_call = true;
+        if (this.Notes.isInProgress) {
+            // Display a dialogue warning about an incomplete note.
+            this.notePending = true;
+        } else {
+            // Display the call type/reason dialogue.
+            this.endingCall = true;
+        }
     }
 
     /**

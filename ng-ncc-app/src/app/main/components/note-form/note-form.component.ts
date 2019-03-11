@@ -128,6 +128,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         if (reset) {
             this._resetComment();
         }
+        this.restore();
         this.Notes.hide();
     }
 
@@ -179,6 +180,14 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     }
 
     /**
+     *
+     */
+    updateNoteProgress() {
+        const has_comment = this.comment && this.comment.trim().length > 0;
+        this.Notes.isInProgress = has_comment;
+    }
+
+    /**
      * This is called when the form is submitted.
      * Here we save a manual note.
      */
@@ -200,6 +209,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
 
                         // Reset just the comment (we might want to keep the selected call type and reason).
                         this.comment = null;
+                        this.Notes.isInProgress = false;
                     },
                     () => {
                         // An error occurred.
@@ -230,6 +240,8 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         if (this.callNatureField) {
             this.callNatureField.reset();
         }
+
+        this.Notes.isInProgress = false;
     }
 
     /**

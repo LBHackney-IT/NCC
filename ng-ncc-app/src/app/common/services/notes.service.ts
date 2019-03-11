@@ -25,6 +25,7 @@ export class NotesService {
     _name: string | null = null;
     _settings: IAddNoteParameters = null;
     _enabled: boolean;
+    private _isInProgress: boolean;
     _visible: boolean;
     _usedNatures: ILogCallSelection[]; // previously used call natures.
 
@@ -433,6 +434,14 @@ export class NotesService {
         } else {
             return of({});
         }
+    }
+
+    set isInProgress(value: boolean) {
+        this._isInProgress = value;
+    }
+
+    get isInProgress(): boolean {
+        return this._isInProgress;
     }
 
 }

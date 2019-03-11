@@ -33,7 +33,7 @@
         <div class="govuk-form-group">
             <label class="govuk-label" for="note-comment">Comments</label>
             <textarea #commentField class="govuk-textarea note-form__field" id="note-comment" name="comment" required rows="4"
-                [(ngModel)]="comment" [disabled]="saving"></textarea>
+                [(ngModel)]="comment" (ngModelChange)="updateNoteProgress()" [disabled]="saving"></textarea>
         </div>
 
         <!-- Was the call transferred? -->
