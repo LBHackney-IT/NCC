@@ -47,7 +47,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        if (changes.account) {
+        if (changes.account || changes.minDate || changes.maxDate) {
             // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
             this._loadTransactions();
         } else {
