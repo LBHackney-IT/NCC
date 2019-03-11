@@ -87,6 +87,7 @@ import { CurrentBalanceComponent } from './components/current-balance/current-ba
 import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
 import { CommsTelephoneComponent } from './components/comms-telephone/comms-telephone.component';
 import { PatchDetailsComponent } from './components/patch-details/patch-details.component';
+import { DraggableModule } from '../common/directives/draggable/draggable.module';
 
 @NgModule({
     declarations: [
@@ -165,6 +166,7 @@ import { PatchDetailsComponent } from './components/patch-details/patch-details.
 
         LayoutModule,
         ComponentsModule,
+        DraggableModule,
 
         // Set up routing.
         AppRoutingModule

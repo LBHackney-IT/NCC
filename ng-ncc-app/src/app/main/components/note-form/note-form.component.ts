@@ -58,6 +58,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         this.expanded = false;
         this._resetComment();
 
+        // Adjust the position of the add note form so it remains within the browser window.
         this.Notes.updatePosition()
             .pipe(takeUntil(this._destroyed$))
             .subscribe((coords: { x: number, y: number }) => {
@@ -99,17 +100,15 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         this.Notes.toggle();
 
         if (this.Notes.isVisible()) {
-            // Set the focus on the comment field if the form is visible.
-            // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
-            setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
+            this.openForm();
         } else {
-            this._resetComment();
-            this.error = false;
+            this.closeForm();
         }
     }
 
     openForm() {
         this.Notes.show();
+        this.restore();
         // Set the focus on the comment field if the form is visible.
         // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
         setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);

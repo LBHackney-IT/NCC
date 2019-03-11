@@ -1,4 +1,5 @@
-<form class="form govuk-body" [class.is-minimised]="isMinimised" #commentForm="ngForm" *ngIf="shouldShow()" (ngSubmit)="saveNote()">
+<form class="form govuk-body" [class.is-minimised]="isMinimised" #commentForm="ngForm" *ngIf="shouldShow()" (ngSubmit)="saveNote()"
+[draggable]="true">
 
     <!-- A makeshift bar, used for moving the note form around the screen. -->
     <div class="drag-bar">
@@ -12,7 +13,7 @@
     </div>
 
     <!-- The content of the add note form, which should be hidden if the form is "minimised". -->
-    <ng-container *ngIf="!isMinimised">
+    <div *ngIf="!isMinimised" [draggable]="false">
 
         <!-- Caller details. -->
         <app-value-list class="govuk-body-s">
@@ -91,5 +92,5 @@
             The note was saved.
         </app-success-panel>
 
-    </ng-container>
+    </div>
 </form>
