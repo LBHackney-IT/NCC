@@ -35,14 +35,21 @@ $note-form-close-offset: 1rem !default;
     display: flex;
     align-items: stretch;
     flex-wrap: nowrap;
+    margin: calc(-#{$note-form-padding} + #{$note-form-border-width});
+    margin-bottom: .5rem;
 
-    &:before {
-        content: "";
-        display: block;
-        flex-grow: 1;
-        background: #CCC;
+    .is-minimised & {
+        margin-bottom: 0;
     }
 }
+
+.drag-bar__title {
+    background: #CCC;
+    display: block;
+    flex-grow: 1;
+    padding: .2rem .5em;
+}
+
 
 .form__close,
 .form__minimise,

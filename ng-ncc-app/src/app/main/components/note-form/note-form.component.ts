@@ -35,14 +35,15 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     page_defs = PAGES;
 
     containerStyle: Object; // used to control the inline style of .note-form__container.
-    comment: string = null;
+    comment: string;
     saving: boolean;        // set to TRUE when saving a note.
     call_nature: ILogCallSelection;  // the selected call type and reason.
     show: boolean;          // whether the note component is visible on the page.
-    error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
     isMinimised: boolean;
-    transferred = false;
+    transferred: boolean;
+    savedProblem: boolean;         // set to TRUE if there was a problem with saving a note.
+    savedSuccess: boolean;         // set to TRUE if a note was saved successfully.
 
     constructor(
         private element: ElementRef,
@@ -105,6 +106,23 @@ export class NoteFormComponent implements OnInit, OnDestroy {
             this._resetComment();
             this.error = false;
         }
+    }
+
+    openForm() {
+        this.Notes.show();
+        // Set the focus on the comment field if the form is visible.
+        // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
+        setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
+    }
+
+    /**
+     *
+     */
+    closeForm(reset: boolean = false) {
+        if (reset) {
+            this._resetComment();
+        }
+        this.Notes.hide();
     }
 
     /**
@@ -192,18 +210,14 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                 }))
                 .subscribe(
                     () => {
-                        this._resetComment();
-                        if (!environment.disable.noteCloseOnSave) {
-                            // Automatically close the note form.
-                            this.Notes.hide();
-                            // } else {
-                            // Display a confirmation that the note was saved.
+                        // Display a confirmation that the note was saved.
+                        this.savedSuccess = true;
 
-                            // Reset the comment.
-                            this.comment = null;
-                        }
+                        // Reset just the comment (we might want to keep the selected call type and reason).
+                        this.comment = null;
                     },
-                    (error) => {
+                    () => {
+                        // An error occurred.
                         this.error = true;
                     }
                 );
@@ -211,10 +225,19 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Simply reset the comment body.
+     * Cancels the addition of a note.
+     * This will reset the form and close the add note form.
+     */
+    cancelNote() {
+        this.closeForm(true);
+    }
+
+    /**
+     * Simply reset the form.
      */
     _resetComment() {
         this.comment = null;
+        this.error = false;
         this.transferred = false;
     }
 
