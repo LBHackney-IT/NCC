@@ -1,18 +1,18 @@
 import { environment } from '../../../../environments/environment';
 
 import { Component, HostBinding, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
-import { CallService } from '../../../common/services/call.service';
-import { WindowService } from '../../../common/services/window.service';
-import { NotesService } from '../../../common/services/notes.service';
-import { HelperService } from '../../../common/services/helper.service';
+import { WindowService } from 'src/app/common/services/window.service';
+import { NotesService } from 'src/app/common/services/notes.service';
+import { HelperService } from 'src/app/common/services/helper.service';
 
-import { PAGES } from '../../../common/constants/pages.constant';
+import { PAGES } from 'src/app/common/constants/pages.constant';
 
-import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
+import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
+import { IAddNoteParameters } from 'src/app/common/interfaces/add-note-parameters';
+import { CallNatureComponent } from '../call-nature/call-nature.component';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
 
     @ViewChild('commentForm') commentForm: ElementRef;
     @ViewChild('commentField') commentField: ElementRef;
+    @ViewChild('callNatureField') callNatureField: CallNatureComponent;
 
     private _destroyed$ = new Subject();
 
@@ -41,14 +42,13 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     show: boolean;          // whether the note component is visible on the page.
     expanded: boolean;      // whether the form for adding a note is expanded.
     isMinimised: boolean;
+    settings: IAddNoteParameters;
     transferred: boolean;
     savedProblem: boolean;         // set to TRUE if there was a problem with saving a note.
     savedSuccess: boolean;         // set to TRUE if a note was saved successfully.
 
     constructor(
         private element: ElementRef,
-        private router: Router,
-        private Call: CallService,
         private Helper: HelperService,
         private Notes: NotesService,
         private Window: WindowService
@@ -73,6 +73,13 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                 } else {
                     this.y = coords.y;
                 }
+            });
+
+        // Subscribe to notes settings updates.
+        this.Notes.getSettings
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((settings: IAddNoteParameters) => {
+                this.settings = settings;
             });
     }
 
@@ -125,17 +132,10 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Returns TRUE if the caller is anonymous.
-     */
-    isCallerAnonymous(): boolean {
-        return environment.anonymousUserID === this.Notes.getSettings().crm_contact_id;
-    }
-
-    /**
      * Returns TRUE if the caller is a non-tenant.
      */
     isCallerNonTenant(): boolean {
-        return environment.nonTenantUserID === this.Notes.getSettings().crm_contact_id;
+        return this.settings && environment.nonTenantUserID === this.settings.crm_contact_id;
     }
 
     /**
@@ -151,8 +151,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      *
      */
     getTenancyReference(): string {
-        return this.Notes.getSettings().tenancy_reference;
-        // return this.Call.getTenancyReference();
+        return this.settings && this.settings.tenancy_reference;
     }
 
     /**
@@ -173,24 +172,10 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     canSaveNote(): boolean {
         const is_saving = this.saving;
         const has_comment = this.comment && this.comment.trim().length > 0;
-        const has_call_id = !!(this.Notes.getSettings().call_id);
+        const has_call_id = !!(this.settings && this.settings.call_id);
         const has_call_nature = this.isCallNatureSelected();
 
         return !is_saving && (has_comment && has_call_id && has_call_nature);
-    }
-
-    /**
-     * Returns TRUE if we can view the current caller's notes.
-     */
-    canViewNotes(): boolean {
-        return this.Call.hasCaller() && !(this.isCallerAnonymous() || this.isCallerNonTenant());
-    }
-
-    /**
-     * Navigate to the view notes page.
-     */
-    viewNotes() {
-        this.router.navigateByUrl(PAGES.VIEW_NOTES.route);
     }
 
     /**
@@ -199,7 +184,8 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      */
     saveNote() {
         if (this.canSaveNote()) {
-            this.error = false;
+            this.savedProblem = false;
+            this.savedSuccess = false;
             this.saving = true;
 
             this.Notes.recordManualNote(this.call_nature, this.comment, this.transferred)
@@ -217,7 +203,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                     },
                     () => {
                         // An error occurred.
-                        this.error = true;
+                        this.savedProblem = true;
                     }
                 );
         }
@@ -235,9 +221,15 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      * Simply reset the form.
      */
     _resetComment() {
+        this.call_nature = null;
         this.comment = null;
-        this.error = false;
+        this.savedSuccess = false;
+        this.savedProblem = false;
         this.transferred = false;
+
+        if (this.callNatureField) {
+            this.callNatureField.reset();
+        }
     }
 
     /**

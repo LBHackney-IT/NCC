@@ -1,5 +1,5 @@
-<form class="form govuk-body" [class.is-minimised]="isMinimised" #commentForm="ngForm" *ngIf="shouldShow()" (ngSubmit)="saveNote()"
-[draggable]="true">
+<form class="form govuk-body" #commentForm (ngSubmit)="saveNote()"
+    [class.is-minimised]="isMinimised" [class.is-hidden]="!shouldShow()" [draggable]="true">
 
     <!-- A makeshift bar, used for moving the note form around the screen. -->
     <div class="drag-bar">
@@ -18,18 +18,16 @@
         <!-- Caller details. -->
         <app-value-list class="govuk-body-s">
 
-            <app-value-list-label *ngIf="!isCallerAnonymous()">Reference</app-value-list-label>
-            <app-value-list-value *ngIf="!isCallerAnonymous()">{{ getTenancyReference() }}</app-value-list-value>
+            <app-value-list-label>Reference</app-value-list-label>
+            <app-value-list-value>{{ getTenancyReference() }}</app-value-list-value>
 
             <app-value-list-label>Caller</app-value-list-label>
-            <app-value-list-value>
-                <span [class.is-anonymous]="isCallerAnonymous()">{{ getCallerName() }}</span>
-            </app-value-list-value>
+            <app-value-list-value>{{ getCallerName() }}</app-value-list-value>
 
         </app-value-list>
 
         <!-- Selecting the call type and reason. -->
-        <app-call-nature-dropdown (changed)="selectedCallNature($event)" [disabled]="saving"></app-call-nature-dropdown>
+        <app-call-nature-dropdown #callNatureField (changed)="selectedCallNature($event)" [disabled]="saving"></app-call-nature-dropdown>
 
         <!-- Comment field. -->
         <div class="govuk-form-group">

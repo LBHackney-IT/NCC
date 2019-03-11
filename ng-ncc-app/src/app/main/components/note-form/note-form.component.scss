@@ -38,6 +38,10 @@ $note-form-close-offset: 1rem !default;
             cursor: grabbing;
         }
     }
+
+    &.is-hidden {
+        display: none;
+    }
 }
 
 .drag-bar {

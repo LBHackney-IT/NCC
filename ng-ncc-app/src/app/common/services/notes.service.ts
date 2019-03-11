@@ -28,6 +28,8 @@ export class NotesService {
     _visible: boolean;
     _usedNatures: ILogCallSelection[]; // previously used call natures.
 
+    public getSettings = new ReplaySubject<IAddNoteParameters>();
+
     constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService, private authService: AuthService) { }
 
     /**
@@ -52,6 +54,7 @@ export class NotesService {
 
         this._usedNatures = [];
         this._settings = settings;
+        this.getSettings.next(settings);
     }
 
     /**
@@ -61,8 +64,9 @@ export class NotesService {
         this._enabled = false;
         this._name = null;
         this._usedNatures = [];
-        this._settings = null;
         this._visible = false;
+        this._settings = null;
+        this.getSettings.next(this._settings);
     }
 
     show() {
@@ -92,13 +96,6 @@ export class NotesService {
     }
 
     /**
-     * Returns the settings used when enabling the add note form.
-     */
-    getSettings(): IAddNoteParameters {
-        return this._settings;
-    }
-
-    /**
      * Returns the caller/tenant name to display on the add note form.
      */
     getName(): string {
@@ -121,9 +118,6 @@ export class NotesService {
             // console.log('View only status; do not create an automatic note.');
             return of(true);
         }
-
-        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        const callType = call_nature ? call_nature.call_type.id : null;
 
         return forkJoin(
 
@@ -162,10 +156,6 @@ export class NotesService {
         if (transferred) {
             note_content = `${note_content}\n(Transferred)`;
         }
-
-        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        const callType = call_nature.call_type.id;
-
 
         return forkJoin(
 
