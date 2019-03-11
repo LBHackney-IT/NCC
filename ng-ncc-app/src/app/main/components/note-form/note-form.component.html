@@ -1,77 +1,86 @@
 <form class="form govuk-body" #commentForm="ngForm" *ngIf="shouldShow()" (ngSubmit)="saveNote()">
 
-    <a class="form__close" (click)="toggle()">&times;</a>
+    <!-- A makeshift bar, used for moving the note form around the screen. -->
+    <div class="drag-bar">
 
-    <h2 class="govuk-header-m">Add a note</h2>
+        <a class="form__minimise" (click)="minimise()" *ngIf="!isMinimised">&#95;</a>
+        <a class="form__restore" (click)="restore()" *ngIf="isMinimised">&#10063;</a>
+        <a class="form__close" (click)="toggle()">&times;</a>
 
-    <!-- Caller details. -->
-    <app-value-list class="govuk-body-s">
-
-        <app-value-list-label *ngIf="!isCallerAnonymous()">Reference</app-value-list-label>
-        <app-value-list-value *ngIf="!isCallerAnonymous()">{{ getTenancyReference() }}</app-value-list-value>
-
-        <app-value-list-label>Caller</app-value-list-label>
-        <app-value-list-value>
-            <span [class.is-anonymous]="isCallerAnonymous()">{{ getCallerName() }}</span>
-        </app-value-list-value>
-
-    </app-value-list>
-
-    <app-call-nature-dropdown (changed)="selectedCallNature($event)" [disabled]="saving"></app-call-nature-dropdown>
-
-    <!-- Comment field. -->
-    <div class="govuk-form-group">
-        <label class="govuk-label" for="more-detail">Comments</label>
-        <textarea #commentField class="govuk-textarea note-form__field" id="more-detail" name="comment" required rows="4"
-            [(ngModel)]="comment" [disabled]="saving" aria-describedby="more-detail-hint"></textarea>
     </div>
 
-    <!-- Was the call transferred? -->
-    <div class="govuk-form-group govuk-!-margin-bottom-3">
-        <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <h3 class="govuk-fieldset__heading">Did you transfer the caller?</h3>
-            </legend>
-            <div class="govuk-radios govuk-radios--inline">
-                <div class="govuk-radios__item small-radio">
-                    <input class="govuk-radios__input" id="transfer-yes" name="transfer" type="radio" value="yes"
-                        [(ngModel)]="transferred" [value]="true" [disabled]="saving">
-                    <label class="govuk-label govuk-radios__label" for="transfer-yes">
-                        Yes
-                    </label>
+    <!-- The content of the add note form, which should be hidden if the form is "minimised". -->
+    <ng-container *ngIf="!isMinimised">
+        <h2 class="govuk-header-m">Add a note</h2>
+
+        <!-- Caller details. -->
+        <app-value-list class="govuk-body-s">
+
+            <app-value-list-label *ngIf="!isCallerAnonymous()">Reference</app-value-list-label>
+            <app-value-list-value *ngIf="!isCallerAnonymous()">{{ getTenancyReference() }}</app-value-list-value>
+
+            <app-value-list-label>Caller</app-value-list-label>
+            <app-value-list-value>
+                <span [class.is-anonymous]="isCallerAnonymous()">{{ getCallerName() }}</span>
+            </app-value-list-value>
+
+        </app-value-list>
+
+        <app-call-nature-dropdown (changed)="selectedCallNature($event)" [disabled]="saving"></app-call-nature-dropdown>
+
+        <!-- Comment field. -->
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="more-detail">Comments</label>
+            <textarea #commentField class="govuk-textarea note-form__field" id="more-detail" name="comment" required rows="4"
+                [(ngModel)]="comment" [disabled]="saving" aria-describedby="more-detail-hint"></textarea>
+        </div>
+
+        <!-- Was the call transferred? -->
+        <div class="govuk-form-group govuk-!-margin-bottom-3">
+            <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    <h3 class="govuk-fieldset__heading">Did you transfer the caller?</h3>
+                </legend>
+                <div class="govuk-radios govuk-radios--inline">
+                    <div class="govuk-radios__item small-radio">
+                        <input class="govuk-radios__input" id="transfer-yes" name="transfer" type="radio" value="yes"
+                            [(ngModel)]="transferred" [value]="true" [disabled]="saving">
+                        <label class="govuk-label govuk-radios__label" for="transfer-yes">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item small-radio">
+                        <input class="govuk-radios__input" id="transfer-no" name="transfer" type="radio" value="no"
+                            [(ngModel)]="transferred" [value]="false" [disabled]="saving">
+                        <label class="govuk-label govuk-radios__label" for="transfer-no">
+                            No
+                        </label>
+                    </div>
                 </div>
-                <div class="govuk-radios__item small-radio">
-                    <input class="govuk-radios__input" id="transfer-no" name="transfer" type="radio" value="no"
-                        [(ngModel)]="transferred" [value]="false" [disabled]="saving">
-                    <label class="govuk-label govuk-radios__label" for="transfer-no">
-                        No
-                    </label>
-                </div>
-            </div>
-        </fieldset>
-    </div>
+            </fieldset>
+        </div>
 
-    <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <div class="govuk-form-group govuk-!-margin-bottom-2">
 
-        <!-- Save button. -->
-        <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="2"
-            [disabled]="!canSaveNote()">
-            Save
-        </button>
+            <!-- Save button. -->
+            <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-right-1" tabindex="2"
+                [disabled]="!canSaveNote()">
+                Save
+            </button>
 
-        <!-- Close button. -->
-        <button type="button" class="govuk-button govuk-!-margin-bottom-0" tabindex="4" (click)="toggle()">
-            Cancel
-        </button>
+            <!-- Close button. -->
+            <button type="button" class="govuk-button govuk-!-margin-bottom-0" tabindex="4" (click)="toggle()">
+                Cancel
+            </button>
 
-    </div>
+        </div>
 
-    <app-error-panel class="govuk-!-margin-bottom-5" *ngIf="error">
-        <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Failed to save</h2>
-        <p class="govuk-body">
-            There was a problem adding a note to this call. Please try again.
-        </p>
-        <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
-    </app-error-panel>
-
+        <app-error-panel class="govuk-!-margin-bottom-5" *ngIf="error">
+            <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Failed to save</h2>
+            <p class="govuk-body">
+                There was a problem adding a note to this call. Please try again.
+            </p>
+            <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
+        </app-error-panel>
+    </ng-container>
 </form>

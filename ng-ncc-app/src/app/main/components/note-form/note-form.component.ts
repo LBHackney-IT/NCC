@@ -41,6 +41,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     show: boolean;          // whether the note component is visible on the page.
     error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
+    isMinimised: boolean;
     transferred = false;
 
     constructor(
@@ -236,4 +237,17 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         return false;
     }
 
+    /**
+     * Minimise the add note form.
+     */
+    minimise() {
+        this.isMinimised = true;
+    }
+
+    /**
+     * Restore the add note form, i.e. bring it out of miniminsation.
+     */
+    restore() {
+        this.isMinimised = false;
+    }
 }
