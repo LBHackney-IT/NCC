@@ -68,8 +68,17 @@ export class CommsTelephoneComponent implements OnInit {
         const allNumbers = (this.details.telephone || []).concat(this.details.mobile || []);
         this.telephoneNumbers = Array.from(new Set(allNumbers));
 
-        // Set the default number to use, if available.
-        this.setDefault();
+        console.log(this.selected);
+        if (this.selected) {
+            console.log(this.telephoneNumbers, this.selected);
+            if (this.telephoneNumbers.indexOf(this.selected) === -1) {
+                this.otherNumber = this.selected;
+                this.selected = null;
+            }
+        } else {
+            // Set the default number to use, if available.
+            this.setDefault();
+        }
     }
 
     /**

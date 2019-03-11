@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input, HostListener, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Output, Input, HostListener, ViewChild, ElementRef, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
 import { IActiveDirectoryUserResult } from '../../interfaces/active-directory-user-result';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take, finalize } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
     templateUrl: './user-lookup.component.html',
     styleUrls: ['./user-lookup.component.scss']
 })
-export class UserLookupComponent {
+export class UserLookupComponent implements OnChanges {
     @Input() model: string;
     @Output() modelChange = new EventEmitter<string>();
 
@@ -48,6 +48,12 @@ export class UserLookupComponent {
                     this.updateList();
                 }
             });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.model) {
+            this.txtQuery = changes.model.currentValue;
+        }
     }
 
     /**
