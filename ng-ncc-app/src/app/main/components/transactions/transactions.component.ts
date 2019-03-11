@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { take, finalize } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
-import { IAccountDetails } from '../../../common/interfaces/account-details';
-import { ITenancyTransactionRow } from '../../../common/interfaces/tenancy-transaction-row';
+import { NCCAPIService } from 'src/app/common/API/NCCAPI/ncc-api.service';
+import { IAccountDetails } from 'src/app/common/interfaces/account-details';
+import { ITenancyTransactionRow } from 'src/app/common/interfaces/tenancy-transaction-row';
 
 @Component({
     selector: 'app-transactions',
@@ -14,7 +14,6 @@ import { ITenancyTransactionRow } from '../../../common/interfaces/tenancy-trans
 })
 export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() account: IAccountDetails;
-    @Input() currentBalance: number;
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
