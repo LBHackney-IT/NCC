@@ -84,7 +84,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
                     this._rows = rows;
                     this._filterTransactions();
                 },
-                (error) => {
+                () => {
                     this.error = true;
                 }
             );
@@ -94,22 +94,11 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     _filterTransactions() {
-        const min_date = this.minDate ? moment(this.minDate).format('YYYYMMDDHHmmss') : null;
-        const max_date = this.maxDate ? moment(this.maxDate).format('YYYYMMDDHHmmss') : null;
-
         this._filtered = this._rows.filter(
             (item: ITenancyTransactionRow) => {
                 let outcome = true;
 
-                // Check against the provided dates (if set).
-                if (outcome && min_date) {
-                    outcome = item.dateSort >= min_date;
-                }
-                if (outcome && max_date) {
-                    outcome = item.dateSort < max_date;
-                }
-
-                if (outcome && this.filter) {
+                if (this.filter) {
                     // Put the item through the filter.
                     Object.keys(this.filter).forEach(
                         key => {
@@ -119,6 +108,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
                             }
                         });
                 }
+
                 return outcome;
             });
     }
