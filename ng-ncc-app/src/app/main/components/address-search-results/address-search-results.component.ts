@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { ICitizenIndexSearchResult } from '../../../common/interfaces/citizen-index-search-result';
 import { IAddressSearchGroupedResult } from '../../../common/interfaces/address-search-grouped-result';
+import { CitizenHelper } from 'src/app/common/classes/CitizenHelper.class';
 
 @Component({
     selector: 'app-address-search-results',
@@ -64,7 +65,7 @@ export class AddressSearchResultsComponent implements OnChanges {
                 (r, v: ICitizenIndexSearchResult, i, a, k = v.fullAddressSearch) => (
                     (r[k] || (r[k] = {
                         id: k,
-                        address: v.fullAddressDisplay,
+                        address: CitizenHelper.getAddress(v),
                         addressLine1_raw: parseInt(v.addressLine1.toLowerCase().replace(/^(flat|room) [a-z]?/, ''), 10),
                         addressLine1: v.addressLine1.toLowerCase(),
                         addressLine2: v.addressLine2.toLowerCase(),
