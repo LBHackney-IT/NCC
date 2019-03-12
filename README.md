@@ -100,7 +100,7 @@ Build folder: `ng-ncc-app/dist/ng-ncc-app`
 
 Folder: `\\lbhwsappp01\c$\ng-ncc-app`
 
-Single Sign On (SSO): http://lbhwsappp01:3030
+Single Sign On (SSO): http://ncc.hackney.gov.uk:3030/
 
 View Only mode: http://lbhwsappp01:3030/default.aspx?viewonly
 
@@ -131,6 +131,6 @@ ng build ng-ncc-callback --prod
 
 Build folder: `ng-ncc-app/dist/ng-ncc-callback`
 
-Server folder: *to be determined*
+Server folder: \\lbhdmzwebp03\c$\ng-ncc-callback_test
 
-Front end: *to be determined*
+Front end: https://ncccallback.hackney.gov.uk/[callback id]/[email address]
