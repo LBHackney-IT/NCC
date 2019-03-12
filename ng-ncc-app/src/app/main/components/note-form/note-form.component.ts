@@ -1,18 +1,18 @@
 import { environment } from '../../../../environments/environment';
 
 import { Component, HostBinding, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
 
-import { CallService } from '../../../common/services/call.service';
-import { WindowService } from '../../../common/services/window.service';
-import { NotesService } from '../../../common/services/notes.service';
-import { HelperService } from '../../../common/services/helper.service';
+import { WindowService } from 'src/app/common/services/window.service';
+import { NotesService } from 'src/app/common/services/notes.service';
+import { HelperService } from 'src/app/common/services/helper.service';
 
-import { PAGES } from '../../../common/constants/pages.constant';
+import { PAGES } from 'src/app/common/constants/pages.constant';
 
-import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
+import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
+import { IAddNoteParameters } from 'src/app/common/interfaces/add-note-parameters';
+import { CallNatureComponent } from '../call-nature/call-nature.component';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
 
     @ViewChild('commentForm') commentForm: ElementRef;
     @ViewChild('commentField') commentField: ElementRef;
+    @ViewChild('callNatureField') callNatureField: CallNatureComponent;
 
     private _destroyed$ = new Subject();
 
@@ -35,18 +36,19 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     page_defs = PAGES;
 
     containerStyle: Object; // used to control the inline style of .note-form__container.
-    comment: string = null;
+    comment: string;
     saving: boolean;        // set to TRUE when saving a note.
     call_nature: ILogCallSelection;  // the selected call type and reason.
     show: boolean;          // whether the note component is visible on the page.
-    error: boolean;         // set to TRUE if there was a problem with saving a note.
     expanded: boolean;      // whether the form for adding a note is expanded.
-    transferred = false;
+    isMinimised: boolean;
+    settings: IAddNoteParameters;
+    transferred: boolean;
+    savedProblem: boolean;         // set to TRUE if there was a problem with saving a note.
+    savedSuccess: boolean;         // set to TRUE if a note was saved successfully.
 
     constructor(
         private element: ElementRef,
-        private router: Router,
-        private Call: CallService,
         private Helper: HelperService,
         private Notes: NotesService,
         private Window: WindowService
@@ -56,6 +58,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         this.expanded = false;
         this._resetComment();
 
+        // Adjust the position of the add note form so it remains within the browser window.
         this.Notes.updatePosition()
             .pipe(takeUntil(this._destroyed$))
             .subscribe((coords: { x: number, y: number }) => {
@@ -70,6 +73,13 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                 } else {
                     this.y = coords.y;
                 }
+            });
+
+        // Subscribe to notes settings updates.
+        this.Notes.getSettings
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((settings: IAddNoteParameters) => {
+                this.settings = settings;
             });
     }
 
@@ -97,27 +107,36 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         this.Notes.toggle();
 
         if (this.Notes.isVisible()) {
-            // Set the focus on the comment field if the form is visible.
-            // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
-            setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
+            this.openForm();
         } else {
-            this._resetComment();
-            this.error = false;
+            this.closeForm();
         }
     }
 
+    openForm() {
+        this.Notes.show();
+        this.restore();
+        // Set the focus on the comment field if the form is visible.
+        // The timeout is necessary because the field isn't immediately visible (and therefore not focusable).
+        setTimeout(() => { this.commentField.nativeElement.focus(); }, 1);
+    }
+
     /**
-     * Returns TRUE if the caller is anonymous.
+     *
      */
-    isCallerAnonymous(): boolean {
-        return environment.anonymousUserID === this.Notes.getSettings().crm_contact_id;
+    closeForm(reset: boolean = false) {
+        if (reset) {
+            this._resetComment();
+        }
+        this.restore();
+        this.Notes.hide();
     }
 
     /**
      * Returns TRUE if the caller is a non-tenant.
      */
     isCallerNonTenant(): boolean {
-        return environment.nonTenantUserID === this.Notes.getSettings().crm_contact_id;
+        return this.settings && environment.nonTenantUserID === this.settings.crm_contact_id;
     }
 
     /**
@@ -133,8 +152,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      *
      */
     getTenancyReference(): string {
-        return this.Notes.getSettings().tenancy_reference;
-        // return this.Call.getTenancyReference();
+        return this.settings && this.settings.tenancy_reference;
     }
 
     /**
@@ -155,24 +173,18 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     canSaveNote(): boolean {
         const is_saving = this.saving;
         const has_comment = this.comment && this.comment.trim().length > 0;
-        const has_call_id = !!(this.Notes.getSettings().call_id);
+        const has_call_id = !!(this.settings && this.settings.call_id);
         const has_call_nature = this.isCallNatureSelected();
 
         return !is_saving && (has_comment && has_call_id && has_call_nature);
     }
 
     /**
-     * Returns TRUE if we can view the current caller's notes.
+     *
      */
-    canViewNotes(): boolean {
-        return this.Call.hasCaller() && !(this.isCallerAnonymous() || this.isCallerNonTenant());
-    }
-
-    /**
-     * Navigate to the view notes page.
-     */
-    viewNotes() {
-        this.router.navigateByUrl(PAGES.VIEW_NOTES.route);
+    updateNoteProgress() {
+        const has_comment = this.comment && this.comment.trim().length > 0;
+        this.Notes.isInProgress = has_comment;
     }
 
     /**
@@ -181,7 +193,8 @@ export class NoteFormComponent implements OnInit, OnDestroy {
      */
     saveNote() {
         if (this.canSaveNote()) {
-            this.error = false;
+            this.savedProblem = false;
+            this.savedSuccess = false;
             this.saving = true;
 
             this.Notes.recordManualNote(this.call_nature, this.comment, this.transferred)
@@ -191,30 +204,44 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                 }))
                 .subscribe(
                     () => {
-                        this._resetComment();
-                        if (!environment.disable.noteCloseOnSave) {
-                            // Automatically close the note form.
-                            this.Notes.hide();
-                            // } else {
-                            // Display a confirmation that the note was saved.
+                        // Display a confirmation that the note was saved.
+                        this.savedSuccess = true;
 
-                            // Reset the comment.
-                            this.comment = null;
-                        }
+                        // Reset just the comment (we might want to keep the selected call type and reason).
+                        this.comment = null;
+                        this.Notes.isInProgress = false;
                     },
-                    (error) => {
-                        this.error = true;
+                    () => {
+                        // An error occurred.
+                        this.savedProblem = true;
                     }
                 );
         }
     }
 
     /**
-     * Simply reset the comment body.
+     * Cancels the addition of a note.
+     * This will reset the form and close the add note form.
+     */
+    cancelNote() {
+        this.closeForm(true);
+    }
+
+    /**
+     * Simply reset the form.
      */
     _resetComment() {
+        this.call_nature = null;
         this.comment = null;
+        this.savedSuccess = false;
+        this.savedProblem = false;
         this.transferred = false;
+
+        if (this.callNatureField) {
+            this.callNatureField.reset();
+        }
+
+        this.Notes.isInProgress = false;
     }
 
     /**
@@ -236,4 +263,17 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         return false;
     }
 
+    /**
+     * Minimise the add note form.
+     */
+    minimise() {
+        this.isMinimised = true;
+    }
+
+    /**
+     * Restore the add note form, i.e. bring it out of miniminsation.
+     */
+    restore() {
+        this.isMinimised = false;
+    }
 }

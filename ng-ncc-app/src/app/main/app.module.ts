@@ -87,6 +87,7 @@ import { CurrentBalanceComponent } from './components/current-balance/current-ba
 import { DisplayBalanceComponent } from './components/display-balance/display-balance.component';
 import { CommsTelephoneComponent } from './components/comms-telephone/comms-telephone.component';
 import { PatchDetailsComponent } from './components/patch-details/patch-details.component';
+import { DraggableModule } from '../common/directives/draggable/draggable.module';
 import { CallRevisionAddressComponent } from './components/call-revision-address/call-revision-address.component';
 import { CallRevisionCallerComponent } from 'src/app/main/components/call-revision-caller/call-revision-caller.component';
 
@@ -169,6 +170,7 @@ import { CallRevisionCallerComponent } from 'src/app/main/components/call-revisi
 
         LayoutModule,
         ComponentsModule,
+        DraggableModule,
 
         // Set up routing.
         AppRoutingModule

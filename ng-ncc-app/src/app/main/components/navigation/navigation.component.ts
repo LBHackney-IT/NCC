@@ -2,7 +2,7 @@
 // <app-navigation></app-navigation>
 
 import { environment } from '../../../../environments/environment';
-import { AfterViewChecked, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -26,6 +26,8 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     view_only = false;
     ending_call = false;
     showNotesButton: boolean;
+    endingCall = false;
+    notePending: boolean;
 
     constructor(
         private AddressSearch: AddressSearchService,
@@ -42,16 +44,27 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     @ViewChild('notesButton') notesButton: ElementRef;
 
     // Listen to the scroll event on this component.
-    @HostListener('scroll', ['$event'])
-    onScrollEvent(): void {
-        this._positionNotesForm();
-    }
+    // @HostListener('scroll', ['$event'])
+    // onScrollEvent(event: UIEvent): void {
+    //     this._positionNotesForm();
+    // }
 
     ngOnInit() {
         this.ViewOnly.updates()
             .pipe(takeUntil(this._destroyed$))
             .subscribe((status: boolean) => this.view_only = status);
 
+        this.Notes.whenEnabled
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                setTimeout(() => this._positionNotesForm(), 100);
+            });
+
+        this.Notes.whenShown
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(() => {
+                setTimeout(() => this._positionNotesForm(), 100);
+            });
         this.Notes.toggled
             .pipe(takeUntil(this._destroyed$))
             .subscribe((state: boolean) => {
@@ -83,10 +96,17 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     }
 
     /**
-     * Displays the call type/reason dialogue.
+     * Begins the process of ending the current call.
+     * This is prevented if the agent is currently writing a note.
      */
     endCall() {
-        this.ending_call = true;
+        if (this.Notes.isInProgress) {
+            // Display a dialogue warning about an incomplete note.
+            this.notePending = true;
+        } else {
+            // Display the call type/reason dialogue.
+            this.endingCall = true;
+        }
     }
 
     /**
