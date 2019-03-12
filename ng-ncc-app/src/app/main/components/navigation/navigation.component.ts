@@ -2,7 +2,7 @@
 // <app-navigation></app-navigation>
 
 import { environment } from '../../../../environments/environment';
-import { AfterViewChecked, Component, ElementRef, HostListener, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +19,13 @@ import { PAGES } from '../../../common/constants/pages.constant';
     styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements AfterViewChecked, OnDestroy {
+    page_defs = PAGES;
+    previous_call_count: number = environment.previousCallCount;
+    disable_previous_calls: boolean = environment.disable.previousCalls;
+    disable_additional_reasons: boolean = environment.disable.additionalCallReason;
+    view_only = false;
+    ending_call = false;
+    showNotesButton: boolean;
 
     constructor(
         private AddressSearch: AddressSearchService,
@@ -26,22 +33,17 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
         private Notes: NotesService,
         private ViewOnly: ViewOnlyService,
         private router: Router
-    ) { }
+    ) {
+        this.showNotesButton = false;
+    }
 
     private _destroyed$ = new Subject();
-
-    page_defs = PAGES;
-    previous_call_count: number = environment.previousCallCount;
-    disable_previous_calls: boolean = environment.disable.previousCalls;
-    disable_additional_reasons: boolean = environment.disable.additionalCallReason;
-    view_only = false;
-    ending_call = false;
 
     @ViewChild('notesButton') notesButton: ElementRef;
 
     // Listen to the scroll event on this component.
     @HostListener('scroll', ['$event'])
-    onScrollEvent(event: UIEvent): void {
+    onScrollEvent(): void {
         this._positionNotesForm();
     }
 
@@ -49,6 +51,13 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
         this.ViewOnly.updates()
             .pipe(takeUntil(this._destroyed$))
             .subscribe((status: boolean) => this.view_only = status);
+
+        this.Notes.toggled
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((state: boolean) => {
+                setTimeout(() => { this.showNotesButton = state; }, 100);
+                // The timeout is necessary to prevent an "expression changed" error.
+            })
     }
     /**
      *
@@ -153,13 +162,6 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
      */
     getRentRoute(): string {
         return `/${PAGES.RENT.route}/${PAGES.RENT_TRANSACTIONS.route}`;
-    }
-
-    /**
-     *
-     */
-    areNotesEnabled(): boolean {
-        return this.Notes.isEnabled();
     }
 
     /**
