@@ -26,11 +26,14 @@ export class CallRevisionAddressComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._destroy$))
             .subscribe((previousCall: ILastCall) => {
                 this.previousCall = previousCall;
-                this.ManageATenancyAPI.getAccountDetailsByReference(this.previousCall.housingref)
-                    .pipe(take(1))
-                    .subscribe((data: IAccountDetailsByReference) => {
-                        this.accountDetails = data;
-                    });
+                this.accountDetails = null;
+                if (previousCall) {
+                    this.ManageATenancyAPI.getAccountDetailsByReference(previousCall.housingref)
+                        .pipe(take(1))
+                        .subscribe((data: IAccountDetailsByReference) => {
+                            this.accountDetails = data;
+                        });
+                }
             });
     }
 
