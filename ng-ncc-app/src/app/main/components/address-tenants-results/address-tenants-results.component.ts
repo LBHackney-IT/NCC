@@ -6,6 +6,7 @@ import { IAddressSearchGroupedResult } from '../../../common/interfaces/address-
 import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
 import { NonTenantCaller } from '../../../common/classes/non-tenant-caller.class';
 import { DPAService } from '../../../common/services/dpa.service';
+import { ITenure } from 'src/app/common/interfaces/tenure';
 
 @Component({
     selector: 'app-address-tenants-results',
@@ -15,7 +16,7 @@ import { DPAService } from '../../../common/services/dpa.service';
 export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() address: IAddressSearchGroupedResult;
     @Input() disabled: boolean;
-    @Input() isLeasehold: boolean;
+    @Input() tenure: ITenure;
     @Input() showBackButton: boolean;
 
     // When a tenant is selected and the Continue button is hit.

@@ -4,6 +4,9 @@ import { catchError, takeUntil } from 'rxjs/operators';
 
 import { DPAService } from '../../../common/services/dpa.service';
 import { IAccountDetails } from '../../../common/interfaces/account-details';
+import { TENURE } from 'src/app/common/constants/tenure.constant';
+import { TENURE_CHARGE } from 'src/app/common/constants/tenure-charge.constant';
+import { ITenure } from 'src/app/common/interfaces/tenure';
 
 @Component({
     selector: 'app-dpa-tenancy',
@@ -12,7 +15,7 @@ import { IAccountDetails } from '../../../common/interfaces/account-details';
 })
 export class DPATenancyComponent implements OnInit, OnDestroy {
     @Input() crmContactID: string;
-    @Input() isLeasehold: boolean;
+    @Input() tenure: ITenure;
 
     private _destroyed$ = new Subject();
     error: boolean;
@@ -82,6 +85,28 @@ export class DPATenancyComponent implements OnInit, OnDestroy {
     getTenancyDPARent(): string {
         const result = this.DPA.getTenancyRentAmount();
         return result ? result.toString() : null;
+    }
+
+    /**
+     *
+     */
+    getChargeFrequency(): string {
+        if (this.tenure) {
+            switch (this.tenure.charged) {
+                case TENURE_CHARGE.WEEKLY:
+                    return '(per week)';
+                case TENURE_CHARGE.MONTHLY:
+                    return '(per month)';
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     */
+    isLeasehold(): boolean {
+        return this.tenure && this.tenure.isLeasehold;
     }
 
 }
