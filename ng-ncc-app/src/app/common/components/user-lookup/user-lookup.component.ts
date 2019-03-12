@@ -38,12 +38,10 @@ export class UserLookupComponent implements OnChanges {
 
         this.txtQueryChanged
             .pipe(
-                debounceTime(this.debounceTime), // wait for this timeafter the last event before emitting.
-                distinctUntilChanged() // only emit if value is different from previous value.
+                debounceTime(this.debounceTime), // wait for this time after the last event before emitting.
+                distinctUntilChanged()           // only emit if value is different from previous value.
             )
-            .subscribe(model => {
-                // this.txtQuery = model;
-
+            .subscribe(() => {
                 if (this.txtQuery && this.txtQuery.length >= this.minLength) {
                     this.updateList();
                 }

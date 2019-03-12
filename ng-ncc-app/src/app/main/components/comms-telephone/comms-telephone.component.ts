@@ -39,7 +39,7 @@ export class CommsTelephoneComponent implements OnInit {
                     }
                     this.changedSelection();
                 },
-                (error) => {
+                () => {
                     // No contact details (with defaults) were available for this caller, so we will use
                     // available information from the caller.
                     this._useCallerInformation();
@@ -61,16 +61,15 @@ export class CommsTelephoneComponent implements OnInit {
      */
     _populateTelephoneNumbers(details: ContactDetailsUpdate) {
         this.details = details;
-        // this.telephoneNumbers = [];
 
         // Because there was previously no validation, a tenant might have duplicate telephone numbers.
         // We will have to make sure there aren't any duplicates after combining both lists of numbers.
         const allNumbers = (this.details.telephone || []).concat(this.details.mobile || []);
         this.telephoneNumbers = Array.from(new Set(allNumbers));
 
-        console.log(this.selected);
         if (this.selected) {
-            console.log(this.telephoneNumbers, this.selected);
+            // A telephone number has already been selected; find out whether it's in the list
+            // or is considered an "other" number.
             if (this.telephoneNumbers.indexOf(this.selected) === -1) {
                 this.otherNumber = this.selected;
                 this.selected = null;
