@@ -46,7 +46,7 @@
             </a>
 
             <!-- For for taking notes. -->
-            <button #notesButton class="navigation__notes" type="button" name="button" *ngIf="areNotesEnabled()"
+            <button #notesButton class="navigation__notes" type="button" name="button" *ngIf="showNotesButton"
                 (click)="toggleAddNote()">Add note</button>
         </li>
 
@@ -100,6 +100,10 @@
     </p>
 
     <!-- A dialogue for the call type and reason(s). -->
-    <app-call-nature-dialogue [(show)]="ending_call" (confirmed)="confirmEndCall()"></app-call-nature-dialogue>
+    <app-call-nature-dialogue [(show)]="endingCall" (confirmed)="confirmEndCall()"></app-call-nature-dialogue>
+
+    <app-dialogue [(show)]="notePending">
+        <p class="govuk-body">You must complete or cancel your current note before ending the call.</p>
+    </app-dialogue>
 
 </nav>

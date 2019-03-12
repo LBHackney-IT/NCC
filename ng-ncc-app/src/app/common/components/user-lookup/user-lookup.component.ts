@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input, HostListener, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Output, Input, HostListener, ViewChild, ElementRef, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
 import { IActiveDirectoryUserResult } from '../../interfaces/active-directory-user-result';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take, finalize } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { NCCAPIService } from '../../API/NCCAPI/ncc-api.service';
     templateUrl: './user-lookup.component.html',
     styleUrls: ['./user-lookup.component.scss']
 })
-export class UserLookupComponent {
+export class UserLookupComponent implements OnChanges {
     @Input() model: string;
     @Output() modelChange = new EventEmitter<string>();
 
@@ -38,16 +38,20 @@ export class UserLookupComponent {
 
         this.txtQueryChanged
             .pipe(
-                debounceTime(this.debounceTime), // wait for this timeafter the last event before emitting.
-                distinctUntilChanged() // only emit if value is different from previous value.
+                debounceTime(this.debounceTime), // wait for this time after the last event before emitting.
+                distinctUntilChanged()           // only emit if value is different from previous value.
             )
-            .subscribe(model => {
-                // this.txtQuery = model;
-
+            .subscribe(() => {
                 if (this.txtQuery && this.txtQuery.length >= this.minLength) {
                     this.updateList();
                 }
             });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.model) {
+            this.txtQuery = changes.model.currentValue;
+        }
     }
 
     /**

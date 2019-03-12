@@ -11,6 +11,7 @@ import { IAddressSearchGroupedResult } from '../../../../common/interfaces/addre
 import { IdentifiedCaller } from '../../../../common/classes/identified-caller.class';
 import { NonTenantCaller } from '../../../../common/classes/non-tenant-caller.class';
 import { ICaller } from '../../../../common/interfaces/caller';
+import { ITenure } from 'src/app/common/interfaces/tenure';
 
 @Component({
     selector: 'app-tenants',
@@ -25,7 +26,7 @@ export class PageIdentifyTenantsComponent implements OnInit {
     confirm_non_tenant: boolean;
     error: boolean;
     hasCaller: boolean;
-    isLeasehold: boolean;
+    tenure: ITenure;
 
     constructor(
         private route: ActivatedRoute,
@@ -50,8 +51,8 @@ export class PageIdentifyTenantsComponent implements OnInit {
         this.route.data
             .pipe(take(1))
             .subscribe(
-                (data: { isLeasehold: boolean }) => {
-                    this.isLeasehold = data.isLeasehold;
+                (data: { tenure: ITenure }) => {
+                    this.tenure = data.tenure;
                 }
             );
 

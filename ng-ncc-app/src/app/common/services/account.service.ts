@@ -1,13 +1,12 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ManageATenancyAPIService } from '../../common/API/ManageATenancyAPI/manageatenancy-api.service';
 import { NonTenantCaller } from '../../common/classes/non-tenant-caller.class';
 import { ICaller } from '../../common/interfaces/caller';
 import { IAccountDetails } from '../../common/interfaces/account-details';
-import { IAccountDetailsByReference } from '../../common/interfaces/account-details-by-reference';
 import { IAddressSearchGroupedResult } from '../../common/interfaces/address-search-grouped-result';
 
 @Injectable({

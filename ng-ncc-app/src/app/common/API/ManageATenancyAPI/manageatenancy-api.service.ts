@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, of, from } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { IAccountDetails } from '../../interfaces/account-details';
 import { IAccountDetailsByReference } from '../../interfaces/account-details-by-reference';

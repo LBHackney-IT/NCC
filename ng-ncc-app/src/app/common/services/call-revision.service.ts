@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
-import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
 import { ILastCall } from '../../common/interfaces/last-call';
 
 @Injectable({
@@ -10,11 +10,11 @@ export class CallRevisionService {
     // This service is used to add notes to a pre-existing call.
 
     _call: ILastCall;
-
-    constructor(private NCCAPI: NCCAPIService) { }
+    callSet = new Subject<ILastCall>();
 
     setPreviousCall(call: ILastCall) {
         this._call = call;
+        this.callSet.next(call);
     }
 
     getPreviousCall(): ILastCall {

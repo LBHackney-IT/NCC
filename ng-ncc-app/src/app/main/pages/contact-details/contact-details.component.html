@@ -1,6 +1,9 @@
 <app-error-panel class="govuk-!-margin-bottom-9" *ngIf="saving_error">
     <h2 class="govuk-heading-l govuk-!-margin-bottom-3">Unable to save new details</h2>
-    <p class="govuk-body">There was a problem saving the new details for this {{ isLeasehold ? 'leaseholder' : 'tenant'}}. Click 'Add new' below and try again.</p>
+    <p class="govuk-body">
+        There was a problem saving the new details for this {{ isLeasehold() ? 'leaseholder' : 'tenant'}}.
+        Click 'Add new' below and try again.
+    </p>
     <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
 </app-error-panel>
 
@@ -11,7 +14,7 @@
 </app-error-panel>
 
 <ng-template #contactDetails>
-    <div class="govuk-grid-row">
+    <div class="govuk-grid-row" *ngIf="caller">
         <form #formContactDetails="ngForm" class="govuk-grid-column-two-thirds" (ngSubmit)="saveDetails()">
             <!-- #formContactDetails="ngForm" -->
             <!-- This creates a local template variable called formContactDetails, which is bound to ngForm. -->
@@ -62,7 +65,8 @@
                             <h2 class="govuk-fieldset__heading add-new__title">
                                 Home number
                             </h2>
-                            <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughTelephoneNumbers()" (click)="addTelephoneNumber()">+ Add new</button>
+                            <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughTelephoneNumbers()"
+                                (click)="addTelephoneNumber()">+ Add new</button>
                         </div>
                     </legend>
                     <div class="govuk-radios">
@@ -81,7 +85,8 @@
                         </app-warning>
 
                         <!-- New home number(s). -->
-                        <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_telephone; let i = index; trackBy: trackByIndex;">
+                        <div class="govuk-radios__item govuk-!-width-one-half"
+                            *ngFor="let row of new_telephone; let i = index; trackBy: trackByIndex;">
                             <!-- See the component for trackByIndex(). -->
 
                             <!-- radio button... -->
@@ -91,7 +96,9 @@
 
                             <!-- text field... -->
                             <div class="govuk-form-group govuk-!-margin-left-3">
-                                <label class="govuk-label govuk-visually-hidden" for="new-telephone-{{ i }}-value">New telephone number {{ i + 1 }}</label>
+                                <label class="govuk-label govuk-visually-hidden" for="new-telephone-{{ i }}-value">
+                                    New telephone number {{ i + 1 }}
+                                </label>
                                 <input class="govuk-input" type="text" id="new-telephone-{{ i }}-value" name="new_telephone_{{ i }}"
                                     required appNumbersOnly
                                     [(ngModel)]="new_telephone[i]"
@@ -114,7 +121,8 @@
                             <h2 class="govuk-fieldset__heading add-new__title">
                                 Mobile number
                             </h2>
-                            <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughMobileNumbers()" (click)="addMobileNumber()">+ Add new</button>
+                            <button class="add-new__button" type="button" name="button" *ngIf="!hasEnoughMobileNumbers()"
+                                (click)="addMobileNumber()">+ Add new</button>
                         </div>
                     </legend>
                     <div class="govuk-radios">
@@ -133,7 +141,8 @@
                         </app-warning>
 
                         <!-- New mobile number(s). -->
-                        <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_mobile; let i = index; trackBy: trackByIndex;">
+                        <div class="govuk-radios__item govuk-!-width-one-half"
+                            *ngFor="let row of new_mobile; let i = index; trackBy: trackByIndex;">
 
                             <!-- radio button... -->
                             <input class="govuk-radios__input" id="new-mobile-{{ i }}" name="mobile-default" type="radio"
@@ -142,7 +151,9 @@
 
                             <!-- text field... -->
                             <div class="govuk-form-group govuk-!-margin-left-3">
-                                <label class="govuk-label govuk-visually-hidden" for="new-mobile-{{ i }}-value">New mobile number {{ i + 1 }}</label>
+                                <label class="govuk-label govuk-visually-hidden" for="new-mobile-{{ i }}-value">
+                                    New mobile number {{ i + 1 }}
+                                </label>
                                 <input class="govuk-input" type="text" id="new-mobile-{{ i }}-value" name="new_mobile_{{ i }}"
                                     required appNumbersOnly
                                     [(ngModel)]="new_mobile[i]" (focus)="update.default.mobile = row;"
@@ -184,7 +195,8 @@
                         </app-warning>
 
                         <!-- New email address(es). -->
-                        <div class="govuk-radios__item govuk-!-width-one-half" *ngFor="let row of new_email; let i = index; trackBy: trackByIndex;">
+                        <div class="govuk-radios__item govuk-!-width-one-half"
+                            *ngFor="let row of new_email; let i = index; trackBy: trackByIndex;">
 
                             <!-- radio button... -->
                             <input class="govuk-radios__input" id="new-email-{{ i }}" name="email-default" type="radio"

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
 import { PAGES } from '../../../common/constants/pages.constant';
-import { IContactDetails } from '../../../common/interfaces/contact-details';
 import { ContactDetailsUpdate } from '../../../common/classes/contact-details-update.class';
 import { IdentifiedCaller } from '../../../common/classes/identified-caller.class';
 import { CallService } from '../../../common/services/call.service';
@@ -12,6 +11,8 @@ import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
 import { BackLinkService } from '../../../common/services/back-link.service';
 import { ViewOnlyService } from '../../../common/services/view-only.service';
 import { PageTitleService } from '../../../common/services/page-title.service';
+import { ITenure } from 'src/app/common/interfaces/tenure';
+import { ICaller } from 'src/app/common/interfaces/caller';
 
 @Component({
     selector: 'app-contact-details',
@@ -26,7 +27,7 @@ export class PageContactDetailsComponent implements OnInit {
 
     MAX_OPTIONS = 0;        // maximum number of each contact method we can have for a caller (set to 0 for infinite).
     caller: IdentifiedCaller;
-    isLeasehold: boolean;
+    tenure: ITenure;
     new_telephone: string[];
     new_mobile: string[];
     new_email: string[];
@@ -52,9 +53,9 @@ export class PageContactDetailsComponent implements OnInit {
         this.route.data
             .pipe(take(1))
             .subscribe(
-                (data: { caller: IdentifiedCaller, details: ContactDetailsUpdate, isLeasehold: boolean }) => {
-                    this._buildDetails(data.caller, data.details);
-                    this.isLeasehold = data.isLeasehold;
+                (data: { details: ContactDetailsUpdate, tenure: ITenure }) => {
+                    this._buildDetails(this.Call.getCaller(), data.details);
+                    this.tenure = data.tenure;
                 },
                 () => { this.error = true; }
             );
@@ -79,8 +80,8 @@ export class PageContactDetailsComponent implements OnInit {
     /**
      * Populates our form model with the identified caller's existing details.
      */
-    private _buildDetails(caller: IdentifiedCaller, details: ContactDetailsUpdate) {
-        this.caller = caller;
+    private _buildDetails(caller: ICaller, details: ContactDetailsUpdate) {
+        this.caller = <IdentifiedCaller>caller;
 
         // TELEPHONE
         // Do we have existing details from the NCC API?
@@ -232,6 +233,10 @@ export class PageContactDetailsComponent implements OnInit {
                 },
                 () => { this.saving_error = true; }
             );
+    }
+
+    isLeasehold(): boolean {
+        return this.tenure && this.tenure.isLeasehold;
     }
 
 }

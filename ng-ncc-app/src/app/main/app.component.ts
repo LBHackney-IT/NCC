@@ -6,8 +6,7 @@ import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/co
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { initAll } from 'govuk-frontend';
-import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { Event, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../common/services/auth.service';
 import { BackLinkService } from '../common/services/back-link.service';
 
@@ -59,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
         return this.Auth.isLoggedIn();
     }
 
-    jumpToContent(event) {
+    jumpToContent() {
         this.contentArea.nativeElement.scrollIntoView();
         this.contentArea.nativeElement.focus();
         return false;

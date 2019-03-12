@@ -25,8 +25,14 @@ export class NotesService {
     _name: string | null = null;
     _settings: IAddNoteParameters = null;
     _enabled: boolean;
+    private _isInProgress: boolean;
     _visible: boolean;
     _usedNatures: ILogCallSelection[]; // previously used call natures.
+
+    public getSettings = new ReplaySubject<IAddNoteParameters>();
+    public whenEnabled = new Subject<void>();
+    public whenShown = new Subject<void>();
+    public toggled = new Subject<boolean>();
 
     constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService, private authService: AuthService) { }
 
@@ -36,22 +42,21 @@ export class NotesService {
      * However, we still want to be able to record automatic notes for anonymous users.
      */
     enable(name: string, settings: IAddNoteParameters) {
-        if (this.ViewOnly.status) {
+        if (this.ViewOnly.status || !settings.tenancy_reference) {
             // console.log('View only status; do not enable the note form.');
             this.disable();
             return;
         }
 
-        if (settings.tenancy_reference) {
-            this._enabled = true;
-            this._name = name;
-            this._visible = false;
-        } else {
-            this.disable();
-        }
-
+        this._enabled = true;
+        this._name = name;
+        this._visible = false;
         this._usedNatures = [];
         this._settings = settings;
+
+        this.getSettings.next(settings);
+        this.whenEnabled.next();
+        this.toggled.next(true);
     }
 
     /**
@@ -61,12 +66,16 @@ export class NotesService {
         this._enabled = false;
         this._name = null;
         this._usedNatures = [];
-        this._settings = null;
         this._visible = false;
+        this._settings = null;
+
+        this.getSettings.next(this._settings);
+        this.toggled.next(false);
     }
 
     show() {
         this._visible = true;
+        this.whenShown.next();
     }
 
     hide() {
@@ -74,7 +83,11 @@ export class NotesService {
     }
 
     toggle() {
-        this._visible = !this._visible;
+        if (this._visible) {
+            this.hide();
+        } else {
+            this.show();
+        }
     }
 
     /**
@@ -89,13 +102,6 @@ export class NotesService {
      */
     isVisible(): boolean {
         return this._visible;
-    }
-
-    /**
-     * Returns the settings used when enabling the add note form.
-     */
-    getSettings(): IAddNoteParameters {
-        return this._settings;
     }
 
     /**
@@ -121,9 +127,6 @@ export class NotesService {
             // console.log('View only status; do not create an automatic note.');
             return of(true);
         }
-
-        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        const callType = call_nature ? call_nature.call_type.id : null;
 
         return forkJoin(
 
@@ -162,10 +165,6 @@ export class NotesService {
         if (transferred) {
             note_content = `${note_content}\n(Transferred)`;
         }
-
-        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        const callType = call_nature.call_type.id;
-
 
         return forkJoin(
 
@@ -435,6 +434,14 @@ export class NotesService {
         } else {
             return of({});
         }
+    }
+
+    set isInProgress(value: boolean) {
+        this._isInProgress = value;
+    }
+
+    get isInProgress(): boolean {
+        return this._isInProgress;
     }
 
 }
