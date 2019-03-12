@@ -28,6 +28,8 @@ export class NotesService {
     _visible: boolean;
     _usedNatures: ILogCallSelection[]; // previously used call natures.
 
+    toggled = new Subject<boolean>();
+
     constructor(private NCCAPI: NCCAPIService, private ViewOnly: ViewOnlyService, private authService: AuthService) { }
 
     /**
@@ -46,12 +48,12 @@ export class NotesService {
             this._enabled = true;
             this._name = name;
             this._visible = false;
+            this._usedNatures = [];
+            this._settings = settings;
+            this.toggled.next(true);
         } else {
             this.disable();
         }
-
-        this._usedNatures = [];
-        this._settings = settings;
     }
 
     /**
@@ -63,6 +65,7 @@ export class NotesService {
         this._usedNatures = [];
         this._settings = null;
         this._visible = false;
+        this.toggled.next(false);
     }
 
     show() {

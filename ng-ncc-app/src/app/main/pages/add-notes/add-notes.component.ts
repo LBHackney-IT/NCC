@@ -1,6 +1,6 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 
 import { PAGES } from '../../../common/constants/pages.constant';
@@ -17,7 +17,7 @@ import { ILastCall } from '../../../common/interfaces/last-call';
     templateUrl: '../view-notes/view-notes.component.html',
     styleUrls: ['../view-notes/view-notes.component.scss']
 })
-export class PageAddNotesComponent extends PageNotes implements OnInit {
+export class PageAddNotesComponent extends PageNotes implements OnInit, OnDestroy {
     // This page is similar to the View Notes page, except it doesn't have a dependency on the Call service or an identified caller.
 
     previous_call: ILastCall;
@@ -64,6 +64,10 @@ export class PageAddNotesComponent extends PageNotes implements OnInit {
             tenancy_reference: this.previous_call.housingref
         };
         setTimeout(() => { this.Notes.enable(this.previous_call.name, settings); }, 10);
+    }
+
+    ngOnDestroy() {
+        this.CallRevision.setPreviousCall(null);
     }
 
     /**
