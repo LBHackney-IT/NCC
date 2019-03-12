@@ -88,6 +88,7 @@ import { DisplayBalanceComponent } from './components/display-balance/display-ba
 import { CommsTelephoneComponent } from './components/comms-telephone/comms-telephone.component';
 import { PatchDetailsComponent } from './components/patch-details/patch-details.component';
 import { CallRevisionAddressComponent } from './components/call-revision-address/call-revision-address.component';
+import { CallRevisionCallerComponent } from 'src/app/main/components/call-revision-caller/call-revision-caller.component';
 
 @NgModule({
     declarations: [
@@ -156,7 +157,8 @@ import { CallRevisionAddressComponent } from './components/call-revision-address
         ValueListValueComponent,
         WarningComponent,
         PatchDetailsComponent,
-        CallRevisionAddressComponent
+        CallRevisionAddressComponent,
+        CallRevisionCallerComponent
     ],
     imports: [
         BrowserModule,
