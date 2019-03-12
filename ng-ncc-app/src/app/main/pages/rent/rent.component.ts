@@ -39,7 +39,6 @@ export class PageRentComponent implements OnInit, OnDestroy {
             .pipe(take(1))
             .subscribe(
                 (data: { tenure: ITenure }) => {
-                    console.log(data.tenure);
                     this.tenure = data.tenure;
                 }
             );
