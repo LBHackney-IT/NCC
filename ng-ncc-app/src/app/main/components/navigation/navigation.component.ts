@@ -19,6 +19,15 @@ import { PAGES } from '../../../common/constants/pages.constant';
     styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements AfterViewChecked, OnDestroy {
+    page_defs = PAGES;
+    previous_call_count: number = environment.previousCallCount;
+    disable_previous_calls: boolean = environment.disable.previousCalls;
+    disable_additional_reasons: boolean = environment.disable.additionalCallReason;
+    view_only = false;
+    ending_call = false;
+    showNotesButton: boolean;
+    endingCall = false;
+    notePending: boolean;
 
     constructor(
         private AddressSearch: AddressSearchService,
@@ -26,17 +35,11 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
         private Notes: NotesService,
         private ViewOnly: ViewOnlyService,
         private router: Router
-    ) { }
+    ) {
+        this.showNotesButton = false;
+    }
 
     private _destroyed$ = new Subject();
-
-    page_defs = PAGES;
-    previous_call_count: number = environment.previousCallCount;
-    disable_previous_calls: boolean = environment.disable.previousCalls;
-    disable_additional_reasons: boolean = environment.disable.additionalCallReason;
-    view_only = false;
-    endingCall = false;
-    notePending: boolean;
 
     @ViewChild('notesButton') notesButton: ElementRef;
 
@@ -62,6 +65,12 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
             .subscribe(() => {
                 setTimeout(() => this._positionNotesForm(), 100);
             });
+        this.Notes.toggled
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe((state: boolean) => {
+                setTimeout(() => { this.showNotesButton = state; }, 100);
+                // The timeout is necessary to prevent an "expression changed" error.
+            })
     }
     /**
      *
@@ -173,13 +182,6 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
      */
     getRentRoute(): string {
         return `/${PAGES.RENT.route}/${PAGES.RENT_TRANSACTIONS.route}`;
-    }
-
-    /**
-     *
-     */
-    areNotesEnabled(): boolean {
-        return this.Notes.isEnabled();
     }
 
     /**

@@ -46,8 +46,9 @@
             </a>
 
             <!-- For for taking notes. -->
-            <button #notesButton class="navigation__notes" type="button" name="button" *ngIf="areNotesEnabled()"
+            <button #notesButton class="navigation__notes" type="button" name="button" *ngIf="showNotesButton"
                 (click)="toggleAddNote()">Add note</button>
+                {{ showNotesButton }}
         </li>
 
         <!-- Send emails, texts and letters. -->
