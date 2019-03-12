@@ -1,38 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { PAGES } from '../../common/constants/pages.constant';
-import { ManageATenancyAPIService } from '../../common/API/ManageATenancyAPI/manageatenancy-api.service';
-import { CallService } from '../../common/services/call.service';
 import { AddressSearchService } from '../../common/services/address-search.service';
 import { IAccountDetails } from '../../common/interfaces/account-details';
 import { IAddressSearchGroupedResult } from '../../common/interfaces/address-search-grouped-result';
+import { ManageATenancyAPIService } from 'src/app/common/API/ManageATenancyAPI/manageatenancy-api.service';
+import { ITenure } from 'src/app/common/interfaces/tenure';
+import { TENURE } from 'src/app/common/constants/tenure.constant';
 
 @Injectable()
-export class IsLeaseholdPropertyResolver implements Resolve<any[]> {
+export class TenureResolver implements Resolve<ITenure> {
 
     constructor(
-        private router: Router,
-        private Call: CallService,
         private ManageATenancyAPI: ManageATenancyAPIService,
         private AddressSearch: AddressSearchService) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITenure> {
 
         const address: IAddressSearchGroupedResult = this.AddressSearch.getAddress();
         if (address) {
             const crmContactID = address.results[0].crmContactId;
             return this.ManageATenancyAPI.getAccountDetails(crmContactID)
                 .pipe(take(1))
-                .pipe(map((data: IAccountDetails) => {
-                    const isLeasehold: boolean = (data && -1 !== data.tenuretype.indexOf('Leasehold'));
-                    return isLeasehold;
+                .pipe(map((account: IAccountDetails) => {
+                    const tenure = TENURE.find((t: ITenure) => t.label === account.tenuretype)
+                    return tenure;
                 }));
         } else {
             // Assume not a leasehold property.
-            return of(false);
+            return of(null);
         }
 
     }

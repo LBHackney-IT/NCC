@@ -6,19 +6,23 @@
         Ask if they would like you to email or text them a link to either.
     </p>
 
-    <p *ngIf="!isLeasehold">
-        Rent Standing Order Details:<br>
-        Bank: Lloyds<br>
-        Account number: 00641877<br>
-        Sort code: 30-00-02
-    </p>
+    <ng-container *ngIf="isLeasehold(); else notLeasehold">
+        <p class="govuk-body">
+            Rent Standing Order Details:<br>
+            Bank: Lloyds<br>
+            Account number: 00641877<br>
+            Sort code: 30-00-02
+        </p>
+    </ng-container>
 
-    <p *ngIf="isLeasehold">
-        Leaseholder Service Charge Standing Order Details:<br>
-        Bank: Lloyds<br>
-        Account number: 00634021<br>
-        Sort code: 30-00-02
-    </p>
+    <ng-template #notLeasehold>
+        <p class="govuk-body">
+            Leaseholder Service Charge Standing Order Details:<br>
+            Bank: Lloyds<br>
+            Account number: 00634021<br>
+            Sort code: 30-00-02
+        </p>
+    </ng-template>
 </div>
 
 <form action="">

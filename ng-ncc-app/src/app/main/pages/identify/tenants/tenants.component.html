@@ -1,8 +1,8 @@
 <!-- A list of tenants at the selected address. -->
 <app-address-tenants-results
-    [disabled]="hasCaller"
     [address]="address"
-    [isLeasehold]="isLeasehold"
+    [disabled]="hasCaller"
+    [tenure]="tenure"
     (beginEdit)="tenantToEdit($event)"
     (selected)="tenantSelected($event)">
 </app-address-tenants-results>

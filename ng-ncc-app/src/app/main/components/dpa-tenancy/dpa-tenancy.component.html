@@ -8,14 +8,14 @@
     <app-value-list class="govuk-body-s">
 
         <app-value-list-label>
-            {{ isLeasehold ? 'Reference number' : 'Tenancy reference number' }}
+            {{ isLeasehold() ? 'Reference number' : 'Tenancy reference number' }}
         </app-value-list-label>
         <app-value-list-value>
             {{ getTenancyDPAReference() }}
         </app-value-list-value>
 
         <app-value-list-label>
-            {{ isLeasehold ? 'Start date' : 'Tenancy start date' }}
+            {{ isLeasehold() ? 'Start date' : 'Tenancy start date' }}
         </app-value-list-label>
         <app-value-list-value>
             {{ getTenancyDPAStartDate() }}
@@ -36,7 +36,7 @@
         </app-value-list-value>
 
         <app-value-list-label>
-            Amount {{ isLeasehold ? '(per month)' : '(per week)' }}
+            Amount {{ getChargeFrequency() }}
         </app-value-list-label>
         <app-value-list-value>
             {{ getTenancyDPARent() | currency:'GBP' }}
