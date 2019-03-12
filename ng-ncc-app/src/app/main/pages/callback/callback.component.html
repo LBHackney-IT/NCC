@@ -10,14 +10,14 @@
             <label class="govuk-label govuk-!-width-one-half" for="recipient">
                 Recipient or Officer email address
             </label>
-            <app-user-lookup [(model)]="recipient" [disabled]="sending" placeholder="Begin typing a name or email address"></app-user-lookup>
+            <app-user-lookup [(model)]="form.recipient" [disabled]="sending" placeholder="Begin typing a name or email address"></app-user-lookup>
         </div>
 
         <div class="govuk-form-group">
             <label class="govuk-label govuk-!-width-one-half" for="team-leader">
                 Their Team leader or Manager email address (optional)
             </label>
-            <app-user-lookup [(model)]="teamLeader" [disabled]="sending" placeholder="Begin typing a name or email address"></app-user-lookup>
+            <app-user-lookup [(model)]="form.teamLeader" [disabled]="sending" placeholder="Begin typing a name or email address"></app-user-lookup>
         </div>
 
     </fieldset>
@@ -31,12 +31,12 @@
 
         <!-- The caller's name. -->
         <p class="govuk-body">
-            This caller: <app-current-caller class="govuk-!-font-weight-bold" allowAnonymous="true"></app-current-caller>
+            This caller: <app-current-caller class="govuk-!-font-weight-bold"></app-current-caller>
         </p>
 
         <!-- The associated tenancy reference. -->
-        <p class="govuk-body" *ngIf="tenancyReference">
-            Tenancy reference: <b>{{ tenancyReference }}</b>
+        <p class="govuk-body" *ngIf="form.tenancyReference">
+            Tenancy reference: <b>{{ form.tenancyReference }}</b>
         </p>
 
         <!-- Select from a list of the caller's telephone numbers. -->
@@ -60,7 +60,7 @@
                 Enter a message
             </label>
             <textarea class="govuk-textarea govuk-!-width-one-half" id="message" name="message" rows="5"
-                placeholder="Enter a message..." [(ngModel)]="message" [disabled]="sending"></textarea>
+                placeholder="Enter a message..." [(ngModel)]="form.message" [disabled]="sending"></textarea>
         </div>
     </fieldset>
 </div>

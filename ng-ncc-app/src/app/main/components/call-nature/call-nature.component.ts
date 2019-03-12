@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -21,7 +21,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
 
     optionOther: LogCallReason;
     callTypes: LogCallType[];
-    callReasons: Array<any>;
+    callReasons: { [key: number]: LogCallReason[] };
     error: boolean;
     selected: ILogCallSelection; // the selected call type and reason.
 
@@ -44,6 +44,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
                 data => {
                     this.callTypes = data[0];
                     this.callReasons = data[1];
+
                     this.updateSelection();
                 },
                 () => { this.error = true; }
@@ -55,6 +56,21 @@ export class CallNatureComponent implements OnInit, OnDestroy {
      */
     ngOnDestroy() {
         this._destroyed$.next();
+    }
+
+    setCallNature(callNature: ILogCallSelection) {
+        if (callNature) {
+            if (callNature.call_type) {
+                this.selected.call_type = this.callTypes.find((f: LogCallType) => f.id === callNature.call_type.id);
+            }
+            if (callNature.call_reason) {
+                this.selected.call_reason = this.callReasons[this.selected.call_type.id]
+                    .find((f: LogCallReason) => f.id === callNature.call_reason.id);
+            }
+            this.selected.other_reason = callNature.other_reason;
+        } else {
+            this.reset();
+        }
     }
 
     /**
@@ -75,7 +91,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
      * Returns TRUE if "other" is selected as the call reason.
      */
     isOtherReasonSelected(): boolean {
-        return this.selected.call_reason && this.optionOther.id === this.selected.call_reason.id;
+        return (this.selected.call_reason && this.optionOther) && this.optionOther.id === this.selected.call_reason.id;
     }
 
     /**
@@ -106,7 +122,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
      * Returns a list of call reasons for the currently selected call type, ordered alphabetically (ascending).
      */
     getCallTypeReasons(): LogCallReason[] {
-        if (this.isCallTypeSelected()) {
+        if (this.isCallTypeSelected() && this.callReasons) {
             const reasons: LogCallReason[] = Array.from(this.callReasons[this.selected.call_type.id]);
             // We use Array.from() to create a new instance of the list of call reasons.
             // Without this we would have an ever-shrinking list of call reasons as they are selected,
