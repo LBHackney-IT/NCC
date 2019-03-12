@@ -4,7 +4,6 @@ import { environment } from '../../environments/environment';
 
 import { PAGES } from '../common/constants/pages.constant';
 
-import { PageAuthComponent } from './pages/auth/auth.component';
 import { PageAddNotesComponent } from './pages/add-notes/add-notes.component';
 import { PageCallbackComponent } from './pages/callback/callback.component';
 import { PageCommsComponent } from './pages/comms/comms.component';
@@ -13,8 +12,6 @@ import { PageIdentifyAddressesComponent } from './pages/identify/addresses/addre
 import { PageIdentifyComponent } from './pages/identify/identify.component';
 import { PageIdentifyTenantsComponent } from './pages/identify/tenants/tenants.component';
 import { PageLastCallsComponent } from './pages/last-calls/last-calls.component';
-import { PageLogAdditionalComponent } from './pages/log-additional/log-additional.component';
-import { PageLogCallComponent } from './pages/log-call/log-call.component';
 import { PagePlaygroundComponent } from './pages/playground/playground.component';
 import { PageRentCommunicationsComponent } from './pages/rent/communications/communications.component';
 import { PageRentComponent } from './pages/rent/rent.component';
@@ -35,8 +32,8 @@ import { CallerCanMakePaymentGuard } from './guard/caller-can-make-payment.guard
 import { IsCallerAvailableGuard } from './guard/is-caller-available.guard';
 
 import { ContactDetailsResolver } from './resolvers/contact-details-resolver.service';
-import { AccountDetailsResolver } from './resolvers/account-details-resolver.service';
-import { IsLeaseholdPropertyResolver } from './resolvers/is-leasehold-property.resolver';
+import { TenureResolver } from './resolvers/tenure.resolver';
+
 
 export const AppRoutes: Routes = [
     // -------------------------------------------------------------------------------------------------------------------------------------
@@ -118,14 +115,17 @@ export const AppRoutes: Routes = [
         component: PageRentComponent,
         canActivate: [AuthGuard],
         resolve: {
-            isLeasehold: IsLeaseholdPropertyResolver
+            tenure: TenureResolver
         },
         children: [
             {
                 // Rent > Transactions.
                 path: PAGES.RENT_TRANSACTIONS.route,
                 component: PageRentTransactionsComponent,
-                canActivate: [IsIdentifiedOrNonTenantCallerGuard]
+                canActivate: [IsIdentifiedOrNonTenantCallerGuard],
+                resolve: {
+                    tenure: TenureResolver
+                }
             },
             {
                 // Rent > Make (Payment).
@@ -133,14 +133,17 @@ export const AppRoutes: Routes = [
                 component: PageRentPaymentComponent,
                 canActivate: [CallerCanMakePaymentGuard],
                 resolve: {
-                    isLeasehold: IsLeaseholdPropertyResolver
+                    tenure: TenureResolver
                 }
             },
             {
                 // Rent > Communications.
                 path: PAGES.RENT_COMMS.route,
                 component: PageRentCommunicationsComponent,
-                canActivate: [IsIdentifiedOrNonTenantCallerGuard]
+                canActivate: [IsIdentifiedOrNonTenantCallerGuard],
+                resolve: {
+                    tenure: TenureResolver
+                }
             },
             {
                 // Catch-all (which should go to the summary child page).
@@ -173,7 +176,7 @@ export const AppRoutes: Routes = [
                 path: PAGES.IDENTIFY_TENANTS.route,
                 component: PageIdentifyTenantsComponent,
                 resolve: {
-                    isLeasehold: IsLeaseholdPropertyResolver
+                    tenure: TenureResolver
                 }
             }
         ]
@@ -188,7 +191,7 @@ export const AppRoutes: Routes = [
         ],
         resolve: {
             details: ContactDetailsResolver,
-            isLeasehold: IsLeaseholdPropertyResolver
+            tenure: TenureResolver
         }
     },
     {
@@ -200,7 +203,7 @@ export const AppRoutes: Routes = [
             IsCallerAvailableGuard
         ],
         resolve: {
-            isLeasehold: IsLeaseholdPropertyResolver
+            tenure: TenureResolver
         }
     },
     {
@@ -248,7 +251,7 @@ export const AppRoutes: Routes = [
         RouterModule.forRoot(AppRoutes)
     ],
     providers: [
-        IsLeaseholdPropertyResolver
+        TenureResolver
     ]
 })
 export class AppRoutingModule { }

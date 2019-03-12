@@ -8,6 +8,8 @@ import { IAccountDetails } from '../../../../common/interfaces/account-details';
 import { CallService } from '../../../../common/services/call.service';
 import { NCCAPIService } from '../../../../common/API/NCCAPI/ncc-api.service';
 import { PageTitleService } from '../../../../common/services/page-title.service';
+import { TENURE } from 'src/app/common/constants/tenure.constant';
+import { TENURE_CHARGE } from 'src/app/common/constants/tenure-charge.constant';
 
 @Component({
     selector: 'app-rent-payment',
@@ -28,7 +30,6 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
     show_confirm: boolean;
     amount: string;
     route: ActivatedRoute;
-    isLeasehold: boolean;
 
     // Listen to the window's storage event.
     // This is fired whenever a localStorage property (it has access to?) is *changed*.
@@ -74,16 +75,6 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
                 this.account_details = account;
             });
         this.amount = null;
-
-        // Find out whether this account is for a leasehold property.
-        this.route.data
-            .pipe(take(1))
-            .subscribe(
-                (data: { isLeasehold: boolean }) => {
-                    this.isLeasehold = data.isLeasehold;
-                },
-                () => { this.isLeasehold = false; }
-            );
     }
 
     /**
@@ -148,4 +139,19 @@ export class PageRentPaymentComponent implements OnInit, OnDestroy {
         return this.Call.isCallerIdentified();
     }
 
+    /**
+     *
+     */
+    isLeasehold(): boolean {
+        const tenure = TENURE.find((t) => t.key === this.account_details.tenuretype);
+        if (tenure) {
+            switch (tenure.charged) {
+                case TENURE_CHARGE.WEEKLY:
+                    return false;
+                case TENURE_CHARGE.MONTHLY:
+                    return true;
+            }
+        }
+        return false;
+    }
 }
