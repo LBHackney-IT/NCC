@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { take, finalize } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
-import { IAccountDetails } from '../../../common/interfaces/account-details';
-import { ITenancyTransactionRow } from '../../../common/interfaces/tenancy-transaction-row';
+import { NCCAPIService } from 'src/app/common/API/NCCAPI/ncc-api.service';
+import { IAccountDetails } from 'src/app/common/interfaces/account-details';
+import { ITenancyTransactionRow } from 'src/app/common/interfaces/tenancy-transaction-row';
 
 @Component({
     selector: 'app-transactions',
@@ -14,7 +14,6 @@ import { ITenancyTransactionRow } from '../../../common/interfaces/tenancy-trans
 })
 export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() account: IAccountDetails;
-    @Input() currentBalance: number;
     @Input() filter: { [propKey: string]: string };
     @Input() minDate?: Date;
     @Input() maxDate?: Date;
@@ -47,7 +46,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        if (changes.account) {
+        if (changes.account || changes.minDate || changes.maxDate) {
             // The tenancy reference has changed, so load the transactions associated with the tenancy reference.
             this._loadTransactions();
         } else {
@@ -85,7 +84,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
                     this._rows = rows;
                     this._filterTransactions();
                 },
-                (error) => {
+                () => {
                     this.error = true;
                 }
             );
@@ -95,22 +94,11 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     _filterTransactions() {
-        const min_date = this.minDate ? moment(this.minDate).format('YYYYMMDDHHmmss') : null;
-        const max_date = this.maxDate ? moment(this.maxDate).format('YYYYMMDDHHmmss') : null;
-
         this._filtered = this._rows.filter(
             (item: ITenancyTransactionRow) => {
                 let outcome = true;
 
-                // Check against the provided dates (if set).
-                if (outcome && min_date) {
-                    outcome = item.dateSort >= min_date;
-                }
-                if (outcome && max_date) {
-                    outcome = item.dateSort < max_date;
-                }
-
-                if (outcome && this.filter) {
+                if (this.filter) {
                     // Put the item through the filter.
                     Object.keys(this.filter).forEach(
                         key => {
@@ -120,6 +108,7 @@ export class TransactionsComponent implements OnInit, OnChanges, OnDestroy {
                             }
                         });
                 }
+
                 return outcome;
             });
     }
