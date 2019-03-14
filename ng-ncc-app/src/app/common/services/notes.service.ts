@@ -42,20 +42,25 @@ export class NotesService {
      * However, we still want to be able to record automatic notes for anonymous users.
      */
     enable(name: string, settings: IAddNoteParameters) {
-        if (this.ViewOnly.status || !settings.tenancy_reference) {
+        if (this.ViewOnly.status) {
             // console.log('View only status; do not enable the note form.');
             this.disable();
             return;
         }
 
-        this._enabled = true;
         this._name = name;
         this._visible = false;
         this._usedNatures = [];
         this._settings = settings;
 
         this.getSettings.next(settings);
-        this.whenEnabled.next();
+
+        // Only enable the notes form if we have a tenancy refernece.
+        if (settings.tenancy_reference) {
+            this._enabled = true;
+            this.whenEnabled.next();
+        }
+
         this.toggled.next(true);
     }
 
