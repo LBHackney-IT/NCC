@@ -56,24 +56,6 @@ When copying files over to the host folders, **be careful not to remove the `web
 
 ### The main app
 
-#### DEVELOPMENT test site
-
-This is no longer used, but while available it might be useful for testing scenarios that require non-*localhost* URLs (e.g. payments via Paris).
-
-```
-ng build -c dev-test
-```
-
-Build folder: `ng-ncc-app/dist/dev-test`
-
-Server folder: `\\lbhwebintd01\c$\ng-ncc-app-dev-test`
-
-Single Sign On (SSO): http://lbhwebintd01:1010
-
-View Only mode: http://lbhwebintd01:1010/default.aspx?viewonly
-
-Front end: http://lbhwebintd01:2020
-
 #### LIVE test site
 
 ```
