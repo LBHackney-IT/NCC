@@ -4,7 +4,7 @@
 
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { of, forkJoin, Subject } from 'rxjs';
-import { finalize, take, takeUntil } from 'rxjs/operators';
+import { finalize, take, takeUntil, delay } from 'rxjs/operators';
 
 import { LogCallReason } from '../../../common/classes/log-call-reason.class';
 import { LogCallType } from '../../../common/classes/log-call-type.class';
@@ -116,6 +116,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
      */
     reset() {
         this.selectedType = null;
+        this.selectedReasons = [];
         this.selectedReasonIds = [];
         this.otherReasonText = {};
     }
@@ -272,7 +273,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
 
         let observe;
         if (this.ViewOnly.status) {
-            observe = of([]);
+            observe = of(null).pipe(delay(500));
         } else {
             const notes = this._buildCallReasonNotes();
             observe = this.Notes.recordCallReasons(notes);
@@ -285,6 +286,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
             .pipe(finalize(() => this.saving = false))
             .subscribe(
                 () => {
+                    console.log('done.');
                     this.confirmed.emit();
                     this.reset();
                     this.closeDialogue();
