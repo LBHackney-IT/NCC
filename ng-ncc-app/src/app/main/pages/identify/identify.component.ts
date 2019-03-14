@@ -24,7 +24,6 @@ export class PageIdentifyComponent implements OnInit {
     is_searching: boolean;
     disable_identify_caller: boolean = environment.disable.identifyCaller;
     existing_call: boolean;
-    postcode: string;
 
     constructor(
         private router: Router,
@@ -59,6 +58,9 @@ export class PageIdentifyComponent implements OnInit {
         this.AddressSearch.setLastName(this.searchNameForm.value.lastName);
         this.AddressSearch.setPostcode(null);
 
+        // To avoid confusing the user, reset the postcode.
+        this.searchPostcodeForm.resetForm();
+
         // Perform a search.
         this._performSearch();
     }
@@ -71,6 +73,9 @@ export class PageIdentifyComponent implements OnInit {
         this.AddressSearch.setPostcode(this.searchPostcodeForm.value.postcode);
         this.AddressSearch.setFirstName(null);
         this.AddressSearch.setLastName(null);
+
+        // To avoid confusing the user, reset the first and last name.
+        this.searchNameForm.resetForm();
 
         this._performSearch();
     }
