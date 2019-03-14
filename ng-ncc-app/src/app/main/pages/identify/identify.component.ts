@@ -24,7 +24,6 @@ export class PageIdentifyComponent implements OnInit {
     is_searching: boolean;
     disable_identify_caller: boolean = environment.disable.identifyCaller;
     existing_call: boolean;
-    postcode: string;
 
     constructor(
         private router: Router,
