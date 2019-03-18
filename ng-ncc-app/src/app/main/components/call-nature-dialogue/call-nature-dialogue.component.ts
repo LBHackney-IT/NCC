@@ -125,6 +125,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
      * Preselects call reasons in the dialogue.
      */
     private _preselectCallReasons() {
+        // Find out which call types and reasons were selected.
         const natures = this.Notes.getUsedCallNatures();
 
         this.selectedReasonIds = natures.map(
