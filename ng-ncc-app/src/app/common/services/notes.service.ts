@@ -367,7 +367,7 @@ export class NotesService {
      *
      */
     private _addCallNatureToList(call_nature: ILogCallSelection) {
-        this._usedNatures.push(call_nature);
+        this._usedNatures.push({ ...call_nature });
     }
 
     /**
