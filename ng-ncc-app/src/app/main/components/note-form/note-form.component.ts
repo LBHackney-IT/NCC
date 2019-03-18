@@ -113,6 +113,9 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     *
+     */
     openForm() {
         this.Notes.show();
         this.restore();
@@ -205,11 +208,13 @@ export class NoteFormComponent implements OnInit, OnDestroy {
                 .subscribe(
                     () => {
                         // Display a confirmation that the note was saved.
-                        this.savedSuccess = true;
+                        // this.savedSuccess = true;
 
                         // Reset just the comment (we might want to keep the selected call type and reason).
                         this.comment = null;
                         this.Notes.isInProgress = false;
+
+                        this.closeForm(true);
                     },
                     () => {
                         // An error occurred.
