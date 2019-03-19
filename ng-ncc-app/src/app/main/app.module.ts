@@ -23,6 +23,7 @@ import { MainComponentsModule } from 'src/app/main/components/main-components.mo
 import { MainPagesModule } from './pages/main-pages.module';
 import { CommonComponentsModule } from 'src/app/common/components/components.module';
 import { NoteFormModule } from './components/note-form/note-form.module';
+import { BackLinkModule } from 'src/app/common/components/back-link/back-link.module';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { NoteFormModule } from './components/note-form/note-form.module';
         MainComponentsModule,
         CommonComponentsModule,
         NoteFormModule,
+        BackLinkModule,
 
         // Set up routing.
         AppRoutingModule
