@@ -1,15 +1,8 @@
-<form class="form govuk-body" #commentForm (ngSubmit)="saveNote()"
-    [class.is-minimised]="isMinimised" [class.is-hidden]="!shouldShow()" [draggable]="true">
+<form class="form govuk-body" #commentForm (ngSubmit)="saveNote()" [class.is-hidden]="!shouldShow()" [draggable]="true">
 
     <!-- A makeshift bar, used for moving the note form around the screen. -->
     <div class="drag-bar">
-
         <div class="drag-bar__title govuk-header-m">Add a note</div>
-
-        <a class="form__minimise" (click)="minimise()" *ngIf="!isMinimised">&#95;</a>
-        <a class="form__restore" (click)="restore()" *ngIf="isMinimised">&#10063;</a>
-        <a class="form__close" (click)="toggle()">&times;</a>
-
     </div>
 
     <!-- The content of the add note form, which should be hidden if the form is "minimised". -->
@@ -84,11 +77,6 @@
             </p>
             <p class="govuk-body govuk-!-margin-bottom-0">If this continues you will need to contact ICT.</p>
         </app-error-panel>
-
-        <!-- Save success message... -->
-        <app-success-panel class="govuk-!-margin-bottom-5" *ngIf="savedSuccess">
-            The note was saved.
-        </app-success-panel>
 
     </div>
 </form>

@@ -1,12 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { Observable, forkJoin, Subject } from 'rxjs';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
-import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
-import { LogCallReason } from '../../../common/classes/log-call-reason.class';
-import { LogCallType } from '../../../common/classes/log-call-type.class';
-import { CALL_REASON } from '../../../common/constants/call-reason.constant';
+import { HackneyAPIService } from 'src/app/common/API/HackneyAPI/hackney-api.service';
+import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
+import { LogCallReason } from 'src/app/common/classes/log-call-reason.class';
+import { LogCallType } from 'src/app/common/classes/log-call-type.class';
+import { CALL_REASON } from 'src/app/common/constants/call-reason.constant';
 
 @Component({
     selector: 'app-call-nature',

@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LayoutModule } from '../common/layout/layout.module';
-import { CommonComponentsModule } from '../common/components/components.module';
 
 import { HelperService } from '../common/services/helper.service';
 import { WindowService } from '../common/services/window.service';
@@ -22,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { MainComponentsModule } from 'src/app/main/components/main-components.module';
 import { MainPagesModule } from './pages/main-pages.module';
-import { DraggableModule } from '../common/directives/draggable/draggable.module';
+import { CommonComponentsModule } from 'src/app/common/components/components.module';
+import { NoteFormModule } from './components/note-form/note-form.module';
 
 @NgModule({
     declarations: [
@@ -34,10 +34,10 @@ import { DraggableModule } from '../common/directives/draggable/draggable.module
         HttpClientModule,
 
         LayoutModule,
-        DraggableModule,
         MainPagesModule,
         MainComponentsModule,
         CommonComponentsModule,
+        NoteFormModule,
 
         // Set up routing.
         AppRoutingModule

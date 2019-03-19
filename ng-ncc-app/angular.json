@@ -6,7 +6,7 @@
     {
         "ng-ncc-app":
         {
-            "root": "",
+            "root": "src/app/main",
             "sourceRoot": "src",
             "projectType": "application",
             "prefix": "app",
@@ -137,7 +137,7 @@
         },
         "ng-ncc-callback":
         {
-            "root": "",
+            "root": "src/app/callback",
             "sourceRoot": "src",
             "projectType": "application",
             "prefix": "callback",
