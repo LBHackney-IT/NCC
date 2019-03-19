@@ -9,7 +9,7 @@ import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection'
 import { INCCInteraction } from 'src/app/common/interfaces/ncc-interaction';
 import { NotesService } from 'src/app/common/services/notes.service';
 import { NCCAPIService } from 'src/app/common/API/NCCAPI/ncc-api.service';
-import { CallNatureDropdownComponent } from '../../components/call-nature-dropdown/call-nature-dropdown.component';
+import { CallNatureDropdownComponent } from '../../components/call-nature/call-nature-dropdown/call-nature-dropdown.component';
 import { CommsTelephoneComponent } from '../../components/comms-telephone/comms-telephone.component';
 import { AuthService } from 'src/app/common/services/auth.service';
 import { CallbackService } from 'src/app/main/services/callback.service';

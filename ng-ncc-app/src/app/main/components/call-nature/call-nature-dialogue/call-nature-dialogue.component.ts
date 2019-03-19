@@ -6,17 +6,15 @@ import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, 
 import { of, forkJoin, Subject } from 'rxjs';
 import { finalize, take, takeUntil, delay } from 'rxjs/operators';
 
-import { LogCallReason } from '../../../common/classes/log-call-reason.class';
-import { LogCallType } from '../../../common/classes/log-call-type.class';
-import { CALL_REASON } from '../../../common/constants/call-reason.constant';
-import { ConfirmDialogueComponent } from '../dialogue/confirm/confirm-dialogue.component';
-
-import { ILogCallSelection } from '../../../common/interfaces/log-call-selection';
-import { ICallReasonListItem } from '../../../common/interfaces/call-reason-list-item';
-
-import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
-import { NotesService } from '../../../common/services/notes.service';
-import { ViewOnlyService } from '../../../common/services/view-only.service';
+import { ICallReasonListItem } from 'src/app/common/interfaces/call-reason-list-item';
+import { LogCallReason } from 'src/app/common/classes/log-call-reason.class';
+import { LogCallType } from 'src/app/common/classes/log-call-type.class';
+import { ViewOnlyService } from 'src/app/common/services/view-only.service';
+import { NotesService } from 'src/app/common/services/notes.service';
+import { HackneyAPIService } from 'src/app/common/API/HackneyAPI/hackney-api.service';
+import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
+import { CALL_REASON } from 'src/app/common/constants/call-reason.constant';
+import { ConfirmDialogueComponent } from 'src/app/main/components/dialogue/confirm/confirm-dialogue.component';
 
 @Component({
     selector: 'app-call-nature-dialogue',
