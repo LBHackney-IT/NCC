@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CommonComponentsModule } from '../common/components/components.module';
 import { LayoutModule } from '../common/layout/layout.module';
 import { PageRespondComponent } from './pages/respond/respond.component';
+import { PanelModule } from 'src/app/common/components/panel/panel.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { PageRespondComponent } from './pages/respond/respond.component';
         AppRoutingModule,
 
         LayoutModule,
-        CommonComponentsModule
+        CommonComponentsModule,
+        PanelModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, Output, ElementRef, ViewChild, OnChanges, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { DialogueComponent } from '../dialogue.component';
 
 @Component({

@@ -29,15 +29,23 @@ import { PageAuthComponent } from './auth/auth.component';
 import { MainComponentsModule } from '../components/main-components.module';
 import { CommonComponentsModule } from '../../common/components/components.module';
 import { OrModule } from 'src/app/common/components/or/or.module';
+import { PanelModule } from '../../common/components/panel/panel.module';
+import { ValueListModule } from '../../common/components/value-list/value-list.module';
+import { CallNatureModule } from 'src/app/main/components/call-nature/call-nature.module';
+import { HelperModule } from 'src/app/main/components/helper/helper.module';
 
 @NgModule({
     imports: [
         CommonModule,
         MainComponentsModule,
         CommonComponentsModule,
+        CallNatureModule,
         FormsModule,
         RouterModule,
-        OrModule
+        OrModule,
+        PanelModule,
+        ValueListModule,
+        HelperModule,
     ],
     declarations: [
         PageAddNotesComponent,

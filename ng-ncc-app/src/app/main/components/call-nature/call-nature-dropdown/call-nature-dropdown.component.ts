@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { CallNatureComponent } from '../call-nature/call-nature.component';
+import { CallNatureComponent } from 'src/app/main/components/call-nature/call-nature.component';
 
 @Component({
     selector: 'app-call-nature-dropdown',
