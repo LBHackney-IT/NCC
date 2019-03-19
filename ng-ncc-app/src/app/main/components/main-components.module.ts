@@ -39,6 +39,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { CommonComponentsModule } from 'src/app/common/components/components.module';
 import { AddressResultTenantComponent } from './address-tenants-results/tenant/tenant.component';
 import { ChecklistModule } from 'angular-checklist';
+import { OrModule } from 'src/app/common/components/or/or.module';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import { ChecklistModule } from 'angular-checklist';
         CommonComponentsModule,
         ChecklistModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        OrModule
     ],
     declarations: [
         AccountBalanceComponent,
