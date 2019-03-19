@@ -6,9 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AccountBalanceComponent } from './account-balance/account-balance.component';
 import { AddressSearchResultsComponent } from './address-search-results/address-search-results.component';
 import { AddressTenantsResultsComponent } from './address-tenants-results/address-tenants-results.component';
-import { CallNatureComponent } from './call-nature/call-nature.component';
-import { CallNatureDialogueComponent } from './call-nature-dialogue/call-nature-dialogue.component';
-import { CallNatureDropdownComponent } from './call-nature-dropdown/call-nature-dropdown.component';
 import { CallRevisionCallerComponent } from './call-revision-caller/call-revision-caller.component';
 import { CallRevisionAddressComponent } from './call-revision-address/call-revision-address.component';
 import { CommsMethodSelectComponent } from './comms-method-select/comms-method-select.component';
@@ -21,7 +18,6 @@ import { ConfirmDialogueComponent } from './dialogue/confirm/confirm-dialogue.co
 import { DialogueComponent } from './dialogue/dialogue.component';
 import { DisplayBalanceComponent } from './display-balance/display-balance.component';
 import { DialogueTitleComponent } from './dialogue/title/dialogue-title.component';
-import { HelperComponent } from './helper/helper.component';
 import { EditorialComponent } from './editorial/editorial.component';
 import { DPATenancyComponent } from './dpa-tenancy/dpa-tenancy.component';
 import { DPADialogueComponent } from './dialogue/dpa/dpa-dialogue.component';
@@ -31,7 +27,6 @@ import { TenancyTypeComponent } from './tenancy-type/tenancy-type.component';
 import { RentBreakdownComponent } from './rent-breakdown/rent-breakdown.component';
 import { NotifyTemplatePreviewComponent } from './notify-template-preview/notify-template-preview.component';
 import { NoteTypeComponent } from './note-type/note-type.component';
-import { NoteFormComponent } from './note-form/note-form.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LastCallsListComponent } from './last-calls-list/last-calls.component';
 import { NoResultsComponent } from './no-results/no-results.component';
@@ -40,24 +35,29 @@ import { CommonComponentsModule } from 'src/app/common/components/components.mod
 import { AddressResultTenantComponent } from './address-tenants-results/tenant/tenant.component';
 import { ChecklistModule } from 'angular-checklist';
 import { OrModule } from 'src/app/common/components/or/or.module';
+import { PanelModule } from '../../common/components/panel/panel.module';
+import { ValueListModule } from '../../common/components/value-list/value-list.module';
+import { CallNatureModule } from 'src/app/main/components/call-nature/call-nature.module';
+import { HelperModule } from 'src/app/main/components/helper/helper.module';
 
 @NgModule({
     imports: [
         CommonModule,
         CommonComponentsModule,
+        CallNatureModule,
         ChecklistModule,
         FormsModule,
         RouterModule,
-        OrModule
+        HelperModule,
+        OrModule,
+        PanelModule,
+        ValueListModule
     ],
     declarations: [
         AccountBalanceComponent,
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
         AddressResultTenantComponent,
-        CallNatureComponent,
-        CallNatureDialogueComponent,
-        CallNatureDropdownComponent,
         CallRevisionCallerComponent,
         CallRevisionAddressComponent,
         CommsMethodSelectComponent,
@@ -73,11 +73,9 @@ import { OrModule } from 'src/app/common/components/or/or.module';
         DPADialogueComponent,
         DPATenancyComponent,
         EditorialComponent,
-        HelperComponent,
         LastCallsListComponent,
         NavigationComponent,
         NoResultsComponent,
-        NoteFormComponent,
         NoteTypeComponent,
         NotifyTemplatePreviewComponent,
         RentBreakdownComponent,
@@ -91,9 +89,6 @@ import { OrModule } from 'src/app/common/components/or/or.module';
         AddressSearchResultsComponent,
         AddressTenantsResultsComponent,
         AddressResultTenantComponent,
-        CallNatureComponent,
-        CallNatureDialogueComponent,
-        CallNatureDropdownComponent,
         CallRevisionCallerComponent,
         CallRevisionAddressComponent,
         CurrentBalanceComponent,
@@ -110,11 +105,9 @@ import { OrModule } from 'src/app/common/components/or/or.module';
         DPADialogueComponent,
         DPATenancyComponent,
         EditorialComponent,
-        HelperComponent,
         LastCallsListComponent,
         NavigationComponent,
         NoResultsComponent,
-        NoteFormComponent,
         NoteTypeComponent,
         NotifyTemplatePreviewComponent,
         RentBreakdownComponent,

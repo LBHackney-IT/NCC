@@ -1,8 +1,8 @@
 $dialogue-max-width: 900px !default;
 $call-nature-dialogue-width: $dialogue-max-width !default;
 
-@import "../dialogue/dialogue.component";
-@import "../../../../assets/scss/vars.scss";
+@import "../../dialogue/dialogue.component";
+@import "../../../../../assets/scss/vars.scss";
 @import "~govuk-frontend/helpers/colour";
 @import "~govuk-frontend/settings/colours-applied";
 
