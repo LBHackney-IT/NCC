@@ -28,6 +28,7 @@ import { PageAddNotesComponent } from './add-notes/add-notes.component';
 import { PageAuthComponent } from './auth/auth.component';
 import { MainComponentsModule } from '../components/main-components.module';
 import { CommonComponentsModule } from '../../common/components/components.module';
+import { OrModule } from 'src/app/common/components/or/or.module';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { CommonComponentsModule } from '../../common/components/components.modul
         MainComponentsModule,
         CommonComponentsModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        OrModule
     ],
     declarations: [
         PageAddNotesComponent,

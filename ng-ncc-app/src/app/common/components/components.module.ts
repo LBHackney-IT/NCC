@@ -12,18 +12,21 @@ import { SuccessPanelComponent } from './panel/success-panel/success-panel.compo
 import { CallerAddressComponent } from './caller-address/caller-address.component';
 import { UserLookupComponent } from './user-lookup/user-lookup.component';
 import { FormsModule } from '../../../../node_modules/@angular/forms';
-import { OrComponent } from './or/or.component';
 import { WarningComponent } from './warning/warning.component';
 import { ValueListComponent } from './value-list/value-list.component';
 import { ValueListLabelComponent } from './value-list/value-list-label/value-list-label.component';
 import { ValueListValueComponent } from './value-list/value-list-value/value-list-value.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tabs/tab/tab.component';
+import { BackLinkModule } from './back-link/back-link.module';
+import { OrModule } from './or/or.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        BackLinkModule,
+        OrModule
     ],
     declarations: [
         AgentComponent,
