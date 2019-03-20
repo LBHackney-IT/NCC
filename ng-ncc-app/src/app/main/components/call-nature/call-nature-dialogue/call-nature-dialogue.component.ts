@@ -285,7 +285,6 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
             .pipe(finalize(() => this.saving = false))
             .subscribe(
                 () => {
-                    console.log('done.');
                     this.confirmed.emit();
                     this.reset();
                     this.closeDialogue();
