@@ -1,4 +1,4 @@
-<span class="govuk-body caller" *ngIf="hasCaller()" [class.caller--is-anonymous]="isCallerAnonymous()">
+<span class="govuk-body caller" *ngIf="hasCaller()" [class.caller--is-anonymous]="!isCallerIdentified()">
     <b *ngIf="withPrefix">Caller:</b>
     {{ getCallerName() }}
     <em *ngIf="allowAnonymous && isCallerAnonymous()">anonymous</em>
