@@ -23,6 +23,8 @@ $note-form-close-offset: 1rem !default;
     position: absolute;
     width: 100%;
     z-index: $note-form-z-index;
+
+    pointer-events: none; // prevents the mouse interacting with this element, though hacky.
 }
 
 .form {
@@ -30,6 +32,8 @@ $note-form-close-offset: 1rem !default;
     border: $note-form-border-width solid $note-form-border-colour;
     color: $note-form-text-colour;
     padding: $note-form-padding;
+
+    pointer-events: auto; // reinstates the ability for the mouse to interact with the element.
 
     &.cursor-draggable {
         cursor: grab;
