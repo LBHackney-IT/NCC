@@ -16,14 +16,14 @@
         </p>
 
         <div class="govuk-inset-text">
-            <p *ngIf="!isLeasehold">
+            <p class="govuk-body" *ngIf="!isLeasehold">
                 Rent Standing Order Details:<br>
                 Bank: Lloyds<br>
                 Account number: 00641877<br>
                 Sort code: 30-00-02
             </p>
 
-            <p *ngIf="isAnonymousCaller || isLeasehold">
+            <p class="govuk-body" *ngIf="isAnonymousCaller || isLeasehold">
                 Leaseholder Service Charge Standing Order Details:<br>
                 Bank: Lloyds<br>
                 Account number: 00634021<br>
