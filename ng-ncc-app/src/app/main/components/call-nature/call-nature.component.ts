@@ -140,6 +140,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
         if (this.selected) {
             this.selected.call_type = null;
             this.selected.call_reason = null;
+            this.selected.other_reason = null;
         }
     }
 
