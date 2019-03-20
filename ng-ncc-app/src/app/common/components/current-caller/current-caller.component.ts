@@ -31,10 +31,17 @@ export class CurrentCallerComponent {
     }
 
     /**
-     *
+     * Returns TRUE if the current caller is anonymous (but NOT a non-tenant).
      */
     isCallerAnonymous() {
-        return this.Call.hasCaller() && !this.Call.isCallerIdentified();
+        return !this.isCallerIdentified() && !this.Call.isCallerNonTenant();
+    }
+
+    /**
+     * Returns TRUE if the current caller is identified.
+     */
+    isCallerIdentified() {
+        return this.Call.hasCaller() && this.Call.isCallerIdentified();
     }
 
 }
