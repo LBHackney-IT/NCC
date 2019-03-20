@@ -48,15 +48,22 @@ export class AddressSearchService {
      * Sets the postcode to use for an address search.
      */
     setPostcode(postcode: string) {
-        this._postcode = postcode;
+        this._postcode = this._processValue(postcode);
+
+        // Attempt to handle postcodes without spaces.
+        const regex = new RegExp('([A-Za-z]{1,2}[0-9]{1,2})\s*([0-9]{1}[A-Za-z]{2})');
+        const matches = regex.exec(this._postcode);
+        if (matches) {
+            this._postcode = `${matches[1].toUpperCase()} ${matches[2].toUpperCase()}`;
+        }
     }
 
     setFirstName(name: string) {
-        this._firstName = name;
+        this._firstName = this._processValue(name);
     }
 
     setLastName(name: string) {
-        this._lastName = name;
+        this._lastName = this._processValue(name);
     }
 
     /**
@@ -92,7 +99,13 @@ export class AddressSearchService {
         this._addresses = null;
         this._error = false;
 
-        return this.ManageATenancyAPI.getCitizenIndexSearch(this._firstName, this._lastName, null, this._postcode, isAdvanceSearch)
+        return this.ManageATenancyAPI.getCitizenIndexSearch(
+            this._firstName,
+            this._lastName,
+            null,
+            this._postcode,
+            isAdvanceSearch
+        )
             .pipe(finalize(() => {
                 // The finalize pipe is triggered when the Observable is completed,
                 // whether resolved or rejected. It's equivalent to finally() for Promises.
@@ -116,6 +129,16 @@ export class AddressSearchService {
             );
     }
 
+    /**
+     *
+     */
+    private _processValue(value: string): string | null {
+        if (value) {
+            // Remove whitespace from either side of the value, and replace multiple spaces with just one space.
+            value = value.trim().replace(/\s{2,}/g, ' ');
+        }
+        return value;
+    }
 
     /**
      * Returns a ReplaySubject, which provides the search results when generated.
