@@ -52,6 +52,7 @@ $helper-text-z-index: 30 !default;
     user-select: none;
     padding: $padding;
     z-index: $helper-text-z-index;
+    pointer-events: none;
 
     &:after {
         content: "";
