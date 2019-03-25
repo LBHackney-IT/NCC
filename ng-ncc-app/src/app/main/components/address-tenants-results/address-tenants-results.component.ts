@@ -61,7 +61,10 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
 
             this.occupants = this.address.results
                 .filter((row) => !row.mainTenant)
-                .map((row) => new IdentifiedCaller(row));
+                .map((row) => new IdentifiedCaller(row))
+                .sort((a: IdentifiedCaller, b: IdentifiedCaller) => {
+                    return this._cmp(a.getLastName(), b.getLastName()) || this._cmp(a.getFirstName(), b.getFirstName());
+                });
 
             // If there's only one tenant, automatically select them.
             if (1 === this.tenants.length) {
@@ -70,6 +73,14 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
 
             this.getDPAAnswers();
         }
+    }
+
+    private _cmp(a: string, b: string): number {
+        if (a === b) {
+            return 0;
+        }
+
+        return a > b ? 1 : -1;
     }
 
     ngOnDestroy() {
