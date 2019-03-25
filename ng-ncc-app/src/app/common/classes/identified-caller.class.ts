@@ -23,6 +23,13 @@ export class IdentifiedCaller extends Caller {
     }
 
     /**
+     * Returns TRUE if this identified caller is a "main" tenant, as opposed to just an occupant.
+     */
+    isMainTenant(): boolean {
+        return this._details.mainTenant;
+    }
+
+    /**
      * Returns the caller's full name.
      */
     getName(): string {
