@@ -76,8 +76,17 @@
                 </app-error-panel>
             </div>
         </div>
-
     </app-box-panel>
+
+    <app-panel *ngIf="occupants.length">
+        <h3 class="govuk-heading-s">Other occupants</h3>
+        <ul>
+            <li *ngFor="let row of occupants; let i = index; trackBy: trackByMethod">
+                {{ row.getName() }}
+            </li>
+        </ul>
+    </app-panel>
+
 
     <app-or></app-or>
 
