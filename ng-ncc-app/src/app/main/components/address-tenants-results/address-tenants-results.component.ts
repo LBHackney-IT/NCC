@@ -32,6 +32,7 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
 
     // A list of tenants under the address passed to this component.
     tenants: IdentifiedCaller[];
+    occupants: IdentifiedCaller[];
     nonTenantCaller: NonTenantCaller;
 
     crm_contact_id: string;
@@ -54,7 +55,13 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
 
             // Convert the list of results into IdentifiedCallers.
             // Since we're selecting a person from the list, we know that the caller is going to be identified.
-            this.tenants = this.address.results.map((row) => new IdentifiedCaller(row));
+            this.tenants = this.address.results
+                .filter((row) => row.mainTenant)
+                .map((row) => new IdentifiedCaller(row));
+
+            this.occupants = this.address.results
+                .filter((row) => !row.mainTenant)
+                .map((row) => new IdentifiedCaller(row));
 
             // If there's only one tenant, automatically select them.
             if (1 === this.tenants.length) {

@@ -30,4 +30,5 @@ export interface ICitizenIndexSearchResult {
     isActiveTenant: boolean;
     householdId: string;
     accounttype: string;
+    mainTenant: boolean;
 }
