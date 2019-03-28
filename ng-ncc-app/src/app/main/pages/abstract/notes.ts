@@ -68,8 +68,12 @@ export abstract class PageNotes extends PageHistory implements OnInit {
      */
     filterNotes() {
         this.filter.manual = {
-            callReasonType: this.filter_reason,
-            clientName: this.filter_tenant
+            callReasonType: this.filter_search_input,
+            clientName: this.filter_tenant,
+            notesType: this.filter_note_type,
+            createdBy: this.filter_search_input,
+            notes: this.filter_search_input,
+            callType: this.filter_search_input
         };
     }
 
