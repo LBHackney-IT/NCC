@@ -45,7 +45,10 @@ export abstract class PageNotes extends PageHistory implements OnInit {
             .subscribe((list: string[]) => {
                 this.tenants_list = list;
             });
-
+        // Retrieve list of note types for the filter
+        Object.keys(NOTES).forEach((note_type_id) => {
+            this.note_type_list.push(NOTES[note_type_id]);
+        });
         // Clear the notes filter.
         this.clearFilter();
     }
