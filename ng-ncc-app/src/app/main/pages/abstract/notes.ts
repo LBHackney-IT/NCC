@@ -7,18 +7,20 @@ import { PAGES } from '../../../common/constants/pages.constant';
 import { PageHistory } from '../abstract/history';
 import { NotesService } from '../../../common/services/notes.service';
 import { PageTitleService } from '../../../common/services/page-title.service';
+import { NOTES } from 'src/app/common/constants/notes.constant';
 
 export abstract class PageNotes extends PageHistory implements OnInit {
 
     tenants_list: string[];
-
+    note_type_list: string[] = [];
     filter: {
         min_date: Date | null,
         max_date: Date | null,
         manual: { [propKey: string]: string }
     };
     filter_tenant: string;
-    filter_reason: string;
+    filter_search_input: string;
+    filter_note_type: string;
 
     route: ActivatedRoute;
     Notes: NotesService;
