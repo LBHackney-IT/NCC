@@ -16,12 +16,20 @@
                 <!-- Search by the call reason. -->
                 <div class="govuk-form-group govuk-!-margin-bottom-2">
                     <label class="govuk-visually-hidden govuk-label govuk-!-font-weight-bold" for="filter-manual-reason">
-                        Search by call reason
+                        Search by call reason, call type and agent name 
                     </label>
-                    <input class="govuk-input govuk-!-margin-right-1" id="filter-manual-reason" name="filter-manual-reason"
-                        type="search"
-                        placeholder="Search by reason"
-                        [(ngModel)]="filter_reason">
+                    <input class="govuk-input govuk-!-margin-right-1" id="filter-manual-reason" name="filter-manual-reason" type="search" placeholder="Search by type, reason, agent name and keyword" [(ngModel)]="filter_search_input">
+                </div>
+
+                <!-- Filter by the note type. -->
+                <div class="govuk-form-group govuk-!-margin-bottom-2">
+                    <label class="govuk-visually-hidden govuk-!-font-weight-bold" for="filter-manual-note-type">
+                        Filter by Note Type
+                    </label>
+                    <select class="govuk-select" name="filter-manual-note-type" [(ngModel)]="filter_note_type">
+                        <option [value]="null">All Note Types</option>
+                        <option *ngFor="let note_type of note_type_list" [value]="note_type">{{note_type}}</option>
+                    </select>
                 </div>
 
                 <!-- Filter by the caller's name. -->
