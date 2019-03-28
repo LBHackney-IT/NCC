@@ -100,11 +100,11 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     _filterNotes() {
         const min_date = this.minDate ? moment(this.minDate).format('YYYYMMDDHHmmss') : null;
         const max_date = this.maxDate ? moment(this.maxDate).format('YYYYMMDDHHmmss') : null;
-
+        // Keys using being search by input text
+        const inputSearch: string[] = ['callReasonType', 'createdBy', 'notes', 'callType'];
         this._filtered = this._rows.filter(
             item => {
                 let outcome = true;
-
                 // Check against the provided dates (if set).
                 if (outcome && min_date) {
                     outcome = item.createdOnSort >= min_date;
