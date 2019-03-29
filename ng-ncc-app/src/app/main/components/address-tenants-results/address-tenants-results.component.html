@@ -34,8 +34,7 @@
 
     <!-- Display each tenant. -->
     <h2 class="govuk-heading-m">
-        <!-- {{ isLeasehold ? 'Details' : 'Tenant details' }} -->
-        Details
+        Named {{ tenure.isLeasehold ? 'leaseholders' : 'tenants' }}
     </h2>
 
     <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
@@ -56,7 +55,7 @@
                 </label>
 
                 <div class="govuk-!-margin-bottom-5">
-                    <button class="link-button" type="button" name="button" (click)="editContactDetails(row)">
+                    <button class="link-button govuk-!-margin-bottom-0" type="button" name="button" (click)="editContactDetails(row)">
                         <!-- {{ isLeasehold ? 'Edit details' : 'Edit tenant details' }} -->
                         Edit Details
                     </button>
