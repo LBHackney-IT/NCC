@@ -35,7 +35,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
 
     form: {
         recipient: string;  // Recipient or Officer email address.
-        teamLeader: string; // Team leader or Manager email address.
+        ccEmail: string[]; // Team leader or Manager email address.
         contactNumber: string;
         callNature: ILogCallSelection;
         message: string;
@@ -61,6 +61,13 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit() {
         setTimeout(() => { this._recover() }, 200);
+    }
+
+    /**
+     * Add another field for a CC email.
+     */
+    addCCEmail() {
+        this.form.ccEmail.push(null);
     }
 
     /**
@@ -108,7 +115,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
 
         const callbackDetails: ICallbackNoteParameters = {
             recipientEmail: this.form.recipient,
-            managerEmail: this.form.teamLeader,
+            managerEmail: this.form.ccEmail[0],
             callbackNumber: this.form.contactNumber,
             message: this.form.message,
             callerName: this.Call.getCaller().getName(),
@@ -142,13 +149,13 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     /**
-     *
+     * Reset the form.
      */
     _reset() {
         this.form = {
             tenancyReference: this.Call.getTenancyReference(),
             recipient: null,
-            teamLeader: null,
+            ccEmail: [null],    // start with one!
             contactNumber: null,
             callNature: null,
             message: null
@@ -157,6 +164,10 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
         this.telephoneField.setDefault();
     }
 
+    /**
+     * Populate the form with "recovered" data.
+     * This happens when the user leaves the callback page before completing their callback request.
+     */
     private _recover() {
         this.form = Object.assign(this.form, this.Callback.details);
 
@@ -168,7 +179,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     /**
-     *
+     * This
      */
     selectedRecipientEmail(result: string) {
         this.form.recipient = result;
@@ -177,8 +188,12 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
     /**
      *
      */
-    selectedTeamLeaderEmail(result: string) {
-        this.form.teamLeader = result;
+    selectedTeamLeaderEmail(a, b, c) {
+        console.log(a, b, c);
+        // this.form.teamLeader = result;
     }
 
+    trackByFn(index: number, item: string) {
+        return index;
+    }
 }

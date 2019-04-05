@@ -59,9 +59,9 @@ export class NotesService {
         if (settings.tenancy_reference) {
             this._enabled = true;
             this.whenEnabled.next();
+            this.toggled.next(true);
         }
 
-        this.toggled.next(true);
     }
 
     /**
