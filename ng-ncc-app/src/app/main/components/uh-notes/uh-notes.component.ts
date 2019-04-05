@@ -115,6 +115,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
 
                 if (outcome && this.filter) {
                     let inputSearchOutcome = true;
+                    let dropdownOutcome = true;
                     // Assign input search outcome to false if the keys to be filtered are not null
                     inputSearch.forEach(key => {
                         inputSearchOutcome = this.filter[key] ? false : inputSearchOutcome;
@@ -128,13 +129,16 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                                 inputSearchOutcome =
                                     item[key].toLowerCase().includes(this.filter[key].toLowerCase())
                                         ? true : inputSearchOutcome;
+                                outcome = inputSearchOutcome;
+
                             } else {
                                 if (term && 'null' !== term) {
-                                    outcome = outcome && (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
+                                    dropdownOutcome = (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
                                 }
                             }
                         });
-                    outcome = inputSearchOutcome;
+
+                        outcome = inputSearchOutcome && dropdownOutcome;
                 }
                 return outcome;
             });
