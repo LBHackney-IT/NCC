@@ -7,18 +7,20 @@ import { PAGES } from '../../../common/constants/pages.constant';
 import { PageHistory } from '../abstract/history';
 import { NotesService } from '../../../common/services/notes.service';
 import { PageTitleService } from '../../../common/services/page-title.service';
+import { NOTES } from 'src/app/common/constants/notes.constant';
 
 export abstract class PageNotes extends PageHistory implements OnInit {
 
     tenants_list: string[];
-
+    note_type_list: string[] = [];
     filter: {
         min_date: Date | null,
         max_date: Date | null,
         manual: { [propKey: string]: string }
     };
     filter_tenant: string;
-    filter_reason: string;
+    filter_search_input: string;
+    filter_note_type: string;
 
     route: ActivatedRoute;
     Notes: NotesService;
@@ -43,7 +45,10 @@ export abstract class PageNotes extends PageHistory implements OnInit {
             .subscribe((list: string[]) => {
                 this.tenants_list = list;
             });
-
+        // Retrieve list of note types for the filter
+        Object.keys(NOTES).forEach((note_type_id) => {
+            this.note_type_list.push(NOTES[note_type_id]);
+        });
         // Clear the notes filter.
         this.clearFilter();
     }
@@ -63,8 +68,12 @@ export abstract class PageNotes extends PageHistory implements OnInit {
      */
     filterNotes() {
         this.filter.manual = {
-            callReasonType: this.filter_reason,
-            clientName: this.filter_tenant
+            callReasonType: this.filter_search_input,
+            clientName: this.filter_tenant,
+            notesType: this.filter_note_type,
+            createdBy: this.filter_search_input,
+            notes: this.filter_search_input,
+            callType: this.filter_search_input
         };
     }
 
@@ -77,8 +86,9 @@ export abstract class PageNotes extends PageHistory implements OnInit {
             max_date: null,
             manual: {}
         };
-        this.filter_reason = null;
+        this.filter_search_input = null;
         this.filter_tenant = null;
+        this.filter_note_type = null;
         this.filterNotes();
         this.filterByDate();
     }

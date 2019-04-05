@@ -100,11 +100,11 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
     _filterNotes() {
         const min_date = this.minDate ? moment(this.minDate).format('YYYYMMDDHHmmss') : null;
         const max_date = this.maxDate ? moment(this.maxDate).format('YYYYMMDDHHmmss') : null;
-
+        // Keys using being search by input text
+        const inputSearch: string[] = ['callReasonType', 'createdBy', 'notes', 'callType'];
         this._filtered = this._rows.filter(
             item => {
                 let outcome = true;
-
                 // Check against the provided dates (if set).
                 if (outcome && min_date) {
                     outcome = item.createdOnSort >= min_date;
@@ -114,14 +114,31 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                 }
 
                 if (outcome && this.filter) {
-                    // Put the item through the filter.
+                    let inputSearchOutcome = true;
+                    let dropdownOutcome = true;
+                    // Assign input search outcome to false if the keys to be filtered are not null
+                    inputSearch.forEach(key => {
+                        inputSearchOutcome = this.filter[key] ? false : inputSearchOutcome;
+                    });
                     Object.keys(this.filter).forEach(
                         key => {
                             const term = this.filter[key];
-                            if (term && 'null' !== term) {
-                                outcome = outcome && (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
+                            // Check if key should be filtered and if it it's null in both the item and filter object
+                            if (inputSearch.includes(key) && item[key] && this.filter[key]) {
+                                // If there's a match set inputSearchOutcome to true
+                                inputSearchOutcome =
+                                    item[key].toLowerCase().includes(this.filter[key].toLowerCase())
+                                        ? true : inputSearchOutcome;
+                                outcome = inputSearchOutcome;
+
+                            } else {
+                                if (term && 'null' !== term) {
+                                    dropdownOutcome = (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
+                                }
                             }
                         });
+
+                        outcome = inputSearchOutcome && dropdownOutcome;
                 }
                 return outcome;
             });
