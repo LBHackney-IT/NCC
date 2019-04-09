@@ -166,6 +166,10 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
         return this.disabled ? false : (null !== this._selected);
     }
 
+    hasTenants() {
+        return this.tenants.length > 0;
+    }
+
     /**
      * Called when the user hits the Continue button.
      */
