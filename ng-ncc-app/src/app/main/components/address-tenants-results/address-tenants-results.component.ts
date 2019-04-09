@@ -128,14 +128,14 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
      * Returns TRUE if there are no search results.
      */
     hasNoResults(): boolean {
-        return this.tenants && 0 === this.tenants.length;
+        return (this.tenants && 0 === this.tenants.length) && (this.occupants && this.occupants.length === 0);
     }
 
     /**
      * Returns TRUE if there are search results.
      */
     hasResults(): boolean {
-        return this.tenants && 0 < this.tenants.length;
+        return (this.tenants && 0 < this.tenants.length) || (this.occupants && 0 < this.occupants.length);
     }
 
     /**
