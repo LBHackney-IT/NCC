@@ -19,7 +19,7 @@
     <app-panel class="govuk-!-margin-bottom-5">
         <h2 class="govuk-heading-m property-heading">
             Property details
-            <app-tenancy-type [crmContactID]="crm_contact_id"></app-tenancy-type>
+            <app-tenancy-type *ngIf='hasTenants()' [crmContactID]="crm_contact_id"></app-tenancy-type>
         </h2>
 
         <app-patch-details [postcode]="getAddressPostcode()" [uprn]="getAddressUPRN()"></app-patch-details>
@@ -28,8 +28,8 @@
         <p class="govuk-body" [innerHtml]="getAddress()"></p>
 
         <!-- DPA questions and answers. -->
-        <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h3>
-        <app-dpa-tenancy [crmContactID]="crm_contact_id" [tenure]="tenure"></app-dpa-tenancy>
+        <h3 *ngIf='hasTenants()' class="govuk-heading-s govuk-!-margin-bottom-2">Data Protection Act questions</h3>
+        <app-dpa-tenancy *ngIf='hasTenants()' [crmContactID]="crm_contact_id" [tenure]="tenure"></app-dpa-tenancy>
     </app-panel>
 
     <!-- Display each tenant. -->
@@ -37,7 +37,11 @@
         Named {{ tenure.isLeasehold ? 'leaseholders' : 'tenants' }}
     </h2>
 
-    <app-box-panel class="tenant-list govuk-!-margin-bottom-3">
+    <app-box-panel *ngIf='!hasTenants()' class="tenant-list govuk-!-margin-bottom-3">
+        <p> There are no main tenants associated to this address</p>
+    </app-box-panel>
+
+    <app-box-panel *ngIf='hasTenants()' class="tenant-list govuk-!-margin-bottom-3">
         <div class="govuk-radios">
             <div class="govuk-radios__item" *ngFor="let row of tenants; let i = index; trackBy: trackByMethod">
                 <input class="govuk-radios__input" id="changed-name-{{i}}" name="changed-name" type="radio"
