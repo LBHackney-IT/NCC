@@ -71,7 +71,9 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
                 this._selected = this.tenants[0];
             }
 
-            this.getDPAAnswers();
+            if (this.hasTenants()) {
+                this.getDPAAnswers();
+            }
         }
     }
 
