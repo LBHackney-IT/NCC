@@ -42,11 +42,13 @@ export class TenancyTypeComponent implements OnInit {
     constructor(private ManageATenancyAPI: ManageATenancyAPIService) { }
 
     ngOnInit() {
-        this.ManageATenancyAPI.getAccountDetails(this.crmContactID)
+        if (this.crmContactID) {
+            this.ManageATenancyAPI.getAccountDetails(this.crmContactID)
             .pipe(take(1))
             .subscribe((data: IAccountDetails) => {
                 this.account = data;
             });
+        }
     }
 
     getTenantType(): string {

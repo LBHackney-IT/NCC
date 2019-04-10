@@ -71,7 +71,9 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
                 this._selected = this.tenants[0];
             }
 
-            this.getDPAAnswers();
+            if (this.hasTenants()) {
+                this.getDPAAnswers();
+            }
         }
     }
 
@@ -128,14 +130,14 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
      * Returns TRUE if there are no search results.
      */
     hasNoResults(): boolean {
-        return this.tenants && 0 === this.tenants.length;
+        return (this.tenants && 0 === this.tenants.length) && (this.occupants && this.occupants.length === 0);
     }
 
     /**
      * Returns TRUE if there are search results.
      */
     hasResults(): boolean {
-        return this.tenants && 0 < this.tenants.length;
+        return (this.tenants && 0 < this.tenants.length) || (this.occupants && 0 < this.occupants.length);
     }
 
     /**
@@ -164,6 +166,10 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
      */
     hasSelection(): boolean {
         return this.disabled ? false : (null !== this._selected);
+    }
+
+    hasTenants() {
+        return this.tenants.length > 0;
     }
 
     /**
