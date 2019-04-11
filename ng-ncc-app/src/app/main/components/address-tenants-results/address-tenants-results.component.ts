@@ -56,11 +56,11 @@ export class AddressTenantsResultsComponent implements OnInit, OnChanges, OnDest
             // Convert the list of results into IdentifiedCallers.
             // Since we're selecting a person from the list, we know that the caller is going to be identified.
             this.tenants = this.address.results
-                .filter((row) => row.mainTenant)
+                // .filter((row) => row.mainTenant)
                 .map((row) => new IdentifiedCaller(row));
 
             this.occupants = this.address.results
-                .filter((row) => !row.mainTenant)
+                // .filter((row) => !row.mainTenant)
                 .map((row) => new IdentifiedCaller(row))
                 .sort((a: IdentifiedCaller, b: IdentifiedCaller) => {
                     return this._cmp(a.getLastName(), b.getLastName()) || this._cmp(a.getFirstName(), b.getFirstName());
