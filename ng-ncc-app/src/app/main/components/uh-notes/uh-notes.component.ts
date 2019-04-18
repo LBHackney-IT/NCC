@@ -133,28 +133,14 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                                 // outcome = inputSearchOutcome;
 
                             } else {
-                                if (term && 'null' !== term) {
-                                    dropdownOutcome = outcome &&
-                                    (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
-                                    // dropdownOutcome =
-                                    // item[key].toLowerCase().includes(term.toLowerCase())
-                                    //     ? true : dropdownOutcome;
+                                if (term && item[key]) {
+                                    // If there's no match set dropdownOutcome to false if not set it to the original outcome
+                                    dropdownOutcome = !item[key].toLowerCase().includes(term.toLowerCase())
+                                    ? false : dropdownOutcome;
                                 }
                             }
                         });
-
-
-
                         outcome = outcome && inputSearchOutcome && dropdownOutcome;
-
-                        if(outcome) {
-                            console.log(this.filter);
-                            console.log('inputSearchOutcome', inputSearchOutcome);
-                            console.log('dropdownOutcome', dropdownOutcome);
-                        }
-                }
-                if (outcome) {
-                    console.log('filter', this.filter);
                 }
                 return outcome;
             });
