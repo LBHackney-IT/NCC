@@ -41,6 +41,7 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
             .pipe(takeUntil(this._destroyed$))
             .subscribe(() => {
                 this._loadNotes();
+
             });
     }
 
@@ -124,21 +125,22 @@ export class UHNotesComponent implements OnInit, OnChanges, OnDestroy {
                         key => {
                             const term = this.filter[key];
                             // Check if key should be filtered and if it it's null in both the item and filter object
-                            if (inputSearch.includes(key) && item[key] && this.filter[key]) {
+                            if (inputSearch.includes(key) && item[key] && term) {
                                 // If there's a match set inputSearchOutcome to true
-                                inputSearchOutcome =
-                                    item[key].toLowerCase().includes(this.filter[key].toLowerCase())
+                                inputSearchOutcome = outcome &&
+                                    item[key].toLowerCase().includes(term.toLowerCase())
                                         ? true : inputSearchOutcome;
-                                outcome = inputSearchOutcome;
+                                // outcome = inputSearchOutcome;
 
                             } else {
-                                if (term && 'null' !== term) {
-                                    dropdownOutcome = (item[key] && (-1 !== item[key].toLowerCase().indexOf(term.toLowerCase())));
+                                if (term && item[key]) {
+                                    // If there's no match set dropdownOutcome to false if not set it to the original outcome
+                                    dropdownOutcome = !item[key].toLowerCase().includes(term.toLowerCase())
+                                    ? false : dropdownOutcome;
                                 }
                             }
                         });
-
-                        outcome = inputSearchOutcome && dropdownOutcome;
+                        outcome = outcome && inputSearchOutcome && dropdownOutcome;
                 }
                 return outcome;
             });
