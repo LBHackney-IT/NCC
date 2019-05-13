@@ -11,10 +11,10 @@ import { LogCallReason } from 'src/app/common/classes/log-call-reason.class';
 import { LogCallType } from 'src/app/common/classes/log-call-type.class';
 import { ViewOnlyService } from 'src/app/common/services/view-only.service';
 import { NotesService } from 'src/app/common/services/notes.service';
-import { HackneyAPIService } from 'src/app/common/API/HackneyAPI/hackney-api.service';
 import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
 import { CALL_REASON } from 'src/app/common/constants/call-reason.constant';
 import { ConfirmDialogueComponent } from 'src/app/main/components/dialogue/confirm/confirm-dialogue.component';
+import { NCCAPIService } from '../../../../common/API/NCCAPI/ncc-api.service';
 
 @Component({
     selector: 'app-call-nature-dialogue',
@@ -56,7 +56,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
 
     constructor(
         private cdRef: ChangeDetectorRef,
-        private HackneyAPI: HackneyAPIService,
+        private NCCAPI: NCCAPIService,
         private Notes: NotesService,
         private ViewOnly: ViewOnlyService
     ) {
@@ -93,8 +93,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
      */
     getCallNatures() {
         forkJoin(
-            this.HackneyAPI.getCallTypes(),
-            this.HackneyAPI.getCallReasons()
+            this.NCCAPI.getCallTypes(),
+            this.NCCAPI.getCallReasons()
         )
             .pipe(take(1))
             .subscribe(

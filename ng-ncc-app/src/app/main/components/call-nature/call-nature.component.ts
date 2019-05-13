@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { HackneyAPIService } from 'src/app/common/API/HackneyAPI/hackney-api.service';
 import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
 import { LogCallReason } from 'src/app/common/classes/log-call-reason.class';
 import { LogCallType } from 'src/app/common/classes/log-call-type.class';
 import { CALL_REASON } from 'src/app/common/constants/call-reason.constant';
+import { NCCAPIService } from 'src/app/common/API/NCCAPI/ncc-api.service';
 
 @Component({
     selector: 'app-call-nature',
@@ -25,7 +24,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
     error: boolean;
     selected: ILogCallSelection; // the selected call type and reason.
 
-    constructor(private HackneyAPI: HackneyAPIService, private cdRef: ChangeDetectorRef) { }
+    constructor(private cdRef: ChangeDetectorRef, private NCCAPI: NCCAPIService) { }
 
     ngOnInit() {
         this.selected = new ILogCallSelection;
@@ -34,8 +33,8 @@ export class CallNatureComponent implements OnInit, OnDestroy {
 
         // Fetch a list of call types and reasons from the Hackney API.
         forkJoin(
-            this.HackneyAPI.getCallTypes(),
-            this.HackneyAPI.getCallReasons()
+            this.NCCAPI.getCallTypes(),
+            this.NCCAPI.getCallReasons()
         )
             .pipe(
                 takeUntil(this._destroyed$)
