@@ -532,10 +532,11 @@ export class NCCAPIService {
         return this.http
             .get(`${this._url}CRM/GetCRMEnquiryCallTypes`)
             .pipe(
-                map((response: IHackneyAPIJSONResult) => {
+                map((response: IJSONResponse) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
                     // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
                     const types = response.result;
+
                     // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
                     const indexed_types: Array<LogCallType> = Object.keys(types).map(
                         // (value, index) => new LogCallType(index, types[index])
@@ -543,6 +544,7 @@ export class NCCAPIService {
                             const id = parseInt(value, 10);
                             return new LogCallType(id, types[id]);
                         });
+
                     return indexed_types;
                 })
             );
