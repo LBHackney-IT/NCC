@@ -15,6 +15,7 @@ import { HackneyAPIService } from 'src/app/common/API/HackneyAPI/hackney-api.ser
 import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
 import { CALL_REASON } from 'src/app/common/constants/call-reason.constant';
 import { ConfirmDialogueComponent } from 'src/app/main/components/dialogue/confirm/confirm-dialogue.component';
+import { NCCAPIService } from '../../../../common/API/NCCAPI/ncc-api.service';
 
 @Component({
     selector: 'app-call-nature-dialogue',
@@ -57,6 +58,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
     constructor(
         private cdRef: ChangeDetectorRef,
         private HackneyAPI: HackneyAPIService,
+        private NCCAPI: NCCAPIService,
         private Notes: NotesService,
         private ViewOnly: ViewOnlyService
     ) {
