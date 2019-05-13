@@ -521,7 +521,7 @@ export class NCCAPIService {
 
     }
 
-        /**
+    /**
      * Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
      *
      * This version of the method makes use of a [highly touted] Observable.
@@ -530,13 +530,12 @@ export class NCCAPIService {
         // Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
-            .get(`${this._url}/CRM/GetCRMEnquiryCallTypes`)
+            .get(`${this._url}CRM/GetCRMEnquiryCallTypes`)
             .pipe(
                 map((response: IHackneyAPIJSONResult) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
                     // Though the above recommends using lodash/underscore for mapping with an object, we can still do it using native JS.
                     const types = response.result;
-
                     // Prepare the data returned from the microservice as a list (array) of ID and label pairs.
                     const indexed_types: Array<LogCallType> = Object.keys(types).map(
                         // (value, index) => new LogCallType(index, types[index])
@@ -544,7 +543,6 @@ export class NCCAPIService {
                             const id = parseInt(value, 10);
                             return new LogCallType(id, types[id]);
                         });
-
                     return indexed_types;
                 })
             );
@@ -559,7 +557,7 @@ export class NCCAPIService {
         //
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
-            .get(`${this._url}/CRM/GetCRMEnquirySubTypes`)
+            .get(`${this._url}CRM/GetCRMEnquirySubTypes`)
             .pipe(
                 map((response: IHackneyAPIJSONResult) => {
                     let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
