@@ -95,8 +95,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
      */
     getCallNatures() {
         forkJoin(
-            this.HackneyAPI.getCallTypes(),
-            this.HackneyAPI.getCallReasons()
+            this.NCCAPI.getCallTypes(),
+            this.NCCAPI.getCallReasons()
         )
             .pipe(take(1))
             .subscribe(
