@@ -1,8 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { HackneyAPIService } from 'src/app/common/API/HackneyAPI/hackney-api.service';
 import { ILogCallSelection } from 'src/app/common/interfaces/log-call-selection';
 import { LogCallReason } from 'src/app/common/classes/log-call-reason.class';
 import { LogCallType } from 'src/app/common/classes/log-call-type.class';
@@ -26,7 +24,7 @@ export class CallNatureComponent implements OnInit, OnDestroy {
     error: boolean;
     selected: ILogCallSelection; // the selected call type and reason.
 
-    constructor(private HackneyAPI: HackneyAPIService, private cdRef: ChangeDetectorRef, private NCCAPI: NCCAPIService) { }
+    constructor(private cdRef: ChangeDetectorRef, private NCCAPI: NCCAPIService) { }
 
     ngOnInit() {
         this.selected = new ILogCallSelection;
