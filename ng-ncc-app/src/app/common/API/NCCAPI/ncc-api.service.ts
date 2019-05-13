@@ -561,9 +561,9 @@ export class NCCAPIService {
         return this.http
             .get(`${this._url}CRM/GetCRMEnquirySubTypes`)
             .pipe(
-                map((response: IHackneyAPIJSONResult) => {
+                map((response: IJSONResponse) => {
                     let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
-                    const types = response.result;
+                    const types = response.results;
 
                     groups = {};
                     Object.keys(types)
