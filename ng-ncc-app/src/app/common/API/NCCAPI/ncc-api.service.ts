@@ -530,7 +530,7 @@ export class NCCAPIService {
         // Fetching a list of call types from the HackneyAPI microservice, and returning them as a formatted list.
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
-            .get(`${this._url}CRM/GetCRMEnquiryCallTypes`)
+            .get(`${this._url}CRM/CRMEnquiryCallTypes`)
             .pipe(
                 map((response: IJSONResponse) => {
                     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_map
@@ -559,7 +559,7 @@ export class NCCAPIService {
         //
         // https://stackoverflow.com/a/50850777/4073160
         return this.http
-            .get(`${this._url}CRM/GetCRMEnquirySubTypes`)
+            .get(`${this._url}CRM/CRMEnquirySubTypes`)
             .pipe(
                 map((response: IJSONResponse) => {
                     let groups: { [propKey: number]: any }; // groups of call reasons, indexed by call type.
