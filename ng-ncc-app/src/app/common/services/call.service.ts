@@ -8,7 +8,6 @@ import { IJSONResponse } from '../../common/interfaces/json-response';
 import { ILogCallSelection } from '../../common/interfaces/log-call-selection';
 import { INCCNote } from '../../common/interfaces/ncc-note';
 import { NCCAPIService } from '../../common/API/NCCAPI/ncc-api.service';
-import { HackneyAPIService } from '../../common/API/HackneyAPI/hackney-api.service';
 import { ManageATenancyAPIService } from '../../common/API/ManageATenancyAPI/manageatenancy-api.service';
 import { AccountService } from '../services/account.service';
 import { AnonymousCaller } from '../../common/classes/anonymous-caller.class';
@@ -50,7 +49,6 @@ export class CallService {
     constructor(
         private Account: AccountService,
         private Auth: AuthService,
-        private HackneyAPI: HackneyAPIService,
         private ManageATenancyAPI: ManageATenancyAPIService,
         private NCCAPI: NCCAPIService,
         private Notes: NotesService,

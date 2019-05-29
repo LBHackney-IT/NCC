@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { finalize, take, map } from 'rxjs/operators';
 
-import { HackneyAPIService } from '../../../common/API/HackneyAPI/hackney-api.service';
 import { NCCAPIService } from '../../../common/API/NCCAPI/ncc-api.service';
 import { HelperService } from '../../../common/services/helper.service';
 import { ICallbackDetails } from '../../../common/interfaces/callback-details';
@@ -32,7 +31,6 @@ export class PageRespondComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private Helper: HelperService,
-        private HackneyAPI: HackneyAPIService,
         private NCCAPI: NCCAPIService
     ) { }
 
@@ -44,7 +42,7 @@ export class PageRespondComponent implements OnInit {
         if (this.callbackID) {
             forkJoin(
                 this.NCCAPI.getCallbackDetails(this.callbackID),
-                this.HackneyAPI.getCallReasons()
+                this.NCCAPI.getCallReasons()
             )
                 .pipe(take(1))
                 .pipe(map((data) => {
