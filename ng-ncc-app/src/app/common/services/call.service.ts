@@ -259,6 +259,13 @@ export class CallService {
     }
 
     /**
+     * Returns the property reference number associated with the caller.
+     */
+    getAccountId(): string {
+        return this.account ? this.account.accountid : null;
+    }
+
+    /**
      * Returns the payment reference number associated with the caller.
      */
     getPaymentReference(): string {

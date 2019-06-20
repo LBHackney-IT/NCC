@@ -30,6 +30,7 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     endingCall = false;
     notePending: boolean;
     propertyReferenceNumber = null;
+    accountId = null;
 
     constructor(
         private AddressSearch: AddressSearchService,
@@ -192,7 +193,8 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     getRepairsHubLink(): string {
         if (this.Call.isCallerIdentified()) {
             this.propertyReferenceNumber = this.Call.getPropertyReferenceNumber();
-            return `${environment.repairsHubLink}/${this.propertyReferenceNumber}`;
+            this.accountId = this.Call.getAccountId();
+            return `${environment.repairsHubLink}/${this.propertyReferenceNumber}?account_id=${this.accountId}`;
         } else {
             return '';
         }
