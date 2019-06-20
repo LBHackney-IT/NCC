@@ -13,6 +13,7 @@ export const PAGES = {
     RENT_PAYMENT: { route: 'make', label: 'Pay' },
     RENT_COMMS: { route: 'comms', label: 'Communications to caller' },
     RENT_STATEMENT: { route: 'statement', label: 'Transactions Preview' },
+    REPAIRS_HUB: {label: 'View in Repairs Hub'},
     REQUEST_CALLBACK: { route: 'callback', label: 'Request a callback' },
     EDIT_CONTACT_DETAILS: { route: 'contact-details', label: 'Edit Contact Details' },
     AUTHENTICATION: { route: 'auth', label: '' },

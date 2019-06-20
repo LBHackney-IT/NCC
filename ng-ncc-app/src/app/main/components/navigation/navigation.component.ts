@@ -5,13 +5,14 @@ import { environment } from '../../../../environments/environment';
 import { AfterViewChecked, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 import { AddressSearchService } from '../../../common/services/address-search.service';
 import { CallService } from '../../../common/services/call.service';
 import { NotesService } from '../../../common/services/notes.service';
 import { ViewOnlyService } from '../../../common/services/view-only.service';
 import { PAGES } from '../../../common/constants/pages.constant';
+import { IAccountDetails } from '../../../common/interfaces/account-details';
 
 @Component({
     selector: 'app-navigation',
@@ -28,6 +29,8 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
     showNotesButton: boolean;
     endingCall = false;
     notePending: boolean;
+    propertyReferenceNumber = null;
+    accountId = null;
 
     constructor(
         private AddressSearch: AddressSearchService,
@@ -182,6 +185,19 @@ export class NavigationComponent implements AfterViewChecked, OnDestroy {
      */
     getRentRoute(): string {
         return `/${PAGES.RENT.route}/${PAGES.RENT_TRANSACTIONS.route}`;
+    }
+
+     /**
+     *
+     */
+    getRepairsHubLink(): string {
+        if (this.Call.isCallerIdentified()) {
+            this.propertyReferenceNumber = this.Call.getPropertyReferenceNumber();
+            this.accountId = this.Call.getAccountId();
+            return `${environment.repairsHubLink}/${this.propertyReferenceNumber}?account_id=${this.accountId}`;
+        } else {
+            return '';
+        }
     }
 
     /**
