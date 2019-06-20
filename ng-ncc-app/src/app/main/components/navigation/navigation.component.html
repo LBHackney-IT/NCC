@@ -73,7 +73,7 @@
 
         <!-- Request a callback. -->
         <li class="navigation__item" routerLinkActive="navigation__item--active">
-            <a href="{{getRepairsHubLink()}}" [class.disabled]="!isCallActive()">
+            <a href="{{getRepairsHubLink()}}" [class.disabled]="!isCallActive() || !isCallerIdentified()" target="_blank">
                 {{ page_defs.REPAIRS_HUB.label }}
             </a>
         </li>
