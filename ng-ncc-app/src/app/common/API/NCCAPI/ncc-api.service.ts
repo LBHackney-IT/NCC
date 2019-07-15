@@ -89,7 +89,7 @@ export class NCCAPIService {
      * Create a callback request note against a call.
      */
     createCallbackNote(agentCRMID: string, settings: INotesSettings, details: ICallbackNoteParameters) {
-        const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
+        const emails = [details.recipientEmail].filter(e => null !== e);
 
         // The callback request is considered sent to the first specified email address,
         // with any other email addresses being carbon copied (CC'd).
@@ -107,7 +107,6 @@ export class NCCAPIService {
             'CallbackRequest.MessageForEmail': details.message,
             'CallbackRequest.CallersFullname': details.callerName,
             'CallbackRequest.RecipientEmailId': details.recipientEmail,
-            'CallbackRequest.ManagerEmailId': details.managerEmail,
             'CallbackRequest.PhoneNumber': details.callbackNumber,
             'CallbackRequest.OtherNumber': details.otherNumber,
         }, settings.parameters);
@@ -481,7 +480,6 @@ export class NCCAPIService {
         const parameters = {
             CallBackId: details.callbackId,
             RecipientEmailId: details.recipientEmail,
-            ManagerEmailId: details.managerEmail,
             PhoneNumber: details.callbackNumber,
             MessageForEmail: details.message,
             CallersFullName: details.callerName,
