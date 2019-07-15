@@ -280,7 +280,7 @@ export class NotesService {
         }
 
         // Remove any empty email addresses.
-        const emails = [details.recipientEmail, details.managerEmail].filter(e => null !== e);
+        const emails = [details.recipientEmail].filter(e => null !== e);
 
         // The callback request is considered sent to the first specified email address,
         // with any other email addresses being carbon copied (CC'd).
