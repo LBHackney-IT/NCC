@@ -64,13 +64,6 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     /**
-     * Add another field for a CC email.
-     */
-    addCCEmail() {
-        this.form.ccEmail.push(null);
-    }
-
-    /**
      *
      */
     numberSelected(number: string) {
