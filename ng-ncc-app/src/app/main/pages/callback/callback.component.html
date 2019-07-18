@@ -18,9 +18,7 @@
             <label class="govuk-label govuk-!-width-one-half" for="team-leader">
                 Their Team leader or Manager email address (optional)
             </label>
-            <app-user-lookup class="govuk-!-margin-bottom-1" placeholder="Begin typing a name or email address"
-                 *ngFor="let row of form.ccEmail; let i = index; trackBy: trackByFn"
-                 [(model)]="form.ccEmail[i]" [disabled]="sending"></app-user-lookup>
+            <app-user-lookup class="govuk-!-margin-bottom-1" placeholder="Begin typing a name or email address" [(model)]="form.ccEmail" [disabled]="sending"></app-user-lookup>
         </div>
 
     </fieldset>

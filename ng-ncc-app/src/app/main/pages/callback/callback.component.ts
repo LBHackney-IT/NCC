@@ -35,7 +35,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
 
     form: {
         recipient: string;  // Recipient or Officer email address.
-        ccEmail: string[]; // Team leader or Manager email address.
+        ccEmail: string; // Team leader or Manager email address.
         contactNumber: string;
         callNature: ILogCallSelection;
         message: string;
@@ -108,7 +108,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
 
         const callbackDetails: ICallbackNoteParameters = {
             recipientEmail: this.form.recipient,
-            managerEmail: this.form.ccEmail[0],
+            managerEmail: this.form.ccEmail,
             callbackNumber: this.form.contactNumber,
             message: this.form.message,
             callerName: this.Call.getCaller().getName(),
@@ -148,7 +148,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
         this.form = {
             tenancyReference: this.Call.getTenancyReference(),
             recipient: null,
-            ccEmail: [null],    // start with one!
+            ccEmail: null,    // start with one!
             contactNumber: null,
             callNature: null,
             message: null
