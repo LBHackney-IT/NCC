@@ -3,6 +3,7 @@ export interface ICallbackDetails {
     housingtagref: string;
     calltypereasonid: string;
     calltypeotherreason: string;
+    callbackmanageremailid: string;
     callbackofficeremailid: string;
     callbackphonenumber: string;
     notes: string;
