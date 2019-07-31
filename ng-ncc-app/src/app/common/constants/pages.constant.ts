@@ -7,7 +7,7 @@ export const PAGES = {
     ADDITIONAL_REASON: { route: 'log-additional', label: 'Add another call reason' },
     VIEW_NOTES: { route: 'view-notes', label: 'View caller notes' },
     ADD_NOTES: { route: 'add-notes', label: 'Add notes' },
-    COMMS: { route: 'comms', label: 'Send emails, texts, and letters' },
+    COMMS: { route: 'comms', label: 'Send non-sensitive emails, texts, and letters' },
     RENT: { route: 'rent', label: 'View or pay account' },
     RENT_TRANSACTIONS: { route: 'transactions', label: 'Transaction History' },
     RENT_PAYMENT: { route: 'make', label: 'Pay' },
