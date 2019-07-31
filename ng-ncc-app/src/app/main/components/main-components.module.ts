@@ -12,6 +12,7 @@ import { CommsMethodSelectComponent } from './comms-method-select/comms-method-s
 import { CommsReceiptTemplatesComponent } from './comms-receipt-templates/comms-receipt-templates.component';
 import { CommsTemplatesComponent } from './comms-templates/comms-templates.component';
 import { CommsTelephoneComponent } from './comms-telephone/comms-telephone.component';
+import { SensitiveCommsTemplatesComponent } from './sensitive-comms-templates/sensitive-comms-templates.component';
 import { DateFieldComponent } from './date-field/date-field.component';
 import { CurrentBalanceComponent } from './current-balance/current-balance.component';
 import { ConfirmDialogueComponent } from './dialogue/confirm/confirm-dialogue.component';
@@ -79,6 +80,7 @@ import { HelperModule } from 'src/app/main/components/helper/helper.module';
         NoteTypeComponent,
         NotifyTemplatePreviewComponent,
         RentBreakdownComponent,
+        SensitiveCommsTemplatesComponent,
         TenancyTypeComponent,
         TransactionsComponent,
         UHNotesComponent,
@@ -111,6 +113,7 @@ import { HelperModule } from 'src/app/main/components/helper/helper.module';
         NoteTypeComponent,
         NotifyTemplatePreviewComponent,
         RentBreakdownComponent,
+        SensitiveCommsTemplatesComponent,
         TenancyTypeComponent,
         TransactionsComponent,
         UHNotesComponent,

@@ -1,7 +1,7 @@
 <form (submit)="sendMessage($event)">
 
     <!-- Select the form to send. -->
-    <app-comms-templates title="Select an item to send:" includeSensitive="true" (selected)="selectedOption($event)"></app-comms-templates>
+    <app-sensitive-comms-templates title="Select an item to send:" includeSensitive="true" (selected)="selectedOption($event)"></app-sensitive-comms-templates>
 
     <!-- Select the communications method. -->
     <!-- Which methods are available will depend on the selected form (GOV.UK Notify template). -->
