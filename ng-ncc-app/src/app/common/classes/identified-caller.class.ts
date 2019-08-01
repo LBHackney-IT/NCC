@@ -85,6 +85,13 @@ export class IdentifiedCaller extends Caller {
         return null;
     }
 
+    getAge(): number | null {
+        if (this._details.dateOfBirth) {
+            return moment().diff(this._details.dateOfBirth, 'years');
+        }
+        return null;
+    }
+
     /**
      * Returns the caller's postal address.
      */
