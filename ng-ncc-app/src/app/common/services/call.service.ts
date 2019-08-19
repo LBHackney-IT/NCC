@@ -195,9 +195,6 @@ export class CallService {
                             tenancy_reference: tenancy_reference
                         };
                         this.Notes.enable(this.caller.getName(), settings);
-
-                        // Create an automatic note mentioning the selected caller.
-                        this.createCallerNote();
                     });
         }
     }
