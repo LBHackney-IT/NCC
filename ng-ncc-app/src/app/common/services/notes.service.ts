@@ -322,7 +322,7 @@ export class NotesService {
         const observables = callReasonNotes.map(
             (logCallSelection: ILogCallSelection) => {
                 return this.recordAutomaticNote(
-                    null,
+                    `Caller identified as ${this._name}.`,
                     logCallSelection
                 );
             }

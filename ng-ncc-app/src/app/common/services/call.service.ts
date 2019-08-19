@@ -213,36 +213,6 @@ export class CallService {
     }
 
     /**
-     * Creates an automatic note about the caller being identified.
-     */
-    createCallerNote() {
-        if (this.call_id) {
-            const name = (this.caller.isAnonymous() && !this.caller.isNonTenant()) ? 'anonymous' : this.caller.getName();
-            // const call_type = null; // TODO this.call_nature.call_type.label;
-            // const call_reason = null; // TODO this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
-            // this.call_nature.call_reason.label;
-
-            forkJoin(
-                // Record an automatic note.
-                this.recordAutomaticNote(`Caller identified as ${name}.`),
-
-                // Record an Action Diary note about the call type and reason.
-                // this.recordActionDiaryNote(`calling about ${call_type} - ${call_reason}.`)
-                // Commented out because the call type and reason are only determined at the end of the call, so here they will always be
-                // NULL.
-            )
-                .pipe(take(1))
-                .pipe(map((data) => data[0])) // only interested in the response from recordAutomaticNote().
-                .subscribe((data: INCCNote) => {
-                    // Store the interaction ID from this note for later use (i.e. when and if making a payment.)
-                    // Making a payment via Paris requires an interaction ID, and since we're creating this note we can obtain one from it.
-                    this.interaction_id = data.interactionId;
-                    // console.log('Interaction ID is', this.interaction_id);
-                });
-        }
-    }
-
-    /**
      * Returns the tenancy reference number associated with the caller.
      */
     getTenancyReference(): string {
