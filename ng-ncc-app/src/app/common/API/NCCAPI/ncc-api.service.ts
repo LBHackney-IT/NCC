@@ -160,19 +160,6 @@ export class NCCAPIService {
     }
 
     /**
-     * Create an Action Diary entry against a call.
-     */
-    createActionDiaryEntry(tenancyReference: string, content: string) {
-        const parameters = {
-            tenancyAgreementId: tenancyReference,
-            notes: content
-        };
-
-        return this.http
-            .post(`${this._url}UH/CreateArearsActionDiary?${this._buildQueryString(parameters)}`, {});
-    }
-
-    /**
      *
      *
      * @param {string} tenancyReference

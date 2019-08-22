@@ -11,7 +11,7 @@ import { ICaller } from '../../common/interfaces/caller';
     providedIn: 'root'
 })
 export class UHTriggerService {
-    // This service is used to record Action Diary entries against the current call (tenancy reference) when something in the app happens.
+    // This service is used to record UH notes against the current call (tenancy reference) when something in the app happens.
     // Unfortunately there's no real way of telling exactly what was sent, because everything has an ID that might change in the future.
     // Therefore we have to make use of hardcoded call types/reasons/template names for now.
 

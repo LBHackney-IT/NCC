@@ -199,23 +199,6 @@ export class NotesService {
             }));
     }
 
-    /**
-     * Record an Action Diary entry against the tenancy associated with the call (if present).
-     */
-    recordActionDiaryNote(note_content: string | null, call_nature: ILogCallSelection = null) {
-        if (this.ViewOnly.status) {
-            // console.log('View only status; do not create an Action Diary note.');
-            return of(true);
-        }
-
-        const tenancy_reference = this._settings.tenancy_reference;
-        if (tenancy_reference) {
-            return this.NCCAPI.createActionDiaryEntry(tenancy_reference, note_content);
-        }
-
-        return of(true);
-    }
-
     recordTenancyAgreementNote(note_content: string | null, call_nature: ILogCallSelection = null) {
 
         if (this.ViewOnly.status) {
@@ -262,7 +245,7 @@ export class NotesService {
             }),
 
             // Action Diary note...
-            this.recordActionDiaryNote(note_content, call_nature)
+            this.recordTenancyAgreementNote(note_content, call_nature)
         );
     }
 
@@ -319,7 +302,7 @@ export class NotesService {
         const observables = callReasonNotes.map(
             (logCallSelection: ILogCallSelection) => {
                 return this.recordAutomaticNote(
-                    null,
+                    `Caller identified as ${this._name}.`,
                     logCallSelection
                 );
             }

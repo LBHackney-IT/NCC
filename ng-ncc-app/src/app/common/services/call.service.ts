@@ -194,9 +194,6 @@ export class CallService {
                             tenancy_reference: tenancy_reference
                         };
                         this.Notes.enable(this.caller.getName(), settings);
-
-                        // Create an automatic note mentioning the selected caller.
-                        this.createCallerNote();
                     });
         }
     }
@@ -209,31 +206,6 @@ export class CallService {
         this.accountSubject.next(this.account);
         // Anything subscribed to getAccountDetails() will receive updated account information.
         // console.log(`Account details were obtained.`, this.account.tagReferenceNumber);
-    }
-
-    /**
-     * Creates an automatic note about the caller being identified.
-     */
-    createCallerNote() {
-        if (this.call_id) {
-            const name = (this.caller.isAnonymous() && !this.caller.isNonTenant()) ? 'anonymous' : this.caller.getName();
-            // const call_type = null; // TODO this.call_nature.call_type.label;
-            // const call_reason = null; // TODO this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
-            // this.call_nature.call_reason.label;
-
-            forkJoin(
-                // Record an automatic note.
-                this.recordAutomaticNote(`Caller identified as ${name}.`),
-            )
-                .pipe(take(1))
-                .pipe(map((data) => data[0])) // only interested in the response from recordAutomaticNote().
-                .subscribe((data: INCCNote) => {
-                    // Store the interaction ID from this note for later use (i.e. when and if making a payment.)
-                    // Making a payment via Paris requires an interaction ID, and since we're creating this note we can obtain one from it.
-                    this.interaction_id = data.interactionId;
-                    // console.log('Interaction ID is', this.interaction_id);
-                });
-        }
     }
 
     /**
@@ -392,13 +364,6 @@ export class CallService {
      */
     recordCommsNote(notify_template_name: string, notify_method: string): Observable<any> {
         return this.Notes.recordCommsNote(notify_template_name, notify_method);
-    }
-
-    /**
-     * Record an Action Diary entry against the tenancy associated with the call (if present).
-     */
-    recordActionDiaryNote(note_content: string) {
-        return this.Notes.recordActionDiaryNote(note_content);
     }
 
     /**
