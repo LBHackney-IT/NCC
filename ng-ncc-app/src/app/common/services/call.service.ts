@@ -162,7 +162,6 @@ export class CallService {
                 this.NCCAPI.createCall(contact_id),
 
                 // We also fetch account details, in order to obtain the associated tenancy reference, via the Manage A Tenancy API.
-                // The tenancy reference is required to record Action Diary entries.
                 this.Account.getFor(this.caller, this.tenancy)
             )
                 .pipe(take(1))
@@ -365,13 +364,6 @@ export class CallService {
      */
     recordCommsNote(notify_template_name: string, notify_method: string): Observable<any> {
         return this.Notes.recordCommsNote(notify_template_name, notify_method);
-    }
-
-    /**
-     * Record an Action Diary entry against the tenancy associated with the call (if present).
-     */
-    recordActionDiaryNote(note_content: string) {
-        return this.Notes.recordActionDiaryNote(note_content);
     }
 
     /**

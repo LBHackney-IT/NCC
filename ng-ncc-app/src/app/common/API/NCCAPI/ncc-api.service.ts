@@ -79,7 +79,7 @@ export class NCCAPIService {
 
     /**
      * Create an automatic note against a call.
-     * Automatic notes are also added to the Action Diary.
+     * Automatic notes are also added to the UH Notes.
      */
     createAutomaticNote(agentCRMID: string, settings: INotesSettings) {
         return this._createNote(agentCRMID, settings, NOTE_TYPE.AUTOMATIC);
@@ -157,19 +157,6 @@ export class NCCAPIService {
 
         return this.http
             .post(`${this._url}CRM/CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
-    }
-
-    /**
-     * Create an Action Diary entry against a call.
-     */
-    createActionDiaryEntry(tenancyReference: string, content: string) {
-        const parameters = {
-            tenancyAgreementId: tenancyReference,
-            notes: content
-        };
-
-        return this.http
-            .post(`${this._url}UH/CreateArearsActionDiary?${this._buildQueryString(parameters)}`, {});
     }
 
     /**
