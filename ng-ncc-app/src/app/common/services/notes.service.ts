@@ -125,7 +125,7 @@ export class NotesService {
 
     /**
      * Record an automatic note against the call.
-     * A corresponding Action Diary note is also created.
+     * A corresponding UH note is also created.
      */
     recordAutomaticNote(note_content: string, call_nature: ILogCallSelection = null): Observable<any> {
         if (this.ViewOnly.status) {
@@ -146,7 +146,7 @@ export class NotesService {
                 content: this._formatNoteContent(note_content, call_nature)
             }),
 
-            this.checkCallTypeAndMakeCall(call_nature, note_content)
+            this.makeUHNoteCall(call_nature, note_content)
 
         )
             .pipe(map((data: IJSONResponse[]) => {
@@ -159,7 +159,7 @@ export class NotesService {
 
     /**
      * Record a manual note.
-     * A corresponding Action Diary or Universal Housing note is also created.
+     * A corresponding Universal Housing note is also created.
      */
     recordManualNote(call_nature: ILogCallSelection, note_content: string, transferred: boolean = false) {
         if (this.ViewOnly.status) {
@@ -185,11 +185,8 @@ export class NotesService {
                 tenancy_reference: this._settings.tenancy_reference
             }),
 
-            // Action Diary or Universal Housing note...
-            this.checkCallTypeAndMakeCall(call_nature, note_content)
-
-
-            //  this.recordActionDiaryNote(note_content)
+            // Universal Housing note...
+            this.makeUHNoteCall(call_nature, note_content)
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Add the call nature to the list.
@@ -271,7 +268,7 @@ export class NotesService {
 
     /**
      * Record a callback note against the call.
-     * A corresponding Action Diary note is also created.
+     * A corresponding UH note is also created.
      */
     recordCallbackNote(call_nature: ILogCallSelection = null, details: ICallbackNoteParameters): Observable<any> {
         if (this.ViewOnly.status) {
@@ -303,8 +300,8 @@ export class NotesService {
                 content: noteMessage
             }, details),
 
-            // Action Diary note...
-            this.checkCallTypeAndMakeCall(call_nature, noteMessage, 'Callback Request')
+            // UH note...
+            this.makeUHNoteCall(call_nature, noteMessage, 'Callback Request')
         )
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
@@ -413,29 +410,21 @@ export class NotesService {
     }
 
     /**
-     * Check whether it needs to call Action Diary or Universal housing
-     * depending on the type.
-     * Then make the appropiate api call
+     * Make the Universal housing note api call
      *
      * @private
      * @memberof NotesService
      */
-    private checkCallTypeAndMakeCall = (call_nature: ILogCallSelection,
+    private makeUHNoteCall = (call_nature: ILogCallSelection,
         additional_notes: string,
         note_header?: string): ObservableInput<any> => {
-
-        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
 
         if (call_nature && call_nature.call_type !== null) {
             const note = note_header ?
                 this.buildNoteText(call_nature, additional_notes, note_header) :
                 this.buildNoteText(call_nature, additional_notes);
 
-            if (callTypes.includes(call_nature.call_type.id)) {
-                return this.recordActionDiaryNote(note, call_nature);
-            } else {
-                return this.recordTenancyAgreementNote(note, call_nature);
-            }
+            return this.recordTenancyAgreementNote(note, call_nature);
         } else {
             return of({});
         }

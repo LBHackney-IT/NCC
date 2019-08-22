@@ -79,7 +79,7 @@ export class NCCAPIService {
 
     /**
      * Create an automatic note against a call.
-     * Automatic notes are also added to the Action Diary.
+     * Automatic notes are also added to the UH Notes.
      */
     createAutomaticNote(agentCRMID: string, settings: INotesSettings) {
         return this._createNote(agentCRMID, settings, NOTE_TYPE.AUTOMATIC);

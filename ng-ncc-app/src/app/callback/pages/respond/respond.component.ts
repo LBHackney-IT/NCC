@@ -114,16 +114,16 @@ export class PageRespondComponent implements OnInit {
         };
 
         const responseStatus = this.gotThrough ? 'Callback successful' : 'Callback unsuccessful';
-        const actionDiaryNote = `${responseStatus}; Callback response logged by ${parameters.responseBy}; ${parameters.notes}`;
+        const uHNote = `${responseStatus}; Callback response logged by ${parameters.responseBy}; ${parameters.notes}`;
 
         // NOTE: using forkJoin is cleaner here, but recording the callback response will fail
         // if either endpoint returns an error.
         forkJoin(
             // CRM note
             this.NCCAPI.createCallbackResponse(parameters),
-
-            // Action Diary or UH note, depending on the call type.
-            this.decideADorUH(parameters, actionDiaryNote)
+            
+            // UH note
+            this.NCCAPI.addTenancyAgreementNotes(parameters.tenancyReference, uHNote, null)
         )
             .pipe(take(1))
             .pipe(finalize(() => { this.saving = false; }))
@@ -132,19 +132,4 @@ export class PageRespondComponent implements OnInit {
                 () => { this.error = true; }
             );
     }
-
-    /**
-     * Returns an Observable for creating either an Action Diary or UH note, depending on the call type.
-     */
-    private decideADorUH(parameters: ICallbackResponse, note: string) {
-        const callTypes = environment.listOfCallTypeIdsToBeSentToActionDiary;
-        if (callTypes.includes(this.callReasonsToTypes[parameters.callReasonId])) {
-            // Action Diary note.
-            return this.NCCAPI.createActionDiaryEntry(parameters.tenancyReference, note)
-        } else {
-            // UH note.
-            return this.NCCAPI.addTenancyAgreementNotes(parameters.tenancyReference, note, null);
-        }
-    }
-
 }
