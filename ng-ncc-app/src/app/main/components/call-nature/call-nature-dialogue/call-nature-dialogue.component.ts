@@ -170,7 +170,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
             this._separateOther(reasons);
 
             // Set optionExistingRepairContractor option as variable to add text box in UI
-            this.optionExistingRepairContractor = reasons.find(x => x.label === 'Existing Repair: Contractor');
+            this.optionExistingRepairContractor = reasons.find(x => x.label === CALL_REASON.EXISTING_REPAIR_CONTRACTOR);
 
             reasons.sort(this._sortCallReasons);
             
