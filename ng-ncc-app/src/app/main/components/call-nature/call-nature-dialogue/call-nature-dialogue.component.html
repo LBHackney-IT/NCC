@@ -35,6 +35,16 @@
                                     <input class="govuk-checkboxes__input" id="call-reason-{{ reason.id }}" name="call_reason" type="checkbox" [(checklist)]="selectedReasonIds" (ngModelChange)="updateSelection()" [checklistValue]="reason.id" (checklistChange)="_mapSelectedCallReasonsToListOfReasons()">
                                     <label class="govuk-label govuk-checkboxes__label" for="call-reason-{{ reason.id }}">{{ reason.label }}</label>
                                 </div>
+                                <!-- A text field for entering additional text for "Existing Repair: Contractor" (in the event of "Existing Repair: Contractor" being selected). -->
+                                <div class="govuk-form-group govuk-!-margin-left-8 govuk-!-margin-top-1" *ngIf="isExistingRepairContractorReasonSelected() && reason.id === optionExistingRepairContractor.id">
+                                    <label class="govuk-label govuk-!-font-weight-bold govuk-visually-hidden" for="call_reason_existing_repair_contractor">
+                                        Specify the call reason:
+                                    </label>
+                                    <input type="text" class="govuk-input govuk-input--width-20" id="call_reason_existing_repair_contractor" name="call_reason_existing_repair_contractor"
+                                        placeholder="Specify the call reason" maxlength="50"
+                                        #existingRepairContractorReasonField
+                                        [(ngModel)]="existingRepairContractorReasonText[optionExistingRepairContractor.id]" (ngModelChange)="updateSelection()">
+                                </div>
 
                                 <!-- Secondary labels. -->
 

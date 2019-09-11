@@ -142,6 +142,7 @@ export class NotesService {
                 tenancy_reference: this._settings.tenancy_reference,
                 call_reason_id: call_nature ? call_nature.call_reason.id : null,
                 other_reason: call_nature ? call_nature.other_reason : null,
+                existing_repair_contractor_reason: call_nature ? call_nature.existing_repair_contractor_reason : null,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this._formatNoteContent(note_content, call_nature)
             }),
@@ -179,6 +180,7 @@ export class NotesService {
                 ticket_number: this._settings.ticket_number,
                 call_reason_id: call_nature.call_reason.id,
                 other_reason: call_nature.other_reason,
+                existing_repair_contractor_reason: call_nature.existing_repair_contractor_reason,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: this._formatNoteContent(note_content, call_nature),
                 calltransferred: transferred,
@@ -236,6 +238,7 @@ export class NotesService {
                 tenancy_reference: this._settings.tenancy_reference,
                 call_reason_id: null,
                 other_reason: null,
+                existing_repair_contractor_reason: null,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: note_content,
                 parameters: {
@@ -279,6 +282,7 @@ export class NotesService {
                 tenancy_reference: this._settings.tenancy_reference,
                 call_reason_id: call_nature.call_reason.id,
                 other_reason: call_nature.other_reason,
+                existing_repair_contractor_reason: call_nature.existing_repair_contractor_reason,
                 crm_contact_id: this._settings.crm_contact_id,
                 content: noteMessage
             }, details),
@@ -338,6 +342,8 @@ export class NotesService {
     private _formatNoteContent(note_content: string, call_nature: ILogCallSelection = null): string {
         if (call_nature && call_nature.other_reason) {
             note_content = `Other: ${call_nature.other_reason}\n${note_content}`;
+        } else if (call_nature && call_nature.existing_repair_contractor_reason) {
+            note_content = `${call_nature.existing_repair_contractor_reason}\n${note_content}`
         }
 
         return note_content;
@@ -382,6 +388,7 @@ export class NotesService {
                     call_nature.call_reason.label +
                     ' (' +
                     call_nature.other_reason +
+                    call_nature.existing_repair_contractor_reason + 
                     ')'
                 );
         }

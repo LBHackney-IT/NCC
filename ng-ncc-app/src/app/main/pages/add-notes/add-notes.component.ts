@@ -60,6 +60,7 @@ export class PageAddNotesComponent extends PageNotes implements OnInit, OnDestro
             ticket_number: this.previous_call.ticketnumber,
             call_reason_id: this.previous_call.callreasonId,
             other_reason: null,
+            existing_repair_contractor_reason: null,
             crm_contact_id: this.previous_call.contactid,
             tenancy_reference: this.previous_call.housingref
         };

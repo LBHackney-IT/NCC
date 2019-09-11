@@ -8,4 +8,5 @@ export class ILogCallSelection {
     call_type: LogCallType | null;
     call_reason: LogCallReason | null;
     other_reason?: string | null;
+    existing_repair_contractor_reason?: string | null;
 }

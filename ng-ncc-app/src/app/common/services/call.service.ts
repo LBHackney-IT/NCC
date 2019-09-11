@@ -190,6 +190,7 @@ export class CallService {
                             ticket_number: this.ticket_number,
                             call_reason_id: null, // TODO this.call_nature.call_reason.id,
                             other_reason: null, // TODO this.call_nature.other_reason,
+                            existing_repair_contractor_reason: null, // TODO this.call_nature.existing_repair_contractor_reason,
                             crm_contact_id: this.caller.getContactID(),
                             tenancy_reference: tenancy_reference
                         };
@@ -250,6 +251,7 @@ export class CallService {
     private _getCallNatureAsText(): string {
         const call_type = this.call_nature.call_type.label;
         const call_reason = this.call_nature.other_reason ? `Other (${this.call_nature.other_reason})` :
+            this.call_nature.existing_repair_contractor_reason ? `${CALL_REASON.EXISTING_REPAIR_CONTRACTOR} (${this.call_nature.existing_repair_contractor_reason})` :
             this.call_nature.call_reason.label;
         return `${call_type} - ${call_reason}`;
     }
@@ -372,6 +374,8 @@ export class CallService {
     private _formatNoteContent(note_content: string): string {
         if (CALL_REASON.OTHER === this.call_nature.call_reason.id) {
             note_content = `Other: ${this.call_nature.other_reason}\n${note_content}`;
+        } else if (this.call_nature.call_reason.label === CALL_REASON.EXISTING_REPAIR_CONTRACTOR) {
+            note_content = `${this.call_nature.existing_repair_contractor_reason}\n${note_content}`
         }
 
         return note_content;
