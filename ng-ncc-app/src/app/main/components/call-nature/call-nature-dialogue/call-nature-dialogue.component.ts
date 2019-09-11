@@ -36,6 +36,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
 
     // A reference to the text field used for entering "other" call reason text.
     @ViewChild('otherReasonField') otherReasonField: ElementRef;
+    @ViewChild('existingRepairContractorReasonField') existingRepairContractorReasonField: ElementRef;
 
     // A private Subject used to unsubscribe from subscriptions, to avoid memory leaks.
     private _destroyed$ = new Subject<void>();
@@ -45,6 +46,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
     callTypes: LogCallType[];
     error: boolean;
     optionOther: LogCallReason;
+    optionExistingRepairContractor: LogCallReason;
+    existingRepairContractorReasonText: { [propKey: string]: string}; // contains additional text for call-type specific "Existing Repair: Contractor" reasons.
     otherReasonText: { [propKey: string]: string }; // contains additional text for call-type specific "other" reasons.
     otherReasonIds: string[];
     saving: boolean;
@@ -117,6 +120,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
         this.selectedReasons = [];
         this.selectedReasonIds = [];
         this.otherReasonText = {};
+        this.existingRepairContractorReasonText = {};
     }
 
     /**
@@ -165,8 +169,11 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
             // because of the below method.
             this._separateOther(reasons);
 
-            reasons.sort(this._sortCallReasons);
+            // Set optionExistingRepairContractor option as variable to add text box in UI
+            this.optionExistingRepairContractor = reasons.find(x => x.label === 'Existing Repair: Contractor');
 
+            reasons.sort(this._sortCallReasons);
+            
             return reasons;
         }
     }
@@ -220,6 +227,9 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
         if (this.isOtherReasonSelected()) {
             this._focusOtherReason();
         }
+        if (this.isExistingRepairContractorReasonSelected()) {
+            this._focusExistingRepairContractorReason();
+        }
     }
 
     /**
@@ -251,11 +261,27 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
     }
 
     /**
+     * Returns TRUE if "Existing Repair: Contractor" is selected as the call reason.
+     */
+    isExistingRepairContractorReasonSelected(): boolean {
+        return this.optionExistingRepairContractor !== undefined ? this.isReasonSelected(this.optionExistingRepairContractor) : false;
+    }
+
+    /**
      * Set the focus on the other reason field.
      */
     private _focusOtherReason() {
         if (this.otherReasonField) {
             this.otherReasonField.nativeElement.focus();
+        }
+    }
+
+    /**
+     * Set the focus on the existing repair contractor text field
+     */
+    private _focusExistingRepairContractorReason() {
+        if (this.existingRepairContractorReasonField) {
+            this.existingRepairContractorReasonField.nativeElement.focus();
         }
     }
 
@@ -306,6 +332,7 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
 
         const notes = this.selectedReasons.map((reason) => {
             const otherReasonText = this.otherReasonText[reason.callReasonId] ? this.otherReasonText[reason.callReasonId] : null;
+            const existingRepairContractorReasonText = this.existingRepairContractorReasonText[reason.callReasonId] ? this.existingRepairContractorReasonText[reason.callReasonId] : null;
             return {
                 call_type: {
                     id: reason.callTypeId,
@@ -315,7 +342,8 @@ export class CallNatureDialogueComponent extends ConfirmDialogueComponent
                     id: reason.callReasonId,
                     label: reason.callReasonLabel
                 },
-                other_reason: otherReasonText
+                other_reason: otherReasonText,
+                existing_repair_contractor_reason: existingRepairContractorReasonText
             };
         });
 
