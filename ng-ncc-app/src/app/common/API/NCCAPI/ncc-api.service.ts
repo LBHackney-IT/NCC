@@ -125,7 +125,7 @@ export class NCCAPIService {
             ticket_number: response.ticketNumber,
             call_reason_id: response.callReasonId,
             other_reason: response.otherReason,
-            existing_repair_contractor_reason: response.existingRepairContractorReason,
+            existing_repair_contractor_reason: null,
             crm_contact_id: response.contactId,
             content: responseMessage,
             tenancy_reference: response.tenancyReference,
