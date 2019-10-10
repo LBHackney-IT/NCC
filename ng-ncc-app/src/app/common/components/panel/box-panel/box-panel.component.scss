@@ -1,7 +1,7 @@
 @import "../panel.component";
 
 $box-panel-border-width: 2px !default;
-$box-panel-border-colour: govuk-colour("grey-3") !default;
+$box-panel-border-colour: govuk-colour("light-grey") !default;
 
 :host {
     background: transparent;

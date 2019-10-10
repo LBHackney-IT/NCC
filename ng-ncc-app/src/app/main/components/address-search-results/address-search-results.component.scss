@@ -1,16 +1,19 @@
 @import "../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/settings/colours-applied";
-@import "~govuk-frontend/settings/measurements";
-@import "~govuk-frontend/helpers/focusable";
+@import "~govuk-frontend/govuk/settings/all";
+@import "~govuk-frontend/govuk/tools/all";
+@import "~govuk-frontend/govuk/helpers/focused";
 
 ////////////////////
 
 button {
-    @include govuk-focusable;
     background: transparent;
     border: none;
     cursor: pointer;
     display: block;
     text-align: left;
     text-decoration: underline;
+
+    &:hover {
+        @include govuk-focused-text;
+    }
 }

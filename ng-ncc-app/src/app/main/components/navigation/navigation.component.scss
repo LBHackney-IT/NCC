@@ -1,7 +1,7 @@
 @import '../../../../assets/scss/vars';
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/colours-applied";
-@import "~govuk-frontend/settings/media-queries";
+@import "~govuk-frontend/govuk/helpers/colour";
+@import "~govuk-frontend/govuk/settings/colours-applied";
+@import "~govuk-frontend/govuk/settings/media-queries";
 
 $navigation-border-colour: #BFC1C3 !default;
 $navigation-border-width: 1px !default;

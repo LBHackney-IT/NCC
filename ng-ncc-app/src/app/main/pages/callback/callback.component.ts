@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { mergeMap, finalize, take } from 'rxjs/operators';
+import { CharacterCount } from 'govuk-frontend'
 
 import { CALL_REASON } from 'src/app/common/constants/call-reason.constant';
 import { CallService } from 'src/app/common/services/call.service';
@@ -32,6 +33,9 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
     sending: boolean;
     completed: boolean;
     error: boolean;
+    characterCount: any;
+    characterError: boolean;
+    maxLength: number = 200;
 
     form: {
         recipient: string;  // Recipient or Officer email address.
@@ -53,6 +57,11 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit() {
         this._reset();
+        var $characterCount = document.querySelector('[data-module="govuk-character-count"]');
+        if ($characterCount) {
+            this.characterCount = new CharacterCount($characterCount);
+            this.characterCount.init();
+        }
     }
 
     ngOnDestroy() {
@@ -61,6 +70,16 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit() {
         setTimeout(() => { this._recover() }, 200);
+    }
+
+    checkCharacterError() {
+        var currentLength = this.characterCount.count(this.form.message);
+        console.log(this.form.message.length);
+        console.log(currentLength);
+        var remainingNumber = this.maxLength - currentLength;
+        console.log(remainingNumber);
+        this.characterError = remainingNumber < 0;
+        console.log(this.characterError);
     }
 
     /**
@@ -85,7 +104,8 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
             this.Helper.isPopulated(this.form.recipient) &&
             this.Helper.isPopulated(this.form.contactNumber) &&
             this._isCallReasonDefined() &&
-            this.Helper.isPopulated(this.form.message);
+            this.Helper.isPopulated(this.form.message) &&
+            !this.characterError;
     }
 
     /**

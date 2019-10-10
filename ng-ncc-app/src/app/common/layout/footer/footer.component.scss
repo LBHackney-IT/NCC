@@ -9,8 +9,8 @@ $page-footer-z-index: 10 !default;
 ////////////////////
 
 @import "../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/typography-font";
+@import "~govuk-frontend/govuk/helpers/colour";
+@import "~govuk-frontend/govuk/settings/typography-font";
 @import "../../../../assets/scss/mixins/hackney-stripes";
 
 :host {

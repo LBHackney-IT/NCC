@@ -3,8 +3,8 @@ $call-nature-dialogue-width: $dialogue-max-width !default;
 
 @import "../../dialogue/dialogue.component";
 @import "../../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/colours-applied";
+@import "~govuk-frontend/govuk/helpers/colour";
+@import "~govuk-frontend/govuk/settings/colours-applied";
 
 .dialogue__box {
     min-width: 600px;
