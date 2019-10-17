@@ -1,6 +1,6 @@
 @import "../../../../assets/scss/vars.scss";
 @import "../../../../assets/scss/components/radio-text-field.scss";
-@import "~govuk-frontend/all";
+@import "~govuk-frontend/govuk/all";
 
 $add-new-width: 360px !default;
 $add-new-button-colour: #FFF !default;
@@ -23,11 +23,13 @@ $add-new-button-padding: .5rem 1em !default;
 }
 
 .add-new__button {
-    @include govuk-focusable;
     background: $add-new-button-colour;
     border-color: transparent;
     cursor: pointer;
     display: block;
     font-weight: bold;
     padding: $add-new-button-padding;
+    &:focus {
+        @include govuk-focused-text;
+    }
 }

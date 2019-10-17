@@ -8,7 +8,7 @@ $page-header-padding: 2rem !default;
 ////////////////////
 
 @import "../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/settings/typography-font";
+@import "~govuk-frontend/govuk/settings/typography-font";
 @import "../../../../assets/scss/mixins/hackney-stripes";
 
 :host {

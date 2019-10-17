@@ -1,7 +1,7 @@
 @import "../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/helpers/colour";
+@import "~govuk-frontend/govuk/helpers/colour";
 
-$route-loader-bg-colour: govuk-colour("grey-3") !default;
+$route-loader-bg-colour: govuk-colour("light-grey") !default;
 $route-loader-bar-colour: govuk-colour("blue") !default;
 $route-loader-bar-width: 200px !default;
 $route-loader-height: 6px !default;

@@ -30,8 +30,8 @@ $helper-text-z-index: 30;
 $route-loader-z-index: 40;
 $dialogue-z-index: 50;
 
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/colours-applied";
+@import "~govuk-frontend/govuk/helpers/colour";
+@import "~govuk-frontend/govuk/settings/colours-applied";
 
 $typeahead-bg-colour: govuk-colour("white") !default;
 $typeahead-border-colour: $govuk-border-colour !default;

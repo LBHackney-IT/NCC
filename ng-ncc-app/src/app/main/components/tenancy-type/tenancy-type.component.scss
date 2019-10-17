@@ -1,7 +1,7 @@
 @import "../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/settings/typography-font";
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/colours-applied";
+@import "~govuk-frontend/govuk/settings/typography-font";
+@import "~govuk-frontend/govuk/helpers/colour";
+@import "~govuk-frontend/govuk/settings/colours-applied";
 
 $tenancy-type-border-width: 3px !default;
 $tenancy-type-padding: .2rem 1rem !default;
@@ -10,7 +10,7 @@ $tenancy-type-default-colour: $govuk-text-colour !default;
 $tenancy-type-secure-colour: $govuk-text-colour !default;
 $tenancy-type-tenancy-colour: govuk-colour("turquoise") !default;
 $tenancy-type-leasehold-colour: govuk-colour("blue") !default;
-$tenancy-type-introductory-colour: govuk-colour("grey-1") !default;
+$tenancy-type-introductory-colour: govuk-colour("dark-grey") !default;
 $tenancy-type-special-colour: govuk-colour("orange") !default;
 
 ////////////////////

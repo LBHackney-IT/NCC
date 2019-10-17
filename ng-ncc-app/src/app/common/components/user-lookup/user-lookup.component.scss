@@ -1,14 +1,14 @@
 @import "../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/typography-font";
-@import "~govuk-frontend/settings/all";
-@import "~govuk-frontend/tools/all";
-@import "~govuk-frontend/helpers/all";
-@import "~govuk-frontend/core/all";
-@import "~govuk-frontend/objects/all";
-@import "~govuk-frontend/helpers/all";
-@import "~govuk-frontend/utilities/all";
-@import "~govuk-frontend/overrides/all";
+@import "~govuk-frontend/govuk/helpers/colour";
+@import "~govuk-frontend/govuk/settings/typography-font";
+@import "~govuk-frontend/govuk/settings/all";
+@import "~govuk-frontend/govuk/tools/all";
+@import "~govuk-frontend/govuk/helpers/all";
+@import "~govuk-frontend/govuk/core/all";
+@import "~govuk-frontend/govuk/objects/all";
+@import "~govuk-frontend/govuk/helpers/all";
+@import "~govuk-frontend/govuk/utilities/all";
+@import "~govuk-frontend/govuk/overrides/all";
 
 $typeahead-text-size: 19 !default;
 $typeahead-border-width: 2px !default;
@@ -21,7 +21,7 @@ $typeahead-focus-text-colour: #000 !default;
 $typeahead-z-index: 90 !default;
 $typeahead-max-height: 20rem !default;
 
-$typeahead-loading-bg-colour: govuk-colour("grey-3") !default;
+$typeahead-loading-bg-colour: govuk-colour("light-grey") !default;
 $typeahead-loading-bar-colour: govuk-colour("blue") !default;
 $typeahead-loading-bar-width: 200px !default;
 $typeahead-loading-height: 3px !default;

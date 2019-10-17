@@ -1,8 +1,5 @@
 @import "../../../../../assets/scss/vars.scss";
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/colours-applied";
-@import "~govuk-frontend/settings/measurements";
-@import "~govuk-frontend/helpers/focusable";
+@import "~govuk-frontend/govuk/all";
 
 $tabs-tab-active-bg-colour: govuk-colour('white') !default;
 $tabs-tab-border-width: 3px !default;
@@ -13,10 +10,13 @@ $tabs-tab-min-width: 12em !default;
 ////////////////////
 
 :host {
-    @include govuk-focusable;
     border: $tabs-tab-border-width solid transparent;
     border-bottom-color: $tabs-tab-border-colour;
     display: inline-block;
+
+    &:focus {
+        @include govuk-focused-text;
+    }
 
     &.active {
         background: $tabs-tab-active-bg-colour;

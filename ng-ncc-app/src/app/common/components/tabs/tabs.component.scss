@@ -1,5 +1,5 @@
-@import "~govuk-frontend/helpers/colour";
-@import "~govuk-frontend/settings/colours-applied";
+@import "~govuk-frontend/govuk/helpers/colour";
+@import "~govuk-frontend/govuk/settings/colours-applied";
 
 $tabs-content-bg-colour: govuk-colour('white') !default;
 $tabs-content-border-width: 3px !default;

@@ -55,13 +55,18 @@
         <app-call-nature-dropdown class="govuk-!-margin-bottom-7" (changed)="natureSelected($event)"
             [disabled]="sending"></app-call-nature-dropdown>
 
-        <!-- A message accompanying the callback request. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label govuk-visually-hidden govuk-!-width-one-half" for="message">
-                Enter a message
-            </label>
-            <textarea class="govuk-textarea govuk-!-width-one-half" id="message" name="message" rows="5"
-                placeholder="Enter a message..." [(ngModel)]="form.message" [disabled]="sending"></textarea>
+        <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="1314">
+            <!-- A message accompanying the callback request. -->
+            <div  [className]="characterError ? 'govuk-form-group govuk-form-group--error' : 'govuk-form-group'">
+                <label class="govuk-label govuk-visually-hidden govuk-!-width-one-half" for="message">
+                    Enter a message
+                </label>
+                <span id="exceeding-characters-error" class="govuk-error-message" *ngIf="characterError">
+                    <span class="govuk-visually-hidden">Error:</span> Message must be {{maxLength}} characters or fewer
+                </span>
+                <textarea class="govuk-textarea govuk-js-character-count govuk-!-width-one-half" aria-described-by="exceeding-characters-info" id="message" name="message" rows="5"
+                    placeholder="Enter a message..." [(ngModel)]="form.message" (ngModelChange)="checkCharacterError()" [disabled]="sending"></textarea>
+            </div>
         </div>
     </fieldset>
 </div>
