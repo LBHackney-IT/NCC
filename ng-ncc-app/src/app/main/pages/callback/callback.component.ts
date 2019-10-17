@@ -35,7 +35,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
     error: boolean;
     characterCount: any;
     characterError: boolean;
-    maxLength: number = 200;
+    maxLength: number = 1314;
 
     form: {
         recipient: string;  // Recipient or Officer email address.

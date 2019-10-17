@@ -1,7 +1,7 @@
 import { environment } from '../../../../environments/environment';
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -61,8 +61,11 @@ export class NCCAPIService {
             ContactId: crm_contact_id
         };
 
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json; utf-8'
+        });
         return this.http
-            .post(`${this._url}CRM/CreateServiceRequests?${this._buildQueryString(parameters)}`, {})
+            .post(`${this._url}CRM/CreateServiceRequests`, JSON.stringify(parameters), {headers: headers})
             .pipe(
                 map((data: IJSONResponse) => {
                     return data.response.servicerequest as ICRMServiceRequest;
@@ -147,18 +150,23 @@ export class NCCAPIService {
             CallReasonId: settings.call_reason_id || '',
             OtherReason: settings.other_reason,
             ExistingRepairContractorReason: settings.existing_repair_contractor_reason,
-            'ServiceRequest.Id': settings.call_id,
-            'ServiceRequest.TicketNumber': settings.ticket_number,
-            'ServiceRequest.ContactId': settings.crm_contact_id,
-            'ServiceRequest.CreatedBy': agentCRMID,
+            ServiceRequest: {
+                Id: settings.call_id,
+                TicketNumber: settings.ticket_number,
+                ContactId: settings.crm_contact_id,
+                CreatedBy: agentCRMID
+            },
             Notestype: noteType,
             Notes: settings.content,
             CallTransferred: settings.calltransferred,
             HousingTagRef: settings.tenancy_reference
         }, settings.parameters);
-
+        
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json; utf-8'
+        });
         return this.http
-            .post(`${this._url}CRM/CreateNCCInteractions?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}CRM/CreateNCCInteractions`, JSON.stringify(parameters), {headers: headers});
     }
 
     /**
@@ -176,9 +184,11 @@ export class NCCAPIService {
             notes: content,
             username: username
         };
-
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json; utf-8'
+        });
         return this.http
-            .post(`${this._url}UH/AddTenancyAgreementNotes?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}UH/AddTenancyAgreementNotes`, parameters, {headers: headers});
     }
 
     /**
