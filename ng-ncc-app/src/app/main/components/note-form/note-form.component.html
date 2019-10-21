@@ -23,10 +23,15 @@
         <app-call-nature-dropdown #callNatureField (changed)="selectedCallNature($event)" [disabled]="saving"></app-call-nature-dropdown>
 
         <!-- Comment field. -->
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="note-comment">Comments</label>
-            <textarea #commentField class="govuk-textarea note-form__field" id="note-comment" name="comment" required rows="4"
-                [(ngModel)]="comment" (ngModelChange)="updateNoteProgress()" [disabled]="saving"></textarea>
+        <div #characterCount class="govuk-character-count" data-module="govuk-character-count" data-maxlength="1800">
+            <div [className]="characterError ? 'govuk-form-group govuk-form-group--error' : 'govuk-form-group'">
+                <label class="govuk-label" for="note-comment">Comments</label>
+                <span id="exceeding-characters-error" class="govuk-error-message" *ngIf="characterError">
+                    <span class="govuk-visually-hidden">Error:</span> Message must be {{maxLength}} characters or fewer
+                </span>
+                <textarea #commentField class="govuk-js-character-count govuk-textarea note-form__field" aria-described-by="exceeding-characters-error" id="note-comment" name="comment" required rows="4"
+                    [(ngModel)]="comment" (ngModelChange)="updateNoteProgress()" [disabled]="saving"></textarea>
+            </div>
         </div>
 
         <!-- Was the call transferred? -->

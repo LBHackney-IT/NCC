@@ -388,7 +388,7 @@ export class NotesService {
                     call_nature.call_reason.label +
                     ' (' +
                     call_nature.other_reason +
-                    call_nature.existing_repair_contractor_reason + 
+                    call_nature.existing_repair_contractor_reason +
                     ')'
                 );
         }
