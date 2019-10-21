@@ -1,4 +1,5 @@
 import { environment } from '../../../../environments/environment';
+import { CharacterCount } from 'govuk-frontend';
 
 import { Component, HostBinding, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -27,6 +28,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     @ViewChild('commentForm') commentForm: ElementRef;
     @ViewChild('commentField') commentField: ElementRef;
     @ViewChild('callNatureField') callNatureField: CallNatureComponent;
+    @ViewChild('characterCount') input;
 
     private _destroyed$ = new Subject();
 
@@ -46,6 +48,9 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     transferred: boolean;
     savedProblem: boolean;         // set to TRUE if there was a problem with saving a note.
     savedSuccess: boolean;         // set to TRUE if a note was saved successfully.
+    characterCount: any;
+    characterError: boolean;
+    maxLength = 1800;
 
     constructor(
         private element: ElementRef,
@@ -80,6 +85,16 @@ export class NoteFormComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._destroyed$))
             .subscribe((settings: IAddNoteParameters) => {
                 this.settings = settings;
+            });
+        this.Notes.toggled.subscribe(
+            (data: boolean) => {
+                if (data) {
+                    if (this.input) {
+                        console.log(this.input);
+                        this.characterCount = new CharacterCount(this.input.nativeElement);
+                        this.characterCount.init();
+                    }
+                }
             });
     }
 
@@ -178,8 +193,9 @@ export class NoteFormComponent implements OnInit, OnDestroy {
         const has_comment = this.comment && this.comment.trim().length > 0;
         const has_call_id = !!(this.settings && this.settings.call_id);
         const has_call_nature = this.isCallNatureSelected();
+        const is_too_long = this.characterError;
 
-        return !is_saving && (has_comment && has_call_id && has_call_nature);
+        return !is_saving && (has_comment && has_call_id && has_call_nature && !is_too_long);
     }
 
     /**
@@ -188,6 +204,8 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     updateNoteProgress() {
         const has_comment = this.comment && this.comment.trim().length > 0;
         this.Notes.isInProgress = has_comment;
+        const remainingNumber = this.maxLength - this.comment.trim().length;
+        this.characterError = remainingNumber < 0;
     }
 
     /**
