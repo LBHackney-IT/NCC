@@ -90,7 +90,6 @@ export class NoteFormComponent implements OnInit, OnDestroy {
             (data: boolean) => {
                 if (data) {
                     if (this.input) {
-                        console.log(this.input);
                         this.characterCount = new CharacterCount(this.input.nativeElement);
                         this.characterCount.init();
                     }
