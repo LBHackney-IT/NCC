@@ -75,7 +75,7 @@ export class PageCallbackComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     checkCharacterError() {
-        const currentLength = this.form.message.trim().length;
+        const currentLength = this.form.message.length;
         const remainingNumber = this.maxLength - currentLength;
         this.characterError = remainingNumber < 0;
     }

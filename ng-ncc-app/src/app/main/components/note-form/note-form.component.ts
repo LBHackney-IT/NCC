@@ -203,7 +203,7 @@ export class NoteFormComponent implements OnInit, OnDestroy {
     updateNoteProgress() {
         const has_comment = this.comment && this.comment.trim().length > 0;
         this.Notes.isInProgress = has_comment;
-        const remainingNumber = this.maxLength - this.comment.trim().length;
+        const remainingNumber = this.maxLength - this.comment.length;
         this.characterError = remainingNumber < 0;
     }
 
