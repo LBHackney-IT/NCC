@@ -491,8 +491,11 @@ export class NCCAPIService {
             AgentName: details.fromName
         };
 
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json; utf-8'
+        });
         return this.http
-            .post(`${this._url}Callback/SendCallbackEmail?${this._buildQueryString(parameters)}`, {});
+            .post(`${this._url}Callback/SendCallbackEmail`, JSON.stringify(parameters), {headers: headers});
     }
 
     /**
