@@ -105,14 +105,16 @@ export class NCCAPIService {
 
         settings.parameters = Object.assign({}, {
             Notes: noteMessage,
-            'CallbackRequest.Address': details.address,
-            'CallbackRequest.AgentName': details.fromName,
-            'CallbackRequest.MessageForEmail': details.message,
-            'CallbackRequest.CallersFullname': details.callerName,
-            'CallbackRequest.RecipientEmailId': details.recipientEmail,
-            'CallbackRequest.ManagerEmailId': details.managerEmail,
-            'CallbackRequest.PhoneNumber': details.callbackNumber,
-            'CallbackRequest.OtherNumber': details.otherNumber,
+            CallbackRequest: {
+                Address: details.address,
+                AgentName: details.fromName,
+                MessageForEmail: details.message,
+                CallersFullName: details.callerName,
+                RecipientEmailId: details.recipientEmail,
+                ManagerEmailId: details.managerEmail,
+                PhoneNumber: details.callbackNumber,
+                OtherNumber: details.otherNumber
+            }
         }, settings.parameters);
         return this._createNote(agentCRMID, settings, NOTE_TYPE.CALLBACK);
     }
