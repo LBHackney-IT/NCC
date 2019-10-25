@@ -136,9 +136,11 @@ export class NCCAPIService {
             tenancy_reference: response.tenancyReference,
             parameters: {
                 InteractionId: response.callbackId,
-                'CallbackRequest.CallBackId': response.callbackId,
-                'CallbackRequest.Response': response.gotThrough ? CALLBACK_SUCCESS.YES : CALLBACK_SUCCESS.NO,
-                'CallbackRequest.ResponseBy': response.responseBy,
+                CallbackRequest: {
+                    CallbackId: response.callbackId,
+                    Response: response.gotThrough ? CALLBACK_SUCCESS.YES : CALLBACK_SUCCESS.NO,
+                    ResponseBy: response.responseBy
+                }
             }
         };
         return this._createNote(null, settings, NOTE_TYPE.CALLBACK);
@@ -163,7 +165,7 @@ export class NCCAPIService {
             CallTransferred: settings.calltransferred,
             HousingTagRef: settings.tenancy_reference
         }, settings.parameters);
-        
+
         const headers = new HttpHeaders({
             'Content-Type': 'application/json; utf-8'
         });

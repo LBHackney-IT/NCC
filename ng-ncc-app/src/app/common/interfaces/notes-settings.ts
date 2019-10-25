@@ -8,5 +8,5 @@ export interface INotesSettings {
     content: string;
     calltransferred?: boolean;
     tenancy_reference?: string;
-    parameters?: { [propKey: string]: string | number };
+    parameters?: { [propKey: string]: string | number | object };
 }
