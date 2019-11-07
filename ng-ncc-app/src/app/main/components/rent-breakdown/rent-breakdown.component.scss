@@ -5,6 +5,7 @@ $rent-breakdown-item-width: 8.5rem;
 
 ul {
     display: flex;
+    flex-wrap: wrap;
 }
 
 li {
