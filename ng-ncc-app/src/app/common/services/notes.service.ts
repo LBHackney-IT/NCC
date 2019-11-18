@@ -127,29 +127,28 @@ export class NotesService {
      * Record an automatic note against the call.
      * A corresponding UH note is also created.
      */
-    recordAutomaticNote(note_content: string, call_nature: ILogCallSelection = null): Observable<any> {
+    recordAutomaticNote(note_content: string, call_nature: ILogCallSelection = null, not_for_uh = false): Observable<any> {
         if (this.ViewOnly.status) {
             // console.log('View only status; do not create an automatic note.');
             return of(true);
         }
 
-        return forkJoin(
+        const observables = [this.NCCAPI.createAutomaticNote(this._settings.agent_crm_id, {
+            call_id: this._settings.call_id,
+            ticket_number: this._settings.ticket_number,
+            tenancy_reference: this._settings.tenancy_reference,
+            call_reason_id: call_nature ? call_nature.call_reason.id : null,
+            other_reason: call_nature ? call_nature.other_reason : null,
+            existing_repair_contractor_reason: call_nature ? call_nature.existing_repair_contractor_reason : null,
+            crm_contact_id: this._settings.crm_contact_id,
+            content: this._formatNoteContent(note_content, call_nature)
+        })];
 
-            // Automatic note...
-            this.NCCAPI.createAutomaticNote(this._settings.agent_crm_id, {
-                call_id: this._settings.call_id,
-                ticket_number: this._settings.ticket_number,
-                tenancy_reference: this._settings.tenancy_reference,
-                call_reason_id: call_nature ? call_nature.call_reason.id : null,
-                other_reason: call_nature ? call_nature.other_reason : null,
-                existing_repair_contractor_reason: call_nature ? call_nature.existing_repair_contractor_reason : null,
-                crm_contact_id: this._settings.crm_contact_id,
-                content: this._formatNoteContent(note_content, call_nature)
-            }),
+        if (!not_for_uh) {
+            observables.push(this.makeUHNoteCall(call_nature, note_content) as Observable<Object>);
+        }
 
-            this.makeUHNoteCall(call_nature, note_content)
-
-        )
+        return forkJoin(...observables)
             .pipe(map((data: IJSONResponse[]) => {
                 // Inform anything subscribed to note addition events that a note was added.
                 this._added$.next();
@@ -307,7 +306,8 @@ export class NotesService {
             (logCallSelection: ILogCallSelection) => {
                 return this.recordAutomaticNote(
                     `Caller identified as ${this._name}.`,
-                    logCallSelection
+                    logCallSelection,
+                    logCallSelection.call_type.label === 'RCC'
                 );
             }
         );
